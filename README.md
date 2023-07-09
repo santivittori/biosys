@@ -6,7 +6,7 @@
 
 # Biosys System 🌱🌎
 
-BioSys es un proyecto innovador relacionado con la gestión de árboles. Nuestra plataforma está diseñada para ayudarte a llevar la gestión de árboles a un nivel superior. Ya sea que estés a cargo de un parque, un jardín botánico, una comunidad o cualquier entorno natural, Biosys es la herramienta perfecta para optimizar tus procesos y maximizar la belleza y salud de tus árboles. No esperes más para descubrir todas las ventajas que Biosys tiene para ofrecerte. Únete a nosotros y explora nuestro sistema!
+Biosys es un proyecto innovador relacionado con la gestión de árboles. Nuestra plataforma está diseñada para ayudarte a llevar la gestión de árboles a un nivel superior. Ya sea que estés a cargo de un parque, un jardín botánico, una comunidad o cualquier entorno natural. Es la herramienta perfecta para optimizar tus procesos, maximizar la belleza y salud de tus árboles. No esperes más para descubrir todas las ventajas que Biosys tiene para ofrecerte. Únete a nosotros y explora nuestro sistema!
 
 ## Appendix
 
