@@ -41,6 +41,10 @@ namespace Controladora
         {
             ConsultasModelo.GuardarNuevoUsuario(nombreUsuario, claveHash, email, rol);
         }
+        public static int ObtenerIdUsuario(string nombreUsuario)
+        {
+            return ConsultasModelo.ObtenerIdUsuario(nombreUsuario);
+        }
         public static bool VerificarEmailExistente(string email)
         {
             return ConsultasModelo.VerificarEmailExistente(email);
@@ -104,9 +108,9 @@ namespace Controladora
         {
             ConsultasModelo.InsertarProducto(nombre, tipoProductoID, tipoEspecificoID);
         }
-        public static int GuardarCompra(string nroFactura, string nroRemito, DateTime fechaCompra, string proveedorEmail)
+        public static int GuardarCompra(string nroFactura, string nroRemito, DateTime fechaCompra, string proveedorEmail, int usuarioId)
         {
-            return ConsultasModelo.GuardarCompra(nroFactura, nroRemito, fechaCompra, proveedorEmail);
+            return ConsultasModelo.GuardarCompra(nroFactura, nroRemito, fechaCompra, proveedorEmail, usuarioId);
         }
         public static void GuardarDetalleCompra(int compraId, int productoId, int cantidad)
         {

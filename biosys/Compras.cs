@@ -211,7 +211,11 @@ namespace biosys
             string proveedorEmail = comboProveedor.SelectedValue.ToString();
             DateTime fechaCompra = this.fechaCompra.Value;
 
-            int compraId = Controladora.Controladora.GuardarCompra(nroFactura, nroRemito, fechaCompra, proveedorEmail);
+            string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
+
+            int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
+
+            int compraId = Controladora.Controladora.GuardarCompra(nroFactura, nroRemito, fechaCompra, proveedorEmail, usuarioId);
 
             foreach (Compra compra in comprasList)
             {

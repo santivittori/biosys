@@ -84,6 +84,7 @@ namespace Modelo
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 command.Parameters.AddWithValue("@nombre_usuario", nombreUsuario);
+                
                 return (string)command.ExecuteScalar();
             }
         }
@@ -114,6 +115,17 @@ namespace Modelo
 
                 command.ExecuteNonQuery();
                 ConexionModelo.CerrarConexion();
+            }
+        }
+        public static int ObtenerIdUsuario(string nombreUsuario)
+        {
+            string sql = "SELECT id FROM usuarios WHERE nombre_usuario = @nombre_usuario";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@nombre_usuario", nombreUsuario);
+                
+                return Convert.ToInt32(command.ExecuteScalar());
             }
         }
         public static bool VerificarProveedorExistente(string nombre, string apellido, string email)
@@ -300,12 +312,12 @@ namespace Modelo
             }
         }
 
-        public static int GuardarCompra(string nroFactura, string nroRemito, DateTime fechaCompra, string proveedorEmail)
+        public static int GuardarCompra(string nroFactura, string nroRemito, DateTime fechaCompra, string proveedorEmail, int usuarioId)
         {
             int compraId = 0;
 
-            string sql = "INSERT INTO compras (nro_factura, nro_remito, fecha, proveedor_id) " +
-                         "VALUES (@NroFactura, @NroRemito, @FechaCompra, (SELECT id FROM proveedores WHERE email_prov = @ProveedorEmail));" +
+            string sql = "INSERT INTO compras (nro_factura, nro_remito, fecha, proveedor_id, usuario_id) " +
+                         "VALUES (@NroFactura, @NroRemito, @FechaCompra, (SELECT id FROM proveedores WHERE email_prov = @ProveedorEmail), @UsuarioId);" +
                          "SELECT SCOPE_IDENTITY();";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
@@ -314,6 +326,7 @@ namespace Modelo
                 command.Parameters.AddWithValue("@NroRemito", nroRemito);
                 command.Parameters.AddWithValue("@FechaCompra", fechaCompra);
                 command.Parameters.AddWithValue("@ProveedorEmail", proveedorEmail);
+                command.Parameters.AddWithValue("@UsuarioId", usuarioId);
 
                 compraId = Convert.ToInt32(command.ExecuteScalar());
                 ConexionModelo.CerrarConexion();

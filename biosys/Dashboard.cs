@@ -13,6 +13,11 @@ namespace biosys
 {
     public partial class Dashboard : Form
     {
+        public string NombreUsuarioActual
+        {
+            get { return lblUsuario.Text.Replace("Usuario: ", ""); }
+        }
+
         private string rol;
 
         public Dashboard(string rol, string nombreUsuario)
