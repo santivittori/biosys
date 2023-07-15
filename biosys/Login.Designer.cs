@@ -44,6 +44,11 @@
             this.btnOjo = new System.Windows.Forms.PictureBox();
             this.btnOjoCerrado = new System.Windows.Forms.PictureBox();
             this.lblOlvidoClave = new System.Windows.Forms.Label();
+            this.txtCodigoVerificacion = new System.Windows.Forms.TextBox();
+            this.panelVerficacion = new System.Windows.Forms.Panel();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.btnSinCodigo = new System.Windows.Forms.Button();
+            this.btnConfirmarCodigo = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
@@ -52,6 +57,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOjo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOjoCerrado)).BeginInit();
+            this.panelVerficacion.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -61,14 +68,14 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(250, 364);
+            this.panel1.Size = new System.Drawing.Size(250, 490);
             this.panel1.TabIndex = 0;
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(-102, -74);
+            this.pictureBox1.Location = new System.Drawing.Point(-103, -29);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(456, 469);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -242,12 +249,79 @@
             this.lblOlvidoClave.Text = "Olvidé mi contraseña";
             this.lblOlvidoClave.Click += new System.EventHandler(this.lblOlvidoClave_Click);
             // 
+            // txtCodigoVerificacion
+            // 
+            this.txtCodigoVerificacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.txtCodigoVerificacion.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCodigoVerificacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCodigoVerificacion.ForeColor = System.Drawing.Color.DimGray;
+            this.txtCodigoVerificacion.Location = new System.Drawing.Point(52, 20);
+            this.txtCodigoVerificacion.Name = "txtCodigoVerificacion";
+            this.txtCodigoVerificacion.Size = new System.Drawing.Size(370, 19);
+            this.txtCodigoVerificacion.TabIndex = 14;
+            this.txtCodigoVerificacion.Text = "CÓDIGO DE VERIFICACIÓN";
+            this.txtCodigoVerificacion.Enter += new System.EventHandler(this.txtCodigoVerificacion_Enter);
+            this.txtCodigoVerificacion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoVerificacion_KeyPress);
+            this.txtCodigoVerificacion.Leave += new System.EventHandler(this.txtCodigoVerificacion_Leave);
+            // 
+            // panelVerficacion
+            // 
+            this.panelVerficacion.Controls.Add(this.pictureBox4);
+            this.panelVerficacion.Controls.Add(this.btnSinCodigo);
+            this.panelVerficacion.Controls.Add(this.btnConfirmarCodigo);
+            this.panelVerficacion.Controls.Add(this.txtCodigoVerificacion);
+            this.panelVerficacion.Location = new System.Drawing.Point(273, 358);
+            this.panelVerficacion.Name = "panelVerficacion";
+            this.panelVerficacion.Size = new System.Drawing.Size(495, 120);
+            this.panelVerficacion.TabIndex = 15;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(7, 40);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(440, 30);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox4.TabIndex = 17;
+            this.pictureBox4.TabStop = false;
+            // 
+            // btnSinCodigo
+            // 
+            this.btnSinCodigo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnSinCodigo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSinCodigo.FlatAppearance.BorderSize = 0;
+            this.btnSinCodigo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.btnSinCodigo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnSinCodigo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSinCodigo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSinCodigo.ForeColor = System.Drawing.Color.LightGray;
+            this.btnSinCodigo.Location = new System.Drawing.Point(130, 76);
+            this.btnSinCodigo.Name = "btnSinCodigo";
+            this.btnSinCodigo.Size = new System.Drawing.Size(222, 26);
+            this.btnSinCodigo.TabIndex = 16;
+            this.btnSinCodigo.Text = "NO TENGO EL CÓDIGO";
+            this.btnSinCodigo.UseVisualStyleBackColor = false;
+            this.btnSinCodigo.Click += new System.EventHandler(this.btnSinCodigo_Click);
+            // 
+            // btnConfirmarCodigo
+            // 
+            this.btnConfirmarCodigo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnConfirmarCodigo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConfirmarCodigo.Location = new System.Drawing.Point(428, 3);
+            this.btnConfirmarCodigo.Name = "btnConfirmarCodigo";
+            this.btnConfirmarCodigo.Size = new System.Drawing.Size(38, 36);
+            this.btnConfirmarCodigo.TabIndex = 15;
+            this.btnConfirmarCodigo.Text = "✅";
+            this.btnConfirmarCodigo.UseVisualStyleBackColor = false;
+            this.btnConfirmarCodigo.Click += new System.EventHandler(this.btnConfirmarCodigo_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.ClientSize = new System.Drawing.Size(780, 364);
+            this.ClientSize = new System.Drawing.Size(780, 490);
+            this.Controls.Add(this.panelVerficacion);
             this.Controls.Add(this.lblOlvidoClave);
             this.Controls.Add(this.btnOjoCerrado);
             this.Controls.Add(this.btnOjo);
@@ -278,6 +352,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOjo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOjoCerrado)).EndInit();
+            this.panelVerficacion.ResumeLayout(false);
+            this.panelVerficacion.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -300,6 +377,11 @@
         private System.Windows.Forms.PictureBox btnOjo;
         private System.Windows.Forms.PictureBox btnOjoCerrado;
         private System.Windows.Forms.Label lblOlvidoClave;
+        private System.Windows.Forms.TextBox txtCodigoVerificacion;
+        private System.Windows.Forms.Panel panelVerficacion;
+        private System.Windows.Forms.Button btnSinCodigo;
+        private System.Windows.Forms.Button btnConfirmarCodigo;
+        private System.Windows.Forms.PictureBox pictureBox4;
     }
 }
 

@@ -12,6 +12,8 @@ using System.Security.Cryptography;
 using biosys;
 using Controladora;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using COMUN;
+using System.Configuration;
 
 namespace biosys
 {
@@ -130,9 +132,7 @@ namespace biosys
         // Boton para registrarse
         private void btnRegistro_Click(object sender, EventArgs e)
         {
-            Registro registro = new Registro();
-            this.Hide();
-            registro.ShowDialog();
+            panelVerficacion.Visible = true;
         }
         // Metodo para mensajes de error
         public void msgError(string msg)
@@ -160,6 +160,7 @@ namespace biosys
         private void Login_Load(object sender, EventArgs e)
         {
             btnOjoCerrado.Visible = true;
+            panelVerficacion.Visible = false;
         }
         // Borrar y mostrar el valor del campo por defecto
         private void txtUsuario_MouseClick(object sender, MouseEventArgs e)
@@ -186,6 +187,64 @@ namespace biosys
             RecuperarClave recuperarclave = new RecuperarClave();
             this.Hide();
             recuperarclave.ShowDialog();
+        }
+
+        private void btnConfirmarCodigo_Click(object sender, EventArgs e)
+        {
+            string codigoVerificacionIngresado = txtCodigoVerificacion.Text;
+
+            // Verificar el código de verificación ingresado
+            if (codigoVerificacionIngresado == ConfigurationManager.AppSettings["CodigoVerificacion"])
+            {
+                Registro registro = new Registro();
+                this.Hide();
+                registro.ShowDialog();
+            }
+            else if (codigoVerificacionIngresado == "CÓDIGO DE VERIFICACIÓN")
+            {
+                msgError("Ingrese el código de verificación primero.");
+            }
+            else
+            {
+                msgError("El código de verificación ingresado es incorrecto.");
+            }
+        }
+
+        private void btnSinCodigo_Click(object sender, EventArgs e)
+        {
+            Registro registro = new Registro();
+            this.Hide();
+            registro.comborol.SelectedIndex = 1;
+            registro.comborol.Enabled = false;
+            registro.ShowDialog();
+        }
+
+        private void txtCodigoVerificacion_Enter(object sender, EventArgs e)
+        {
+            if (txtCodigoVerificacion.Text == "CÓDIGO DE VERIFICACIÓN")
+            {
+                txtCodigoVerificacion.Text = "";
+                txtCodigoVerificacion.ForeColor = Color.LightGray;
+            }
+        }
+
+        private void txtCodigoVerificacion_Leave(object sender, EventArgs e)
+        {
+            if (txtCodigoVerificacion.Text == "")
+            {
+                txtCodigoVerificacion.Text = "CÓDIGO DE VERIFICACIÓN";
+                txtCodigoVerificacion.ForeColor = Color.DimGray;
+            }
+        }
+
+        private void txtCodigoVerificacion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e = MetodosComunes.KeyPressSoloNumeros(e);
+
+            if (e.Handled)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

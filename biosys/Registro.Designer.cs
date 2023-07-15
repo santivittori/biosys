@@ -290,7 +290,6 @@
         private System.Windows.Forms.PictureBox btnCerrar;
         private System.Windows.Forms.Label labelTitulo;
         private System.Windows.Forms.Button btnCrearUsuario;
-        private System.Windows.Forms.ComboBox comborol;
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.TextBox txtContraseña;
@@ -301,5 +300,6 @@
         private System.Windows.Forms.PictureBox btnOjo;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox txtEmail;
+        public System.Windows.Forms.ComboBox comborol;
     }
 }

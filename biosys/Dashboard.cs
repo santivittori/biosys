@@ -25,19 +25,15 @@ namespace biosys
             InitializeComponent();
             this.rol = rol;
 
-            // Mostrar u ocultar botones según el rol del usuario
-            if (rol == "Administrador")
-            {
-                SubmenuABM.Visible = true;
-                SubmenuAltaProd.Visible = true;
-            }
-            else if (rol == "Empleado")
-            {
-                btnInformes.Enabled = false;
-                SubmenuABM.Visible = true;
-                SubmenuAltaProd.Visible = true;
-                
-            }
+            // Crear los componentes decorados con seguridad
+            IComponenteSeguridad btnInformesSeguridad = new BotonSeguridad(btnInformes);
+            IComponenteSeguridad submenuABMSeguridad = new PanelSeguridad(SubmenuABM);
+            IComponenteSeguridad submenuAltaProdSeguridad = new PanelSeguridad(SubmenuAltaProd);
+
+            // Mostrar u ocultar los componentes según el rol del usuario
+            btnInformesSeguridad.MostrarElemento(rol);
+            submenuABMSeguridad.MostrarElemento(rol);
+            submenuAltaProdSeguridad.MostrarElemento(rol);
 
             // Asignar los valores de usuario y rol
             lblUsuario.Text = "Usuario: " + nombreUsuario;
@@ -133,5 +129,58 @@ namespace biosys
             informesForm.DashboardInstance = this;
             AbrirFormHijo(informesForm);
         }
+
+        public interface IComponenteSeguridad
+        {
+            void MostrarElemento(string rol);
+        }
+
+        public class BotonSeguridad : Button, IComponenteSeguridad
+        {
+            private Button boton;
+
+            public BotonSeguridad(Button boton)
+            {
+                this.boton = boton;
+            }
+
+            public void MostrarElemento(string rol)
+            {
+                // Lógica para mostrar/ocultar el botón según el rol
+                if (rol == "Administrador")
+                {
+                    boton.Visible = true;
+                }
+                else
+                {
+                    boton.Enabled = false;
+                }
+            }
+        }
+
+
+        public class PanelSeguridad : Panel, IComponenteSeguridad
+        {
+            private Panel panel;
+
+            public PanelSeguridad(Panel panel)
+            {
+                this.panel = panel;
+            }
+
+            public void MostrarElemento(string rol)
+            {
+                // Lógica para mostrar/ocultar el panel según el rol
+                if (rol == "Administrador" || rol == "Empleado")
+                {
+                    panel.Visible = true;
+                }
+                else
+                {
+                    panel.Enabled = false;
+                }
+            }
+        }
+
     }
 }

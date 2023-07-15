@@ -639,6 +639,11 @@ namespace COMUN
             }
         }
 
+        public interface IComponenteSeguridad
+        {
+            void MostrarElemento(string rol);
+        }
+
         #endregion
     }
 }
