@@ -116,6 +116,22 @@ namespace Controladora
         {
             ConsultasModelo.GuardarDetalleCompra(compraId, productoId, cantidad);
         }
+        public static int GuardarDonacion(string donante, DateTime fechaDonacion, int usuarioId)
+        {
+            return ConsultasModelo.GuardarDonacion(donante, fechaDonacion, usuarioId);
+        }
+        public static void GuardarDetalleDonacion(int donacionId, int productoId, int cantidad)
+        {
+            ConsultasModelo.GuardarDetalleDonacion(donacionId, productoId, cantidad);
+        }
+        public static int GuardarRecoleccion(string lugar, DateTime fechaRecoleccion, int usuarioId)
+        {
+            return ConsultasModelo.GuardarRecoleccion(lugar, fechaRecoleccion, usuarioId);
+        }
+        public static void GuardarDetalleRecoleccion(int recoleccionId, int productoId, int cantidad)
+        {
+            ConsultasModelo.GuardarDetalleRecoleccion(recoleccionId, productoId, cantidad);
+        }
         public static void ActualizarStock(int productoId, int cantidad)
         {
             ConsultasModelo.ActualizarStock(productoId, cantidad);

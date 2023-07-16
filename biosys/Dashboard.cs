@@ -182,5 +182,11 @@ namespace biosys
             }
         }
 
+        private void btnDonacion_Click(object sender, EventArgs e)
+        {
+            Donaciones donacionForm = new Donaciones();
+            donacionForm.DashboardInstance = this;
+            AbrirFormHijo(donacionForm);
+        }
     }
 }

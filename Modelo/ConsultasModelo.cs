@@ -351,6 +351,76 @@ namespace Modelo
             }
         }
 
+        public static int GuardarDonacion(string donante, DateTime fechaDonacion, int usuarioId)
+        {
+            int donacionId = 0;
+
+            string sql = "INSERT INTO donaciones (entidad_donante, fecha, usuario_id) " +
+                         "VALUES (@EntidadDonante, @FechaDonacion, @UsuarioId);" +
+                         "SELECT SCOPE_IDENTITY();";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@EntidadDoante", donante);
+                command.Parameters.AddWithValue("@FechaDonacion", fechaDonacion);
+                command.Parameters.AddWithValue("@UsuarioId", usuarioId);
+
+                donacionId = Convert.ToInt32(command.ExecuteScalar());
+                ConexionModelo.CerrarConexion();
+            }
+
+            return donacionId;
+        }
+        public static void GuardarDetalleDonacion(int donacionId, int productoId, int cantidad)
+        {
+            string sql = "INSERT INTO detalle_donacion (donacion_id, producto_id, cantidad) " +
+                         "VALUES (@DonacionId, @ProductoId, @Cantidad)";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@DonacionId", donacionId);
+                command.Parameters.AddWithValue("@ProductoId", productoId);
+                command.Parameters.AddWithValue("@Cantidad", cantidad);
+
+                command.ExecuteNonQuery();
+                ConexionModelo.CerrarConexion();
+            }
+        }
+        public static int GuardarRecoleccion(string lugar, DateTime fechaRecoleccion, int usuarioId)
+        {
+            int recoleccionId = 0;
+
+            string sql = "INSERT INTO recolecciones (lugar, fecha, usuario_id) " +
+                         "VALUES (@Lugar, @FechaRecoleccion, @UsuarioId);" +
+                         "SELECT SCOPE_IDENTITY();";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@Lugar", lugar);
+                command.Parameters.AddWithValue("@FechaRecolecccion", fechaRecoleccion);
+                command.Parameters.AddWithValue("@UsuarioId", usuarioId);
+
+                recoleccionId = Convert.ToInt32(command.ExecuteScalar());
+                ConexionModelo.CerrarConexion();
+            }
+
+            return recoleccionId;
+        }
+        public static void GuardarDetalleRecoleccion(int recoleccionId, int productoId, int cantidad)
+        {
+            string sql = "INSERT INTO detalle_recoleccion (recoleccion_id, producto_id, cantidad) " +
+                         "VALUES (@RecoleccionId, @ProductoId, @Cantidad)";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@RecoleccionId", recoleccionId);
+                command.Parameters.AddWithValue("@ProductoId", productoId);
+                command.Parameters.AddWithValue("@Cantidad", cantidad);
+
+                command.ExecuteNonQuery();
+                ConexionModelo.CerrarConexion();
+            }
+        }
         public static void ActualizarStock(int productoId, int cantidad)
         {
             string sql = "UPDATE productos SET stock = stock + @Cantidad WHERE id = @ProductoId";

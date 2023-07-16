@@ -33,3 +33,4 @@ C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\StarkbankEcdsa.dll
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Newtonsoft.Json.xml
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\SendGrid.pdb
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\SendGrid.xml
+C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.Donaciones.resources

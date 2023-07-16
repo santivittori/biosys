@@ -307,6 +307,7 @@
             this.btnDonacion.TabIndex = 25;
             this.btnDonacion.Text = "DONACIÓN";
             this.btnDonacion.UseVisualStyleBackColor = false;
+            this.btnDonacion.Click += new System.EventHandler(this.btnDonacion_Click);
             // 
             // panel2
             // 
