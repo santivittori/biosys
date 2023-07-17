@@ -37,14 +37,19 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Informes));
             this.labelTitulo = new System.Windows.Forms.Label();
             this.CantTotal = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.SemillasTipo = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ArbolesTipo = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.TotalporDivision = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.CantTotal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SemillasTipo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ArbolesTipo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TotalporDivision)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
@@ -64,13 +69,13 @@
             this.CantTotal.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.CantTotal.Legends.Add(legend1);
-            this.CantTotal.Location = new System.Drawing.Point(983, 247);
+            this.CantTotal.Location = new System.Drawing.Point(950, 125);
             this.CantTotal.Name = "CantTotal";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.CantTotal.Series.Add(series1);
-            this.CantTotal.Size = new System.Drawing.Size(333, 275);
+            this.CantTotal.Size = new System.Drawing.Size(333, 252);
             this.CantTotal.TabIndex = 52;
             this.CantTotal.Text = "chart1";
             // 
@@ -80,7 +85,7 @@
             this.SemillasTipo.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.SemillasTipo.Legends.Add(legend2);
-            this.SemillasTipo.Location = new System.Drawing.Point(159, 134);
+            this.SemillasTipo.Location = new System.Drawing.Point(97, 125);
             this.SemillasTipo.Name = "SemillasTipo";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
@@ -96,7 +101,7 @@
             this.ArbolesTipo.ChartAreas.Add(chartArea3);
             legend3.Name = "Legend1";
             this.ArbolesTipo.Legends.Add(legend3);
-            this.ArbolesTipo.Location = new System.Drawing.Point(159, 401);
+            this.ArbolesTipo.Location = new System.Drawing.Point(97, 413);
             this.ArbolesTipo.Name = "ArbolesTipo";
             series3.ChartArea = "ChartArea1";
             series3.Legend = "Legend1";
@@ -106,12 +111,29 @@
             this.ArbolesTipo.TabIndex = 54;
             this.ArbolesTipo.Text = "chart2";
             // 
+            // TotalporDivision
+            // 
+            chartArea4.Name = "ChartArea1";
+            this.TotalporDivision.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.TotalporDivision.Legends.Add(legend4);
+            this.TotalporDivision.Location = new System.Drawing.Point(950, 413);
+            this.TotalporDivision.Name = "TotalporDivision";
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.TotalporDivision.Series.Add(series4);
+            this.TotalporDivision.Size = new System.Drawing.Size(333, 252);
+            this.TotalporDivision.TabIndex = 55;
+            this.TotalporDivision.Text = "chart1";
+            // 
             // Informes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1384, 743);
+            this.Controls.Add(this.TotalporDivision);
             this.Controls.Add(this.ArbolesTipo);
             this.Controls.Add(this.SemillasTipo);
             this.Controls.Add(this.CantTotal);
@@ -124,6 +146,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.CantTotal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SemillasTipo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ArbolesTipo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TotalporDivision)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,5 +158,6 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart CantTotal;
         private System.Windows.Forms.DataVisualization.Charting.Chart SemillasTipo;
         private System.Windows.Forms.DataVisualization.Charting.Chart ArbolesTipo;
+        private System.Windows.Forms.DataVisualization.Charting.Chart TotalporDivision;
     }
 }

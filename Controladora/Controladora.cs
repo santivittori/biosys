@@ -152,6 +152,18 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerDatosGraficoSemillas();
         }
+        public static int ObtenerTotalCompras()
+        {
+            return ConsultasModelo.ObtenerTotalCompras();
+        }
+        public static int ObtenerTotalDonaciones()
+        {
+            return ConsultasModelo.ObtenerTotalDonaciones();
+        }
+        public static int ObtenerTotalRecoleccion()
+        {
+            return ConsultasModelo.ObtenerTotalRecoleccion();
+        }
         public static void EliminarProducto(int idProducto)
         {
             ConsultasModelo.EliminarProducto(idProducto);

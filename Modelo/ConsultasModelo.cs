@@ -361,7 +361,7 @@ namespace Modelo
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@EntidadDoante", donante);
+                command.Parameters.AddWithValue("@EntidadDonante", donante);
                 command.Parameters.AddWithValue("@FechaDonacion", fechaDonacion);
                 command.Parameters.AddWithValue("@UsuarioId", usuarioId);
 
@@ -397,7 +397,7 @@ namespace Modelo
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 command.Parameters.AddWithValue("@Lugar", lugar);
-                command.Parameters.AddWithValue("@FechaRecolecccion", fechaRecoleccion);
+                command.Parameters.AddWithValue("@FechaRecoleccion", fechaRecoleccion);
                 command.Parameters.AddWithValue("@UsuarioId", usuarioId);
 
                 recoleccionId = Convert.ToInt32(command.ExecuteScalar());
@@ -505,6 +505,69 @@ namespace Modelo
                 adapter.Fill(dataTable);
                 ConexionModelo.CerrarConexion();
                 return dataTable;
+            }
+        }
+        public static int ObtenerTotalCompras()
+        {
+            string sql = "SELECT SUM(cantidad) FROM detalle_compra;";
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                object result = command.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                {
+                    // Si el resultado es nulo, devolver cero
+                    ConexionModelo.CerrarConexion();
+                    return 0;
+                }
+                else
+                {
+                    // Si el resultado no es nulo, convertir y devolver el valor
+                    int totalCompras = Convert.ToInt32(result);
+                    ConexionModelo.CerrarConexion();
+                    return totalCompras;
+                }
+            }
+        }
+        public static int ObtenerTotalDonaciones()
+        {
+            string sql = "SELECT SUM(cantidad) FROM detalle_donacion;";
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                object result = command.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                {
+                    // Si el resultado es nulo, devolver cero
+                    ConexionModelo.CerrarConexion();
+                    return 0;
+                }
+                else
+                {
+                    // Si el resultado no es nulo, convertir y devolver el valor
+                    int totalDonaciones = Convert.ToInt32(result);
+                    ConexionModelo.CerrarConexion();
+                    return totalDonaciones;
+                }
+            }
+        }
+        public static int ObtenerTotalRecoleccion()
+        {
+            string sql = "SELECT SUM(cantidad) FROM detalle_recoleccion;";
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                object result = command.ExecuteScalar();
+                if (result == null || result == DBNull.Value)
+                {
+                    // Si el resultado es nulo, devolver cero
+                    ConexionModelo.CerrarConexion();
+                    return 0;
+                }
+                else
+                {
+                    // Si el resultado no es nulo, convertir y devolver el valor
+                    int totalRecolecciones = Convert.ToInt32(result);
+                    ConexionModelo.CerrarConexion();
+                    return totalRecolecciones;
+                }
             }
         }
 

@@ -288,6 +288,7 @@
             this.btnRecoleccion.TabIndex = 27;
             this.btnRecoleccion.Text = "RECOLECCIÓN";
             this.btnRecoleccion.UseVisualStyleBackColor = false;
+            this.btnRecoleccion.Click += new System.EventHandler(this.btnRecoleccion_Click);
             // 
             // btnDonacion
             // 

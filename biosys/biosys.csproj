@@ -111,6 +111,12 @@
     <Compile Include="Proveedores.Designer.cs">
       <DependentUpon>Proveedores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Recolecciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Recolecciones.Designer.cs">
+      <DependentUpon>Recolecciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="RecuperarClave.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +161,9 @@
     </Compile>
     <EmbeddedResource Include="Proveedores.resx">
       <DependentUpon>Proveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Recolecciones.resx">
+      <DependentUpon>Recolecciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RecuperarClave.resx">
       <DependentUpon>RecuperarClave.cs</DependentUpon>

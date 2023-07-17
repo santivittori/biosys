@@ -27,6 +27,7 @@ namespace biosys
             CantTotalArbolesySemillas();
             SemillasTipoCant();
             ArbolesTipoCant();
+            TotalPorDivision();
         }
         // Metodo para obtener la cant total de semillas y árboles
         private void CantTotalArbolesySemillas()
@@ -200,5 +201,60 @@ namespace biosys
 
             ArbolesTipo.DataBind();
         }
+
+        private void TotalPorDivision()
+        {
+            // Obtener los totales por división (Compras, Donaciones y Recolección)
+            int totalCompras = Controladora.Controladora.ObtenerTotalCompras();
+            int totalDonaciones = Controladora.Controladora.ObtenerTotalDonaciones();
+            int totalRecoleccion = Controladora.Controladora.ObtenerTotalRecoleccion();
+
+            // Configurar el control Chart
+            TotalporDivision.Series.Clear();
+            TotalporDivision.ChartAreas.Clear();
+            TotalporDivision.ChartAreas.Add(new ChartArea());
+
+            // Agregar la serie para Compras
+            Series seriesCompras = new Series("Compras");
+            seriesCompras.Points.AddXY("", totalCompras);
+            seriesCompras.Color = Color.Blue;
+            seriesCompras.BorderWidth = 1;
+            seriesCompras.BorderColor = Color.Black;
+            TotalporDivision.Series.Add(seriesCompras);
+
+            // Agregar la serie para Donaciones
+            Series seriesDonaciones = new Series("Donaciones");
+            seriesDonaciones.Points.AddXY("", totalDonaciones);
+            seriesDonaciones.Color = Color.Green;
+            seriesDonaciones.BorderWidth = 1;
+            seriesDonaciones.BorderColor = Color.Black;
+            TotalporDivision.Series.Add(seriesDonaciones);
+
+            // Agregar la serie para Recolección
+            Series seriesRecoleccion = new Series("Recolecciones");
+            seriesRecoleccion.Points.AddXY("", totalRecoleccion);
+            seriesRecoleccion.Color = Color.Orange;
+            seriesRecoleccion.BorderWidth = 1;
+            seriesRecoleccion.BorderColor = Color.Black;
+            TotalporDivision.Series.Add(seriesRecoleccion);
+
+            // Configurar las etiquetas de valores
+            seriesCompras.IsValueShownAsLabel = true;
+            seriesCompras.Font = new Font(seriesCompras.Font, FontStyle.Bold);
+
+            seriesDonaciones.IsValueShownAsLabel = true;
+            seriesDonaciones.Font = new Font(seriesDonaciones.Font, FontStyle.Bold);
+
+            seriesRecoleccion.IsValueShownAsLabel = true;
+            seriesRecoleccion.Font = new Font(seriesRecoleccion.Font, FontStyle.Bold);
+
+            // Configurar el título del gráfico
+            TotalporDivision.Titles.Clear();
+            TotalporDivision.Titles.Add("Totales por División");
+            TotalporDivision.Titles[0].Font = new Font("Arial", 12, FontStyle.Bold);
+
+            TotalporDivision.DataBind();
+        }
+
     }
 }

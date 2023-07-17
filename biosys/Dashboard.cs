@@ -188,5 +188,12 @@ namespace biosys
             donacionForm.DashboardInstance = this;
             AbrirFormHijo(donacionForm);
         }
+
+        private void btnRecoleccion_Click(object sender, EventArgs e)
+        {
+            Recolecciones recoleccionForm = new Recolecciones();
+            recoleccionForm.DashboardInstance = this;
+            AbrirFormHijo(recoleccionForm);
+        }
     }
 }
