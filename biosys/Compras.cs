@@ -35,6 +35,8 @@ namespace biosys
             public int ProductoId { get; set; }
             public string Producto { get; set; }
             public int Cantidad { get; set; }
+            public decimal PrecioUnitario { get; set; }
+            public decimal PrecioTotal => Cantidad * PrecioUnitario;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -69,6 +71,7 @@ namespace biosys
                 // Limpiar los textbox
                 txtNroFactura.Text = string.Empty;
                 txtNroRemito.Text = string.Empty;
+                txtPrecioUnitario.Text = string.Empty;
 
                 // Habilitar campos nuevamente
                 txtNroFactura.Enabled = true;
@@ -81,8 +84,8 @@ namespace biosys
         private void btnGuardarDetalle_Click(object sender, EventArgs e)
         {
             // Validar que los campos tengan información
-            if (string.IsNullOrWhiteSpace(txtNroFactura.Text) || comboProveedor.SelectedIndex == -1 ||
-                comboProductos.SelectedIndex == -1 || numericCantidad.Value <= 0)
+            if (string.IsNullOrWhiteSpace(txtNroFactura.Text) || string.IsNullOrWhiteSpace(txtPrecioUnitario.Text) || txtPrecioUnitario.Text == "Ejemplo: 1350,70" 
+                || comboProveedor.SelectedIndex == -1 || comboProductos.SelectedIndex == -1 || numericCantidad.Value <= 0)
             {
                 msgError("Completar los campos obligatorios. La cantidad debe ser mayor que cero.");
                 return;
@@ -109,12 +112,21 @@ namespace biosys
             int productoId = Controladora.Controladora.ObtenerIdProducto(nombreProducto, tipoProducto, tipoEspecifico);
             int cantidad = int.Parse(numericCantidad.Text);
 
+            // Si el texto no contiene una coma, agregar la coma y dos ceros después del número
+            if (!txtPrecioUnitario.Text.Contains(","))
+            {
+                txtPrecioUnitario.Text += ",00";
+            }
+
+            decimal precioUnitario = decimal.Parse(txtPrecioUnitario.Text);
+
             // Crear una instancia de la clase Compra y agregarla a la lista
             Compra compra = new Compra
             {
                 ProductoId = productoId,
                 Producto = productoCompleto,
-                Cantidad = cantidad
+                Cantidad = cantidad,
+                PrecioUnitario = precioUnitario
             };
             comprasList.Add(compra);
 
@@ -127,6 +139,7 @@ namespace biosys
             // Limpiar los campos de entrada de datos
             comboProductos.SelectedIndex = -1;
             numericCantidad.Text = string.Empty;
+            txtPrecioUnitario.Text = string.Empty;
 
             // Actualizar el contenido del ListBox
             ActualizarListBox();
@@ -166,7 +179,7 @@ namespace biosys
             // Agregar cada elemento de la lista al ListBox
             foreach (Compra compra in comprasList)
             {
-                string item = $"ID: {compra.ProductoId} - {compra.Producto} - Cantidad: {compra.Cantidad}";
+                string item = $"ID: {compra.ProductoId} - {compra.Producto} - Cantidad: {compra.Cantidad} - Precio Total: ${compra.PrecioTotal}";
                 listDetalleCompra.Items.Add(item);
             }
         }
@@ -196,6 +209,11 @@ namespace biosys
         {
             CargarProveedores();
             CargarProductos();
+
+            // Agregar el texto de ayuda al TextBox
+            txtPrecioUnitario.Text = "Ejemplo: 1350,70";
+            // Asignar el color gris al texto de ayuda
+            txtPrecioUnitario.ForeColor = System.Drawing.Color.Gray;
         }
 
         private void btnRegistrarCompra_Click(object sender, EventArgs e)
@@ -215,21 +233,30 @@ namespace biosys
 
             int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
 
-            int compraId = Controladora.Controladora.GuardarCompra(nroFactura, nroRemito, fechaCompra, proveedorEmail, usuarioId);
+            decimal precioTotalCompra = 0;
+
+            foreach (Compra compra in comprasList)
+            {
+                precioTotalCompra += compra.PrecioTotal;
+            }
+
+            int compraId = Controladora.Controladora.GuardarCompra(nroFactura, nroRemito, fechaCompra, proveedorEmail, usuarioId, precioTotalCompra);
 
             foreach (Compra compra in comprasList)
             {
                 int productoId = compra.ProductoId;
                 int cantidad = compra.Cantidad;
+                decimal precioUnitario = compra.PrecioUnitario;
+                decimal precioTotalDetalle = compra.PrecioTotal;
 
-                Controladora.Controladora.GuardarDetalleCompra(compraId, productoId, cantidad);
+                Controladora.Controladora.GuardarDetalleCompra(compraId, productoId, cantidad, precioUnitario, precioTotalDetalle);
                 Controladora.Controladora.ActualizarStock(productoId, cantidad);
             }
 
             LimpiarCampos();
             comprasList.Clear();
 
-            MessageBox.Show("La compra se registró correctamente.", "Compra registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"La compra se registró correctamente.\n\nPrecio total: ${precioTotalCompra}", "Compra registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void LimpiarCampos()
@@ -244,6 +271,7 @@ namespace biosys
             // Limpiar los textbox
             txtNroFactura.Text = string.Empty;
             txtNroRemito.Text = string.Empty;
+            txtPrecioUnitario.Text = string.Empty;
 
             // Habilitar campos nuevamente
             txtNroFactura.Enabled = true;
@@ -276,6 +304,39 @@ namespace biosys
             if (e.Handled)
             {
                 e.Handled = true;
+            }
+        }
+
+        private void txtPrecioUnitario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir números y comas
+            if (Char.IsDigit(e.KeyChar) || e.KeyChar == ',' || Char.IsControl(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtPrecioUnitario_Enter(object sender, EventArgs e)
+        {
+            // Limpiar el texto de ayuda y cambiar el color del texto al entrar al TextBox
+            if (txtPrecioUnitario.Text == "Ejemplo: 1350,70")
+            {
+                txtPrecioUnitario.Text = "";
+                txtPrecioUnitario.ForeColor = System.Drawing.Color.Black;
+            }
+        }
+
+        private void txtPrecioUnitario_Leave(object sender, EventArgs e)
+        {
+            // Restaurar el texto de ayuda si el TextBox está vacío al salir del control
+            if (string.IsNullOrWhiteSpace(txtPrecioUnitario.Text))
+            {
+                txtPrecioUnitario.Text = "Ejemplo: 1350,70";
+                txtPrecioUnitario.ForeColor = System.Drawing.Color.Gray;
             }
         }
     }

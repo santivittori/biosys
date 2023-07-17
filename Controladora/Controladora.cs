@@ -112,13 +112,13 @@ namespace Controladora
         {
             ConsultasModelo.InsertarProducto(nombre, tipoProductoID, tipoEspecificoID);
         }
-        public static int GuardarCompra(string nroFactura, string nroRemito, DateTime fechaCompra, string proveedorEmail, int usuarioId)
+        public static int GuardarCompra(string nroFactura, string nroRemito, DateTime fechaCompra, string proveedorEmail, int usuarioId, decimal precioTotalCompra)
         {
-            return ConsultasModelo.GuardarCompra(nroFactura, nroRemito, fechaCompra, proveedorEmail, usuarioId);
+            return ConsultasModelo.GuardarCompra(nroFactura, nroRemito, fechaCompra, proveedorEmail, usuarioId, precioTotalCompra);
         }
-        public static void GuardarDetalleCompra(int compraId, int productoId, int cantidad)
+        public static void GuardarDetalleCompra(int compraId, int productoId, int cantidad, decimal precioUnitario, decimal precioTotalDetalle)
         {
-            ConsultasModelo.GuardarDetalleCompra(compraId, productoId, cantidad);
+            ConsultasModelo.GuardarDetalleCompra(compraId, productoId, cantidad, precioUnitario, precioTotalDetalle);
         }
         public static int GuardarDonacion(string donante, DateTime fechaDonacion, int usuarioId)
         {

@@ -325,12 +325,12 @@ namespace Modelo
             }
         }
 
-        public static int GuardarCompra(string nroFactura, string nroRemito, DateTime fechaCompra, string proveedorEmail, int usuarioId)
+        public static int GuardarCompra(string nroFactura, string nroRemito, DateTime fechaCompra, string proveedorEmail, int usuarioId, decimal precioTotalCompra)
         {
             int compraId = 0;
 
-            string sql = "INSERT INTO compras (nro_factura, nro_remito, fecha, proveedor_id, usuario_id) " +
-                         "VALUES (@NroFactura, @NroRemito, @FechaCompra, (SELECT id FROM proveedores WHERE email_prov = @ProveedorEmail), @UsuarioId);" +
+            string sql = "INSERT INTO compras (nro_factura, nro_remito, fecha, proveedor_id, usuario_id, precio_total) " +
+                         "VALUES (@NroFactura, @NroRemito, @FechaCompra, (SELECT id FROM proveedores WHERE email_prov = @ProveedorEmail), @UsuarioId, @PrecioTotalCompra);" +
                          "SELECT SCOPE_IDENTITY();";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
@@ -339,7 +339,8 @@ namespace Modelo
                 command.Parameters.AddWithValue("@NroRemito", nroRemito);
                 command.Parameters.AddWithValue("@FechaCompra", fechaCompra);
                 command.Parameters.AddWithValue("@ProveedorEmail", proveedorEmail);
-                command.Parameters.AddWithValue("@UsuarioId", usuarioId);
+                command.Parameters.AddWithValue("@UsuarioId", usuarioId); 
+                command.Parameters.AddWithValue("@PrecioTotalCompra", precioTotalCompra);
 
                 compraId = Convert.ToInt32(command.ExecuteScalar());
                 ConexionModelo.CerrarConexion();
@@ -348,16 +349,18 @@ namespace Modelo
             return compraId;
         }
 
-        public static void GuardarDetalleCompra(int compraId, int productoId, int cantidad)
+        public static void GuardarDetalleCompra(int compraId, int productoId, int cantidad, decimal precioUnitario, decimal precioTotalDetalle)
         {
-            string sql = "INSERT INTO detalle_compra (compra_id, producto_id, cantidad) " +
-                         "VALUES (@CompraId, @ProductoId, @Cantidad)";
+            string sql = "INSERT INTO detalle_compra (compra_id, producto_id, cantidad, precio_unitario, precio_total) " +
+                         "VALUES (@CompraId, @ProductoId, @Cantidad, @PrecioUnitario, @PrecioTotalDetalle)";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 command.Parameters.AddWithValue("@CompraId", compraId);
                 command.Parameters.AddWithValue("@ProductoId", productoId);
                 command.Parameters.AddWithValue("@Cantidad", cantidad);
+                command.Parameters.AddWithValue("@PrecioUnitario", precioUnitario);
+                command.Parameters.AddWithValue("@PrecioTotalDetalle", precioTotalDetalle); 
 
                 command.ExecuteNonQuery();
                 ConexionModelo.CerrarConexion();
