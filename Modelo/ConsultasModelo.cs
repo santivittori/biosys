@@ -102,6 +102,19 @@ namespace Modelo
             }
         }
 
+        public static bool VerificarExistenciaEmail(string email)
+        {
+            string sql = "SELECT COUNT(*) FROM usuarios WHERE email = @Email;";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@Email", email);
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                ConexionModelo.CerrarConexion();
+                return count > 0;
+            }
+        }
+
         public static void GuardarNuevoUsuario(string nombreUsuario, string claveHash, string email, string rol)
         {
             string sql = "INSERT INTO usuarios (nombre_usuario, clave, email, rol) VALUES (@nombre_usuario, @clave, @email, @rol)";

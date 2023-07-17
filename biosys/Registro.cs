@@ -143,6 +143,12 @@ namespace biosys
                 msgError("Debe ingresar un email válido, por favor verifíquelo.");
                 return;
             }
+            else if (Controladora.Controladora.VerificarExistenciaEmail(email))
+            {
+                msgError("El email ya está registrado. Por favor, use otro email.");
+                return;
+                
+            }
             else
             {
                 // Guardar el nuevo usuario en la base de datos

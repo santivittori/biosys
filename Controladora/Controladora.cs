@@ -37,6 +37,10 @@ namespace Controladora
         {
             return ConsultasModelo.VerificarExistenciaUsuario(nombreUsuario);
         }
+        public static bool VerificarExistenciaEmail(string email)
+        {
+            return ConsultasModelo.VerificarExistenciaEmail(email);
+        }
         public static void GuardarNuevoUsuario(string nombreUsuario, string claveHash, string email, string rol)
         {
             ConsultasModelo.GuardarNuevoUsuario(nombreUsuario, claveHash, email, rol);

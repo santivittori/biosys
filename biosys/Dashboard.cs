@@ -25,12 +25,10 @@ namespace biosys
             InitializeComponent();
             this.rol = rol;
 
-            // Crear los componentes decorados con seguridad
             IComponenteSeguridad btnInformesSeguridad = new BotonSeguridad(btnInformes);
             IComponenteSeguridad submenuABMSeguridad = new PanelSeguridad(SubmenuABM);
             IComponenteSeguridad submenuAltaProdSeguridad = new PanelSeguridad(SubmenuAltaProd);
 
-            // Mostrar u ocultar los componentes según el rol del usuario
             btnInformesSeguridad.MostrarElemento(rol);
             submenuABMSeguridad.MostrarElemento(rol);
             submenuAltaProdSeguridad.MostrarElemento(rol);
