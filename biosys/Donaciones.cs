@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static biosys.Compras;
+using Entidad;
 
 namespace biosys
 {
@@ -25,14 +26,6 @@ namespace biosys
 
             // Inicializo la lista de donación
             donacionList = new List<Donacion>();
-        }
-
-        // Clase para representar un producto, cantidad y id de producto
-        public class Donacion
-        {
-            public int ProductoId { get; set; }
-            public string Producto { get; set; }
-            public int Cantidad { get; set; }
         }
 
         private void Donaciones_Load(object sender, EventArgs e)

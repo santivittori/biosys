@@ -4,3 +4,6 @@ C:\Users\vitto\source\repos\biosys\Modelo\obj\Debug\Modelo.csproj.AssemblyRefere
 C:\Users\vitto\source\repos\biosys\Modelo\obj\Debug\Modelo.csproj.CoreCompileInputs.cache
 C:\Users\vitto\source\repos\biosys\Modelo\obj\Debug\Modelo.dll
 C:\Users\vitto\source\repos\biosys\Modelo\obj\Debug\Modelo.pdb
+C:\Users\vitto\source\repos\biosys\Modelo\bin\Debug\Entidad.dll
+C:\Users\vitto\source\repos\biosys\Modelo\bin\Debug\Entidad.pdb
+C:\Users\vitto\source\repos\biosys\Modelo\obj\Debug\Modelo.csproj.CopyComplete

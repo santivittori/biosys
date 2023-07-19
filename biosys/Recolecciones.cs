@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static biosys.Compras;
-using static biosys.Donaciones;
+using Entidad;
 
 namespace biosys
 {
@@ -24,13 +24,6 @@ namespace biosys
             InitializeComponent();
 
             recoleccionList = new List<Recoleccion>();
-        }
-
-        public class Recoleccion
-        {
-            public int ProductoId { get; set; }
-            public string Producto { get; set; }
-            public int Cantidad { get; set; }
         }
 
         private void CargarProductos()

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Controladora;
 using COMUN;
+using Entidad;
 
 namespace biosys
 {
@@ -27,16 +28,6 @@ namespace biosys
 
             // Inicializo la lista de compras
             comprasList = new List<Compra>();
-        }
-
-        // Clase para representar un producto, cantidad y id de producto
-        public class Compra
-        {
-            public int ProductoId { get; set; }
-            public string Producto { get; set; }
-            public int Cantidad { get; set; }
-            public decimal PrecioUnitario { get; set; }
-            public decimal PrecioTotal => Cantidad * PrecioUnitario;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -186,7 +177,7 @@ namespace biosys
 
         private void CargarProveedores()
         {
-            List<Controladora.Controladora.Proveedor> proveedores = Controladora.Controladora.ObtenerDatosProveedores();
+            List<Proveedor> proveedores = Controladora.Controladora.ObtenerDatosProveedores();
 
             comboProveedor.DataSource = proveedores;
             comboProveedor.DisplayMember = "NombreCompleto"; // Mostrar el nombre del proveedor en el combo box

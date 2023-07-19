@@ -7,3 +7,5 @@ C:\Users\vitto\source\repos\biosys\Controladora\obj\Debug\Controladora.csproj.Co
 C:\Users\vitto\source\repos\biosys\Controladora\obj\Debug\Controladora.csproj.CopyComplete
 C:\Users\vitto\source\repos\biosys\Controladora\obj\Debug\Controladora.dll
 C:\Users\vitto\source\repos\biosys\Controladora\obj\Debug\Controladora.pdb
+C:\Users\vitto\source\repos\biosys\Controladora\bin\Debug\Entidad.dll
+C:\Users\vitto\source\repos\biosys\Controladora\bin\Debug\Entidad.pdb

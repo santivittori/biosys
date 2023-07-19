@@ -6,25 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Modelo;
+using Entidad;
 
 namespace Controladora
 {
     public class Controladora
     {
-        public class Proveedor
-        {
-            public string Nombre { get; set; }
-            public string Apellido { get; set; }
-            public string Email { get; set; }
-
-            public string NombreCompleto => $"{Nombre} {Apellido}";
-
-            public override string ToString()
-            {
-                return NombreCompleto;
-            }
-        }
-
         public static bool VerificarAutenticacion(string nombreUsuario, string claveCifrada)
         {
             return ConsultasModelo.VerificarAutenticacion(nombreUsuario, claveCifrada);

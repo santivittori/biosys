@@ -194,6 +194,10 @@
       <Project>{dca2c8e4-f347-4162-9f7e-312e9562fe8d}</Project>
       <Name>Controladora</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Entidad\Entidad.csproj">
+      <Project>{60452f2c-4408-433f-a75b-448057b2ad6f}</Project>
+      <Name>Entidad</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

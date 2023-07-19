@@ -35,3 +35,5 @@ C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\SendGrid.pdb
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\SendGrid.xml
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.Donaciones.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.Recolecciones.resources
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Entidad.dll
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Entidad.pdb
