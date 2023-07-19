@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using COMUN;
 using Controladora;
+using Entidad;
 
 namespace biosys
 {
@@ -30,17 +31,23 @@ namespace biosys
                 // Obtener la fila seleccionada
                 DataGridViewRow selectedRow = dataGridViewProveedores.SelectedRows[0];
 
-                // Obtener el ID del producto seleccionado
-                idProveedorSeleccionado = Convert.ToInt32(dataGridViewProveedores.Rows[e.RowIndex].Cells["ID"].Value);
+                // Crear un objeto ProveedorInfo con los datos del proveedor seleccionado
+                ProveedorInfo proveedorSeleccionado = new ProveedorInfo
+                {
+                    Id = Convert.ToInt32(selectedRow.Cells["ID"].Value),
+                    Nombre = selectedRow.Cells["Nombre"].Value.ToString(),
+                    Apellido = selectedRow.Cells["Apellido"].Value.ToString(),
+                    Email = selectedRow.Cells["Email"].Value.ToString(),
+                    Telefono = selectedRow.Cells["Telefono"].Value.ToString()
+                };
 
                 // Cargar los datos del proveedor en los campos correspondientes
-                txtNombreProv.Text = dataGridViewProveedores.Rows[e.RowIndex].Cells["Nombre"].Value.ToString();
-                txtApellidoProv.Text = dataGridViewProveedores.Rows[e.RowIndex].Cells["Apellido"].Value.ToString();
-                txtEmailProv.Text = dataGridViewProveedores.Rows[e.RowIndex].Cells["Email"].Value.ToString();
-                txtTelefonoProv.Text = dataGridViewProveedores.Rows[e.RowIndex].Cells["Telefono"].Value.ToString();
+                txtNombreProv.Text = proveedorSeleccionado.Nombre;
+                txtApellidoProv.Text = proveedorSeleccionado.Apellido;
+                txtEmailProv.Text = proveedorSeleccionado.Email;
+                txtTelefonoProv.Text = proveedorSeleccionado.Telefono;
             }
         }
-
         private void btnGuardarProv_Click(object sender, EventArgs e)
         {
             // Verificar campos vacíos
@@ -58,7 +65,17 @@ namespace biosys
 
             bool esValido = MetodosComunes.ValidacionEMAIL(null, email);
 
-            bool proveedorExistente = Controladora.Controladora.VerificarProveedorExistente(nombre, apellido, email);
+            // Crear el objeto ProveedorInfo con los datos del proveedor
+            ProveedorInfo proveedorInfo = new ProveedorInfo
+            {
+                Id = idProveedorSeleccionado,
+                Nombre = nombre,
+                Apellido = apellido,
+                Email = email,
+                Telefono = telefono
+            };
+
+            bool proveedorExistente = Controladora.Controladora.VerificarProveedorExistente(proveedorInfo);
 
             if (!esValido)
             {
@@ -75,14 +92,14 @@ namespace biosys
             if (idProveedorSeleccionado != 0)
             {
                 // Actualizar el producto en la base de datos utilizando el ID del producto seleccionado
-                Controladora.Controladora.ActualizarProveedor(idProveedorSeleccionado, nombre, apellido, email, telefono);
+                Controladora.Controladora.ActualizarProveedor(proveedorInfo);
 
                 // Mostrar mensaje de éxito
                 MessageBox.Show("Proveedor modificado exitosamente.", "Modificación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                Controladora.Controladora.InsertarProveedor(nombre, apellido, email, telefono);
+                Controladora.Controladora.InsertarProveedor(proveedorInfo);
 
                 // Mostrar mensaje de éxito y limpiar campos
                 MessageBox.Show("Proveedor guardado exitosamente.", "Guardado exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -101,17 +101,16 @@ namespace Modelo
                 return count > 0;
             }
         }
-
-        public static void GuardarNuevoUsuario(string nombreUsuario, string claveHash, string email, string rol)
+        public static void GuardarNuevoUsuario(Usuario usuario)
         {
             string sql = "INSERT INTO usuarios (nombre_usuario, clave, email, rol) VALUES (@nombre_usuario, @clave, @email, @rol)";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@nombre_usuario", nombreUsuario);
-                command.Parameters.AddWithValue("@clave", claveHash);
-                command.Parameters.AddWithValue("@email", email);
-                command.Parameters.AddWithValue("@rol", rol);
+                command.Parameters.AddWithValue("@nombre_usuario", usuario.NombreUsuario);
+                command.Parameters.AddWithValue("@clave", usuario.Clave);
+                command.Parameters.AddWithValue("@email", usuario.Email);
+                command.Parameters.AddWithValue("@rol", usuario.Rol);
 
                 command.ExecuteNonQuery();
                 ConexionModelo.CerrarConexion();
@@ -128,16 +127,16 @@ namespace Modelo
                 return Convert.ToInt32(command.ExecuteScalar());
             }
         }
-        public static bool VerificarProveedorExistente(string nombre, string apellido, string email)
+        public static bool VerificarProveedorExistente(ProveedorInfo proveedorInfo)
         {
             string sql = "SELECT COUNT(*) FROM proveedores WHERE nombre_prov = @nombre AND apellido_prov = @apellido AND email_prov = @email";
             int count;
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@nombre", nombre);
-                command.Parameters.AddWithValue("@apellido", apellido);
-                command.Parameters.AddWithValue("@email", email);
+                command.Parameters.AddWithValue("@nombre", proveedorInfo.Nombre);
+                command.Parameters.AddWithValue("@apellido", proveedorInfo.Apellido);
+                command.Parameters.AddWithValue("@email", proveedorInfo.Email);
 
                 count = (int)command.ExecuteScalar();
                 ConexionModelo.CerrarConexion();
@@ -145,32 +144,32 @@ namespace Modelo
             return count > 0;
         }
 
-        public static void InsertarProveedor(string nombre, string apellido, string email, string telefono)
+        public static void InsertarProveedor(ProveedorInfo proveedorInfo)
         {
             string sql = "INSERT INTO proveedores (nombre_prov, apellido_prov, email_prov, telefono_prov) VALUES (@Nombre, @Apellido, @Email, @Telefono)";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@Nombre", nombre);
-                command.Parameters.AddWithValue("@Apellido", apellido);
-                command.Parameters.AddWithValue("@Email", email);
-                command.Parameters.AddWithValue("@Telefono", telefono);
+                command.Parameters.AddWithValue("@Nombre", proveedorInfo.Nombre);
+                command.Parameters.AddWithValue("@Apellido", proveedorInfo.Apellido);
+                command.Parameters.AddWithValue("@Email", proveedorInfo.Email);
+                command.Parameters.AddWithValue("@Telefono", proveedorInfo.Telefono);
 
                 command.ExecuteNonQuery();
                 ConexionModelo.CerrarConexion();
             }
         }
-        public static void ActualizarProveedor(int idProveedorSeleccionado, string nombre, string apellido, string email, string telefono)
+        public static void ActualizarProveedor(ProveedorInfo proveedorInfo)
         {
             string sql = "UPDATE proveedores SET nombre_prov = @nombre, apellido_prov = @apellido, email_prov = @email, telefono_prov = @telefono WHERE id = @id";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@nombre", nombre);
-                command.Parameters.AddWithValue("@apellido", apellido);
-                command.Parameters.AddWithValue("@email", email);
-                command.Parameters.AddWithValue("@telefono", telefono);
-                command.Parameters.AddWithValue("@id", idProveedorSeleccionado);
+                command.Parameters.AddWithValue("@nombre", proveedorInfo.Nombre);
+                command.Parameters.AddWithValue("@apellido", proveedorInfo.Apellido);
+                command.Parameters.AddWithValue("@email", proveedorInfo.Email);
+                command.Parameters.AddWithValue("@telefono", proveedorInfo.Telefono);
+                command.Parameters.AddWithValue("@id", proveedorInfo.Id);
 
                 command.ExecuteNonQuery();
                 ConexionModelo.CerrarConexion();
@@ -312,7 +311,7 @@ namespace Modelo
             }
         }
 
-        public static int GuardarCompra(string nroFactura, string nroRemito, DateTime fechaCompra, string proveedorEmail, int usuarioId, decimal precioTotalCompra)
+        public static int GuardarCompra(CompraInfo compraInfo)
         {
             int compraId = 0;
 
@@ -322,12 +321,12 @@ namespace Modelo
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@NroFactura", nroFactura);
-                command.Parameters.AddWithValue("@NroRemito", nroRemito);
-                command.Parameters.AddWithValue("@FechaCompra", fechaCompra);
-                command.Parameters.AddWithValue("@ProveedorEmail", proveedorEmail);
-                command.Parameters.AddWithValue("@UsuarioId", usuarioId); 
-                command.Parameters.AddWithValue("@PrecioTotalCompra", precioTotalCompra);
+                command.Parameters.AddWithValue("@NroFactura", compraInfo.NroFactura);
+                command.Parameters.AddWithValue("@NroRemito", compraInfo.NroRemito);
+                command.Parameters.AddWithValue("@FechaCompra", compraInfo.FechaCompra);
+                command.Parameters.AddWithValue("@ProveedorEmail", compraInfo.ProveedorEmail);
+                command.Parameters.AddWithValue("@UsuarioId", compraInfo.UsuarioId); 
+                command.Parameters.AddWithValue("@PrecioTotalCompra", compraInfo.PrecioTotalCompra);
 
                 compraId = Convert.ToInt32(command.ExecuteScalar());
                 ConexionModelo.CerrarConexion();
@@ -336,25 +335,24 @@ namespace Modelo
             return compraId;
         }
 
-        public static void GuardarDetalleCompra(int compraId, int productoId, int cantidad, decimal precioUnitario, decimal precioTotalDetalle)
+        public static void GuardarDetalleCompra(DetalleCompraInfo detalleCompraInfo)
         {
             string sql = "INSERT INTO detalle_compra (compra_id, producto_id, cantidad, precio_unitario, precio_total) " +
                          "VALUES (@CompraId, @ProductoId, @Cantidad, @PrecioUnitario, @PrecioTotalDetalle)";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@CompraId", compraId);
-                command.Parameters.AddWithValue("@ProductoId", productoId);
-                command.Parameters.AddWithValue("@Cantidad", cantidad);
-                command.Parameters.AddWithValue("@PrecioUnitario", precioUnitario);
-                command.Parameters.AddWithValue("@PrecioTotalDetalle", precioTotalDetalle); 
+                command.Parameters.AddWithValue("@CompraId", detalleCompraInfo.CompraId);
+                command.Parameters.AddWithValue("@ProductoId", detalleCompraInfo.ProductoId);
+                command.Parameters.AddWithValue("@Cantidad", detalleCompraInfo.Cantidad);
+                command.Parameters.AddWithValue("@PrecioUnitario", detalleCompraInfo.PrecioUnitario);
+                command.Parameters.AddWithValue("@PrecioTotalDetalle", detalleCompraInfo.PrecioTotalDetalle); 
 
                 command.ExecuteNonQuery();
                 ConexionModelo.CerrarConexion();
             }
         }
-
-        public static int GuardarDonacion(string donante, DateTime fechaDonacion, int usuarioId)
+        public static int GuardarDonacion(DonacionInfo donacionInfo)
         {
             int donacionId = 0;
 
@@ -364,9 +362,9 @@ namespace Modelo
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@EntidadDonante", donante);
-                command.Parameters.AddWithValue("@FechaDonacion", fechaDonacion);
-                command.Parameters.AddWithValue("@UsuarioId", usuarioId);
+                command.Parameters.AddWithValue("@EntidadDonante", donacionInfo.Donante);
+                command.Parameters.AddWithValue("@FechaDonacion", donacionInfo.FechaDonacion);
+                command.Parameters.AddWithValue("@UsuarioId", donacionInfo.UsuarioId);
 
                 donacionId = Convert.ToInt32(command.ExecuteScalar());
                 ConexionModelo.CerrarConexion();
@@ -374,22 +372,22 @@ namespace Modelo
 
             return donacionId;
         }
-        public static void GuardarDetalleDonacion(int donacionId, int productoId, int cantidad)
+        public static void GuardarDetalleDonacion(DetalleDonacionInfo detalleDonacionInfo)
         {
             string sql = "INSERT INTO detalle_donacion (donacion_id, producto_id, cantidad) " +
                          "VALUES (@DonacionId, @ProductoId, @Cantidad)";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@DonacionId", donacionId);
-                command.Parameters.AddWithValue("@ProductoId", productoId);
-                command.Parameters.AddWithValue("@Cantidad", cantidad);
+                command.Parameters.AddWithValue("@DonacionId", detalleDonacionInfo.DonacionId);
+                command.Parameters.AddWithValue("@ProductoId", detalleDonacionInfo.ProductoId);
+                command.Parameters.AddWithValue("@Cantidad", detalleDonacionInfo.Cantidad);
 
                 command.ExecuteNonQuery();
                 ConexionModelo.CerrarConexion();
             }
         }
-        public static int GuardarRecoleccion(string lugar, DateTime fechaRecoleccion, int usuarioId)
+        public static int GuardarRecoleccion(RecoleccionInfo recoleccionInfo)
         {
             int recoleccionId = 0;
 
@@ -399,9 +397,9 @@ namespace Modelo
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@Lugar", lugar);
-                command.Parameters.AddWithValue("@FechaRecoleccion", fechaRecoleccion);
-                command.Parameters.AddWithValue("@UsuarioId", usuarioId);
+                command.Parameters.AddWithValue("@Lugar", recoleccionInfo.Lugar);
+                command.Parameters.AddWithValue("@FechaRecoleccion", recoleccionInfo.FechaRecoleccion);
+                command.Parameters.AddWithValue("@UsuarioId", recoleccionInfo.UsuarioId);
 
                 recoleccionId = Convert.ToInt32(command.ExecuteScalar());
                 ConexionModelo.CerrarConexion();
@@ -409,16 +407,16 @@ namespace Modelo
 
             return recoleccionId;
         }
-        public static void GuardarDetalleRecoleccion(int recoleccionId, int productoId, int cantidad)
+        public static void GuardarDetalleRecoleccion(DetalleRecoleccionInfo detalleRecoleccionInfo)
         {
             string sql = "INSERT INTO detalle_recoleccion (recoleccion_id, producto_id, cantidad) " +
                          "VALUES (@RecoleccionId, @ProductoId, @Cantidad)";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@RecoleccionId", recoleccionId);
-                command.Parameters.AddWithValue("@ProductoId", productoId);
-                command.Parameters.AddWithValue("@Cantidad", cantidad);
+                command.Parameters.AddWithValue("@RecoleccionId", detalleRecoleccionInfo.RecoleccionId);
+                command.Parameters.AddWithValue("@ProductoId", detalleRecoleccionInfo.ProductoId);
+                command.Parameters.AddWithValue("@Cantidad", detalleRecoleccionInfo.Cantidad);
 
                 command.ExecuteNonQuery();
                 ConexionModelo.CerrarConexion();

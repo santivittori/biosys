@@ -226,12 +226,26 @@ namespace biosys
 
             decimal precioTotalCompra = 0;
 
+            // Crear un objeto CompraInfo con los datos de la compra
+            CompraInfo compraInfo = new CompraInfo
+            {
+                NroFactura = nroFactura,
+                NroRemito = nroRemito,
+                ProveedorEmail = proveedorEmail,
+                FechaCompra = fechaCompra,
+                UsuarioId = usuarioId,
+                PrecioTotalCompra = precioTotalCompra
+            };
+
             foreach (Compra compra in comprasList)
             {
-                precioTotalCompra += compra.PrecioTotal;
+                compraInfo.PrecioTotalCompra += compra.PrecioTotal;
             }
 
-            int compraId = Controladora.Controladora.GuardarCompra(nroFactura, nroRemito, fechaCompra, proveedorEmail, usuarioId, precioTotalCompra);
+            int compraId = Controladora.Controladora.GuardarCompra(compraInfo);
+
+            // Crear un objeto DetalleCompraInfo fuera del foreach
+            DetalleCompraInfo detalleCompraInfo = new DetalleCompraInfo();
 
             foreach (Compra compra in comprasList)
             {
@@ -240,14 +254,21 @@ namespace biosys
                 decimal precioUnitario = compra.PrecioUnitario;
                 decimal precioTotalDetalle = compra.PrecioTotal;
 
-                Controladora.Controladora.GuardarDetalleCompra(compraId, productoId, cantidad, precioUnitario, precioTotalDetalle);
+                // Asignar los valores del detalle de compra al objeto DetalleCompraInfo
+                detalleCompraInfo.CompraId = compraId;
+                detalleCompraInfo.ProductoId = productoId;
+                detalleCompraInfo.Cantidad = cantidad;
+                detalleCompraInfo.PrecioUnitario = precioUnitario;
+                detalleCompraInfo.PrecioTotalDetalle = precioTotalDetalle;
+
+                Controladora.Controladora.GuardarDetalleCompra(detalleCompraInfo);
                 Controladora.Controladora.ActualizarStock(productoId, cantidad);
             }
 
             LimpiarCampos();
             comprasList.Clear();
 
-            MessageBox.Show($"La compra se registró correctamente.\n\nPrecio total: ${precioTotalCompra}", "Compra registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"La compra se registró correctamente.\n\nPrecio total: ${compraInfo.PrecioTotalCompra}", "Compra registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void LimpiarCampos()

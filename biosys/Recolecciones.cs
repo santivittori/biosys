@@ -158,14 +158,27 @@ namespace biosys
 
             int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
 
-            int recoleccionId = Controladora.Controladora.GuardarRecoleccion(lugar, fechaRecoleccion, usuarioId);
+            RecoleccionInfo recoleccionInfo = new RecoleccionInfo
+            {
+                Lugar = lugar,
+                FechaRecoleccion = fechaRecoleccion,
+                UsuarioId = usuarioId
+            };
+
+            int recoleccionId = Controladora.Controladora.GuardarRecoleccion(recoleccionInfo);
+
+            DetalleRecoleccionInfo detalleRecoleccionInfo = new DetalleRecoleccionInfo();
 
             foreach (Recoleccion recoleccion in recoleccionList)
             {
                 int productoId = recoleccion.ProductoId;
                 int cantidad = recoleccion.Cantidad;
 
-                Controladora.Controladora.GuardarDetalleRecoleccion(recoleccionId, productoId, cantidad);
+                detalleRecoleccionInfo.RecoleccionId = recoleccionId;
+                detalleRecoleccionInfo.ProductoId = productoId;
+                detalleRecoleccionInfo.Cantidad = cantidad;
+
+                Controladora.Controladora.GuardarDetalleRecoleccion(detalleRecoleccionInfo);
                 Controladora.Controladora.ActualizarStock(productoId, cantidad);
             }
 

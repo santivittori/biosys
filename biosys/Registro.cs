@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using Controladora;
 using COMUN;
+using Entidad;
 
 namespace biosys
 {
@@ -151,8 +152,17 @@ namespace biosys
             }
             else
             {
+                // Crear el objeto Usuario con los datos del nuevo usuario
+                Usuario usuario = new Usuario
+                {
+                    NombreUsuario = nombreUsuario,
+                    Clave = clave,
+                    Rol = rol,
+                    Email = email
+                };
+
                 // Guardar el nuevo usuario en la base de datos
-                Controladora.Controladora.GuardarNuevoUsuario(nombreUsuario, clave, email, rol);
+                Controladora.Controladora.GuardarNuevoUsuario(usuario);
 
                 MessageBox.Show("Usuario registrado exitosamente", "Registro exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

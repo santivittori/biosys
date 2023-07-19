@@ -180,14 +180,27 @@ namespace biosys
 
             int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
 
-            int donacionId = Controladora.Controladora.GuardarDonacion(donante, fechaDonacion, usuarioId);
+            DonacionInfo donacionInfo = new DonacionInfo
+            {
+                Donante = donante,
+                FechaDonacion = fechaDonacion,
+                UsuarioId = usuarioId
+            };
+
+            int donacionId = Controladora.Controladora.GuardarDonacion(donacionInfo);
+
+            DetalleDonacionInfo detalleDonacionInfo = new DetalleDonacionInfo();
 
             foreach (Donacion donacion in donacionList)
             {
                 int productoId = donacion.ProductoId;
                 int cantidad = donacion.Cantidad;
 
-                Controladora.Controladora.GuardarDetalleDonacion(donacionId, productoId, cantidad);
+                detalleDonacionInfo.DonacionId = donacionId;
+                detalleDonacionInfo.ProductoId = productoId;
+                detalleDonacionInfo.Cantidad = cantidad;
+
+                Controladora.Controladora.GuardarDetalleDonacion(detalleDonacionInfo);
                 Controladora.Controladora.ActualizarStock(productoId, cantidad);
             }
 

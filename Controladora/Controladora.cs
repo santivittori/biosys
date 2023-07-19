@@ -28,9 +28,9 @@ namespace Controladora
         {
             return ConsultasModelo.VerificarExistenciaEmail(email);
         }
-        public static void GuardarNuevoUsuario(string nombreUsuario, string claveHash, string email, string rol)
+        public static void GuardarNuevoUsuario(Usuario usuario)
         {
-            ConsultasModelo.GuardarNuevoUsuario(nombreUsuario, claveHash, email, rol);
+            ConsultasModelo.GuardarNuevoUsuario(usuario);
         }
         public static int ObtenerIdUsuario(string nombreUsuario)
         {
@@ -48,17 +48,17 @@ namespace Controladora
         {
             ConsultasModelo.ActualizarContraseñaUsuario(email, nuevaContraseña);
         }
-        public static bool VerificarProveedorExistente(string nombre, string apellido, string email)
+        public static bool VerificarProveedorExistente(ProveedorInfo proveedorInfo)
         {
-            return ConsultasModelo.VerificarProveedorExistente(nombre, apellido, email);
+            return ConsultasModelo.VerificarProveedorExistente(proveedorInfo);
         }
-        public static void InsertarProveedor(string nombre, string apellido, string email, string telefono)
+        public static void InsertarProveedor(ProveedorInfo proveedorInfo)
         {
-            ConsultasModelo.InsertarProveedor(nombre, apellido, email, telefono);
+            ConsultasModelo.InsertarProveedor(proveedorInfo);
         }
-        public static void ActualizarProveedor(int idProveedorSeleccionado, string nombre, string apellido, string email, string telefono)
+        public static void ActualizarProveedor(ProveedorInfo proveedorInfo)
         {
-            ConsultasModelo.ActualizarProveedor(idProveedorSeleccionado, nombre, apellido, email, telefono);
+            ConsultasModelo.ActualizarProveedor(proveedorInfo);
         }
         public static void ActualizarProducto(int idProductoSeleccionado, string nuevoNombre)
         {
@@ -99,29 +99,29 @@ namespace Controladora
         {
             ConsultasModelo.InsertarProducto(nombre, tipoProductoID, tipoEspecificoID);
         }
-        public static int GuardarCompra(string nroFactura, string nroRemito, DateTime fechaCompra, string proveedorEmail, int usuarioId, decimal precioTotalCompra)
+        public static int GuardarCompra(CompraInfo compraInfo)
         {
-            return ConsultasModelo.GuardarCompra(nroFactura, nroRemito, fechaCompra, proveedorEmail, usuarioId, precioTotalCompra);
+            return ConsultasModelo.GuardarCompra(compraInfo);
         }
-        public static void GuardarDetalleCompra(int compraId, int productoId, int cantidad, decimal precioUnitario, decimal precioTotalDetalle)
+        public static void GuardarDetalleCompra(DetalleCompraInfo detalleCompraInfo)
         {
-            ConsultasModelo.GuardarDetalleCompra(compraId, productoId, cantidad, precioUnitario, precioTotalDetalle);
+            ConsultasModelo.GuardarDetalleCompra(detalleCompraInfo);
         }
-        public static int GuardarDonacion(string donante, DateTime fechaDonacion, int usuarioId)
+        public static int GuardarDonacion(DonacionInfo donacionInfo)
         {
-            return ConsultasModelo.GuardarDonacion(donante, fechaDonacion, usuarioId);
+            return ConsultasModelo.GuardarDonacion(donacionInfo);
         }
-        public static void GuardarDetalleDonacion(int donacionId, int productoId, int cantidad)
+        public static void GuardarDetalleDonacion(DetalleDonacionInfo detalleDonacionInfo)
         {
-            ConsultasModelo.GuardarDetalleDonacion(donacionId, productoId, cantidad);
+            ConsultasModelo.GuardarDetalleDonacion(detalleDonacionInfo);
         }
-        public static int GuardarRecoleccion(string lugar, DateTime fechaRecoleccion, int usuarioId)
+        public static int GuardarRecoleccion(RecoleccionInfo recoleccionInfo)
         {
-            return ConsultasModelo.GuardarRecoleccion(lugar, fechaRecoleccion, usuarioId);
+            return ConsultasModelo.GuardarRecoleccion(recoleccionInfo);
         }
-        public static void GuardarDetalleRecoleccion(int recoleccionId, int productoId, int cantidad)
+        public static void GuardarDetalleRecoleccion(DetalleRecoleccionInfo detalleRecoleccionInfo)
         {
-            ConsultasModelo.GuardarDetalleRecoleccion(recoleccionId, productoId, cantidad);
+            ConsultasModelo.GuardarDetalleRecoleccion(detalleRecoleccionInfo);
         }
         public static void ActualizarStock(int productoId, int cantidad)
         {
