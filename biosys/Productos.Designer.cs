@@ -45,7 +45,16 @@
             this.lblError = new System.Windows.Forms.Label();
             this.btnEliminarProd = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnQuitarFiltros = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.comboBoxOrdenar = new System.Windows.Forms.ComboBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtBusqueda = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProductos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
@@ -229,12 +238,91 @@
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
+            // btnQuitarFiltros
+            // 
+            this.btnQuitarFiltros.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnQuitarFiltros.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuitarFiltros.Location = new System.Drawing.Point(141, 672);
+            this.btnQuitarFiltros.Name = "btnQuitarFiltros";
+            this.btnQuitarFiltros.Size = new System.Drawing.Size(127, 48);
+            this.btnQuitarFiltros.TabIndex = 120;
+            this.btnQuitarFiltros.Text = "QUITAR FILTROS";
+            this.btnQuitarFiltros.UseVisualStyleBackColor = true;
+            this.btnQuitarFiltros.Click += new System.EventHandler(this.btnQuitarFiltros_Click);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(48, 567);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(40, 37);
+            this.pictureBox2.TabIndex = 119;
+            this.pictureBox2.TabStop = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(94, 573);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(94, 20);
+            this.label11.TabIndex = 118;
+            this.label11.Text = "Ordenar por";
+            // 
+            // comboBoxOrdenar
+            // 
+            this.comboBoxOrdenar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxOrdenar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxOrdenar.FormattingEnabled = true;
+            this.comboBoxOrdenar.Location = new System.Drawing.Point(48, 610);
+            this.comboBoxOrdenar.Name = "comboBoxOrdenar";
+            this.comboBoxOrdenar.Size = new System.Drawing.Size(336, 28);
+            this.comboBoxOrdenar.TabIndex = 117;
+            this.comboBoxOrdenar.SelectedIndexChanged += new System.EventHandler(this.comboBoxOrdenar_SelectedIndexChanged);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(48, 475);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(40, 43);
+            this.pictureBox1.TabIndex = 116;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(94, 487);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(358, 20);
+            this.label10.TabIndex = 115;
+            this.label10.Text = "Filtrar por Nombre, TipoProducto o TipoEspecifico";
+            // 
+            // txtBusqueda
+            // 
+            this.txtBusqueda.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBusqueda.Location = new System.Drawing.Point(48, 524);
+            this.txtBusqueda.Name = "txtBusqueda";
+            this.txtBusqueda.Size = new System.Drawing.Size(336, 26);
+            this.txtBusqueda.TabIndex = 114;
+            this.txtBusqueda.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtBusqueda.TextChanged += new System.EventHandler(this.txtBusqueda_TextChanged);
+            this.txtBusqueda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBusqueda_KeyPress);
+            // 
             // Productos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnQuitarFiltros);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.comboBoxOrdenar);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.txtBusqueda);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnEliminarProd);
             this.Controls.Add(this.lblError);
@@ -257,6 +345,8 @@
             this.Text = "Productos";
             this.Load += new System.EventHandler(this.Productos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProductos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -280,5 +370,12 @@
         private System.Windows.Forms.Label lblError;
         private System.Windows.Forms.Button btnEliminarProd;
         private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.Button btnQuitarFiltros;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox comboBoxOrdenar;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtBusqueda;
     }
 }

@@ -50,7 +50,16 @@
             this.lblError = new System.Windows.Forms.Label();
             this.btnEliminarProv = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
+            this.txtBusqueda = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.comboBoxOrdenar = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.btnQuitarFiltros = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProveedores)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
@@ -282,12 +291,91 @@
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
+            // txtBusqueda
+            // 
+            this.txtBusqueda.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBusqueda.Location = new System.Drawing.Point(76, 560);
+            this.txtBusqueda.Name = "txtBusqueda";
+            this.txtBusqueda.Size = new System.Drawing.Size(336, 26);
+            this.txtBusqueda.TabIndex = 107;
+            this.txtBusqueda.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtBusqueda.TextChanged += new System.EventHandler(this.txtBusqueda_TextChanged);
+            this.txtBusqueda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBusqueda_KeyPress);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(143, 522);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(209, 20);
+            this.label10.TabIndex = 108;
+            this.label10.Text = "Filtrar por Nombre o Apellido";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(97, 511);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(40, 43);
+            this.pictureBox1.TabIndex = 109;
+            this.pictureBox1.TabStop = false;
+            // 
+            // comboBoxOrdenar
+            // 
+            this.comboBoxOrdenar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxOrdenar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxOrdenar.FormattingEnabled = true;
+            this.comboBoxOrdenar.Location = new System.Drawing.Point(76, 646);
+            this.comboBoxOrdenar.Name = "comboBoxOrdenar";
+            this.comboBoxOrdenar.Size = new System.Drawing.Size(336, 28);
+            this.comboBoxOrdenar.TabIndex = 110;
+            this.comboBoxOrdenar.SelectedIndexChanged += new System.EventHandler(this.comboBoxOrdenar_SelectedIndexChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(143, 609);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(94, 20);
+            this.label11.TabIndex = 111;
+            this.label11.Text = "Ordenar por";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(97, 603);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(40, 37);
+            this.pictureBox2.TabIndex = 112;
+            this.pictureBox2.TabStop = false;
+            // 
+            // btnQuitarFiltros
+            // 
+            this.btnQuitarFiltros.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnQuitarFiltros.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuitarFiltros.Location = new System.Drawing.Point(169, 708);
+            this.btnQuitarFiltros.Name = "btnQuitarFiltros";
+            this.btnQuitarFiltros.Size = new System.Drawing.Size(127, 48);
+            this.btnQuitarFiltros.TabIndex = 113;
+            this.btnQuitarFiltros.Text = "QUITAR FILTROS";
+            this.btnQuitarFiltros.UseVisualStyleBackColor = true;
+            this.btnQuitarFiltros.Click += new System.EventHandler(this.btnQuitarFiltros_Click);
+            // 
             // Proveedores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnQuitarFiltros);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.comboBoxOrdenar);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.txtBusqueda);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnEliminarProv);
             this.Controls.Add(this.lblError);
@@ -315,6 +403,8 @@
             this.Text = "Proveedores";
             this.Load += new System.EventHandler(this.Proveedores_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProveedores)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -343,5 +433,12 @@
         private System.Windows.Forms.Label lblError;
         private System.Windows.Forms.Button btnEliminarProv;
         private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.TextBox txtBusqueda;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ComboBox comboBoxOrdenar;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Button btnQuitarFiltros;
     }
 }

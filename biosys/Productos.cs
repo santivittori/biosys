@@ -115,8 +115,8 @@ namespace biosys
         private void LimpiarCampos()
         {
             txtNombreProd.Text = string.Empty;
-            comboTipoProducto.SelectedIndex = 0;
-            comboTipoEspecifico.SelectedIndex = 0;
+            comboTipoProducto.SelectedIndex = -1;
+            comboTipoEspecifico.SelectedIndex = -1;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -147,8 +147,19 @@ namespace biosys
             comboTipoEspecifico.DisplayMember = "nombre";
             comboTipoEspecifico.ValueMember = "id";
 
-            comboTipoProducto.SelectedIndex = 0;
-            comboTipoEspecifico.SelectedIndex = 0;
+            comboTipoProducto.SelectedIndex = -1;
+            comboTipoEspecifico.SelectedIndex = -1;
+
+            // Agregar las opciones de ordenamiento al ComboBox
+            comboBoxOrdenar.Items.Add("Nombre ascendente");
+            comboBoxOrdenar.Items.Add("Nombre descendente");
+            comboBoxOrdenar.Items.Add("TipoProducto ascendente");
+            comboBoxOrdenar.Items.Add("TipoProducto descendente");
+            comboBoxOrdenar.Items.Add("TipoEspecifico ascendente");
+            comboBoxOrdenar.Items.Add("TipoEspecifico descendente");
+
+            // Establecer el valor predeterminado para el ComboBox
+            comboBoxOrdenar.SelectedIndex = -1;
 
             CargarProductosEnDataGridView();
         }
@@ -220,6 +231,123 @@ namespace biosys
             // Deseleccionar la fila en el DataGridView
             dataGridViewProductos.ClearSelection();
             idProductoSeleccionado = 0;
+        }
+
+        private void btnQuitarFiltros_Click(object sender, EventArgs e)
+        {
+            // Limpiar el TextBox de búsqueda
+            txtBusqueda.Text = string.Empty;
+
+            // Deseleccionar el ComboBox
+            comboBoxOrdenar.SelectedIndex = -1;
+
+            // Mostrar todos los proveedores en el DataGridView
+            CargarProductosEnDataGridView();
+        }
+
+        private void txtBusqueda_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e = MetodosComunes.KeyPressSoloLetras(e);
+
+            if (e.Handled)
+            {
+                e.Handled = true;
+            }
+        }
+        private void FiltrarProductos(string criterioBusqueda)
+        {
+            // Verificar si el campo de búsqueda no está vacío
+            if (string.IsNullOrWhiteSpace(criterioBusqueda))
+            {
+                // Si está vacío, mostrar todos los productos
+                CargarProductosEnDataGridView();
+            }
+            else
+            {
+                DataTable dataTable = Controladora.Controladora.ObtenerProductosCompleto();
+                dataTable.DefaultView.RowFilter = $"Nombre LIKE '%{criterioBusqueda}%' OR TipoProducto LIKE '%{criterioBusqueda}%' OR TipoEspecifico LIKE '%{criterioBusqueda}%'";
+                dataGridViewProductos.DataSource = dataTable;
+            }
+        }
+        private void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            string criterioBusqueda = txtBusqueda.Text;
+            FiltrarProductos(criterioBusqueda);
+        }
+        private void OrdenarPorNombreAscendente()
+        {
+            DataTable dataTable = Controladora.Controladora.ObtenerProductosCompleto();
+            dataTable.DefaultView.Sort = "Nombre ASC";
+            dataGridViewProductos.DataSource = dataTable;
+        }
+
+        private void OrdenarPorNombreDescendente()
+        {
+            DataTable dataTable = Controladora.Controladora.ObtenerProductosCompleto();
+            dataTable.DefaultView.Sort = "Nombre DESC";
+            dataGridViewProductos.DataSource = dataTable;
+        }
+
+        private void OrdenarPorTipoProductoAscendente()
+        {
+            DataTable dataTable = Controladora.Controladora.ObtenerProductosCompleto();
+            dataTable.DefaultView.Sort = "TipoProducto ASC";
+            dataGridViewProductos.DataSource = dataTable;
+        }
+
+        private void OrdenarPorTipoProductoDescendente()
+        {
+            DataTable dataTable = Controladora.Controladora.ObtenerProductosCompleto();
+            dataTable.DefaultView.Sort = "TipoProducto DESC";
+            dataGridViewProductos.DataSource = dataTable;
+        }
+
+        private void OrdenarPorTipoEspecificoAscendente()
+        {
+            DataTable dataTable = Controladora.Controladora.ObtenerProductosCompleto();
+            dataTable.DefaultView.Sort = "TipoEspecifico ASC";
+            dataGridViewProductos.DataSource = dataTable;
+        }
+
+        private void OrdenarPorTipoEspecificoDescendente()
+        {
+            DataTable dataTable = Controladora.Controladora.ObtenerProductosCompleto();
+            dataTable.DefaultView.Sort = "TipoEspecifico DESC";
+            dataGridViewProductos.DataSource = dataTable;
+        }
+
+        private void comboBoxOrdenar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxOrdenar.SelectedItem != null)
+            {
+                string opcionOrdenamiento = comboBoxOrdenar.SelectedItem.ToString();
+
+                // Realizar el ordenamiento según la opción seleccionada
+                if (opcionOrdenamiento == "Nombre ascendente")
+                {
+                    OrdenarPorNombreAscendente();
+                }
+                else if (opcionOrdenamiento == "Nombre descendente")
+                {
+                    OrdenarPorNombreDescendente();
+                }
+                else if (opcionOrdenamiento == "TipoProducto ascendente")
+                {
+                    OrdenarPorTipoProductoAscendente();
+                }
+                else if (opcionOrdenamiento == "TipoProducto descendente")
+                {
+                    OrdenarPorTipoProductoDescendente();
+                }
+                else if (opcionOrdenamiento == "TipoEspecifico ascendente")
+                {
+                    OrdenarPorTipoEspecificoAscendente();
+                }
+                else if (opcionOrdenamiento == "TipoEspecifico descendente")
+                {
+                    OrdenarPorTipoEspecificoDescendente();
+                }
+            }
         }
     }
 }

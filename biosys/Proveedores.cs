@@ -132,6 +132,15 @@ namespace biosys
 
         private void Proveedores_Load(object sender, EventArgs e)
         {
+            // Agregar las opciones de ordenamiento al ComboBox
+            comboBoxOrdenar.Items.Add("Nombre ascendente");
+            comboBoxOrdenar.Items.Add("Nombre descendente");
+            comboBoxOrdenar.Items.Add("Apellido ascendente");
+            comboBoxOrdenar.Items.Add("Apellido descendente");
+
+            // Establecer el valor predeterminado para el ComboBox
+            comboBoxOrdenar.SelectedIndex = -1;
+
             CargarProveedoresEnDataGridView();
         }
         public void msgError(string msg)
@@ -208,6 +217,97 @@ namespace biosys
             // Deseleccionar la fila en el DataGridView
             dataGridViewProveedores.ClearSelection();
             idProveedorSeleccionado = 0;
+        }
+
+        private void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            string criterioBusqueda = txtBusqueda.Text;
+            FiltrarPorNombreOApellido(criterioBusqueda);
+        }
+        private void FiltrarPorNombreOApellido(string criterioBusqueda)
+        {
+            // Verificar si el campo de búsqueda no está vacío
+            if (string.IsNullOrWhiteSpace(criterioBusqueda))
+            {
+                // Si está vacío, mostrar todos los proveedores
+                CargarProveedoresEnDataGridView();
+            }
+            else
+            {
+                DataTable dataTable = Controladora.Controladora.ObtenerProveedores();
+                dataTable.DefaultView.RowFilter = $"Nombre LIKE '%{criterioBusqueda}%' OR Apellido LIKE '%{criterioBusqueda}%'";
+                dataGridViewProveedores.DataSource = dataTable;
+            }
+        }
+        private void comboBoxOrdenar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxOrdenar.SelectedItem != null)
+            {
+                string opcionOrdenamiento = comboBoxOrdenar.SelectedItem.ToString();
+
+                // Realizar el ordenamiento según la opción seleccionada
+                if (opcionOrdenamiento == "Nombre ascendente")
+                {
+                    OrdenarPorNombreAscendente();
+                }
+                else if (opcionOrdenamiento == "Nombre descendente")
+                {
+                    OrdenarPorNombreDescendente();
+                }
+                else if (opcionOrdenamiento == "Apellido ascendente")
+                {
+                    OrdenarPorApellidoAscendente();
+                }
+                else if (opcionOrdenamiento == "Apellido descendente")
+                {
+                    OrdenarPorApellidoDescendente();
+                }
+            }
+        }
+        private void OrdenarPorNombreAscendente()
+        {
+            DataTable dataTable = Controladora.Controladora.ObtenerProveedores();
+            dataTable.DefaultView.Sort = "Nombre ASC";
+            dataGridViewProveedores.DataSource = dataTable;
+        }
+        private void OrdenarPorNombreDescendente()
+        {
+            DataTable dataTable = Controladora.Controladora.ObtenerProveedores();
+            dataTable.DefaultView.Sort = "Nombre DESC";
+            dataGridViewProveedores.DataSource = dataTable;
+        }
+        private void OrdenarPorApellidoAscendente()
+        {
+            DataTable dataTable = Controladora.Controladora.ObtenerProveedores();
+            dataTable.DefaultView.Sort = "Apellido ASC";
+            dataGridViewProveedores.DataSource = dataTable;
+        }
+        private void OrdenarPorApellidoDescendente()
+        {
+            DataTable dataTable = Controladora.Controladora.ObtenerProveedores();
+            dataTable.DefaultView.Sort = "Apellido DESC";
+            dataGridViewProveedores.DataSource = dataTable;
+        }
+        private void txtBusqueda_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e = MetodosComunes.KeyPressSoloLetras(e);
+
+            if (e.Handled)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void btnQuitarFiltros_Click(object sender, EventArgs e)
+        {
+            // Limpiar el TextBox de búsqueda
+            txtBusqueda.Text = string.Empty;
+
+            // Deseleccionar el ComboBox
+            comboBoxOrdenar.SelectedIndex = -1;
+
+            // Mostrar todos los proveedores en el DataGridView
+            CargarProveedoresEnDataGridView();
         }
     }
 }
