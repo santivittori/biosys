@@ -246,7 +246,6 @@ namespace Modelo
 
             return ExecuteQuery(sql);
         }
-
         public static List<string> ObtenerProductosComboBox()
         {
             string sql = "SELECT p.nombre + ' - ' + tp.nombre + ' - ' + te.nombre AS ProductoCompleto " +
@@ -266,32 +265,32 @@ namespace Modelo
 
             return productos;
         }
-        public static bool VerificarProductoExistente(string nombre, int tipoProductoID, int tipoEspecificoID)
+        public static bool VerificarProductoExistente(ProductoInfo producto)
         {
             string sql = "SELECT COUNT(*) FROM productos WHERE nombre = @nombre AND tipo_producto_id = @tipoProductoID AND tipo_especifico_id = @tipoEspecificoID";
             int count;
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@nombre", nombre);
-                command.Parameters.AddWithValue("@tipoProductoID", tipoProductoID);
-                command.Parameters.AddWithValue("@tipoEspecificoID", tipoEspecificoID);
+                command.Parameters.AddWithValue("@Nombre", producto.Nombre);
+                command.Parameters.AddWithValue("@TipoProductoID", producto.TipoProducto);
+                command.Parameters.AddWithValue("@TipoEspecificoID", producto.TipoEspecifico);
 
                 count = (int)command.ExecuteScalar();
                 ConexionModelo.CerrarConexion();
             }
             return count > 0;
         }
-        public static void InsertarProducto(string nombre, int tipoProductoID, int tipoEspecificoID)
+        public static void InsertarProducto(ProductoInfo producto)
         {
             string sql = "INSERT INTO productos (nombre, tipo_producto_id, tipo_especifico_id, stock) " +
                          "VALUES (@Nombre, @TipoProductoID, @TipoEspecificoID, 0)";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@Nombre", nombre);
-                command.Parameters.AddWithValue("@TipoProductoID", tipoProductoID);
-                command.Parameters.AddWithValue("@TipoEspecificoID", tipoEspecificoID);
+                command.Parameters.AddWithValue("@Nombre", producto.Nombre);
+                command.Parameters.AddWithValue("@TipoProductoID", producto.TipoProducto);
+                command.Parameters.AddWithValue("@TipoEspecificoID", producto.TipoEspecifico);
 
                 command.ExecuteNonQuery();
                 ConexionModelo.CerrarConexion();

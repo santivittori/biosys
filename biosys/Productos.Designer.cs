@@ -52,6 +52,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
+            this.btnCargarExcel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProductos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -310,12 +311,26 @@
             this.txtBusqueda.TextChanged += new System.EventHandler(this.txtBusqueda_TextChanged);
             this.txtBusqueda.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBusqueda_KeyPress);
             // 
+            // btnCargarExcel
+            // 
+            this.btnCargarExcel.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnCargarExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCargarExcel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCargarExcel.Location = new System.Drawing.Point(1172, 280);
+            this.btnCargarExcel.Name = "btnCargarExcel";
+            this.btnCargarExcel.Size = new System.Drawing.Size(137, 72);
+            this.btnCargarExcel.TabIndex = 121;
+            this.btnCargarExcel.Text = "CARGAR EXCEL CON PRODUCTOS";
+            this.btnCargarExcel.UseVisualStyleBackColor = false;
+            this.btnCargarExcel.Click += new System.EventHandler(this.btnCargarExcel_Click);
+            // 
             // Productos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnCargarExcel);
             this.Controls.Add(this.btnQuitarFiltros);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label11);
@@ -377,5 +392,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtBusqueda;
+        private System.Windows.Forms.Button btnCargarExcel;
     }
 }

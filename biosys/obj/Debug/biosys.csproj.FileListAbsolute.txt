@@ -37,3 +37,9 @@ C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.Donaciones.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.Recolecciones.resources
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Entidad.dll
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Entidad.pdb
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\EPPlus.dll
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\EPPlus.Interfaces.dll
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\EPPlus.System.Drawing.dll
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\EPPlus.xml
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml

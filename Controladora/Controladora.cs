@@ -91,13 +91,13 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerProductosComboBox();
         }
-        public static bool VerificarProductoExistente(string nombre, int tipoProductoID, int tipoEspecificoID)
+        public static bool VerificarProductoExistente(ProductoInfo producto)
         {
-            return ConsultasModelo.VerificarProductoExistente(nombre, tipoProductoID, tipoEspecificoID);
+            return ConsultasModelo.VerificarProductoExistente(producto);
         }
-        public static void InsertarProducto(string nombre, int tipoProductoID, int tipoEspecificoID)
+        public static void InsertarProducto(ProductoInfo producto)
         {
-            ConsultasModelo.InsertarProducto(nombre, tipoProductoID, tipoEspecificoID);
+            ConsultasModelo.InsertarProducto(producto);
         }
         public static int GuardarCompra(CompraInfo compraInfo)
         {

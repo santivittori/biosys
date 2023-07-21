@@ -46,6 +46,12 @@ namespace Entidad
         public string Email { get; set; }
         public string Rol { get; set; }
     }
+    public class ProductoInfo
+    {
+        public string Nombre { get; set; }
+        public int TipoProducto { get; set; }
+        public int TipoEspecifico { get; set; }
+    }
     public class CompraInfo
     {
         public string NroFactura { get; set; }

@@ -11,6 +11,9 @@ using System.Windows.Forms;
 using COMUN;
 using Controladora;
 using static biosys.Compras;
+using Entidad;
+using OfficeOpenXml;
+using System.IO;
 
 namespace biosys
 {
@@ -24,6 +27,10 @@ namespace biosys
         public Productos()
         {
             InitializeComponent();
+        }
+        private void EstablecerContextoLicencia()
+        {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
         }
         // Permite editar el campo nombre seleccionado una fila en el datagridview
         private void dataGridViewProductos_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -76,8 +83,15 @@ namespace biosys
             int tipoProductoID = Convert.ToInt32(comboTipoProducto.SelectedValue);
             int tipoEspecificoID = Convert.ToInt32(comboTipoEspecifico.SelectedValue);
 
+            ProductoInfo producto = new ProductoInfo()
+            {
+                Nombre = nombre,
+                TipoProducto = tipoProductoID,
+                TipoEspecifico = tipoEspecificoID,
+            };
+
             // Verificar si el producto ya existe
-            bool productoExistente = Controladora.Controladora.VerificarProductoExistente(nombre, tipoProductoID, tipoEspecificoID);
+            bool productoExistente = Controladora.Controladora.VerificarProductoExistente(producto);
 
             if (productoExistente)
             {
@@ -97,9 +111,8 @@ namespace biosys
             else
             {
                 // No se seleccionó una fila previamente, se creará un nuevo registro
-
                 // Insertar el producto en la base de datos
-                Controladora.Controladora.InsertarProducto(nombre, tipoProductoID, tipoEspecificoID);
+                Controladora.Controladora.InsertarProducto(producto);
 
                 // Mostrar mensaje de éxito
                 MessageBox.Show("Producto guardado exitosamente.", "Guardado exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -348,6 +361,203 @@ namespace biosys
                     OrdenarPorTipoEspecificoDescendente();
                 }
             }
+        }
+
+        private void btnCargarExcel_Click(object sender, EventArgs e)
+        {
+            // Mensaje informativo sobre cómo debe estar estructurado el archivo Excel
+            string mensajeInstrucciones =
+                "El archivo Excel debe tener el siguiente formato:\n\n" +
+                "1. La primera fila debe contener los títulos de las columnas.\n\n" +
+                "2. Las columnas deben estar en el siguiente orden:\n\n" +
+                "   NOMBRE | TIPO PRODUCTO | TIPO ESPECIFICO\n\n" +
+                "3. En la columna 'TIPO PRODUCTO', debe especificar 'Árbol' o 'Semilla'.\n\n" +
+                "4. En la columna 'TIPO ESPECIFICO', debe especificar 'Éxotica' o 'Nativa'.\n\n" +
+                "5. Asegúrese de que no haya espacios vacíos en ninguna de las celdas de estas columnas.";
+
+            MessageBox.Show(mensajeInstrucciones, "Instrucciones para cargar el archivo Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            EstablecerContextoLicencia();
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos Excel (*.xlsx)|*.xlsx|Todos los archivos (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = openFileDialog.FileName;
+
+                // Leer el contenido del archivo Excel y obtener los datos en una lista de objetos
+                List<ProductoInfo> productos = LeerExcel(path);
+
+                if (productos != null && productos.Count > 0)
+                {
+                    // Normalizar los datos y verificar su validez
+                    List<ProductoInfo> productosNormalizados = NormalizarDatos(productos);
+
+                    if (productosNormalizados != null && productosNormalizados.Count > 0)
+                    {
+                        // Agregar los productos normalizados a la base de datos
+                        foreach (ProductoInfo producto in productosNormalizados)
+                        {
+                            // Verificar si el producto ya existe en la base de datos
+                            bool productoExistente = Controladora.Controladora.VerificarProductoExistente(producto);
+                            if (productoExistente)
+                            {
+                                // Omitir la inserción de este producto, ya que ya existe en la base de datos.
+                                continue;
+                            }
+
+                            // Si el producto no existe, proceder con la inserción
+                            Controladora.Controladora.InsertarProducto(producto);
+                        }
+
+                        MessageBox.Show("Los productos se han cargado exitosamente.", "Carga exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CargarProductosEnDataGridView();
+                    }
+                    else
+                    {
+                        msgError("El archivo Excel no contiene datos válidos o no se pudo normalizar.");
+                        return;
+                    }
+                }
+                else
+                {
+                    msgError("El archivo Excel no contiene datos válidos o está vacío.");
+                    return;
+                }
+            }
+        }
+        private List<ProductoInfo> LeerExcel(string filePath)
+        {
+            List<ProductoInfo> productos = new List<ProductoInfo>();
+
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var worksheet = package.Workbook.Worksheets[0];
+                int rows = worksheet.Dimension.Rows;
+
+                // Verificar que el archivo Excel tiene las columnas esperadas (NOMBRE, TIPO PRODUCTO y TIPO ESPECIFICO)
+                if (worksheet.Cells[1, 1].Text.Trim().ToUpper() != "NOMBRE" ||
+                    worksheet.Cells[1, 2].Text.Trim().ToUpper() != "TIPO PRODUCTO" ||
+                    worksheet.Cells[1, 3].Text.Trim().ToUpper() != "TIPO ESPECIFICO")
+                {
+                    // Si las columnas no tienen los títulos esperados, mostrar un mensaje de error y salir
+                    msgError("El archivo Excel no tiene el formato esperado.");
+                    return null;
+                }
+
+                for (int i = 2; i <= rows; i++)
+                {
+                    string nombre = worksheet.Cells[i, 1].Value?.ToString(); // Columna 1 (Nombre)
+                    string tipoProductoString = worksheet.Cells[i, 2].Value?.ToString(); // Columna 2 (TipoProducto)
+                    string tipoEspecificoString = worksheet.Cells[i, 3].Value?.ToString(); // Columna 3 (TipoEspecifico)
+
+                    // Verificar que los campos no estén vacíos
+                    if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(tipoProductoString) || string.IsNullOrWhiteSpace(tipoEspecificoString))
+                    {
+                        // Si alguno de los campos está vacío, mostrar un mensaje de error y salir
+                        msgError("El archivo Excel contiene datos incompletos.");
+                        return null;
+                    }
+
+                    int tipoProducto;
+                    int tipoEspecifico;
+
+                    // Obtener los valores enteros correspondientes a TipoProducto y TipoEspecifico
+                    try
+                    {
+                        tipoProducto = ObtenerTipoProductoID(tipoProductoString);
+                        tipoEspecifico = ObtenerTipoEspecificoID(tipoEspecificoString);
+                    }
+                    catch (ArgumentException)
+                    {
+                        // Si se produce una excepción en los métodos ObtenerTipoProductoID o ObtenerTipoEspecificoID,
+                        // significa que los valores de tipoProductoString o tipoEspecificoString no son válidos.
+                        msgError("Valores de TipoProducto o TipoEspecifico inválidos en el archivo Excel.");
+                        return null;
+                    }
+
+                    // Agregar los datos leídos a la lista de productos
+                    productos.Add(new ProductoInfo
+                    {
+                        Nombre = nombre,
+                        TipoProducto = tipoProducto,
+                        TipoEspecifico = tipoEspecifico
+                    });
+                }
+            }
+
+            return productos;
+        }
+
+        private List<ProductoInfo> NormalizarDatos(List<ProductoInfo> productos)
+        {
+            List<ProductoInfo> productosNormalizados = new List<ProductoInfo>();
+
+            foreach (ProductoInfo producto in productos)
+            {
+                // Verificar que los datos normalizados sean válidos
+                if (IsValid(producto))
+                {
+                    productosNormalizados.Add(producto);
+                }
+                else
+                {
+                    // Si los datos no son válidos, detener el proceso y devolver null
+                    msgError("Los datos del producto no son válidos.");
+                    return null;
+                }
+            }
+
+            return productosNormalizados;
+        }
+
+        private bool IsValid(ProductoInfo producto)
+        {
+            // Verificar que el nombre no sea nulo o vacío
+            if (string.IsNullOrWhiteSpace(producto.Nombre))
+            {
+                return false;
+            }
+
+            // Verificar si los valores son válidos (1 para Árbol o 2 para Semilla) y (1 para Éxotica o 2 para Nativa)
+            if ((producto.TipoProducto == 1 || producto.TipoProducto == 2) &&
+                (producto.TipoEspecifico == 1 || producto.TipoEspecifico == 2))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private Dictionary<string, int> tipoProductoDictionary = new Dictionary<string, int>()
+        {
+            { "Árbol", 1 },
+            { "Semilla", 2 }
+        };
+
+        private Dictionary<string, int> tipoEspecificoDictionary = new Dictionary<string, int>()
+        {
+            { "Exótica", 1 },
+            { "Nativa", 2 }
+        };
+
+        private int ObtenerTipoProductoID(string tipoProductoString)
+        {
+            if (tipoProductoDictionary.TryGetValue(tipoProductoString, out int tipoProductoID))
+            {
+                return tipoProductoID;
+            }
+            throw new ArgumentException("Valor de TipoProducto no válido.");
+        }
+
+        private int ObtenerTipoEspecificoID(string tipoEspecificoString)
+        {
+            if (tipoEspecificoDictionary.TryGetValue(tipoEspecificoString, out int tipoEspecificoID))
+            {
+                return tipoEspecificoID;
+            }
+            throw new ArgumentException("Valor de TipoEspecifico no válido.");
         }
     }
 }
