@@ -87,10 +87,6 @@ namespace biosys
                 // Guardar el nuevo usuario en la base de datos
                 Controladora.Controladora.GuardarNuevoUsuario(usuario);
 
-                MessageBox.Show("El usuario se dió de alta exitosamente", "Alta de usuario exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                CargarUsuariosEnDataGridView();
-
                 // Obtener la API Key de Twilio SendGrid desde una variable de entorno
                 string apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
 
@@ -125,10 +121,12 @@ namespace biosys
                     Response response = await client.SendEmailAsync(message);
                     if (response.StatusCode == System.Net.HttpStatusCode.OK || response.StatusCode == System.Net.HttpStatusCode.Accepted)
                     {
-                        DialogResult result = MessageBox.Show($"Se envió un correo a {email} con el aviso de alta de usuario.", "Email enviado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        DialogResult result = MessageBox.Show($"El usuario se dió de alta exitosamente.\n\nSe envió un correo a {email} con el aviso de alta de usuario.", "Alta de usuario y envió de mail", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         if (result == DialogResult.OK)
                         {
+                            CargarUsuariosEnDataGridView();
+
                             txtUsuario.Text = string.Empty;
                             txtContraseña.Text = string.Empty;
                             txtEmail.Text = string.Empty;
