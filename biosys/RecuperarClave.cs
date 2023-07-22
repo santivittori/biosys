@@ -133,8 +133,19 @@ namespace biosys
             if (Controladora.Controladora.VerificarEmailExistente(email))
             {
                 codigoVerificacion = Controladora.Controladora.GenerarCodigoVerificacion();
+                
+                // Obtener la API Key de Twilio SendGrid desde una variable de entorno
+                string apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
 
-                string apiKey = "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";
+                // Verificar si la API Key se ha configurado correctamente
+                if (string.IsNullOrEmpty(apiKey))
+                {
+                    MessageBox.Show("La API Key de Twilio SendGrid no ha sido configurada correctamente. Por favor, verifique la configuración del entorno.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Crear el cliente de Twilio SendGrid utilizando la API Key
+                SendGridClient client = new SendGridClient(apiKey);
                 string remitente = "soportebiosys@gmail.com";
                 string asunto = "Recuperación de contraseña";
 
@@ -148,7 +159,6 @@ namespace biosys
                                        "<p>Atentamente,</p>" +
                                        "<p>Equipo de Soporte</p>";
 
-                SendGridClient client = new SendGridClient(apiKey);
                 EmailAddress from = new EmailAddress(remitente);
                 EmailAddress to = new EmailAddress(email);
                 SendGridMessage message = MailHelper.CreateSingleEmail(from, to, asunto, "", contenidoHTML);

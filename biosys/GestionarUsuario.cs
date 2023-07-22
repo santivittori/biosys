@@ -10,6 +10,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace biosys
 {
@@ -37,7 +39,7 @@ namespace biosys
                 return builder.ToString();
             }
         }
-        private void btnAltaUsuario_Click(object sender, EventArgs e)
+        private async void btnAltaUsuario_Click(object sender, EventArgs e)
         {
             // Verificar campos vacíos
             if (string.IsNullOrWhiteSpace(txtUsuario.Text) || string.IsNullOrWhiteSpace(txtContraseña.Text) || comborol.SelectedItem == null)
@@ -87,13 +89,62 @@ namespace biosys
 
                 MessageBox.Show("El usuario se dió de alta exitosamente", "Alta de usuario exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                txtUsuario.Text = string.Empty;
-                txtContraseña.Text = string.Empty;
-                txtEmail.Text = string.Empty;
-                comborol.SelectedIndex = -1;
-                lblError.Visible = false;
-
                 CargarUsuariosEnDataGridView();
+
+                // Obtener la API Key de Twilio SendGrid desde una variable de entorno
+                string apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+
+                // Verificar si la API Key se ha configurado correctamente
+                if (string.IsNullOrEmpty(apiKey))
+                {
+                    MessageBox.Show("La API Key de Twilio SendGrid no ha sido configurada correctamente. Por favor, verifique la configuración del entorno.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Crear el cliente de Twilio SendGrid utilizando la API Key
+                SendGridClient client = new SendGridClient(apiKey);
+                string remitente = "soportebiosys@gmail.com";
+                string asunto = "Alta de usuario";
+
+                string contenidoHTML = $"<p>Estimado {nombreUsuario},</p>" +
+                                       "<p>Le informamos que su cuenta ha sido creada exitosamente.</p>" +
+                                       $"<p>Nombre de usuario: {nombreUsuario}</p>" +
+                                       $"<p>Clave: {txtContraseña.Text}</p>" +
+                                       "<p>Le recomendamos cambiar su clave en el primer inicio de sesión.</p>" +
+                                       "<p>Esto lo puede hacer utilizando la opción 'Olvidé mi contraseña' en la pantalla de inicio de sesión y seguir los pasos.</p>" +
+                                       "<br>" +
+                                       "<p>Atentamente,</p>" +
+                                       "<p>Equipo de Soporte</p>";
+
+                EmailAddress from = new EmailAddress(remitente);
+                EmailAddress to = new EmailAddress(email);
+                SendGridMessage message = MailHelper.CreateSingleEmail(from, to, asunto, "", contenidoHTML);
+
+                try
+                {
+                    Response response = await client.SendEmailAsync(message);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK || response.StatusCode == System.Net.HttpStatusCode.Accepted)
+                    {
+                        DialogResult result = MessageBox.Show($"Se envió un correo a {email} con el aviso de alta de usuario.", "Email enviado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        if (result == DialogResult.OK)
+                        {
+                            txtUsuario.Text = string.Empty;
+                            txtContraseña.Text = string.Empty;
+                            txtEmail.Text = string.Empty;
+                            comborol.SelectedIndex = -1;
+                            lblError.Visible = false;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
         private void CargarUsuariosEnDataGridView()
