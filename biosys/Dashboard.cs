@@ -26,10 +26,12 @@ namespace biosys
             this.rol = rol;
 
             IComponenteSeguridad btnInformesSeguridad = new BotonSeguridad(btnInformes);
+            IComponenteSeguridad btnGestionarUsuarioSeguridad = new BotonSeguridad(btnGestionarUsuario);
             IComponenteSeguridad submenuABMSeguridad = new PanelSeguridad(SubmenuABM);
             IComponenteSeguridad submenuAltaProdSeguridad = new PanelSeguridad(SubmenuAltaProd);
 
             btnInformesSeguridad.MostrarElemento(rol);
+            btnGestionarUsuarioSeguridad.MostrarElemento(rol);
             submenuABMSeguridad.MostrarElemento(rol);
             submenuAltaProdSeguridad.MostrarElemento(rol);
 
@@ -192,6 +194,13 @@ namespace biosys
             Recolecciones recoleccionForm = new Recolecciones();
             recoleccionForm.DashboardInstance = this;
             AbrirFormHijo(recoleccionForm);
+        }
+
+        private void btnGestionarUsuario_Click(object sender, EventArgs e)
+        {
+            GestionarUsuario gestusuarioForm = new GestionarUsuario();
+            gestusuarioForm.DashboardInstance = this;
+            AbrirFormHijo(gestusuarioForm);
         }
     }
 }

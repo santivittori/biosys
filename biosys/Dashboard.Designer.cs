@@ -58,6 +58,8 @@
             this.btnCerrarSesion = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.PanelContenedor = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.btnGestionarUsuario = new System.Windows.Forms.Button();
             this.BarraTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnMinimizar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
@@ -152,6 +154,8 @@
             // 
             // Menu
             // 
+            this.Menu.Controls.Add(this.panel7);
+            this.Menu.Controls.Add(this.btnGestionarUsuario);
             this.Menu.Controls.Add(this.SubmenuABM);
             this.Menu.Controls.Add(this.SubmenuAltaProd);
             this.Menu.Controls.Add(this.panel2);
@@ -164,9 +168,9 @@
             this.Menu.Controls.Add(this.panel4);
             this.Menu.Controls.Add(this.btnInformes);
             this.Menu.Controls.Add(this.btnVentas);
-            this.Menu.Location = new System.Drawing.Point(0, 239);
+            this.Menu.Location = new System.Drawing.Point(0, 196);
             this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(277, 418);
+            this.Menu.Size = new System.Drawing.Size(277, 458);
             this.Menu.TabIndex = 16;
             // 
             // SubmenuABM
@@ -485,6 +489,34 @@
             this.PanelContenedor.Size = new System.Drawing.Size(1400, 782);
             this.PanelContenedor.TabIndex = 3;
             // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.Color.CadetBlue;
+            this.panel7.Location = new System.Drawing.Point(0, 415);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(8, 32);
+            this.panel7.TabIndex = 31;
+            // 
+            // btnGestionarUsuario
+            // 
+            this.btnGestionarUsuario.BackColor = System.Drawing.Color.Teal;
+            this.btnGestionarUsuario.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGestionarUsuario.FlatAppearance.BorderSize = 0;
+            this.btnGestionarUsuario.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
+            this.btnGestionarUsuario.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
+            this.btnGestionarUsuario.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGestionarUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGestionarUsuario.ForeColor = System.Drawing.Color.Black;
+            this.btnGestionarUsuario.Image = ((System.Drawing.Image)(resources.GetObject("btnGestionarUsuario.Image")));
+            this.btnGestionarUsuario.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGestionarUsuario.Location = new System.Drawing.Point(6, 415);
+            this.btnGestionarUsuario.Name = "btnGestionarUsuario";
+            this.btnGestionarUsuario.Size = new System.Drawing.Size(271, 32);
+            this.btnGestionarUsuario.TabIndex = 30;
+            this.btnGestionarUsuario.Text = "GESTIONAR USUARIOS";
+            this.btnGestionarUsuario.UseVisualStyleBackColor = false;
+            this.btnGestionarUsuario.Click += new System.EventHandler(this.btnGestionarUsuario_Click);
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -543,5 +575,7 @@
         private System.Windows.Forms.Label lblRol;
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Button btnGestionarUsuario;
     }
 }

@@ -222,6 +222,21 @@ namespace Modelo
                 return dataTable;
             }
         }
+        public static DataTable ObtenerUsuarios()
+        {
+            string sql = "SELECT id AS ID, nombre_usuario AS Nombre, clave AS Constraseña, email AS Email, rol AS Rol FROM usuarios";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                ConexionModelo.CerrarConexion();
+
+                return dataTable;
+            }
+        }
 
         public static DataTable ExecuteQuery(string sql)
         {
@@ -596,6 +611,19 @@ namespace Modelo
                 ConexionModelo.CerrarConexion();
 
                 return count > 0;
+            }
+        }
+        public static void EliminarUsuario(int idUsuario)
+        {
+            string sql = "DELETE FROM usuarios WHERE id = @id";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@id", idUsuario);
+
+                // Ejecutar el comando
+                command.ExecuteNonQuery();
+                ConexionModelo.CerrarConexion();
             }
         }
         public static void EliminarProveedor(int idProveedor)

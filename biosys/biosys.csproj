@@ -94,6 +94,12 @@
     <Compile Include="Donaciones.Designer.cs">
       <DependentUpon>Donaciones.cs</DependentUpon>
     </Compile>
+    <Compile Include="GestionarUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestionarUsuario.Designer.cs">
+      <DependentUpon>GestionarUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Informes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Donaciones.resx">
       <DependentUpon>Donaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestionarUsuario.resx">
+      <DependentUpon>GestionarUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Informes.resx">
       <DependentUpon>Informes.cs</DependentUpon>

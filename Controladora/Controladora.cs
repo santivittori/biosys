@@ -79,6 +79,10 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerProveedores();
         }
+        public static DataTable ObtenerUsuarios()
+        {
+            return ConsultasModelo.ObtenerUsuarios();
+        }
         public static DataTable ExecuteQuery(string sql)
         {
             return ConsultasModelo.ExecuteQuery(sql);
@@ -166,6 +170,10 @@ namespace Controladora
         public static void EliminarProveedor(int idProveedor)
         {
             ConsultasModelo.EliminarProveedor(idProveedor);
+        }
+        public static void EliminarUsuario(int idUsuario)
+        {
+            ConsultasModelo.EliminarUsuario(idUsuario);
         }
         public static bool VerificarProveedorEnCompras(int idProveedor)
         {
