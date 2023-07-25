@@ -44,3 +44,14 @@ C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Microsoft.IO.RecyclableMemor
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\EPPlus.xml
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.GestionarUsuario.resources
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\itextsharp.dll
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\System.Buffers.dll
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\System.Memory.dll
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\itextsharp.xml
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\System.Buffers.xml
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\System.Memory.xml
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml

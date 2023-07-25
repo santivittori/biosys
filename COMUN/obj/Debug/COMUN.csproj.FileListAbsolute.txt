@@ -108,7 +108,6 @@ C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\BouncyCastle.Crypto.xml
 C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\Microsoft.AspNetCore.WebUtilities.xml
 C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\Microsoft.Extensions.Primitives.xml
 C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\Microsoft.Net.Http.Headers.xml
-C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\Newtonsoft.Json.pdb
 C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\Newtonsoft.Json.xml
 C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\Polly.xml
 C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\RestSharp.xml
@@ -137,3 +136,10 @@ C:\Users\vitto\source\repos\biosys\COMUN\obj\Debug\COMUN.csproj.CoreCompileInput
 C:\Users\vitto\source\repos\biosys\COMUN\obj\Debug\COMUN.csproj.CopyComplete
 C:\Users\vitto\source\repos\biosys\COMUN\obj\Debug\COMUN.dll
 C:\Users\vitto\source\repos\biosys\COMUN\obj\Debug\COMUN.pdb
+C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\System.Text.Json.dll
+C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\Polly.pdb
+C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\System.Text.Json.xml
+C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\System.Threading.Tasks.Extensions.xml

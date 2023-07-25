@@ -46,6 +46,8 @@
             this.SemillasTipo = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ArbolesTipo = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.TotalporDivision = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.btnInfEconomicos = new System.Windows.Forms.Button();
+            this.btnExportarPDF = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CantTotal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SemillasTipo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ArbolesTipo)).BeginInit();
@@ -69,7 +71,7 @@
             this.CantTotal.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.CantTotal.Legends.Add(legend1);
-            this.CantTotal.Location = new System.Drawing.Point(950, 125);
+            this.CantTotal.Location = new System.Drawing.Point(856, 146);
             this.CantTotal.Name = "CantTotal";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
@@ -85,7 +87,7 @@
             this.SemillasTipo.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.SemillasTipo.Legends.Add(legend2);
-            this.SemillasTipo.Location = new System.Drawing.Point(97, 125);
+            this.SemillasTipo.Location = new System.Drawing.Point(31, 146);
             this.SemillasTipo.Name = "SemillasTipo";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
@@ -101,7 +103,7 @@
             this.ArbolesTipo.ChartAreas.Add(chartArea3);
             legend3.Name = "Legend1";
             this.ArbolesTipo.Legends.Add(legend3);
-            this.ArbolesTipo.Location = new System.Drawing.Point(97, 413);
+            this.ArbolesTipo.Location = new System.Drawing.Point(31, 441);
             this.ArbolesTipo.Name = "ArbolesTipo";
             series3.ChartArea = "ChartArea1";
             series3.Legend = "Legend1";
@@ -117,7 +119,7 @@
             this.TotalporDivision.ChartAreas.Add(chartArea4);
             legend4.Name = "Legend1";
             this.TotalporDivision.Legends.Add(legend4);
-            this.TotalporDivision.Location = new System.Drawing.Point(950, 413);
+            this.TotalporDivision.Location = new System.Drawing.Point(856, 441);
             this.TotalporDivision.Name = "TotalporDivision";
             series4.ChartArea = "ChartArea1";
             series4.Legend = "Legend1";
@@ -127,12 +129,37 @@
             this.TotalporDivision.TabIndex = 55;
             this.TotalporDivision.Text = "chart1";
             // 
+            // btnInfEconomicos
+            // 
+            this.btnInfEconomicos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnInfEconomicos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInfEconomicos.Location = new System.Drawing.Point(1224, 350);
+            this.btnInfEconomicos.Name = "btnInfEconomicos";
+            this.btnInfEconomicos.Size = new System.Drawing.Size(127, 48);
+            this.btnInfEconomicos.TabIndex = 65;
+            this.btnInfEconomicos.Text = "INFORMES ECONÓMICOS";
+            this.btnInfEconomicos.UseVisualStyleBackColor = true;
+            // 
+            // btnExportarPDF
+            // 
+            this.btnExportarPDF.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExportarPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExportarPDF.Location = new System.Drawing.Point(1224, 441);
+            this.btnExportarPDF.Name = "btnExportarPDF";
+            this.btnExportarPDF.Size = new System.Drawing.Size(127, 48);
+            this.btnExportarPDF.TabIndex = 66;
+            this.btnExportarPDF.Text = "DESCARGAR INFORMES";
+            this.btnExportarPDF.UseVisualStyleBackColor = true;
+            this.btnExportarPDF.Click += new System.EventHandler(this.btnExportarPDF_Click);
+            // 
             // Informes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1384, 743);
+            this.Controls.Add(this.btnExportarPDF);
+            this.Controls.Add(this.btnInfEconomicos);
             this.Controls.Add(this.TotalporDivision);
             this.Controls.Add(this.ArbolesTipo);
             this.Controls.Add(this.SemillasTipo);
@@ -159,5 +186,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart SemillasTipo;
         private System.Windows.Forms.DataVisualization.Charting.Chart ArbolesTipo;
         private System.Windows.Forms.DataVisualization.Charting.Chart TotalporDivision;
+        private System.Windows.Forms.Button btnInfEconomicos;
+        private System.Windows.Forms.Button btnExportarPDF;
     }
 }

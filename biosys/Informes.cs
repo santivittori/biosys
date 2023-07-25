@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using Font = System.Drawing.Font;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Controladora;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 
 namespace biosys
 {
@@ -255,6 +260,82 @@ namespace biosys
 
             TotalporDivision.DataBind();
         }
+        private void ExportarPDF()
+        {
+            // Crear el documento PDF
+            Document doc = new Document(PageSize.A4);
+            string fileName = $"Informes Biosys {DateTime.Now:dd-MM-yyyy}.pdf";
 
+            try
+            {
+                // Mostrar un cuadro de diálogo para guardar el archivo PDF
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
+                saveFileDialog.FileName = fileName;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Crear el archivo PDF en el directorio seleccionado
+                    PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(saveFileDialog.FileName, FileMode.Create));
+                    doc.Open();
+
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(@"C:\Users\vitto\Pictures\Ing de Software\biosys-transp.png");
+                    image.Alignment = Element.ALIGN_CENTER;
+                    doc.Add(image);
+
+                    Paragraph title = new Paragraph("BIOSYS", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 30, iTextSharp.text.Font.BOLD));
+                    title.Alignment = Element.ALIGN_CENTER;
+                    doc.Add(title);
+
+                    // Agregar la fecha del día
+                    Paragraph fecha = new Paragraph(DateTime.Now.ToShortDateString(), new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL));
+                    fecha.Alignment = Element.ALIGN_CENTER;
+                    doc.Add(fecha);
+
+                    // Agregar la información de los gráficos (puedes ajustar el formato y contenido según tus necesidades)
+                    doc.Add(new Paragraph("Información de los gráficos:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 14, iTextSharp.text.Font.BOLD)));
+
+                    // Agregar la información de CantTotal
+                    doc.Add(new Paragraph("\nTotal de Semillas y Árboles:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph($"Cantidad total de semillas = {CantTotal.Series["Semillas"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
+                    doc.Add(new Paragraph($"Cantidad total de árboles = {CantTotal.Series["Árboles"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
+
+                    // Agregar la información de SemillasTipo
+                    doc.Add(new Paragraph("\nStock de Semillas por tipo:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    foreach (Series seriesSemilla in SemillasTipo.Series)
+                    {
+                        doc.Add(new Paragraph($"Cantidad de {seriesSemilla.Name} = {seriesSemilla.Points.FirstOrDefault()?.YValues[0] ?? 0}."));
+                    }
+
+                    // Agregar la información de ArbolesTipo
+                    doc.Add(new Paragraph("\nStock de Árboles por tipo:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    foreach (Series seriesArbol in ArbolesTipo.Series)
+                    {
+                        doc.Add(new Paragraph($"Cantidad de {seriesArbol.Name} = {seriesArbol.Points.FirstOrDefault()?.YValues[0] ?? 0}."));
+                    }
+
+                    // Agregar la información de TotalporDivision
+                    doc.Add(new Paragraph("\nTotales por División:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph($"Total de Compras = {TotalporDivision.Series["Compras"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
+                    doc.Add(new Paragraph($"Total de Donaciones = {TotalporDivision.Series["Donaciones"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
+                    doc.Add(new Paragraph($"Total de Recolecciones = {TotalporDivision.Series["Recolecciones"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
+
+                    // Cerrar el documento
+                    doc.Close();
+                    writer.Close();
+
+                    MessageBox.Show("El archivo PDF se ha generado exitosamente.", "PDF generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Se produjo un error al generar el archivo PDF: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnExportarPDF_Click(object sender, EventArgs e)
+        {
+            ExportarPDF();
+        }
     }
 }
