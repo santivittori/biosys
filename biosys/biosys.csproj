@@ -125,6 +125,12 @@
     <Compile Include="Informes.Designer.cs">
       <DependentUpon>Informes.cs</DependentUpon>
     </Compile>
+    <Compile Include="InformesEconomicos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InformesEconomicos.Designer.cs">
+      <DependentUpon>InformesEconomicos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Inicio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +175,12 @@
     <Compile Include="Registro.Designer.cs">
       <DependentUpon>Registro.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reproduccion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reproduccion.Designer.cs">
+      <DependentUpon>Reproduccion.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Compras.resx">
       <DependentUpon>Compras.cs</DependentUpon>
     </EmbeddedResource>
@@ -183,6 +195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Informes.resx">
       <DependentUpon>Informes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InformesEconomicos.resx">
+      <DependentUpon>InformesEconomicos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inicio.resx">
       <DependentUpon>Inicio.cs</DependentUpon>
@@ -213,6 +228,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Registro.resx">
       <DependentUpon>Registro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reproduccion.resx">
+      <DependentUpon>Reproduccion.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

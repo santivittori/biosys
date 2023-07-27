@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Modelo;
 using Entidad;
+using System.Runtime.Remoting;
 
 namespace Controladora
 {
@@ -95,11 +96,11 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerProductosComboBox();
         }
-        public static bool VerificarProductoExistente(ProductoInfo producto)
+        public static bool VerificarProductoExistente(Producto producto)
         {
             return ConsultasModelo.VerificarProductoExistente(producto);
         }
-        public static void InsertarProducto(ProductoInfo producto)
+        public static void InsertarProducto(Producto producto)
         {
             ConsultasModelo.InsertarProducto(producto);
         }
@@ -130,6 +131,10 @@ namespace Controladora
         public static void ActualizarStock(int productoId, int cantidad)
         {
             ConsultasModelo.ActualizarStock(productoId, cantidad);
+        }
+        public static void DisminuirStock(int productoId, int cantidad)
+        {
+            ConsultasModelo.DisminuirStock(productoId, cantidad);
         }
         public static int ObtenerIdProducto(string nombre, int tipoProducto, int tipoEspecifico)
         {
@@ -167,6 +172,10 @@ namespace Controladora
         {
             return ConsultasModelo.VerificarProductoEnCompras(idProducto);
         }
+        public static bool VerificarProductoEnDetalleSiembra(int idProducto)
+        {
+            return ConsultasModelo.VerificarProductoEnDetalleSiembra(idProducto);
+        }
         public static void EliminarProveedor(int idProveedor)
         {
             ConsultasModelo.EliminarProveedor(idProveedor);
@@ -178,6 +187,38 @@ namespace Controladora
         public static bool VerificarProveedorEnCompras(int idProveedor)
         {
             return ConsultasModelo.VerificarProveedorEnCompras(idProveedor);
+        }
+        public static DataTable ObtenerMontosComprasPorTipo()
+        {
+            return ConsultasModelo.ObtenerMontosComprasPorTipo();
+        }
+        public static List<Producto> ObtenerSemillasConStockMayorCero()
+        {
+            return ConsultasModelo.ObtenerSemillasConStockMayorCero();
+        }
+        public static int GuardarSiembra(SiembraInfo siembraInfo)
+        {
+            return ConsultasModelo.GuardarSiembra(siembraInfo);
+        }
+        public static void GuardarDetalleSiembra(DetalleSiembraInfo detalleSiembraInfo)
+        {
+            ConsultasModelo.GuardarDetalleSiembra(detalleSiembraInfo);
+        }
+        public static void ActualizarStockSiembra(int productoId, int cantidad, List<ProductoConversion> productoConversionList)
+        {
+            ConsultasModelo.ActualizarStockSiembra(productoId, cantidad, productoConversionList);
+        }
+        public static Producto ObtenerProductoArbolPorNombre(string nombre)
+        {
+            return ConsultasModelo.ObtenerProductoArbolPorNombre(nombre);
+        }
+        public static Producto ObtenerProductoPorId(int productoId)
+        {
+            return ConsultasModelo.ObtenerProductoPorId(productoId);
+        }
+        public static int InsertarProductoSiembra(Producto producto, int stockInicial)
+        {
+            return ConsultasModelo.InsertarProductoSiembra(producto, stockInicial);
         }
     }
 }

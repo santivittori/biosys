@@ -83,11 +83,11 @@ namespace biosys
             int tipoProductoID = Convert.ToInt32(comboTipoProducto.SelectedValue);
             int tipoEspecificoID = Convert.ToInt32(comboTipoEspecifico.SelectedValue);
 
-            ProductoInfo producto = new ProductoInfo()
+            Producto producto = new Producto()
             {
                 Nombre = nombre,
-                TipoProducto = tipoProductoID,
-                TipoEspecifico = tipoEspecificoID,
+                TipoProductoId = tipoProductoID,
+                TipoEspecificoId = tipoEspecificoID,
             };
 
             // Verificar si el producto ya existe
@@ -215,9 +215,12 @@ namespace biosys
                 // Verificar si el producto ha sido utilizado en una compra
                 bool productoEnCompra = Controladora.Controladora.VerificarProductoEnCompra(idProducto);
 
-                if (productoEnCompra)
+                // Verificar si el producto ha sido utilizado en detalle_siembra
+                bool productoEnDetalleSiembra = Controladora.Controladora.VerificarProductoEnDetalleSiembra(idProducto);
+
+                if (productoEnCompra || productoEnDetalleSiembra)
                 {
-                    msgError("El producto no puede ser eliminado porque ha sido utilizado en una compra.");
+                    msgError("El producto no puede ser eliminado porque ha sido utilizado.");
                     return;
                 }
 
@@ -387,17 +390,17 @@ namespace biosys
                 string path = openFileDialog.FileName;
 
                 // Leer el contenido del archivo Excel y obtener los datos en una lista de objetos
-                List<ProductoInfo> productos = LeerExcel(path);
+                List<Producto> productos = LeerExcel(path);
 
                 if (productos != null && productos.Count > 0)
                 {
                     // Normalizar los datos y verificar su validez
-                    List<ProductoInfo> productosNormalizados = NormalizarDatos(productos);
+                    List<Producto> productosNormalizados = NormalizarDatos(productos);
 
                     if (productosNormalizados != null && productosNormalizados.Count > 0)
                     {
                         // Agregar los productos normalizados a la base de datos
-                        foreach (ProductoInfo producto in productosNormalizados)
+                        foreach (Producto producto in productosNormalizados)
                         {
                             // Verificar si el producto ya existe en la base de datos
                             bool productoExistente = Controladora.Controladora.VerificarProductoExistente(producto);
@@ -427,9 +430,9 @@ namespace biosys
                 }
             }
         }
-        private List<ProductoInfo> LeerExcel(string filePath)
+        private List<Producto> LeerExcel(string filePath)
         {
-            List<ProductoInfo> productos = new List<ProductoInfo>();
+            List<Producto> productos = new List<Producto>();
 
             using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
@@ -478,11 +481,11 @@ namespace biosys
                     }
 
                     // Agregar los datos leídos a la lista de productos
-                    productos.Add(new ProductoInfo
+                    productos.Add(new Producto
                     {
                         Nombre = nombre,
-                        TipoProducto = tipoProducto,
-                        TipoEspecifico = tipoEspecifico
+                        TipoProductoId = tipoProducto,
+                        TipoEspecificoId = tipoEspecifico
                     });
                 }
             }
@@ -490,11 +493,11 @@ namespace biosys
             return productos;
         }
 
-        private List<ProductoInfo> NormalizarDatos(List<ProductoInfo> productos)
+        private List<Producto> NormalizarDatos(List<Producto> productos)
         {
-            List<ProductoInfo> productosNormalizados = new List<ProductoInfo>();
+            List<Producto> productosNormalizados = new List<Producto>();
 
-            foreach (ProductoInfo producto in productos)
+            foreach (Producto producto in productos)
             {
                 // Verificar que los datos normalizados sean válidos
                 if (IsValid(producto))
@@ -512,7 +515,7 @@ namespace biosys
             return productosNormalizados;
         }
 
-        private bool IsValid(ProductoInfo producto)
+        private bool IsValid(Producto producto)
         {
             // Verificar que el nombre no sea nulo o vacío
             if (string.IsNullOrWhiteSpace(producto.Nombre))
@@ -521,8 +524,8 @@ namespace biosys
             }
 
             // Verificar si los valores son válidos (1 para Árbol o 2 para Semilla) y (1 para Éxotica o 2 para Nativa)
-            if ((producto.TipoProducto == 1 || producto.TipoProducto == 2) &&
-                (producto.TipoEspecifico == 1 || producto.TipoEspecifico == 2))
+            if ((producto.TipoProductoId == 1 || producto.TipoProductoId == 2) &&
+                (producto.TipoEspecificoId == 1 || producto.TipoEspecificoId == 2))
             {
                 return true;
             }

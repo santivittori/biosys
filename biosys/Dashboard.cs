@@ -202,5 +202,12 @@ namespace biosys
             gestusuarioForm.DashboardInstance = this;
             AbrirFormHijo(gestusuarioForm);
         }
+
+        private void btnReproduccion_Click(object sender, EventArgs e)
+        {
+            Reproduccion reproduccionForm = new Reproduccion();
+            reproduccionForm.DashboardInstance = this;
+            AbrirFormHijo(reproduccionForm);
+        }
     }
 }

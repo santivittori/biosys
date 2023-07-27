@@ -337,5 +337,12 @@ namespace biosys
         {
             ExportarPDF();
         }
+
+        private void btnInfEconomicos_Click(object sender, EventArgs e)
+        {
+            InformesEconomicos informesEconomicosForm = new InformesEconomicos();
+            informesEconomicosForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(informesEconomicosForm);
+        }
     }
 }

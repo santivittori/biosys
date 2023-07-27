@@ -46,12 +46,6 @@ namespace Entidad
         public string Email { get; set; }
         public string Rol { get; set; }
     }
-    public class ProductoInfo
-    {
-        public string Nombre { get; set; }
-        public int TipoProducto { get; set; }
-        public int TipoEspecifico { get; set; }
-    }
     public class CompraInfo
     {
         public string NroFactura { get; set; }
@@ -100,5 +94,42 @@ namespace Entidad
         public int RecoleccionId { get; set; }
         public int ProductoId { get; set; }
         public int Cantidad { get; set; }
+    }
+    public class Siembra
+    {
+        public int ProductoId { get; set; }
+        public string Producto { get; set; }
+        public int Cantidad { get; set; }
+    }
+    public class SiembraInfo
+    {
+        public DateTime FechaSiembra { get; set; }
+        public int UsuarioId { get; set; }
+    }
+    public class DetalleSiembraInfo
+    {
+        public int SiembraId { get; set; }
+        public int ProductoId { get; set; }
+        public int Cantidad { get; set; }
+    }
+    public class Producto
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public int TipoProductoId { get; set; }
+        public int TipoEspecificoId { get; set; }
+        public int Stock { get; set; }
+        public int StockDisponible { get; set; }
+    }
+    public class ProductoConversion
+    {
+        public int ProductoSemillaId { get; set; }
+        public int ProductoArbolId { get; set; }
+    }
+    public class StockProducto
+    {
+        public int ProductoId { get; set; }
+        public int StockInicial { get; set; }
+        public int StockDisponible { get; set; }
     }
 }

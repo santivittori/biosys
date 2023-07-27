@@ -58,7 +58,7 @@
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(530, 50);
+            this.labelTitulo.Location = new System.Drawing.Point(550, 50);
             this.labelTitulo.Name = "labelTitulo";
             this.labelTitulo.Size = new System.Drawing.Size(277, 55);
             this.labelTitulo.TabIndex = 51;
@@ -139,6 +139,7 @@
             this.btnInfEconomicos.TabIndex = 65;
             this.btnInfEconomicos.Text = "INFORMES ECONÓMICOS";
             this.btnInfEconomicos.UseVisualStyleBackColor = true;
+            this.btnInfEconomicos.Click += new System.EventHandler(this.btnInfEconomicos_Click);
             // 
             // btnExportarPDF
             // 
@@ -157,7 +158,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
-            this.ClientSize = new System.Drawing.Size(1384, 743);
+            this.ClientSize = new System.Drawing.Size(1400, 782);
             this.Controls.Add(this.btnExportarPDF);
             this.Controls.Add(this.btnInfEconomicos);
             this.Controls.Add(this.TotalporDivision);

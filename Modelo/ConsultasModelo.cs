@@ -280,7 +280,7 @@ namespace Modelo
 
             return productos;
         }
-        public static bool VerificarProductoExistente(ProductoInfo producto)
+        public static bool VerificarProductoExistente(Producto producto)
         {
             string sql = "SELECT COUNT(*) FROM productos WHERE nombre = @nombre AND tipo_producto_id = @tipoProductoID AND tipo_especifico_id = @tipoEspecificoID";
             int count;
@@ -288,15 +288,15 @@ namespace Modelo
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 command.Parameters.AddWithValue("@Nombre", producto.Nombre);
-                command.Parameters.AddWithValue("@TipoProductoID", producto.TipoProducto);
-                command.Parameters.AddWithValue("@TipoEspecificoID", producto.TipoEspecifico);
+                command.Parameters.AddWithValue("@TipoProductoID", producto.TipoProductoId);
+                command.Parameters.AddWithValue("@TipoEspecificoID", producto.TipoEspecificoId);
 
                 count = (int)command.ExecuteScalar();
                 ConexionModelo.CerrarConexion();
             }
             return count > 0;
         }
-        public static void InsertarProducto(ProductoInfo producto)
+        public static void InsertarProducto(Producto producto)
         {
             string sql = "INSERT INTO productos (nombre, tipo_producto_id, tipo_especifico_id, stock) " +
                          "VALUES (@Nombre, @TipoProductoID, @TipoEspecificoID, 0)";
@@ -304,8 +304,8 @@ namespace Modelo
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 command.Parameters.AddWithValue("@Nombre", producto.Nombre);
-                command.Parameters.AddWithValue("@TipoProductoID", producto.TipoProducto);
-                command.Parameters.AddWithValue("@TipoEspecificoID", producto.TipoEspecifico);
+                command.Parameters.AddWithValue("@TipoProductoID", producto.TipoProductoId);
+                command.Parameters.AddWithValue("@TipoEspecificoID", producto.TipoEspecificoId);
 
                 command.ExecuteNonQuery();
                 ConexionModelo.CerrarConexion();
@@ -439,6 +439,20 @@ namespace Modelo
         public static void ActualizarStock(int productoId, int cantidad)
         {
             string sql = "UPDATE productos SET stock = stock + @Cantidad WHERE id = @ProductoId";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@Cantidad", cantidad);
+                command.Parameters.AddWithValue("@ProductoId", productoId);
+
+                command.ExecuteNonQuery();
+                ConexionModelo.CerrarConexion();
+            }
+        }
+
+        public static void DisminuirStock(int productoId, int cantidad)
+        {
+            string sql = "UPDATE productos SET stock = stock - @Cantidad WHERE id = @ProductoId";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
@@ -613,6 +627,21 @@ namespace Modelo
                 return count > 0;
             }
         }
+        public static bool VerificarProductoEnDetalleSiembra(int idProducto)
+        {
+            string sql = "SELECT COUNT(*) FROM detalle_siembra WHERE producto_id = @idProducto";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@idProducto", idProducto);
+
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                ConexionModelo.CerrarConexion();
+
+                return count > 0;
+            }
+        }
+
         public static void EliminarUsuario(int idUsuario)
         {
             string sql = "DELETE FROM usuarios WHERE id = @id";
@@ -651,6 +680,220 @@ namespace Modelo
                 ConexionModelo.CerrarConexion();
 
                 return count > 0;
+            }
+        }
+
+        public static DataTable ObtenerMontosComprasPorTipo()
+        {
+            string sql = "SELECT tp.nombre AS TipoProducto, SUM(dc.precio_total) AS MontoTotal " +
+                         "FROM detalle_compra dc " +
+                         "JOIN productos p ON dc.producto_id = p.id " +
+                         "JOIN tipos_producto tp ON p.tipo_producto_id = tp.id " +
+                         "GROUP BY tp.nombre";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                ConexionModelo.CerrarConexion();
+                return dataTable;
+            }
+        }
+
+        public static List<Producto> ObtenerSemillasConStockMayorCero()
+        {
+            string sql = "SELECT p.id, p.nombre, p.tipo_producto_id, p.tipo_especifico_id, p.stock " +
+                         "FROM productos p " +
+                         "JOIN tipos_producto tp ON p.tipo_producto_id = tp.id " +
+                         "JOIN tipos_especifico te ON p.tipo_especifico_id = te.id " +
+                         "WHERE tp.nombre = 'Semilla' AND p.stock > 0";
+
+            List<Producto> semillasConStock = new List<Producto>();
+
+            DataTable dataTable = ExecuteQuery(sql);
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                int id = Convert.ToInt32(row["id"]);
+                string nombre = row["nombre"].ToString();
+                int tipoProductoId = Convert.ToInt32(row["tipo_producto_id"]);
+                int tipoEspecificoId = Convert.ToInt32(row["tipo_especifico_id"]);
+                int stock = Convert.ToInt32(row["stock"]);
+
+                // Crear el objeto Producto con la información recuperada
+                Producto semilla = new Producto
+                {
+                    Id = id,
+                    Nombre = nombre,
+                    TipoProductoId = tipoProductoId,
+                    TipoEspecificoId = tipoEspecificoId,
+                    Stock = stock
+                    // Puedes agregar más atributos de Producto si es necesario
+                };
+
+                semillasConStock.Add(semilla);
+            }
+
+            return semillasConStock;
+        }
+
+        public static int GuardarSiembra(SiembraInfo siembraInfo)
+        {
+            int siembraId = 0;
+
+            string sql = "INSERT INTO siembra (fecha, usuario_id) VALUES (@FechaSiembra, @UsuarioId); SELECT SCOPE_IDENTITY();";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@FechaSiembra", siembraInfo.FechaSiembra);
+                command.Parameters.AddWithValue("@UsuarioId", siembraInfo.UsuarioId);
+
+                siembraId = Convert.ToInt32(command.ExecuteScalar());
+                ConexionModelo.CerrarConexion();
+            }
+            return siembraId;
+        }
+
+        public static void GuardarDetalleSiembra(DetalleSiembraInfo detalleSiembraInfo)
+        {
+            string sql = "INSERT INTO detalle_siembra (siembra_id, producto_id, cantidad) VALUES (@SiembraId, @ProductoId, @Cantidad);";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@SiembraId", detalleSiembraInfo.SiembraId);
+                command.Parameters.AddWithValue("@ProductoId", detalleSiembraInfo.ProductoId);
+                command.Parameters.AddWithValue("@Cantidad", detalleSiembraInfo.Cantidad);
+
+                command.ExecuteNonQuery();
+                ConexionModelo.CerrarConexion();
+            }
+        }
+
+        public static void ActualizarStockSiembra(int productoId, int cantidad, List<ProductoConversion> productoConversionList)
+        {
+            Producto producto = ObtenerProductoPorId(productoId);
+
+            if (producto != null)
+            {
+                if (producto.TipoProductoId == 2) // Representa a las semillas
+                {
+                    // Buscar la conversión de producto correspondiente en la lista
+                    ProductoConversion conversion = productoConversionList.FirstOrDefault(p => p.ProductoSemillaId == productoId);
+
+                    if (conversion != null)
+                    {
+                        // Restar la cantidad de semillas utilizadas en la siembra del stock actual de semillas
+                        int nuevoStockSemillas = producto.Stock - cantidad;
+
+                        // Actualizar el stock de semillas
+                        ActualizarStock(productoId, nuevoStockSemillas);
+
+                        // Sumar la misma cantidad al stock de árboles del producto de árbol relacionado
+                        int nuevoStockArboles = ObtenerStockPorId(conversion.ProductoArbolId) + cantidad;
+
+                        // Actualizar el stock de árboles
+                        ActualizarStock(conversion.ProductoArbolId, nuevoStockArboles);
+                    }
+                }
+            }
+        }
+
+
+        public static Producto ObtenerProductoPorId(int productoId)
+        {
+            string sql = "SELECT id, nombre, tipo_producto_id, tipo_especifico_id, stock FROM productos WHERE id = @ProductoId";
+
+            Producto producto = null;
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@ProductoId", productoId);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        producto = new Producto
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            Nombre = reader["nombre"].ToString(),
+                            TipoProductoId = Convert.ToInt32(reader["tipo_producto_id"]),
+                            TipoEspecificoId = Convert.ToInt32(reader["tipo_especifico_id"]),
+                            Stock = Convert.ToInt32(reader["stock"])
+                        };
+                    }
+                }
+                ConexionModelo.CerrarConexion();
+            }
+
+            return producto;
+        }
+        public static int ObtenerStockPorId(int productoId)
+        {
+            string sql = "SELECT stock FROM productos WHERE id = @ProductoId";
+
+            int stock = 0;
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@ProductoId", productoId);
+
+                var result = command.ExecuteScalar();
+                if (result != null && int.TryParse(result.ToString(), out int stockValue))
+                {
+                    stock = stockValue;
+                }
+                ConexionModelo.CerrarConexion();
+            }
+            return stock;
+        }
+        public static Producto ObtenerProductoArbolPorNombre(string nombre)
+        {
+            string sql = "SELECT TOP 1 * FROM productos WHERE nombre = @Nombre AND tipo_producto_id = 1";
+
+            Producto producto = null;
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@Nombre", nombre);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        producto = new Producto
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            Nombre = reader["nombre"].ToString(),
+                            TipoProductoId = Convert.ToInt32(reader["tipo_producto_id"]),
+                            TipoEspecificoId = Convert.ToInt32(reader["tipo_especifico_id"]),
+                            Stock = Convert.ToInt32(reader["stock"])
+                        };
+                    }
+                }
+            }
+
+            return producto;
+        }
+        public static int InsertarProductoSiembra(Producto producto, int stockInicial)
+        {
+            string sql = "INSERT INTO productos (nombre, tipo_producto_id, tipo_especifico_id, stock) " +
+                         "VALUES (@Nombre, @TipoProductoID, @TipoEspecificoID, @Stock); SELECT SCOPE_IDENTITY();";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@Nombre", producto.Nombre);
+                command.Parameters.AddWithValue("@TipoProductoID", producto.TipoProductoId);
+                command.Parameters.AddWithValue("@TipoEspecificoID", producto.TipoEspecificoId);
+                command.Parameters.AddWithValue("@Stock", stockInicial);
+
+                int productoId = Convert.ToInt32(command.ExecuteScalar());
+                ConexionModelo.CerrarConexion();
+
+                return productoId;
             }
         }
 
