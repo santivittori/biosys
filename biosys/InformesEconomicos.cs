@@ -24,7 +24,7 @@ namespace biosys
         {
             ComprasTotal();
         }
-        private void ComprasTotal()
+        public void ComprasTotal()
         {
             // Obtener los datos de montos de compras por tipo (Semilla o Árbol)
             DataTable datosComprasPorTipo = Controladora.Controladora.ObtenerMontosComprasPorTipo();
@@ -102,5 +102,18 @@ namespace biosys
             informesForm.DashboardInstance = DashboardInstance;
             DashboardInstance.AbrirFormHijo(informesForm);
         }
+
+        // Método para obtener la información de los gráficos de InformesEconomicos
+        public string ObtenerInformacionGraficos()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            // Información del gráfico de Compras
+            sb.AppendLine($"Total de Compras = ${CompraTotal.Titles[1].Text.Replace("Total: $", "")}");
+            sb.AppendLine();
+
+            return sb.ToString();
+        }
+
     }
 }

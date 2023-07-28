@@ -320,6 +320,15 @@ namespace biosys
                     doc.Add(new Paragraph($"Total de Donaciones = {TotalporDivision.Series["Donaciones"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
                     doc.Add(new Paragraph($"Total de Recolecciones = {TotalporDivision.Series["Recolecciones"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
 
+                    // Initialize the CompraTotal chart in InformesEconomicos form
+                    InformesEconomicos informesEconomicosForm = new InformesEconomicos();
+                    informesEconomicosForm.ComprasTotal();
+
+                    // Agregar la información de InformesEconomicos
+                    string informacionGraficos = informesEconomicosForm.ObtenerInformacionGraficos();
+                    doc.Add(new Paragraph("\nCompras:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph(informacionGraficos, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
+
                     // Cerrar el documento
                     doc.Close();
                     writer.Close();
