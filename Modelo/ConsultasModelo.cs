@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using Entidad;
+using System.Net.Http.Headers;
 
 namespace Modelo
 {
@@ -125,6 +126,44 @@ namespace Modelo
                 command.Parameters.AddWithValue("@nombre_usuario", nombreUsuario);
                 
                 return Convert.ToInt32(command.ExecuteScalar());
+            }
+        }
+
+        // Método para obtener usuario por id
+        public static Usuario ObtenerUsuarioPorId(int idUsuario)
+        {
+            string sql = "SELECT nombre_usuario, clave, email, rol FROM usuarios WHERE id = @idUsuario";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        string nombreUsuario = reader.GetString(0);
+                        string clave = reader.GetString(1);
+                        string email = reader.GetString(2);
+                        string rol = reader.GetString(3);
+
+                        Usuario usuario = new Usuario
+                        {
+                            NombreUsuario = nombreUsuario,
+                            Clave = clave,
+                            Email = email,
+                            Rol = rol
+                        };
+
+                        ConexionModelo.CerrarConexion();
+                        return usuario;
+                    }
+                    else
+                    {
+                        ConexionModelo.CerrarConexion();
+                        return null;
+                    }
+                }
             }
         }
         public static bool VerificarProveedorExistente(ProveedorInfo proveedorInfo)
@@ -655,6 +694,7 @@ namespace Modelo
                 ConexionModelo.CerrarConexion();
             }
         }
+
         public static void EliminarProveedor(int idProveedor)
         {
             string sql = "DELETE FROM proveedores WHERE id = @id";
@@ -894,6 +934,89 @@ namespace Modelo
                 ConexionModelo.CerrarConexion();
 
                 return productoId;
+            }
+        }
+
+        public static void ActualizarUsuario(Usuario usuario)
+        {
+            string sql = "UPDATE usuarios SET nombre_usuario = @nombre_usuario, email = @email, rol = @rol";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@nombre_usuario", usuario.NombreUsuario);
+                command.Parameters.AddWithValue("@email", usuario.Email);
+                command.Parameters.AddWithValue("@rol", usuario.Rol);
+
+
+                command.ExecuteNonQuery();
+                ConexionModelo.CerrarConexion();
+            }
+        }
+
+        public static string ObtenerCorreoUsuario(string nombreUsuario)
+        {
+            try
+            {
+                string sql = "SELECT email FROM usuarios WHERE nombre_usuario = @nombre_usuario";
+
+                using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+                {
+                    command.Parameters.AddWithValue("@nombre_usuario", nombreUsuario);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return reader["email"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al obtener el correo electrónico del usuario: " + ex.Message);
+            }
+
+            return null; // Devuelve null en caso de error o si el usuario no se encuentra.
+        }
+        public static string ObtenerCorreoUsuarioAEliminar(int idUsuario)
+        {
+            try
+            {
+                string sql = "SELECT email FROM usuarios WHERE id = @idUsuario";
+
+                using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+                {
+                    command.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return reader["email"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al obtener el correo electrónico del usuario a eliminar: " + ex.Message);
+            }
+
+            return null; // Devuelve null en caso de error o si el usuario no se encuentra.
+        }
+        public static bool UsuarioUtilizadoEnCompras(int idUsuario)
+        {
+            string sql = "SELECT COUNT(*) FROM compras WHERE usuario_id = @idUsuario";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                ConexionModelo.CerrarConexion();
+
+                return count > 0;
             }
         }
 

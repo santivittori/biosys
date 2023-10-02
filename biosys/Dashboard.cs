@@ -74,12 +74,19 @@ namespace biosys
         // Botón cerrar sesión
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            // Mostrar el formulario de inicio de sesión
-            Login loginForm = new Login();
-            loginForm.Show();
+            // Primero preguntar si está seguro de cerrar sesión
+            DialogResult result = MessageBox.Show("¿Está seguro/a que desea cerrar sesión?", "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            
+            // Si la respuesta es correcta , cerrar sesión
+            if (result == DialogResult.Yes)
+            {
+                // Mostrar el formulario de inicio de sesión
+                Login loginForm = new Login();
+                loginForm.Show();
 
-            // Cerrar el formulario actual
-            this.Close();
+                // Cerrar el formulario actual
+                this.Close();
+            }
         }
 
         // Método para abrir un formulario hijo dentro de un panel contenedor

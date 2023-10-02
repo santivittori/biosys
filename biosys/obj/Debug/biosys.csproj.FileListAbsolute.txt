@@ -2,7 +2,6 @@ C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\biosys.exe.config
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\biosys.exe
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\biosys.pdb
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.csproj.AssemblyReference.cache
-C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.csproj.SuggestedBindingRedirects.cache
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.Properties.Resources.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.csproj.GenerateResource.cache
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.csproj.CoreCompileInputs.cache

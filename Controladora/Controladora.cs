@@ -37,6 +37,10 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerIdUsuario(nombreUsuario);
         }
+        public static Usuario ObtenerUsuarioPorId(int idUsuario)
+        {
+            return ConsultasModelo.ObtenerUsuarioPorId(idUsuario);
+        }
         public static bool VerificarEmailExistente(string email)
         {
             return ConsultasModelo.VerificarEmailExistente(email);
@@ -219,6 +223,22 @@ namespace Controladora
         public static int InsertarProductoSiembra(Producto producto, int stockInicial)
         {
             return ConsultasModelo.InsertarProductoSiembra(producto, stockInicial);
+        }
+        public static void ActualizarUsuario(Usuario usuario)
+        {
+            ConsultasModelo.ActualizarUsuario(usuario);
+        }
+        public static string ObtenerCorreoUsuario(string nombreUsuario)
+        {
+            return ConsultasModelo.ObtenerCorreoUsuario(nombreUsuario);
+        }
+        public static string ObtenerCorreoUsuarioAEliminar(int idUsuario)
+        {
+            return ConsultasModelo.ObtenerCorreoUsuarioAEliminar(idUsuario);
+        }
+        public static bool UsuarioUtilizadoEnCompras(int idUsuario)
+        {
+            return ConsultasModelo.UsuarioUtilizadoEnCompras(idUsuario);
         }
     }
 }

@@ -50,9 +50,15 @@
             this.label8 = new System.Windows.Forms.Label();
             this.dataGridViewUsuarios = new System.Windows.Forms.DataGridView();
             this.btnEliminarUsuario = new System.Windows.Forms.Button();
+            this.btnGuardarEdicion = new System.Windows.Forms.Button();
+            this.btnLimpiarCampos = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtBusqueda = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.btnOjo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOjoCerrado)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
@@ -276,10 +282,10 @@
             // 
             // btnEliminarUsuario
             // 
-            this.btnEliminarUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnEliminarUsuario.BackColor = System.Drawing.Color.Red;
             this.btnEliminarUsuario.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEliminarUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminarUsuario.Location = new System.Drawing.Point(1251, 306);
+            this.btnEliminarUsuario.Location = new System.Drawing.Point(1248, 212);
             this.btnEliminarUsuario.Name = "btnEliminarUsuario";
             this.btnEliminarUsuario.Size = new System.Drawing.Size(127, 48);
             this.btnEliminarUsuario.TabIndex = 106;
@@ -287,12 +293,72 @@
             this.btnEliminarUsuario.UseVisualStyleBackColor = false;
             this.btnEliminarUsuario.Click += new System.EventHandler(this.btnEliminarUsuario_Click);
             // 
+            // btnGuardarEdicion
+            // 
+            this.btnGuardarEdicion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnGuardarEdicion.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGuardarEdicion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGuardarEdicion.Location = new System.Drawing.Point(1248, 295);
+            this.btnGuardarEdicion.Name = "btnGuardarEdicion";
+            this.btnGuardarEdicion.Size = new System.Drawing.Size(127, 48);
+            this.btnGuardarEdicion.TabIndex = 107;
+            this.btnGuardarEdicion.Text = "GUARDAR EDICIÓN";
+            this.btnGuardarEdicion.UseVisualStyleBackColor = false;
+            this.btnGuardarEdicion.Click += new System.EventHandler(this.btnGuardarEdicion_Click);
+            // 
+            // btnLimpiarCampos
+            // 
+            this.btnLimpiarCampos.BackColor = System.Drawing.Color.White;
+            this.btnLimpiarCampos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLimpiarCampos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiarCampos.Location = new System.Drawing.Point(1248, 383);
+            this.btnLimpiarCampos.Name = "btnLimpiarCampos";
+            this.btnLimpiarCampos.Size = new System.Drawing.Size(127, 48);
+            this.btnLimpiarCampos.TabIndex = 108;
+            this.btnLimpiarCampos.Text = "LIMPIAR CAMPOS";
+            this.btnLimpiarCampos.UseVisualStyleBackColor = false;
+            this.btnLimpiarCampos.Click += new System.EventHandler(this.btnLimpiarCampos_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(806, 559);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(40, 43);
+            this.pictureBox1.TabIndex = 112;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(852, 570);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(192, 20);
+            this.label10.TabIndex = 111;
+            this.label10.Text = "Filtrar por Nombre o Email";
+            // 
+            // txtBusqueda
+            // 
+            this.txtBusqueda.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBusqueda.Location = new System.Drawing.Point(785, 608);
+            this.txtBusqueda.Name = "txtBusqueda";
+            this.txtBusqueda.Size = new System.Drawing.Size(336, 26);
+            this.txtBusqueda.TabIndex = 110;
+            this.txtBusqueda.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtBusqueda.TextChanged += new System.EventHandler(this.txtBusqueda_TextChanged);
+            // 
             // GestionarUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.txtBusqueda);
+            this.Controls.Add(this.btnLimpiarCampos);
+            this.Controls.Add(this.btnGuardarEdicion);
             this.Controls.Add(this.btnEliminarUsuario);
             this.Controls.Add(this.dataGridViewUsuarios);
             this.Controls.Add(this.label8);
@@ -315,12 +381,14 @@
             this.Controls.Add(this.comborol);
             this.Controls.Add(this.labelTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GestionarUsuario";
             this.Text = "GestionarUsuario";
             this.Load += new System.EventHandler(this.GestionarUsuario_Load);
             ((System.ComponentModel.ISupportInitialize)(this.btnOjo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOjoCerrado)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -349,5 +417,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DataGridView dataGridViewUsuarios;
         private System.Windows.Forms.Button btnEliminarUsuario;
+        private System.Windows.Forms.Button btnGuardarEdicion;
+        private System.Windows.Forms.Button btnLimpiarCampos;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtBusqueda;
     }
 }

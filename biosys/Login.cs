@@ -14,6 +14,7 @@ using Controladora;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using COMUN;
 using System.Configuration;
+using Entidad;
 
 namespace biosys
 {
@@ -98,8 +99,12 @@ namespace biosys
             // Verificar la autenticación del usuario en la base de datos
             if (Controladora.Controladora.VerificarAutenticacion(nombreUsuario, claveCifrada))
             {
-                // Obtener el rol del usuario desde la base de datos
+                // Obtener el rol y el correo electrónico del usuario desde la base de datos
                 string rol = Controladora.Controladora.ObtenerRolUsuario(nombreUsuario);
+                string correoElectronico = Controladora.Controladora.ObtenerCorreoUsuario(nombreUsuario);
+
+                // Guardar la información del usuario logueado
+                UsuarioActual.UsuarioLogueado = new Usuario { NombreUsuario = nombreUsuario, Rol = rol, Email = correoElectronico };
 
                 // Cerrar el formulario actual (Login)
                 this.Hide();
@@ -113,6 +118,7 @@ namespace biosys
                 msgError("Nombre de usuario o contraseña incorrectos");
             }
         }
+
 
         // Método para cifrar la contraseña utilizando SHA256
         private string GetHash(string input)

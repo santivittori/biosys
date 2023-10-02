@@ -132,4 +132,8 @@ namespace Entidad
         public int StockInicial { get; set; }
         public int StockDisponible { get; set; }
     }
+    public class UsuarioActual
+    {
+        public static Usuario UsuarioLogueado { get; set; }
+    }
 }

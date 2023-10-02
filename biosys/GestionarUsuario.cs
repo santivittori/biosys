@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace biosys
 {
@@ -22,6 +23,11 @@ namespace biosys
         public GestionarUsuario()
         {
             InitializeComponent();
+
+            dataGridViewUsuarios.SelectionChanged += dataGridViewUsuarios_SelectionChanged;
+
+            // Deshabilitar la fila de agregar automáticamente en el DataGridView
+            dataGridViewUsuarios.AllowUserToAddRows = false;
         }
 
         // Método para cifrar la contraseña utilizando SHA256
@@ -224,15 +230,38 @@ namespace biosys
             // Verificar si se seleccionó una fila en el DataGridView
             if (dataGridViewUsuarios.SelectedRows.Count > 0)
             {
-                // Obtener el ID del proveedor seleccionado
+                // Obtener el ID del usuario seleccionado
                 int idUsuario = Convert.ToInt32(dataGridViewUsuarios.SelectedRows[0].Cells["ID"].Value);
 
-                // Eliminar el usuario de la base de datos
-                Controladora.Controladora.EliminarUsuario(idUsuario);
+                // Obtener el correo electrónico del usuario que está actualmente logueado
+                string correoUsuarioLogueado = Entidad.UsuarioActual.UsuarioLogueado.Email;
 
-                // Mostrar mensaje de éxito y actualizar el DataGridView
-                MessageBox.Show("Usuario eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarUsuariosEnDataGridView();
+                // Obtener el correo electrónico del usuario que se intenta eliminar
+                string correoUsuarioAEliminar = Controladora.Controladora.ObtenerCorreoUsuarioAEliminar(idUsuario);
+
+                // Verificar si el usuario ha sido utilizado en alguna compra
+                bool usuarioUtilizadoEnCompras = Controladora.Controladora.UsuarioUtilizadoEnCompras(idUsuario);
+
+                // Comparar los correos electrónicos
+                if (correoUsuarioAEliminar == correoUsuarioLogueado)
+                {
+                    // No permitir eliminar al usuario logueado
+                    MessageBox.Show("No puedes eliminar al usuario con el que has iniciado sesión.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (usuarioUtilizadoEnCompras)
+                {
+                    // No permitir eliminar al usuario si ha sido utilizado en compras
+                    MessageBox.Show("No puedes eliminar un usuario que ha sido utilizado en compras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    // Eliminar el usuario de la base de datos
+                    Controladora.Controladora.EliminarUsuario(idUsuario);
+
+                    // Mostrar mensaje de éxito y actualizar el DataGridView
+                    MessageBox.Show("Usuario eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarUsuariosEnDataGridView();
+                }
             }
             else
             {
@@ -240,5 +269,185 @@ namespace biosys
                 return;
             }
         }
+
+        private void dataGridViewUsuarios_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridViewUsuarios.SelectedRows.Count > 0)
+            {
+                // Obtener los datos del usuario seleccionado
+                int idUsuario = Convert.ToInt32(dataGridViewUsuarios.SelectedRows[0].Cells["ID"].Value);
+                Usuario usuario = Controladora.Controladora.ObtenerUsuarioPorId(idUsuario);
+
+                // Llenar los campos del formulario con los datos del usuario
+                txtUsuario.Text = usuario.NombreUsuario;
+                comborol.SelectedItem = usuario.Rol;
+                txtEmail.Text = usuario.Email;
+
+                // Habilita los campos que se pueden editar (nombre, email y rol)
+                HabilitarCamposEdicion(true);
+
+                // Deshabilitar la edición del campo de contraseña
+                txtContraseña.Enabled = false;
+            }
+            else
+            {
+                // Si no se selecciona ninguna fila, deshabilita solo el campo de contraseña
+                txtContraseña.Enabled = true;
+            }
+        }
+
+        private void HabilitarCamposEdicion(bool habilitar)
+        {
+            txtUsuario.Enabled = habilitar;
+            comborol.Enabled = habilitar;
+            txtEmail.Enabled = habilitar;
+        }
+
+        private void btnGuardarEdicion_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewUsuarios.SelectedRows.Count > 0)
+            {
+                // Obtener los datos del usuario seleccionado
+                int idUsuario = Convert.ToInt32(dataGridViewUsuarios.SelectedRows[0].Cells["ID"].Value);
+                Usuario usuario = Controladora.Controladora.ObtenerUsuarioPorId(idUsuario);
+
+                // Guarda el valor actual del correo electrónico en una variable
+                string correoElectronicoAnterior = usuario.Email;
+
+                // Actualizar los datos del usuario con los valores de los campos editados
+                usuario.NombreUsuario = txtUsuario.Text;
+                usuario.Rol = comborol.SelectedItem.ToString();
+                usuario.Email = txtEmail.Text;
+
+                // Guardar los cambios en la base de datos
+                Controladora.Controladora.ActualizarUsuario(usuario);
+
+                // Deshabilita los campos de edición
+                HabilitarCamposEdicion(false);
+
+                // Actualiza el DataGridView
+                CargarUsuariosEnDataGridView();
+
+                // Envía un correo al usuario notificando los cambios
+                EnviarCorreoNotificacion(usuario, correoElectronicoAnterior);
+
+                MessageBox.Show("Usuario editado exitosamente.", "Edición exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                msgError("Debe seleccionar una fila en el DataGridView para editar un usuario.");
+            }
+        }
+
+        private async void EnviarCorreoNotificacion(Usuario usuario, string correoElectronicoAnterior)
+        {
+            // Obtener el nuevo correo electrónico del usuario
+            string nuevoCorreoElectronico = txtEmail.Text;
+
+            // Verificar si el correo electrónico ha cambiado
+            if (nuevoCorreoElectronico != correoElectronicoAnterior)
+            {
+                // El correo electrónico ha cambiado, verifica si ya existe en la base de datos
+                if (Controladora.Controladora.VerificarExistenciaEmail(nuevoCorreoElectronico))
+                {
+                    MessageBox.Show("El nuevo correo electrónico ya está registrado. Por favor, use otro correo electrónico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            // Obtener la API Key de Twilio SendGrid desde una variable de entorno
+            string apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+
+            // Verificar si la API Key se ha configurado correctamente
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                MessageBox.Show("La API Key de Twilio SendGrid no ha sido configurada correctamente. Por favor, verifique la configuración del entorno.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Crear el cliente de Twilio SendGrid utilizando la API Key
+            SendGridClient client = new SendGridClient(apiKey);
+            string remitente = "soportebiosys@gmail.com";
+            string asunto = "Modificación de usuario";
+            // Configura el contenido del correo
+            string contenidoHTML = $"<p>Estimado {usuario.NombreUsuario},</p>" +
+                                   "<p>Le informamos que su cuenta ha sido modificada exitosamente.</p>" +
+                                   $"<p>Nombre de usuario: {usuario.NombreUsuario}</p>" +
+                                   $"<p>Rol: {usuario.Rol}</p>" +
+                                   "<p>Su contraseña sigue siendo la misma que tenía anteriormente.</p>" +
+                                   "<p>Si desea cambiarla, puede hacerlo en la sección 'Olvidé mi contraseña' antes de iniciar sesión.</p>" +
+                                   "<br>" +
+                                   "<p>Atentamente,</p>" +
+                                   "<p>Equipo de Soporte</p>";
+
+            EmailAddress from = new EmailAddress(remitente);
+            EmailAddress to = new EmailAddress(nuevoCorreoElectronico);
+            SendGridMessage message = MailHelper.CreateSingleEmail(from, to, asunto, "", contenidoHTML);
+
+            try
+            {
+                Response response = await client.SendEmailAsync(message);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK || response.StatusCode == System.Net.HttpStatusCode.Accepted)
+                {
+                    DialogResult result = MessageBox.Show($"El usuario se modificó exitosamente.\n\nSe envió un correo a {nuevoCorreoElectronico} con el aviso de modificación.", "Modificación de usuario y envió de mail", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    if (result == DialogResult.OK)
+                    {
+                        CargarUsuariosEnDataGridView();
+
+                        txtUsuario.Text = string.Empty;
+                        txtContraseña.Text = string.Empty;
+                        txtEmail.Text = string.Empty;
+                        comborol.SelectedIndex = -1;
+                        lblError.Visible = false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnLimpiarCampos_Click(object sender, EventArgs e)
+        {
+            txtUsuario.Text = string.Empty;
+            txtContraseña.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+            comborol.SelectedIndex = -1;
+
+            // Habilitar todos los campos
+            txtUsuario.Enabled = true;
+            comborol.Enabled = true;
+            txtEmail.Enabled = true;
+            txtContraseña.Enabled = true;
+        }
+
+        private void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            string criterioBusqueda = txtBusqueda.Text;
+            FiltrarUsuariosPorNombreOEmail(criterioBusqueda);
+        }
+
+        private void FiltrarUsuariosPorNombreOEmail(string criterioBusqueda)
+        {
+            // Verificar si el campo de búsqueda no está vacío
+            if (string.IsNullOrWhiteSpace(criterioBusqueda))
+            {
+                // Si está vacío, mostrar todos los usuarios
+                CargarUsuariosEnDataGridView();
+            }
+            else
+            {
+                DataTable dataTable = Controladora.Controladora.ObtenerUsuarios();
+                dataTable.DefaultView.RowFilter = $"Nombre LIKE '%{criterioBusqueda}%' OR Email LIKE '%{criterioBusqueda}%'";
+                dataGridViewUsuarios.DataSource = dataTable;
+            }
+        }
+
     }
 }
