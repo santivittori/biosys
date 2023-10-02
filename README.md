@@ -21,7 +21,7 @@ En el proyecto, se utilizó C# para la programación orientada a objetos y SQL S
 
 ## 👨🏽‍💻 Author
 
-- [@santivittori](https://www.github.com/santivittori) - Santiago Vittori
+- [@vittorisantiago](https://www.github.com/vittorisantiago) - Santiago Vittori
 
 
 ## 🙋🏽‍♂️ About Me
