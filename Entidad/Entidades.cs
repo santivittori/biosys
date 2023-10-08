@@ -71,6 +71,15 @@ namespace Entidad
         public string Email { get; set; }
         public string Telefono { get; set; }
     }
+    public class ClienteInfo
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Email { get; set; }
+        public string Telefono { get; set; }
+    }
+
     public class DonacionInfo
     {
         public string Donante { get; set; }
@@ -136,4 +145,53 @@ namespace Entidad
     {
         public static Usuario UsuarioLogueado { get; set; }
     }
+    public class Venta
+    {
+        public int ProductoId { get; set; }
+        public string Producto { get; set; }
+        public int Cantidad { get; set; }
+        public decimal PrecioUnitario { get; set; }
+        public decimal PrecioTotal => Cantidad * PrecioUnitario;
+
+        // Propiedad para el stock original
+        public int StockOriginal { get; set; }
+    }
+    public class DetalleVentaInfo
+    {
+        public int VentaId { get; set; }
+        public int ProductoId { get; set; }
+        public int Cantidad { get; set; }
+        public decimal PrecioUnitario { get; set; }
+        public decimal PrecioTotalDetalle { get; set; }
+    }
+    public class VentaInfo
+    {
+        public DateTime FechaVenta { get; set; }
+        public string ClienteEmail { get; set; }
+        public int UsuarioId { get; set; }
+        public decimal PrecioTotalVenta { get; set; }
+    }
+
+    public class Cliente
+    {
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Email { get; set; }
+
+        public string NombreCompleto => $"{Nombre} {Apellido}";
+
+        public override string ToString()
+        {
+            return NombreCompleto;
+        }
+    }
+    public class ProductoInfo
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string TipoProducto { get; set; } // Tipo de producto (Árbol, Semilla, etc.)
+        public string TipoEspecifico { get; set; } // Tipo específico del producto (Exótica, Nativa, etc.)
+        public int Stock { get; set; }
+    }
+
 }

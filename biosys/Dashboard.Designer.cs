@@ -270,6 +270,7 @@
             this.btnClientes.TabIndex = 15;
             this.btnClientes.Text = "CLIENTES";
             this.btnClientes.UseVisualStyleBackColor = false;
+            this.btnClientes.Click += new System.EventHandler(this.btnClientes_Click);
             // 
             // SubmenuAltaProd
             // 
@@ -478,6 +479,7 @@
             this.btnVentas.TabIndex = 7;
             this.btnVentas.Text = "VENTAS";
             this.btnVentas.UseVisualStyleBackColor = false;
+            this.btnVentas.Click += new System.EventHandler(this.btnVentas_Click);
             // 
             // btnCerrarSesion
             // 

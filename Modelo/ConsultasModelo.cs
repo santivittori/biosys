@@ -1020,5 +1020,229 @@ namespace Modelo
             }
         }
 
+        public static bool VerificarClienteExistente(ClienteInfo clienteInfo)
+        {
+            string sql = "SELECT COUNT(*) FROM clientes WHERE nombre_cliente = @nombre AND apellido_cliente = @apellido AND email_cliente = @email";
+            int count;
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@nombre", clienteInfo.Nombre);
+                command.Parameters.AddWithValue("@apellido", clienteInfo.Apellido);
+                command.Parameters.AddWithValue("@email", clienteInfo.Email);
+
+                count = (int)command.ExecuteScalar();
+                ConexionModelo.CerrarConexion();
+            }
+            return count > 0;
+        }
+
+        public static void ActualizarCliente(ClienteInfo clienteInfo)
+        {
+            string sql = "UPDATE clientes SET nombre_cliente = @nombre, apellido_cliente = @apellido, email_cliente = @email, telefono_cliente = @telefono WHERE id = @id";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@nombre", clienteInfo.Nombre);
+                command.Parameters.AddWithValue("@apellido", clienteInfo.Apellido);
+                command.Parameters.AddWithValue("@email", clienteInfo.Email);
+                command.Parameters.AddWithValue("@telefono", clienteInfo.Telefono);
+                command.Parameters.AddWithValue("@id", clienteInfo.Id);
+
+                command.ExecuteNonQuery();
+                ConexionModelo.CerrarConexion();
+            }
+        }
+        public static void InsertarCliente(ClienteInfo clienteInfo)
+        {
+            string sql = "INSERT INTO clientes (nombre_cliente, apellido_cliente, email_cliente, telefono_cliente) VALUES (@Nombre, @Apellido, @Email, @Telefono)";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@Nombre", clienteInfo.Nombre);
+                command.Parameters.AddWithValue("@Apellido", clienteInfo.Apellido);
+                command.Parameters.AddWithValue("@Email", clienteInfo.Email);
+                command.Parameters.AddWithValue("@Telefono", clienteInfo.Telefono);
+
+                command.ExecuteNonQuery();
+                ConexionModelo.CerrarConexion();
+            }
+        }
+        public static DataTable ObtenerClientes()
+        {
+            string sql = "SELECT id AS ID, nombre_cliente AS Nombre, apellido_cliente AS Apellido, email_cliente AS Email, telefono_cliente AS Telefono FROM clientes";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                ConexionModelo.CerrarConexion();
+
+                return dataTable;
+            }
+        }
+        public static void EliminarCliente(int idCliente)
+        {
+            string sql = "DELETE FROM clientes WHERE id = @id";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@id", idCliente);
+
+                // Ejecutar el comando
+                command.ExecuteNonQuery();
+                ConexionModelo.CerrarConexion();
+            }
+        }
+
+        public static bool VerificarClienteEnVentas(int idCliente)
+        {
+            string sql = "SELECT COUNT(*) FROM ventas WHERE cliente_id = @idProveedor";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@idCliente", idCliente);
+
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                ConexionModelo.CerrarConexion();
+
+                return count > 0;
+            }
+        }
+
+        public static List<Cliente> ObtenerDatosClientes()
+        {
+            List<Cliente> clientes = new List<Cliente>();
+
+            string sql = "SELECT nombre_cliente, apellido_cliente, email_cliente FROM clientes";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string nombre = reader.GetString(0);
+                        string apellido = reader.GetString(1);
+                        string email = reader.GetString(2);
+
+                        Cliente cliente = new Cliente
+                        {
+                            Nombre = nombre,
+                            Apellido = apellido,
+                            Email = email
+                        };
+
+                        clientes.Add(cliente);
+                    }
+                    ConexionModelo.CerrarConexion();
+                }
+            }
+            return clientes;
+        }
+
+        public static List<ProductoInfo> ObtenerProductosStockComboBox()
+        {
+            string sql = "SELECT p.id, p.nombre, tp.nombre AS tipo_producto, te.nombre AS tipo_especifico, p.stock " +
+                         "FROM productos p " +
+                         "JOIN tipos_producto tp ON p.tipo_producto_id = tp.id " +
+                         "JOIN tipos_especifico te ON p.tipo_especifico_id = te.id " +
+                         "WHERE p.stock > 0"; // Agrega esta condición para seleccionar productos con stock mayor que cero
+
+            List<ProductoInfo> productos = new List<ProductoInfo>();
+
+            DataTable dataTable = ExecuteQuery(sql);
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                ProductoInfo producto = new ProductoInfo
+                {
+                    Id = Convert.ToInt32(row["id"]),
+                    Nombre = row["nombre"].ToString(),
+                    TipoProducto = row["tipo_producto"].ToString(),
+                    TipoEspecifico = row["tipo_especifico"].ToString(),
+                    Stock = Convert.ToInt32(row["stock"])
+                };
+
+                productos.Add(producto);
+            }
+
+            return productos;
+        }
+
+        public static ProductoInfo ObtenerProductoInfo(int productoId)
+        {
+            string sql = "SELECT p.id, p.nombre, tp.nombre AS tipo_producto, te.nombre AS tipo_especifico, p.stock " +
+                         "FROM productos p " +
+                         "JOIN tipos_producto tp ON p.tipo_producto_id = tp.id " +
+                         "JOIN tipos_especifico te ON p.tipo_especifico_id = te.id " +
+                         "WHERE p.id = @ProductoId";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@ProductoId", productoId);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new ProductoInfo
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            Nombre = reader["nombre"].ToString(),
+                            TipoProducto = reader["tipo_producto"].ToString(),
+                            TipoEspecifico = reader["tipo_especifico"].ToString(),
+                            Stock = Convert.ToInt32(reader["stock"])
+                        };
+                    }
+                }
+            }
+            ConexionModelo.CerrarConexion();
+
+            return null; // Si no se encuentra el producto, devolvemos null
+        }
+
+        public static int GuardarVenta(VentaInfo ventaInfo)
+        {
+            int ventaId = 0;
+
+            string sql = "INSERT INTO ventas (fecha, cliente_id, usuario_id, precio_total) " +
+                         "VALUES (@FechaVenta, (SELECT id FROM clientes WHERE email_cliente = @ClienteEmail), @UsuarioId, @PrecioTotalVenta);" +
+                         "SELECT SCOPE_IDENTITY();";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@FechaVenta", ventaInfo.FechaVenta);
+                command.Parameters.AddWithValue("@ClienteEmail", ventaInfo.ClienteEmail);
+                command.Parameters.AddWithValue("@UsuarioId", ventaInfo.UsuarioId);
+                command.Parameters.AddWithValue("@PrecioTotalVenta", ventaInfo.PrecioTotalVenta);
+
+                ventaId = Convert.ToInt32(command.ExecuteScalar());
+                ConexionModelo.CerrarConexion();
+            }
+
+            return ventaId;
+        }
+
+        public static void GuardarDetalleVenta(DetalleVentaInfo detalleVentaInfo)
+        {
+            string sql = "INSERT INTO detalle_venta (venta_id, producto_id, cantidad, precio_unitario, precio_total) " +
+                         "VALUES (@VentaId, @ProductoId, @Cantidad, @PrecioUnitario, @PrecioTotalDetalle)";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@VentaId", detalleVentaInfo.VentaId);
+                command.Parameters.AddWithValue("@ProductoId", detalleVentaInfo.ProductoId);
+                command.Parameters.AddWithValue("@Cantidad", detalleVentaInfo.Cantidad);
+                command.Parameters.AddWithValue("@PrecioUnitario", detalleVentaInfo.PrecioUnitario);
+                command.Parameters.AddWithValue("@PrecioTotalDetalle", detalleVentaInfo.PrecioTotalDetalle);
+
+                command.ExecuteNonQuery();
+                ConexionModelo.CerrarConexion();
+            }
+        }
+
     }
 }

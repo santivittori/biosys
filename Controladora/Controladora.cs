@@ -240,5 +240,56 @@ namespace Controladora
         {
             return ConsultasModelo.UsuarioUtilizadoEnCompras(idUsuario);
         }
+        public static bool VerificarClienteExistente(ClienteInfo clienteInfo)
+        {
+            return ConsultasModelo.VerificarClienteExistente(clienteInfo);
+        }
+        public static void ActualizarCliente(ClienteInfo clienteInfo)
+        {
+            ConsultasModelo.ActualizarCliente(clienteInfo);
+        }
+        public static void InsertarCliente(ClienteInfo clienteInfo)
+        {
+            ConsultasModelo.InsertarCliente(clienteInfo);
+        }
+        public static DataTable ObtenerClientes()
+        {
+            return ConsultasModelo.ObtenerClientes();
+        }
+        public static void EliminarCliente(int idCliente)
+        {
+            ConsultasModelo.EliminarCliente(idCliente);
+        }
+        public static bool VerificarClienteEnVentas(int idCliente)
+        {
+            return ConsultasModelo.VerificarClienteEnVentas(idCliente);
+        }
+        public static List<Cliente> ObtenerDatosClientes()
+        {
+            return ConsultasModelo.ObtenerDatosClientes()
+                .Select(cliente => new Cliente
+                {
+                    Nombre = cliente.Nombre,
+                    Apellido = cliente.Apellido,
+                    Email = cliente.Email
+                })
+                .ToList();
+        }
+        public static List<ProductoInfo> ObtenerProductosStockComboBox()
+        {
+            return ConsultasModelo.ObtenerProductosStockComboBox();
+        }
+        public static ProductoInfo ObtenerProductoInfo(int productoId)
+        {
+            return Modelo.ConsultasModelo.ObtenerProductoInfo(productoId);
+        }
+        public static int GuardarVenta(VentaInfo ventaInfo)
+        {
+            return ConsultasModelo.GuardarVenta(ventaInfo);
+        }
+        public static void GuardarDetalleVenta(DetalleVentaInfo detalleVentaInfo)
+        {
+            ConsultasModelo.GuardarDetalleVenta(detalleVentaInfo);
+        }
     }
 }

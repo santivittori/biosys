@@ -216,5 +216,19 @@ namespace biosys
             reproduccionForm.DashboardInstance = this;
             AbrirFormHijo(reproduccionForm);
         }
+
+        private void btnClientes_Click(object sender, EventArgs e)
+        {
+            Clientes clientesForm = new Clientes();
+            clientesForm.DashboardInstance = this;
+            AbrirFormHijo(clientesForm);
+        }
+
+        private void btnVentas_Click(object sender, EventArgs e)
+        {
+            Ventas ventasForm = new Ventas();
+            ventasForm.DashboardInstance = this;
+            AbrirFormHijo(ventasForm);
+        }
     }
 }

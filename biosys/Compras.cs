@@ -186,7 +186,6 @@ namespace biosys
             comboProveedor.SelectedIndex = -1;
         }
 
-
         private void CargarProductos()
         {
             List<string> productos = Controladora.Controladora.ObtenerProductosComboBox();

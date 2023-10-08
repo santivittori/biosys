@@ -56,3 +56,5 @@ C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.InformesEconomicos.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.Reproduccion.resources
+C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.Clientes.resources
+C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.Ventas.resources
