@@ -104,6 +104,16 @@ namespace biosys
                 return;
             }
 
+            // Verificar si el producto es de tipo "Semilla"
+            if (tipoProducto == 2)
+            {
+                // Actualizar el stock de producto de tipo "Árbol"
+                Controladora.Controladora.ActualizarStockArbol(productoId, cantidad);
+
+                // Restar la cantidad de semillas sembradas del stock de semillas
+                Controladora.Controladora.DisminuirStock(productoId, cantidad);
+            }
+
             // Crear el objeto Siembra y agregarlo a la lista
             Siembra siembra = new Siembra
             {
@@ -266,6 +276,8 @@ namespace biosys
 
             int siembraId = Controladora.Controladora.GuardarSiembra(siembraInfo);
 
+            Producto productoArbol = null;
+
             foreach (Siembra siembra in siembraList)
             {
                 int productoId = siembra.ProductoId;
@@ -294,7 +306,7 @@ namespace biosys
                 // Actualizar el stock de semillas
                 Controladora.Controladora.DisminuirStock(productoId, cantidad);
 
-                Producto productoArbol = Controladora.Controladora.ObtenerProductoArbolPorNombre(productoSemilla.Nombre);
+                productoArbol = Controladora.Controladora.ObtenerProductoArbolPorNombre(productoSemilla.Nombre);
 
                 if (productoArbol == null)
                 {

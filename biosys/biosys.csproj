@@ -95,6 +95,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BajaProductos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BajaProductos.Designer.cs">
+      <DependentUpon>BajaProductos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Clientes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +142,12 @@
     </Compile>
     <Compile Include="InformesEconomicos.Designer.cs">
       <DependentUpon>InformesEconomicos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InformesReproduccion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InformesReproduccion.Designer.cs">
+      <DependentUpon>InformesReproduccion.cs</DependentUpon>
     </Compile>
     <Compile Include="Inicio.cs">
       <SubType>Form</SubType>
@@ -193,6 +205,9 @@
     <Compile Include="Ventas.Designer.cs">
       <DependentUpon>Ventas.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="BajaProductos.resx">
+      <DependentUpon>BajaProductos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Clientes.resx">
       <DependentUpon>Clientes.cs</DependentUpon>
     </EmbeddedResource>
@@ -213,6 +228,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InformesEconomicos.resx">
       <DependentUpon>InformesEconomicos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InformesReproduccion.resx">
+      <DependentUpon>InformesReproduccion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inicio.resx">
       <DependentUpon>Inicio.cs</DependentUpon>

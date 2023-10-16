@@ -812,36 +812,6 @@ namespace Modelo
             }
         }
 
-        public static void ActualizarStockSiembra(int productoId, int cantidad, List<ProductoConversion> productoConversionList)
-        {
-            Producto producto = ObtenerProductoPorId(productoId);
-
-            if (producto != null)
-            {
-                if (producto.TipoProductoId == 2) // Representa a las semillas
-                {
-                    // Buscar la conversión de producto correspondiente en la lista
-                    ProductoConversion conversion = productoConversionList.FirstOrDefault(p => p.ProductoSemillaId == productoId);
-
-                    if (conversion != null)
-                    {
-                        // Restar la cantidad de semillas utilizadas en la siembra del stock actual de semillas
-                        int nuevoStockSemillas = producto.Stock - cantidad;
-
-                        // Actualizar el stock de semillas
-                        ActualizarStock(productoId, nuevoStockSemillas);
-
-                        // Sumar la misma cantidad al stock de árboles del producto de árbol relacionado
-                        int nuevoStockArboles = ObtenerStockPorId(conversion.ProductoArbolId) + cantidad;
-
-                        // Actualizar el stock de árboles
-                        ActualizarStock(conversion.ProductoArbolId, nuevoStockArboles);
-                    }
-                }
-            }
-        }
-
-
         public static Producto ObtenerProductoPorId(int productoId)
         {
             string sql = "SELECT id, nombre, tipo_producto_id, tipo_especifico_id, stock FROM productos WHERE id = @ProductoId";
@@ -1099,7 +1069,7 @@ namespace Modelo
 
         public static bool VerificarClienteEnVentas(int idCliente)
         {
-            string sql = "SELECT COUNT(*) FROM ventas WHERE cliente_id = @idProveedor";
+            string sql = "SELECT COUNT(*) FROM ventas WHERE cliente_id = @idCliente";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
@@ -1149,7 +1119,7 @@ namespace Modelo
                          "FROM productos p " +
                          "JOIN tipos_producto tp ON p.tipo_producto_id = tp.id " +
                          "JOIN tipos_especifico te ON p.tipo_especifico_id = te.id " +
-                         "WHERE p.stock > 0"; // Agrega esta condición para seleccionar productos con stock mayor que cero
+                         "WHERE p.stock > 0";  // Agregar esta condición para filtrar productos con stock > 0
 
             List<ProductoInfo> productos = new List<ProductoInfo>();
 
@@ -1170,38 +1140,6 @@ namespace Modelo
             }
 
             return productos;
-        }
-
-        public static ProductoInfo ObtenerProductoInfo(int productoId)
-        {
-            string sql = "SELECT p.id, p.nombre, tp.nombre AS tipo_producto, te.nombre AS tipo_especifico, p.stock " +
-                         "FROM productos p " +
-                         "JOIN tipos_producto tp ON p.tipo_producto_id = tp.id " +
-                         "JOIN tipos_especifico te ON p.tipo_especifico_id = te.id " +
-                         "WHERE p.id = @ProductoId";
-
-            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
-            {
-                command.Parameters.AddWithValue("@ProductoId", productoId);
-
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        return new ProductoInfo
-                        {
-                            Id = Convert.ToInt32(reader["id"]),
-                            Nombre = reader["nombre"].ToString(),
-                            TipoProducto = reader["tipo_producto"].ToString(),
-                            TipoEspecifico = reader["tipo_especifico"].ToString(),
-                            Stock = Convert.ToInt32(reader["stock"])
-                        };
-                    }
-                }
-            }
-            ConexionModelo.CerrarConexion();
-
-            return null; // Si no se encuentra el producto, devolvemos null
         }
 
         public static int GuardarVenta(VentaInfo ventaInfo)
@@ -1241,6 +1179,167 @@ namespace Modelo
 
                 command.ExecuteNonQuery();
                 ConexionModelo.CerrarConexion();
+            }
+        }
+
+        public static DataTable ObtenerMontosVentasPorTipo()
+        {
+            string sql = "SELECT tp.nombre AS TipoProducto, SUM(dv.precio_total) AS MontoTotal " +
+                         "FROM detalle_venta dv " +
+                         "JOIN productos p ON dv.producto_id = p.id " +
+                         "JOIN tipos_producto tp ON p.tipo_producto_id = tp.id " +
+                         "GROUP BY tp.nombre";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                ConexionModelo.CerrarConexion();
+                return dataTable;
+            }
+        }
+
+        public static DataTable ObtenerTresArbolesMasVendidos()
+        {
+            string sql = "SELECT TOP 3 p.nombre AS Producto, SUM(dv.cantidad) AS CantidadVendida, SUM(dv.precio_total) AS MontoTotal " +
+                         "FROM detalle_venta dv " +
+                         "JOIN productos p ON dv.producto_id = p.id " +
+                         "WHERE p.tipo_producto_id = 1 " + // 1 representa el ID de Árbol en tu tabla de tipos de producto
+                         "GROUP BY p.nombre " +
+                         "ORDER BY CantidadVendida DESC";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                ConexionModelo.CerrarConexion();
+                return dataTable;
+            }
+        }
+
+        public static DataTable ObtenerTresSemillasMasCompradas()
+        {
+            string sql = "SELECT TOP 3 p.nombre AS Producto, SUM(dc.cantidad) AS CantidadComprada, SUM(dc.precio_total) AS MontoTotal " +
+                         "FROM detalle_compra dc " +
+                         "JOIN productos p ON dc.producto_id = p.id " +
+                         "WHERE p.tipo_producto_id = 2 " + // 2 representa el ID de Semilla en tu tabla de tipos de producto
+                         "GROUP BY p.nombre " +
+                         "ORDER BY CantidadComprada DESC";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                ConexionModelo.CerrarConexion();
+                return dataTable;
+            }
+        }
+
+        public static int ObtenerStockProducto(string productName)
+        {
+            string sql = "SELECT stock FROM productos WHERE nombre = @Nombre";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@Nombre", productName);
+
+                object result = command.ExecuteScalar();
+                if (result != null)
+                {
+                    return Convert.ToInt32(result);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+        }
+
+        public static void DisminuirStockProducto(string productName, int cantidad)
+        {
+            string sql = "UPDATE productos SET stock = stock - @Cantidad WHERE nombre = @Nombre";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@Cantidad", cantidad);
+                command.Parameters.AddWithValue("@Nombre", productName);
+
+                command.ExecuteNonQuery();
+                ConexionModelo.CerrarConexion();
+            }
+        }
+
+        public static void ActualizarStockArbol(int productoId, int cantidad)
+        {
+            string sql = "UPDATE productos " +
+                         "SET stock = stock + @Cantidad " +
+                         "WHERE id = @ProductoId";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@Cantidad", cantidad);
+                command.Parameters.AddWithValue("@ProductoId", productoId);
+
+                command.ExecuteNonQuery();
+                ConexionModelo.CerrarConexion();
+            }
+        }
+
+        public static void RegistrarBajaProducto(string productName, int cantidadBaja, string motivo)
+        {
+            DateTime fechaBaja = DateTime.Now;
+
+            string sql = "INSERT INTO bajas_productos (producto_id, cantidad, motivo, fecha_baja) " +
+                         "SELECT p.id, @cantidadBaja, @motivo, @fechaBaja " +
+                         "FROM productos p " +
+                         "WHERE p.nombre = @productName";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@cantidadBaja", cantidadBaja);
+                command.Parameters.AddWithValue("@motivo", motivo);
+                command.Parameters.AddWithValue("@fechaBaja", fechaBaja);
+                command.Parameters.AddWithValue("@productName", productName);
+
+                command.ExecuteNonQuery();
+
+                ConexionModelo.CerrarConexion();
+            }
+        }
+
+        public static DataTable ObtenerDatosBajasProductos()
+        {
+            string sql = "SELECT motivo, SUM(cantidad) AS Total " +
+                         "FROM bajas_productos " +
+                         "GROUP BY motivo";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                ConexionModelo.CerrarConexion();
+                return dataTable;
+            }
+        }
+        public static DataTable ObtenerDatosBajasTotales()
+        {
+            string sql = "SELECT 'Total' AS motivo, SUM(cantidad) AS Total " +
+                         "FROM bajas_productos";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                ConexionModelo.CerrarConexion();
+                return dataTable;
             }
         }
 

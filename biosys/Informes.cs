@@ -320,14 +320,21 @@ namespace biosys
                     doc.Add(new Paragraph($"Total de Donaciones = {TotalporDivision.Series["Donaciones"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
                     doc.Add(new Paragraph($"Total de Recolecciones = {TotalporDivision.Series["Recolecciones"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
 
-                    // Initialize the CompraTotal chart in InformesEconomicos form
-                    InformesEconomicos informesEconomicosForm = new InformesEconomicos();
-                    informesEconomicosForm.ComprasTotal();
 
-                    // Agregar la información de InformesEconomicos
+                    InformesEconomicos informesEconomicosForm = new InformesEconomicos();
+                    informesEconomicosForm.ObtenerInformacionGraficos();
                     string informacionGraficos = informesEconomicosForm.ObtenerInformacionGraficos();
-                    doc.Add(new Paragraph("\nCompras:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph("\nInformes Economicos:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
                     doc.Add(new Paragraph(informacionGraficos, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
+
+                    
+                    // Agregar la información de BajasTotales y BajasPorMotivo desde InformesReproduccion
+                    InformesReproduccion informesReproduccionForm = new InformesReproduccion();
+                    informesReproduccionForm.ObtenerInfoGraficosReprod();
+                    string informacionGraficosReprod = informesReproduccionForm.ObtenerInfoGraficosReprod();
+                    doc.Add(new Paragraph("\nInformes Reproducción:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph(informacionGraficosReprod, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
+
 
                     // Cerrar el documento
                     doc.Close();
@@ -352,6 +359,13 @@ namespace biosys
             InformesEconomicos informesEconomicosForm = new InformesEconomicos();
             informesEconomicosForm.DashboardInstance = DashboardInstance;
             DashboardInstance.AbrirFormHijo(informesEconomicosForm);
+        }
+
+        private void btnInfReproduccion_Click(object sender, EventArgs e)
+        {
+            InformesReproduccion informesReproduccionForm = new InformesReproduccion();
+            informesReproduccionForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(informesReproduccionForm);
         }
     }
 }

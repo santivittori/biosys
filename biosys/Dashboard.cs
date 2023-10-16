@@ -230,5 +230,12 @@ namespace biosys
             ventasForm.DashboardInstance = this;
             AbrirFormHijo(ventasForm);
         }
+
+        private void btnBajaProductos_Click(object sender, EventArgs e)
+        {
+            BajaProductos bajaProdForm = new BajaProductos();
+            bajaProdForm.DashboardInstance = this;
+            AbrirFormHijo(bajaProdForm);
+        }
     }
 }

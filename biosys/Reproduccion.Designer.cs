@@ -119,7 +119,7 @@
             this.numericCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numericCantidad.Location = new System.Drawing.Point(412, 285);
             this.numericCantidad.Maximum = new decimal(new int[] {
-            1000,
+            100000,
             0,
             0,
             0});

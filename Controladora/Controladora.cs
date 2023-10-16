@@ -208,10 +208,6 @@ namespace Controladora
         {
             ConsultasModelo.GuardarDetalleSiembra(detalleSiembraInfo);
         }
-        public static void ActualizarStockSiembra(int productoId, int cantidad, List<ProductoConversion> productoConversionList)
-        {
-            ConsultasModelo.ActualizarStockSiembra(productoId, cantidad, productoConversionList);
-        }
         public static Producto ObtenerProductoArbolPorNombre(string nombre)
         {
             return ConsultasModelo.ObtenerProductoArbolPorNombre(nombre);
@@ -279,10 +275,6 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerProductosStockComboBox();
         }
-        public static ProductoInfo ObtenerProductoInfo(int productoId)
-        {
-            return Modelo.ConsultasModelo.ObtenerProductoInfo(productoId);
-        }
         public static int GuardarVenta(VentaInfo ventaInfo)
         {
             return ConsultasModelo.GuardarVenta(ventaInfo);
@@ -290,6 +282,42 @@ namespace Controladora
         public static void GuardarDetalleVenta(DetalleVentaInfo detalleVentaInfo)
         {
             ConsultasModelo.GuardarDetalleVenta(detalleVentaInfo);
+        }
+        public static DataTable ObtenerMontosVentasPorTipo()
+        {
+            return ConsultasModelo.ObtenerMontosVentasPorTipo();
+        }
+        public static DataTable ObtenerTresArbolesMasVendidos()
+        {
+            return ConsultasModelo.ObtenerTresArbolesMasVendidos();
+        }
+        public static DataTable ObtenerTresSemillasMasCompradas()
+        {
+            return ConsultasModelo.ObtenerTresSemillasMasCompradas();
+        }
+        public static int ObtenerStockProducto(string productName)
+        {
+            return ConsultasModelo.ObtenerStockProducto(productName);
+        }
+        public static void DisminuirStockProducto(string productName, int cantidad)
+        {
+            ConsultasModelo.DisminuirStockProducto(productName, cantidad);
+        }
+        public static void ActualizarStockArbol(int productoId, int cantidad)
+        {
+            ConsultasModelo.ActualizarStockArbol(productoId, cantidad);
+        }
+        public static void RegistrarBajaProducto(string productName, int cantidadBaja, string motivo)
+        {
+            ConsultasModelo.RegistrarBajaProducto(productName, cantidadBaja, motivo);
+        }
+        public static DataTable ObtenerDatosBajasProductos()
+        {
+            return ConsultasModelo.ObtenerDatosBajasProductos();
+        }
+        public static DataTable ObtenerDatosBajasTotales()
+        {
+            return ConsultasModelo.ObtenerDatosBajasTotales();
         }
     }
 }

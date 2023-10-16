@@ -37,6 +37,8 @@
             this.lblRol = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.Menu = new System.Windows.Forms.Panel();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.btnBajaProductos = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.btnGestionarUsuario = new System.Windows.Forms.Button();
             this.SubmenuABM = new System.Windows.Forms.Panel();
@@ -154,6 +156,8 @@
             // 
             // Menu
             // 
+            this.Menu.Controls.Add(this.panel8);
+            this.Menu.Controls.Add(this.btnBajaProductos);
             this.Menu.Controls.Add(this.panel7);
             this.Menu.Controls.Add(this.btnGestionarUsuario);
             this.Menu.Controls.Add(this.SubmenuABM);
@@ -170,8 +174,36 @@
             this.Menu.Controls.Add(this.btnVentas);
             this.Menu.Location = new System.Drawing.Point(0, 196);
             this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(277, 458);
+            this.Menu.Size = new System.Drawing.Size(277, 492);
             this.Menu.TabIndex = 16;
+            // 
+            // panel8
+            // 
+            this.panel8.BackColor = System.Drawing.Color.CadetBlue;
+            this.panel8.Location = new System.Drawing.Point(0, 453);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(8, 32);
+            this.panel8.TabIndex = 33;
+            // 
+            // btnBajaProductos
+            // 
+            this.btnBajaProductos.BackColor = System.Drawing.Color.Teal;
+            this.btnBajaProductos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnBajaProductos.FlatAppearance.BorderSize = 0;
+            this.btnBajaProductos.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
+            this.btnBajaProductos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
+            this.btnBajaProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBajaProductos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBajaProductos.ForeColor = System.Drawing.Color.Black;
+            this.btnBajaProductos.Image = ((System.Drawing.Image)(resources.GetObject("btnBajaProductos.Image")));
+            this.btnBajaProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBajaProductos.Location = new System.Drawing.Point(6, 453);
+            this.btnBajaProductos.Name = "btnBajaProductos";
+            this.btnBajaProductos.Size = new System.Drawing.Size(271, 32);
+            this.btnBajaProductos.TabIndex = 32;
+            this.btnBajaProductos.Text = "BAJA PRODUCTOS";
+            this.btnBajaProductos.UseVisualStyleBackColor = false;
+            this.btnBajaProductos.Click += new System.EventHandler(this.btnBajaProductos_Click);
             // 
             // panel7
             // 
@@ -580,5 +612,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Button btnGestionarUsuario;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Button btnBajaProductos;
     }
 }
