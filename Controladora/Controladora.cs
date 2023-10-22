@@ -236,6 +236,10 @@ namespace Controladora
         {
             return ConsultasModelo.UsuarioUtilizadoEnCompras(idUsuario);
         }
+        public static bool UsuarioUtilizadoEnVentas(int idUsuario)
+        {
+            return ConsultasModelo.UsuarioUtilizadoEnVentas(idUsuario);
+        }
         public static bool VerificarClienteExistente(ClienteInfo clienteInfo)
         {
             return ConsultasModelo.VerificarClienteExistente(clienteInfo);

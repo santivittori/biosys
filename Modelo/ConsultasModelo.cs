@@ -263,7 +263,7 @@ namespace Modelo
         }
         public static DataTable ObtenerUsuarios()
         {
-            string sql = "SELECT id AS ID, nombre_usuario AS Nombre, clave AS Constraseña, email AS Email, rol AS Rol FROM usuarios";
+            string sql = "SELECT id AS ID, nombre_usuario AS Nombre, email AS Email, rol AS Rol FROM usuarios";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
@@ -978,6 +978,20 @@ namespace Modelo
         public static bool UsuarioUtilizadoEnCompras(int idUsuario)
         {
             string sql = "SELECT COUNT(*) FROM compras WHERE usuario_id = @idUsuario";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                ConexionModelo.CerrarConexion();
+
+                return count > 0;
+            }
+        }
+        public static bool UsuarioUtilizadoEnVentas(int idUsuario)
+        {
+            string sql = "SELECT COUNT(*) FROM ventas WHERE usuario_id = @idUsuario";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {

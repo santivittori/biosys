@@ -30,32 +30,16 @@ namespace biosys
             dataGridViewUsuarios.AllowUserToAddRows = false;
         }
 
-        // Método para cifrar la contraseña utilizando SHA256
-        private string GetHash(string input)
-        {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
-        }
         private async void btnAltaUsuario_Click(object sender, EventArgs e)
         {
             // Verificar campos vacíos
-            if (string.IsNullOrWhiteSpace(txtUsuario.Text) || string.IsNullOrWhiteSpace(txtContraseña.Text) || comborol.SelectedItem == null)
+            if (string.IsNullOrWhiteSpace(txtUsuario.Text) || comborol.SelectedItem == null)
             {
                 msgError("Por favor, complete todos los campos.");
                 return;
             }
 
             string nombreUsuario = txtUsuario.Text;
-            string clave = GetHash(txtContraseña.Text);
             string rol = comborol.SelectedItem.ToString();
             string email = txtEmail.Text;
 
@@ -85,7 +69,7 @@ namespace biosys
                 Usuario usuario = new Usuario
                 {
                     NombreUsuario = nombreUsuario,
-                    Clave = clave,
+                    Clave = string.Empty,
                     Rol = rol,
                     Email = email
                 };
@@ -111,8 +95,7 @@ namespace biosys
                 string contenidoHTML = $"<p>Estimado {nombreUsuario},</p>" +
                                        "<p>Le informamos que su cuenta ha sido creada exitosamente.</p>" +
                                        $"<p>Nombre de usuario: {nombreUsuario}</p>" +
-                                       $"<p>Clave: {txtContraseña.Text}</p>" +
-                                       "<p>Le recomendamos cambiar su clave en el primer inicio de sesión.</p>" +
+                                       "<p>Deberá crear su clave para poder iniciar sesión.</p>" +
                                        "<p>Esto lo puede hacer utilizando la opción 'Olvidé mi contraseña' en la pantalla de inicio de sesión y seguir los pasos.</p>" +
                                        "<br>" +
                                        "<p>Atentamente,</p>" +
@@ -134,7 +117,6 @@ namespace biosys
                             CargarUsuariosEnDataGridView();
 
                             txtUsuario.Text = string.Empty;
-                            txtContraseña.Text = string.Empty;
                             txtEmail.Text = string.Empty;
                             comborol.SelectedIndex = -1;
                             lblError.Visible = false;
@@ -162,57 +144,10 @@ namespace biosys
             lblError.Text = "      " + msg;
             lblError.Visible = true;
         }
-        private void btnOjo_Click(object sender, EventArgs e)
-        {
-            txtContraseña.UseSystemPasswordChar = true;
-            btnOjo.Visible = false;
-            btnOjoCerrado.Visible = true;
-        }
-        private void btnOjoCerrado_Click(object sender, EventArgs e)
-        {
-            if (txtContraseña.Text != "")
-            {
-                txtContraseña.UseSystemPasswordChar = false;
-                btnOjoCerrado.Visible = false;
-                btnOjo.Visible = true;
-            }
-        }
 
-        private void txtContraseña_Enter(object sender, EventArgs e)
-        {
-            if (txtContraseña.Text == "")
-            {
-                txtContraseña.UseSystemPasswordChar = true;
-            }
-        }
-        private void txtContraseña_Leave(object sender, EventArgs e)
-        {
-            if (txtContraseña.Text == "")
-            {
-                txtContraseña.UseSystemPasswordChar = false;
-            }
-        }
-        private void txtUsuario_Click(object sender, EventArgs e)
-        {
-            if (txtContraseña.Text == "")
-            {
-                btnOjo.Visible = false;
-                btnOjoCerrado.Visible = true;
-            }
-        }
-        private void txtEmail_Click(object sender, EventArgs e)
-        {
-            if (txtContraseña.Text == "")
-            {
-                btnOjo.Visible = false;
-                btnOjoCerrado.Visible = true;
-            }
-        }
         private void GestionarUsuario_Load(object sender, EventArgs e)
         {
             CargarUsuariosEnDataGridView();
-            btnOjoCerrado.Visible = true;
-            btnOjo.Visible = false;
         }
 
         private void txtUsuario_TextChanged(object sender, EventArgs e)
@@ -242,6 +177,9 @@ namespace biosys
                 // Verificar si el usuario ha sido utilizado en alguna compra
                 bool usuarioUtilizadoEnCompras = Controladora.Controladora.UsuarioUtilizadoEnCompras(idUsuario);
 
+                // Verificar si el usuario ha sido utilizado en alguna venta
+                bool usuarioUtilizadoEnVentas = Controladora.Controladora.UsuarioUtilizadoEnVentas(idUsuario);
+
                 // Comparar los correos electrónicos
                 if (correoUsuarioAEliminar == correoUsuarioLogueado)
                 {
@@ -251,7 +189,12 @@ namespace biosys
                 else if (usuarioUtilizadoEnCompras)
                 {
                     // No permitir eliminar al usuario si ha sido utilizado en compras
-                    MessageBox.Show("No puedes eliminar un usuario que ha sido utilizado en compras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No puedes eliminar un usuario que ha sido utilizado en el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (usuarioUtilizadoEnVentas)
+                {
+                    // No permitir eliminar al usuario si ha sido utilizado en ventas
+                    MessageBox.Show("No puedes eliminar un usuario que ha sido utilizado en el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -283,24 +226,10 @@ namespace biosys
                 comborol.SelectedItem = usuario.Rol;
                 txtEmail.Text = usuario.Email;
 
-                // Habilita los campos que se pueden editar (nombre, email y rol)
-                HabilitarCamposEdicion(true);
-
-                // Deshabilitar la edición del campo de contraseña
-                txtContraseña.Enabled = false;
+                txtUsuario.Enabled = true;
+                comborol.Enabled = true;
+                txtEmail.Enabled = true;
             }
-            else
-            {
-                // Si no se selecciona ninguna fila, deshabilita solo el campo de contraseña
-                txtContraseña.Enabled = true;
-            }
-        }
-
-        private void HabilitarCamposEdicion(bool habilitar)
-        {
-            txtUsuario.Enabled = habilitar;
-            comborol.Enabled = habilitar;
-            txtEmail.Enabled = habilitar;
         }
 
         private void btnGuardarEdicion_Click(object sender, EventArgs e)
@@ -322,8 +251,9 @@ namespace biosys
                 // Guardar los cambios en la base de datos
                 Controladora.Controladora.ActualizarUsuario(usuario);
 
-                // Deshabilita los campos de edición
-                HabilitarCamposEdicion(false);
+                txtUsuario.Enabled = false;
+                comborol.Enabled = false;
+                txtEmail.Enabled = false;
 
                 // Actualiza el DataGridView
                 CargarUsuariosEnDataGridView();
@@ -371,7 +301,7 @@ namespace biosys
             string asunto = "Modificación de usuario";
             // Configura el contenido del correo
             string contenidoHTML = $"<p>Estimado {usuario.NombreUsuario},</p>" +
-                                   "<p>Le informamos que su cuenta ha sido modificada exitosamente.</p>" +
+                                   "<p>Le informamos que su cuenta ha sido modificada.</p>" +
                                    $"<p>Nombre de usuario: {usuario.NombreUsuario}</p>" +
                                    $"<p>Rol: {usuario.Rol}</p>" +
                                    "<p>Su contraseña sigue siendo la misma que tenía anteriormente.</p>" +
@@ -396,7 +326,6 @@ namespace biosys
                         CargarUsuariosEnDataGridView();
 
                         txtUsuario.Text = string.Empty;
-                        txtContraseña.Text = string.Empty;
                         txtEmail.Text = string.Empty;
                         comborol.SelectedIndex = -1;
                         lblError.Visible = false;
@@ -416,7 +345,6 @@ namespace biosys
         private void btnLimpiarCampos_Click(object sender, EventArgs e)
         {
             txtUsuario.Text = string.Empty;
-            txtContraseña.Text = string.Empty;
             txtEmail.Text = string.Empty;
             comborol.SelectedIndex = -1;
 
@@ -424,7 +352,6 @@ namespace biosys
             txtUsuario.Enabled = true;
             comborol.Enabled = true;
             txtEmail.Enabled = true;
-            txtContraseña.Enabled = true;
         }
 
         private void txtBusqueda_TextChanged(object sender, EventArgs e)

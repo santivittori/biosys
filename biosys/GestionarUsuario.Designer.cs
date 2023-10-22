@@ -30,21 +30,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GestionarUsuario));
             this.labelTitulo = new System.Windows.Forms.Label();
-            this.btnOjo = new System.Windows.Forms.PictureBox();
-            this.btnOjoCerrado = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comborol = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.lblError = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.txtUsuario = new System.Windows.Forms.TextBox();
-            this.txtContraseña = new System.Windows.Forms.TextBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.btnAltaUsuario = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
@@ -55,8 +50,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOjo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOjoCerrado)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -71,28 +64,6 @@
             this.labelTitulo.TabIndex = 50;
             this.labelTitulo.Text = "GESTIONAR USUARIOS";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // btnOjo
-            // 
-            this.btnOjo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnOjo.Image = ((System.Drawing.Image)(resources.GetObject("btnOjo.Image")));
-            this.btnOjo.Location = new System.Drawing.Point(592, 229);
-            this.btnOjo.Name = "btnOjo";
-            this.btnOjo.Size = new System.Drawing.Size(32, 34);
-            this.btnOjo.TabIndex = 60;
-            this.btnOjo.TabStop = false;
-            this.btnOjo.Click += new System.EventHandler(this.btnOjo_Click);
-            // 
-            // btnOjoCerrado
-            // 
-            this.btnOjoCerrado.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnOjoCerrado.Image = ((System.Drawing.Image)(resources.GetObject("btnOjoCerrado.Image")));
-            this.btnOjoCerrado.Location = new System.Drawing.Point(592, 229);
-            this.btnOjoCerrado.Name = "btnOjoCerrado";
-            this.btnOjoCerrado.Size = new System.Drawing.Size(38, 34);
-            this.btnOjoCerrado.TabIndex = 59;
-            this.btnOjoCerrado.TabStop = false;
-            this.btnOjoCerrado.Click += new System.EventHandler(this.btnOjoCerrado_Click);
             // 
             // label1
             // 
@@ -125,21 +96,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(46, 179);
+            this.label2.Location = new System.Drawing.Point(46, 226);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(128, 20);
             this.label2.TabIndex = 61;
             this.label2.Text = "Nombre Usuario:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(46, 240);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 20);
-            this.label3.TabIndex = 62;
-            this.label3.Text = "Contraseña:";
             // 
             // label4
             // 
@@ -197,23 +158,12 @@
             this.label5.TabIndex = 80;
             this.label5.Text = "*";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Red;
-            this.label6.Location = new System.Drawing.Point(144, 240);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(15, 20);
-            this.label6.TabIndex = 81;
-            this.label6.Text = "*";
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Red;
-            this.label7.Location = new System.Drawing.Point(175, 179);
+            this.label7.Location = new System.Drawing.Point(175, 226);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(15, 20);
             this.label7.TabIndex = 82;
@@ -222,22 +172,11 @@
             // txtUsuario
             // 
             this.txtUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsuario.Location = new System.Drawing.Point(250, 176);
+            this.txtUsuario.Location = new System.Drawing.Point(250, 223);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(336, 26);
             this.txtUsuario.TabIndex = 83;
-            this.txtUsuario.Click += new System.EventHandler(this.txtUsuario_Click);
             this.txtUsuario.TextChanged += new System.EventHandler(this.txtUsuario_TextChanged);
-            // 
-            // txtContraseña
-            // 
-            this.txtContraseña.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtContraseña.Location = new System.Drawing.Point(250, 237);
-            this.txtContraseña.Name = "txtContraseña";
-            this.txtContraseña.Size = new System.Drawing.Size(336, 26);
-            this.txtContraseña.TabIndex = 84;
-            this.txtContraseña.Enter += new System.EventHandler(this.txtContraseña_Enter);
-            this.txtContraseña.Leave += new System.EventHandler(this.txtContraseña_Leave);
             // 
             // txtEmail
             // 
@@ -246,7 +185,6 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(336, 26);
             this.txtEmail.TabIndex = 85;
-            this.txtEmail.Click += new System.EventHandler(this.txtEmail_Click);
             // 
             // btnAltaUsuario
             // 
@@ -277,7 +215,7 @@
             this.dataGridViewUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewUsuarios.Location = new System.Drawing.Point(683, 176);
             this.dataGridViewUsuarios.Name = "dataGridViewUsuarios";
-            this.dataGridViewUsuarios.Size = new System.Drawing.Size(545, 321);
+            this.dataGridViewUsuarios.Size = new System.Drawing.Size(444, 321);
             this.dataGridViewUsuarios.TabIndex = 88;
             // 
             // btnEliminarUsuario
@@ -285,7 +223,7 @@
             this.btnEliminarUsuario.BackColor = System.Drawing.Color.Red;
             this.btnEliminarUsuario.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEliminarUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminarUsuario.Location = new System.Drawing.Point(1248, 212);
+            this.btnEliminarUsuario.Location = new System.Drawing.Point(1185, 229);
             this.btnEliminarUsuario.Name = "btnEliminarUsuario";
             this.btnEliminarUsuario.Size = new System.Drawing.Size(127, 48);
             this.btnEliminarUsuario.TabIndex = 106;
@@ -298,7 +236,7 @@
             this.btnGuardarEdicion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.btnGuardarEdicion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnGuardarEdicion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuardarEdicion.Location = new System.Drawing.Point(1248, 295);
+            this.btnGuardarEdicion.Location = new System.Drawing.Point(1185, 312);
             this.btnGuardarEdicion.Name = "btnGuardarEdicion";
             this.btnGuardarEdicion.Size = new System.Drawing.Size(127, 48);
             this.btnGuardarEdicion.TabIndex = 107;
@@ -311,7 +249,7 @@
             this.btnLimpiarCampos.BackColor = System.Drawing.Color.White;
             this.btnLimpiarCampos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLimpiarCampos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiarCampos.Location = new System.Drawing.Point(1248, 383);
+            this.btnLimpiarCampos.Location = new System.Drawing.Point(1185, 400);
             this.btnLimpiarCampos.Name = "btnLimpiarCampos";
             this.btnLimpiarCampos.Size = new System.Drawing.Size(127, 48);
             this.btnLimpiarCampos.TabIndex = 108;
@@ -322,7 +260,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(806, 559);
+            this.pictureBox1.Location = new System.Drawing.Point(761, 560);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(40, 43);
             this.pictureBox1.TabIndex = 112;
@@ -332,7 +270,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(852, 570);
+            this.label10.Location = new System.Drawing.Point(807, 571);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(192, 20);
             this.label10.TabIndex = 111;
@@ -341,7 +279,7 @@
             // txtBusqueda
             // 
             this.txtBusqueda.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBusqueda.Location = new System.Drawing.Point(785, 608);
+            this.txtBusqueda.Location = new System.Drawing.Point(740, 609);
             this.txtBusqueda.Name = "txtBusqueda";
             this.txtBusqueda.Size = new System.Drawing.Size(336, 26);
             this.txtBusqueda.TabIndex = 110;
@@ -364,19 +302,14 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.btnAltaUsuario);
             this.Controls.Add(this.txtEmail);
-            this.Controls.Add(this.txtContraseña);
             this.Controls.Add(this.txtUsuario);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.lblError);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.btnOjo);
-            this.Controls.Add(this.btnOjoCerrado);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comborol);
             this.Controls.Add(this.labelTitulo);
@@ -385,8 +318,6 @@
             this.Name = "GestionarUsuario";
             this.Text = "GestionarUsuario";
             this.Load += new System.EventHandler(this.GestionarUsuario_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.btnOjo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOjoCerrado)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -397,21 +328,16 @@
         #endregion
 
         private System.Windows.Forms.Label labelTitulo;
-        private System.Windows.Forms.PictureBox btnOjo;
-        private System.Windows.Forms.PictureBox btnOjoCerrado;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.ComboBox comborol;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label lblError;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtUsuario;
-        private System.Windows.Forms.TextBox txtContraseña;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Button btnAltaUsuario;
         private System.Windows.Forms.Label label8;

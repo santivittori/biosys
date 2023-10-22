@@ -87,7 +87,7 @@ namespace biosys
             // Agregar los datos a la serie
             foreach (DataRow row in datosBajas.Rows)
             {
-                int cantidad = Convert.ToInt32(row["Total"]);
+                int cantidad = row["Total"] != DBNull.Value ? Convert.ToInt32(row["Total"]) : 0;
                 string motivo = "Total";
 
                 // Agregar un punto al gráfico de torta
