@@ -49,6 +49,7 @@
             this.btnInfEconomicos = new System.Windows.Forms.Button();
             this.btnExportarPDF = new System.Windows.Forms.Button();
             this.btnInfReproduccion = new System.Windows.Forms.Button();
+            this.btnDescargaGrafica = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CantTotal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SemillasTipo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ArbolesTipo)).BeginInit();
@@ -134,7 +135,7 @@
             // 
             this.btnInfEconomicos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnInfEconomicos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInfEconomicos.Location = new System.Drawing.Point(1224, 295);
+            this.btnInfEconomicos.Location = new System.Drawing.Point(1224, 290);
             this.btnInfEconomicos.Name = "btnInfEconomicos";
             this.btnInfEconomicos.Size = new System.Drawing.Size(150, 63);
             this.btnInfEconomicos.TabIndex = 65;
@@ -146,11 +147,11 @@
             // 
             this.btnExportarPDF.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExportarPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportarPDF.Location = new System.Drawing.Point(1224, 393);
+            this.btnExportarPDF.Location = new System.Drawing.Point(1224, 473);
             this.btnExportarPDF.Name = "btnExportarPDF";
             this.btnExportarPDF.Size = new System.Drawing.Size(150, 59);
             this.btnExportarPDF.TabIndex = 66;
-            this.btnExportarPDF.Text = "DESCARGAR INFORMES";
+            this.btnExportarPDF.Text = "DESCARGAR COMPLETA";
             this.btnExportarPDF.UseVisualStyleBackColor = true;
             this.btnExportarPDF.Click += new System.EventHandler(this.btnExportarPDF_Click);
             // 
@@ -158,7 +159,7 @@
             // 
             this.btnInfReproduccion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnInfReproduccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInfReproduccion.Location = new System.Drawing.Point(1224, 485);
+            this.btnInfReproduccion.Location = new System.Drawing.Point(1224, 190);
             this.btnInfReproduccion.Name = "btnInfReproduccion";
             this.btnInfReproduccion.Size = new System.Drawing.Size(150, 59);
             this.btnInfReproduccion.TabIndex = 67;
@@ -166,12 +167,25 @@
             this.btnInfReproduccion.UseVisualStyleBackColor = true;
             this.btnInfReproduccion.Click += new System.EventHandler(this.btnInfReproduccion_Click);
             // 
+            // btnDescargaGrafica
+            // 
+            this.btnDescargaGrafica.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDescargaGrafica.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDescargaGrafica.Location = new System.Drawing.Point(1224, 576);
+            this.btnDescargaGrafica.Name = "btnDescargaGrafica";
+            this.btnDescargaGrafica.Size = new System.Drawing.Size(150, 59);
+            this.btnDescargaGrafica.TabIndex = 68;
+            this.btnDescargaGrafica.Text = "DESCARGA GRÁFICA";
+            this.btnDescargaGrafica.UseVisualStyleBackColor = true;
+            this.btnDescargaGrafica.Click += new System.EventHandler(this.btnDescargaGrafica_Click);
+            // 
             // Informes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnDescargaGrafica);
             this.Controls.Add(this.btnInfReproduccion);
             this.Controls.Add(this.btnExportarPDF);
             this.Controls.Add(this.btnInfEconomicos);
@@ -204,5 +218,6 @@
         private System.Windows.Forms.Button btnInfEconomicos;
         private System.Windows.Forms.Button btnExportarPDF;
         private System.Windows.Forms.Button btnInfReproduccion;
+        private System.Windows.Forms.Button btnDescargaGrafica;
     }
 }

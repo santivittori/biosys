@@ -6,4 +6,4 @@ C:\Users\vitto\source\repos\biosys\Modelo\obj\Debug\Modelo.dll
 C:\Users\vitto\source\repos\biosys\Modelo\obj\Debug\Modelo.pdb
 C:\Users\vitto\source\repos\biosys\Modelo\bin\Debug\Entidad.dll
 C:\Users\vitto\source\repos\biosys\Modelo\bin\Debug\Entidad.pdb
-C:\Users\vitto\source\repos\biosys\Modelo\obj\Debug\Modelo.csproj.CopyComplete
+C:\Users\vitto\source\repos\biosys\Modelo\obj\Debug\Modelo.csproj.Up2Date

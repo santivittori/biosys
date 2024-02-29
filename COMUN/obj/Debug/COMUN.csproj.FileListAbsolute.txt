@@ -133,7 +133,6 @@ C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\UglyToad.PdfPig.Tokens.pdb
 C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\UglyToad.PdfPig.Tokens.xml
 C:\Users\vitto\source\repos\biosys\COMUN\obj\Debug\COMUN.csproj.AssemblyReference.cache
 C:\Users\vitto\source\repos\biosys\COMUN\obj\Debug\COMUN.csproj.CoreCompileInputs.cache
-C:\Users\vitto\source\repos\biosys\COMUN\obj\Debug\COMUN.csproj.CopyComplete
 C:\Users\vitto\source\repos\biosys\COMUN\obj\Debug\COMUN.dll
 C:\Users\vitto\source\repos\biosys\COMUN\obj\Debug\COMUN.pdb
 C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
@@ -143,3 +142,4 @@ C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\Microsoft.Bcl.AsyncInterfaces
 C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\Polly.pdb
 C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\System.Text.Json.xml
 C:\Users\vitto\source\repos\biosys\COMUN\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\vitto\source\repos\biosys\COMUN\obj\Debug\COMUN.csproj.Up2Date

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.IO;
 
 namespace biosys
 {
@@ -78,18 +81,18 @@ namespace biosys
             // Establecer el tamaño de la fuente para las etiquetas personalizadas dentro del gráfico
             foreach (DataPoint dataPoint in seriesTorta.Points)
             {
-                dataPoint.Font = new Font("Arial", 11, FontStyle.Regular);
+                dataPoint.Font = new System.Drawing.Font("Arial", 11, FontStyle.Regular);
             }
 
             // Mostrar el título del gráfico
             CompraTotal.Titles.Clear();
             CompraTotal.Titles.Add("Compras");
-            CompraTotal.Titles[0].Font = new Font("Arial", 12, FontStyle.Bold);
+            CompraTotal.Titles[0].Font = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
 
             // Mostrar el total en la parte inferior del gráfico
             decimal totalCompras = datosComprasPorTipo.AsEnumerable().Sum(row => row.Field<decimal>("MontoTotal"));
             CompraTotal.Titles.Add($"Total: ${totalCompras.ToString("N2")}");
-            CompraTotal.Titles[1].Font = new Font("Arial", 12, FontStyle.Regular);
+            CompraTotal.Titles[1].Font = new System.Drawing.Font("Arial", 12, FontStyle.Regular);
 
             // Configurar el color de la serie
             CompraTotal.Palette = ChartColorPalette.None;
@@ -201,18 +204,18 @@ namespace biosys
             // Establecer el tamaño de la fuente para las etiquetas personalizadas dentro del gráfico
             foreach (DataPoint dataPoint in seriesTorta.Points)
             {
-                dataPoint.Font = new Font("Arial", 11, FontStyle.Regular);
+                dataPoint.Font = new System.Drawing.Font("Arial", 11, FontStyle.Regular);
             }
 
             // Mostrar el título del gráfico
             VentaTotal.Titles.Clear();
             VentaTotal.Titles.Add("Ventas");
-            VentaTotal.Titles[0].Font = new Font("Arial", 12, FontStyle.Bold);
+            VentaTotal.Titles[0].Font = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
 
             // Mostrar el total en la parte inferior del gráfico
             decimal totalVentas = datosVentasPorTipo.AsEnumerable().Sum(row => row.Field<decimal>("MontoTotal"));
             VentaTotal.Titles.Add($"Total: ${totalVentas.ToString("N2")}");
-            VentaTotal.Titles[1].Font = new Font("Arial", 12, FontStyle.Regular);
+            VentaTotal.Titles[1].Font = new System.Drawing.Font("Arial", 12, FontStyle.Regular);
 
             // Configurar el color de la serie
             VentaTotal.Palette = ChartColorPalette.None;
@@ -236,7 +239,7 @@ namespace biosys
                 // No hay datos, mostrar un mensaje predeterminado
                 chartArboles.Series.Clear();
                 chartArboles.Titles.Clear();
-                chartArboles.Titles.Add(new Title("Aún no hay ventas de árboles", Docking.Top, new Font("Arial", 12, FontStyle.Bold), Color.Black));
+                chartArboles.Titles.Add(new Title("Aún no hay ventas de árboles", Docking.Top, new System.Drawing.Font("Arial", 12, FontStyle.Bold), Color.Black));
             }
         }
 
@@ -255,7 +258,7 @@ namespace biosys
                 // No hay datos, mostrar un mensaje predeterminado
                 chartSemillas.Series.Clear();
                 chartSemillas.Titles.Clear();
-                chartSemillas.Titles.Add(new Title("Aún no hay compras de semillas", Docking.Top, new Font("Arial", 12, FontStyle.Bold), Color.Black));
+                chartSemillas.Titles.Add(new Title("Aún no hay compras de semillas", Docking.Top, new System.Drawing.Font("Arial", 12, FontStyle.Bold), Color.Black));
             }
         }
 
@@ -284,7 +287,7 @@ namespace biosys
 
             chart.Series.Add(seriesBarras);
             chart.Titles.Clear();
-            chart.Titles.Add(new Title(titulo, Docking.Top, new Font("Arial", 12, FontStyle.Bold), Color.Black));
+            chart.Titles.Add(new Title(titulo, Docking.Top, new System.Drawing.Font("Arial", 12, FontStyle.Bold), Color.Black));
 
             chart.ChartAreas[0].AxisX.Title = ejeX;
             chart.ChartAreas[0].AxisY.Title = ejeY;
@@ -295,6 +298,74 @@ namespace biosys
             chart.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
 
             chart.DataBind();
+        }
+
+        private void ExportarPDFGraficosEconomicos()
+        {
+            // Crear el documento PDF
+            Document doc = new Document(PageSize.A4);
+            string fileName = $"Graficos Economicos Biosys {DateTime.Now:dd-MM-yyyy}.pdf";
+
+            try
+            {
+                // Mostrar un cuadro de diálogo para guardar el archivo PDF
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
+                saveFileDialog.FileName = fileName;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Crear el archivo PDF en el directorio seleccionado
+                    PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(saveFileDialog.FileName, FileMode.Create));
+                    doc.Open();
+
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(@"C:\Users\vitto\Pictures\Ing de Software\biosys-transp.png");
+                    image.Alignment = Element.ALIGN_CENTER;
+                    doc.Add(image);
+
+                    Paragraph title = new Paragraph("BIOSYS", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 30, iTextSharp.text.Font.BOLD));
+                    title.Alignment = Element.ALIGN_CENTER;
+                    doc.Add(title);
+
+                    // Agregar la fecha del día
+                    Paragraph fecha = new Paragraph(DateTime.Now.ToShortDateString(), new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL));
+                    fecha.Alignment = Element.ALIGN_CENTER;
+                    doc.Add(fecha);
+
+                    // Agregar la información de los gráficos (puedes ajustar el formato y contenido según tus necesidades)
+                    doc.Add(new Paragraph("Información de los gráficos:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 14, iTextSharp.text.Font.BOLD)));
+
+                    // Agregar los gráficos
+                    AgregarGraficoAPDF(doc, chartArboles);
+                    AgregarGraficoAPDF(doc, chartSemillas);
+                    AgregarGraficoAPDF(doc, CompraTotal);
+                    AgregarGraficoAPDF(doc, VentaTotal);
+
+                    doc.Close();
+                    writer.Close();
+
+                    MessageBox.Show("El archivo PDF se ha generado exitosamente.", "PDF generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Se produjo un error al generar el archivo PDF: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void AgregarGraficoAPDF(Document doc, Chart chart)
+        {
+            // Agregar el gráfico al PDF
+            MemoryStream memoryStream = new MemoryStream();
+            chart.SaveImage(memoryStream, ChartImageFormat.Png);
+            iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(memoryStream.GetBuffer());
+            image.Alignment = Element.ALIGN_CENTER;
+            doc.Add(image);
+        }
+
+        private void btnDescargaGrafica_Click(object sender, EventArgs e)
+        {
+            ExportarPDFGraficosEconomicos();
         }
     }
 }

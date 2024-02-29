@@ -18,7 +18,6 @@ C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Controladora.dll
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Modelo.dll
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Controladora.pdb
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\Modelo.pdb
-C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.csproj.CopyComplete
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\COMUN.dll
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\COMUN.pdb
 C:\Users\vitto\source\repos\biosys\biosys\bin\Debug\COMUN.dll.config
@@ -60,3 +59,4 @@ C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.Clientes.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.Ventas.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.InformesReproduccion.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.BajaProductos.resources
+C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.csproj.Up2Date

@@ -367,5 +367,106 @@ namespace biosys
             informesReproduccionForm.DashboardInstance = DashboardInstance;
             DashboardInstance.AbrirFormHijo(informesReproduccionForm);
         }
+
+        private void ExportarPDFGrafico()
+        {
+            // Crear el documento PDF
+            Document doc = new Document(PageSize.A4);
+            string fileName = $"Graficos Biosys {DateTime.Now:dd-MM-yyyy}.pdf";
+
+            try
+            {
+                // Mostrar un cuadro de diálogo para guardar el archivo PDF
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
+                saveFileDialog.FileName = fileName;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Crear el archivo PDF en el directorio seleccionado
+                    PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(saveFileDialog.FileName, FileMode.Create));
+                    doc.Open();
+
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(@"C:\Users\vitto\Pictures\Ing de Software\biosys-transp.png");
+                    image.Alignment = Element.ALIGN_CENTER;
+                    doc.Add(image);
+
+                    Paragraph title = new Paragraph("BIOSYS", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 30, iTextSharp.text.Font.BOLD));
+                    title.Alignment = Element.ALIGN_CENTER;
+                    doc.Add(title);
+
+                    // Agregar la fecha del día
+                    Paragraph fecha = new Paragraph(DateTime.Now.ToShortDateString(), new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL));
+                    fecha.Alignment = Element.ALIGN_CENTER;
+                    doc.Add(fecha);
+
+                    // Agregar la información de los gráficos (puedes ajustar el formato y contenido según tus necesidades)
+                    doc.Add(new Paragraph("Información de los gráficos:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 14, iTextSharp.text.Font.BOLD)));
+
+                    // Agregar los gráficos al PDF con sus respectivos títulos e información
+                    AgregarGraficoAPDF(doc, "", CantTotal);
+
+                    AgregarGraficoAPDF(doc, "", SemillasTipo);
+                    AgregarInformacionSemillas(doc);
+
+                    AgregarGraficoAPDF(doc, "", ArbolesTipo);
+                    AgregarInformacionArboles(doc);
+
+                    AgregarGraficoAPDF(doc, "", TotalporDivision);
+
+                    doc.Close();
+                    writer.Close();
+
+                    MessageBox.Show("El archivo PDF se ha generado exitosamente.", "PDF generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Se produjo un error al generar el archivo PDF: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Método para agregar un gráfico al PDF con un título
+        private void AgregarGraficoAPDF(Document doc, string titulo, Chart chart)
+        {
+            Paragraph paragraph = new Paragraph(titulo, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD));
+            paragraph.Alignment = Element.ALIGN_CENTER;
+            doc.Add(paragraph);
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                chart.SaveImage(stream, ChartImageFormat.Png);
+                iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(stream.GetBuffer());
+                image.Alignment = Element.ALIGN_CENTER;
+                doc.Add(image);
+            }
+        }
+
+        // Método para agregar información de semillas al PDF
+        private void AgregarInformacionSemillas(Document doc)
+        {
+            doc.Add(new Paragraph("Información de Stock de Semillas por Tipo:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+
+            foreach (Series seriesSemilla in SemillasTipo.Series)
+            {
+                doc.Add(new Paragraph($"Cantidad de {seriesSemilla.Name} = {seriesSemilla.Points.FirstOrDefault()?.YValues[0] ?? 0}.", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+            }
+        }
+
+        // Método para agregar información de árboles al PDF
+        private void AgregarInformacionArboles(Document doc)
+        {
+            doc.Add(new Paragraph("Información de Stock de Árboles por Tipo:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+
+            foreach (Series seriesArbol in ArbolesTipo.Series)
+            {
+                doc.Add(new Paragraph($"Cantidad de {seriesArbol.Name} = {seriesArbol.Points.FirstOrDefault()?.YValues[0] ?? 0}.", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
+            }
+        }
+
+        private void btnDescargaGrafica_Click(object sender, EventArgs e)
+        {
+            ExportarPDFGrafico();
+        }
     }
 }

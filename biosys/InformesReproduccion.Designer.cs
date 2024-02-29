@@ -29,17 +29,18 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InformesReproduccion));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.labelTitulo = new System.Windows.Forms.Label();
             this.pictureBack = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.chartBajas = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartBajasTotales = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.btnDescargaGrafica = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartBajas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartBajasTotales)).BeginInit();
@@ -79,35 +80,47 @@
             // 
             // chartBajas
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartBajas.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartBajas.Legends.Add(legend1);
-            this.chartBajas.Location = new System.Drawing.Point(131, 204);
+            chartArea3.Name = "ChartArea1";
+            this.chartBajas.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chartBajas.Legends.Add(legend3);
+            this.chartBajas.Location = new System.Drawing.Point(80, 209);
             this.chartBajas.Name = "chartBajas";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartBajas.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chartBajas.Series.Add(series3);
             this.chartBajas.Size = new System.Drawing.Size(483, 386);
             this.chartBajas.TabIndex = 57;
             this.chartBajas.Text = "chart1";
             // 
             // chartBajasTotales
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartBajasTotales.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartBajasTotales.Legends.Add(legend2);
-            this.chartBajasTotales.Location = new System.Drawing.Point(780, 204);
+            chartArea4.Name = "ChartArea1";
+            this.chartBajasTotales.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chartBajasTotales.Legends.Add(legend4);
+            this.chartBajasTotales.Location = new System.Drawing.Point(676, 209);
             this.chartBajasTotales.Name = "chartBajasTotales";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartBajasTotales.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chartBajasTotales.Series.Add(series4);
             this.chartBajasTotales.Size = new System.Drawing.Size(483, 386);
             this.chartBajasTotales.TabIndex = 58;
             this.chartBajasTotales.Text = "chart2";
+            // 
+            // btnDescargaGrafica
+            // 
+            this.btnDescargaGrafica.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDescargaGrafica.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDescargaGrafica.Location = new System.Drawing.Point(1196, 355);
+            this.btnDescargaGrafica.Name = "btnDescargaGrafica";
+            this.btnDescargaGrafica.Size = new System.Drawing.Size(150, 59);
+            this.btnDescargaGrafica.TabIndex = 69;
+            this.btnDescargaGrafica.Text = "DESCARGA GRÁFICA";
+            this.btnDescargaGrafica.UseVisualStyleBackColor = true;
+            this.btnDescargaGrafica.Click += new System.EventHandler(this.btnDescargaGrafica_Click);
             // 
             // InformesReproduccion
             // 
@@ -115,6 +128,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnDescargaGrafica);
             this.Controls.Add(this.chartBajasTotales);
             this.Controls.Add(this.chartBajas);
             this.Controls.Add(this.label1);
@@ -140,5 +154,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartBajas;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartBajasTotales;
+        private System.Windows.Forms.Button btnDescargaGrafica;
     }
 }
