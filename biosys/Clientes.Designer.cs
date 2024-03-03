@@ -57,6 +57,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnGuardarCliente = new System.Windows.Forms.Button();
+            this.btnPaginaAnterior = new System.Windows.Forms.Button();
+            this.btnPaginaSiguiente = new System.Windows.Forms.Button();
+            this.labelPaginacion = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClientes)).BeginInit();
@@ -192,7 +195,7 @@
             this.dataGridViewClientes.Location = new System.Drawing.Point(445, 482);
             this.dataGridViewClientes.Name = "dataGridViewClientes";
             this.dataGridViewClientes.ReadOnly = true;
-            this.dataGridViewClientes.Size = new System.Drawing.Size(543, 210);
+            this.dataGridViewClientes.Size = new System.Drawing.Size(543, 199);
             this.dataGridViewClientes.TabIndex = 130;
             this.dataGridViewClientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClientes_CellClick);
             // 
@@ -363,12 +366,49 @@
             this.btnGuardarCliente.UseVisualStyleBackColor = false;
             this.btnGuardarCliente.Click += new System.EventHandler(this.btnGuardarCliente_Click);
             // 
+            // btnPaginaAnterior
+            // 
+            this.btnPaginaAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPaginaAnterior.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPaginaAnterior.Location = new System.Drawing.Point(445, 722);
+            this.btnPaginaAnterior.Name = "btnPaginaAnterior";
+            this.btnPaginaAnterior.Size = new System.Drawing.Size(50, 34);
+            this.btnPaginaAnterior.TabIndex = 141;
+            this.btnPaginaAnterior.Text = "<";
+            this.btnPaginaAnterior.UseVisualStyleBackColor = true;
+            this.btnPaginaAnterior.Click += new System.EventHandler(this.btnPaginaAnterior_Click);
+            // 
+            // btnPaginaSiguiente
+            // 
+            this.btnPaginaSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPaginaSiguiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPaginaSiguiente.Location = new System.Drawing.Point(520, 722);
+            this.btnPaginaSiguiente.Name = "btnPaginaSiguiente";
+            this.btnPaginaSiguiente.Size = new System.Drawing.Size(50, 34);
+            this.btnPaginaSiguiente.TabIndex = 142;
+            this.btnPaginaSiguiente.Text = ">";
+            this.btnPaginaSiguiente.UseVisualStyleBackColor = true;
+            this.btnPaginaSiguiente.Click += new System.EventHandler(this.btnPaginaSiguiente_Click);
+            // 
+            // labelPaginacion
+            // 
+            this.labelPaginacion.AutoSize = true;
+            this.labelPaginacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPaginacion.Location = new System.Drawing.Point(599, 732);
+            this.labelPaginacion.Name = "labelPaginacion";
+            this.labelPaginacion.Size = new System.Drawing.Size(109, 16);
+            this.labelPaginacion.TabIndex = 144;
+            this.labelPaginacion.Text = "LabelPaginacion";
+            // 
             // Clientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.labelPaginacion);
+            this.Controls.Add(this.btnPaginaSiguiente);
+            this.Controls.Add(this.btnPaginaAnterior);
             this.Controls.Add(this.btnQuitarFiltros);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label11);
@@ -440,5 +480,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnGuardarCliente;
+        private System.Windows.Forms.Button btnPaginaAnterior;
+        private System.Windows.Forms.Button btnPaginaSiguiente;
+        private System.Windows.Forms.Label labelPaginacion;
     }
 }

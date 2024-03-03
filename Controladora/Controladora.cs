@@ -256,6 +256,14 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerClientes();
         }
+        public static DataTable ObtenerClientesPaginados(int indiceInicio, int tamañoPagina)
+        {
+            return ConsultasModelo.ObtenerClientesPaginados(indiceInicio, tamañoPagina);
+        }
+        public static int ObtenerCantidadTotalClientes()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalClientes();
+        }
         public static void EliminarCliente(int idCliente)
         {
             ConsultasModelo.EliminarCliente(idCliente);

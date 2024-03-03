@@ -1067,6 +1067,50 @@ namespace Modelo
                 return dataTable;
             }
         }
+
+        public static DataTable ObtenerClientesPaginados(int indiceInicio, int tamañoPagina)
+        {
+            string sql = @"SELECT id AS ID, nombre_cliente AS Nombre, apellido_cliente AS Apellido, email_cliente AS Email, telefono_cliente AS Telefono 
+                   FROM clientes
+                   ORDER BY id
+                   OFFSET @IndiceInicio ROWS
+                   FETCH NEXT @TamañoPagina ROWS ONLY";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                // Agregar parámetros para la paginación
+                command.Parameters.AddWithValue("@IndiceInicio", indiceInicio);
+                command.Parameters.AddWithValue("@TamañoPagina", tamañoPagina);
+
+                // Crear un adaptador de datos y llenar el DataTable
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                // Cerrar la conexión
+                ConexionModelo.CerrarConexion();
+
+                return dataTable;
+            }
+        }
+
+        public static int ObtenerCantidadTotalClientes()
+        {
+            int totalClientes = 0;
+
+            string sql = "SELECT COUNT(*) FROM clientes";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                totalClientes = (int)command.ExecuteScalar();
+
+                ConexionModelo.CerrarConexion();
+            }
+
+            // Retornar el número total de clientes
+            return totalClientes;
+        }
+
         public static void EliminarCliente(int idCliente)
         {
             string sql = "DELETE FROM clientes WHERE id = @id";

@@ -224,12 +224,19 @@ namespace biosys
                     return;
                 }
 
-                // Eliminar el producto de la base de datos
-                Controladora.Controladora.EliminarProducto(idProducto);
+                // Mostrar un cuadro de diálogo de confirmación
+                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este producto?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                // Mostrar mensaje de éxito y actualizar el DataGridView
-                MessageBox.Show("Producto eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarProductosEnDataGridView();
+                // Si el usuario confirma la eliminación
+                if (result == DialogResult.Yes)
+                {
+                    // Eliminar el producto de la base de datos
+                    Controladora.Controladora.EliminarProducto(idProducto);
+
+                    // Mostrar mensaje de éxito y actualizar el DataGridView
+                    MessageBox.Show("Producto eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarProductosEnDataGridView();
+                }
             }
             else
             {

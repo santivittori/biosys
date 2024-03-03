@@ -197,12 +197,19 @@ namespace biosys
                     return;
                 }
 
-                // Eliminar el proveedor de la base de datos
-                Controladora.Controladora.EliminarProveedor(idProveedor);
+                // Mostrar un cuadro de diálogo de confirmación
+                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este proveedor?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                // Mostrar mensaje de éxito y actualizar el DataGridView
-                MessageBox.Show("Proveedor eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarProveedoresEnDataGridView();
+                // Si el usuario confirma la eliminación
+                if (result == DialogResult.Yes)
+                {
+                    // Eliminar el proveedor de la base de datos
+                    Controladora.Controladora.EliminarProveedor(idProveedor);
+
+                    // Mostrar mensaje de éxito y actualizar el DataGridView
+                    MessageBox.Show("Proveedor eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarProveedoresEnDataGridView();
+                }
             }
             else
             {

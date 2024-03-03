@@ -198,12 +198,19 @@ namespace biosys
                 }
                 else
                 {
-                    // Eliminar el usuario de la base de datos
-                    Controladora.Controladora.EliminarUsuario(idUsuario);
+                    // Mostrar un cuadro de diálogo de confirmación
+                    DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este usuario?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                    // Mostrar mensaje de éxito y actualizar el DataGridView
-                    MessageBox.Show("Usuario eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CargarUsuariosEnDataGridView();
+                    // Si el usuario confirma la eliminación
+                    if (result == DialogResult.Yes)
+                    {
+                        // Eliminar el usuario de la base de datos
+                        Controladora.Controladora.EliminarUsuario(idUsuario);
+
+                        // Mostrar mensaje de éxito y actualizar el DataGridView
+                        MessageBox.Show("Usuario eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CargarUsuariosEnDataGridView();
+                    }
                 }
             }
             else

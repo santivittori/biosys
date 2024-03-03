@@ -112,12 +112,6 @@ namespace biosys
             this.Close();
         }
 
-        private void CargarClientesEnDataGridView()
-        {
-            DataTable dataTable = Controladora.Controladora.ObtenerClientes();
-            dataGridViewClientes.DataSource = dataTable;
-        }
-
         private void Clientes_Load(object sender, EventArgs e)
         {
             comboBoxOrdenar.Items.Add("Nombre ascendente");
@@ -166,27 +160,34 @@ namespace biosys
         {
             if (dataGridViewClientes.SelectedRows.Count > 0)
             {
+                // Obtener el ID del cliente seleccionado
                 int idCliente = Convert.ToInt32(dataGridViewClientes.SelectedRows[0].Cells["ID"].Value);
 
+                // Verificar si el cliente está asociado a alguna compra
                 bool clienteEnCompra = Controladora.Controladora.VerificarClienteEnVentas(idCliente);
 
-                if (clienteEnCompra)
+                // Mostrar un cuadro de diálogo de confirmación
+                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este cliente?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                // Si el usuario confirma la eliminación
+                if (result == DialogResult.Yes)
                 {
-                    msgError("El cliente no puede ser eliminado porque ha sido utilizado en una venta.");
-                    return;
+                    // Eliminar el cliente
+                    Controladora.Controladora.EliminarCliente(idCliente);
+
+                    // Actualizar la vista
+                    MessageBox.Show("Cliente eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarClientesEnDataGridView();
                 }
-
-                Controladora.Controladora.EliminarCliente(idCliente);
-
-                MessageBox.Show("Cliente eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarClientesEnDataGridView();
             }
             else
             {
+                // Si no se ha seleccionado ningún cliente, mostrar un mensaje de error
                 msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
                 return;
             }
         }
+
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             LimpiarCamposCliente();
@@ -282,6 +283,58 @@ namespace biosys
             txtBusqueda.Text = string.Empty;
             comboBoxOrdenar.SelectedIndex = -1;
             CargarClientesEnDataGridView();
+        }
+
+        // Declarar variables para la paginación
+        private int paginaActual = 1;
+        private int tamañoPagina = 8; // Cantidad de registros por página
+
+        private void CargarClientesEnDataGridView()
+        {
+            // Calcular el índice de inicio para la paginación
+            int indiceInicio = (paginaActual - 1) * tamañoPagina;
+
+            // Obtener los clientes paginados desde la base de datos
+            DataTable dataTable = Controladora.Controladora.ObtenerClientesPaginados(indiceInicio, tamañoPagina);
+
+            // Actualizar el DataSource del DataGridView
+            dataGridViewClientes.DataSource = dataTable;
+
+            // Mostrar información de paginación
+            MostrarInformacionPaginacion();
+        }
+
+        private void MostrarInformacionPaginacion()
+        {
+            // Calcular el número total de clientes
+            int totalClientes = Controladora.Controladora.ObtenerCantidadTotalClientes();
+
+            // Calcular el número total de páginas
+            int totalPaginas = (int)Math.Ceiling((double)totalClientes / tamañoPagina);
+
+            // Mostrar información de paginación en una etiqueta o control similar
+            labelPaginacion.Text = $"Página {paginaActual} de {totalPaginas}. Total de clientes: {totalClientes}";
+        }
+
+        private void btnPaginaAnterior_Click(object sender, EventArgs e)
+        {
+            if (paginaActual > 1)
+            {
+                paginaActual--;
+                CargarClientesEnDataGridView();
+            }
+        }
+
+        private void btnPaginaSiguiente_Click(object sender, EventArgs e)
+        {
+            int totalClientes = Controladora.Controladora.ObtenerCantidadTotalClientes();
+            int totalPaginas = (int)Math.Ceiling((double)totalClientes / tamañoPagina);
+
+            if (paginaActual < totalPaginas)
+            {
+                paginaActual++;
+                CargarClientesEnDataGridView();
+            }
         }
     }
 }
