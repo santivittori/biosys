@@ -20,6 +20,9 @@ namespace biosys
     {
         public Dashboard DashboardInstance { get; set; }
 
+        private int paginaActual = 1;
+        private int tamañoPagina = 8;
+
         public GestionarUsuario()
         {
             InitializeComponent();
@@ -127,16 +130,11 @@ namespace biosys
                         MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-        }
-        private void CargarUsuariosEnDataGridView()
-        {
-            DataTable dataTable = Controladora.Controladora.ObtenerUsuarios();
-            dataGridViewUsuarios.DataSource = dataTable;
         }
 
         public void msgError(string msg)
@@ -343,7 +341,7 @@ namespace biosys
                     MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -383,5 +381,39 @@ namespace biosys
             }
         }
 
+        private void CargarUsuariosEnDataGridView()
+        {
+            int indiceInicio = (paginaActual - 1) * tamañoPagina;
+            DataTable dataTable = Controladora.Controladora.ObtenerUsuariosPaginados(indiceInicio, tamañoPagina);
+            dataGridViewUsuarios.DataSource = dataTable;
+            MostrarInformacionPaginacion();
+        }
+
+        private void MostrarInformacionPaginacion()
+        {
+            int totalUsuarios = Controladora.Controladora.ObtenerCantidadTotalUsuarios();
+            int totalPaginas = (int)Math.Ceiling((double)totalUsuarios / tamañoPagina);
+            labelPaginacion.Text = $"Página {paginaActual} de {totalPaginas}. Total de usuarios: {totalUsuarios}";
+        }
+
+        private void btnPaginaAnterior_Click(object sender, EventArgs e)
+        {
+            if (paginaActual > 1)
+            {
+                paginaActual--;
+                CargarUsuariosEnDataGridView();
+            }
+        }
+
+        private void btnPaginaSiguiente_Click(object sender, EventArgs e)
+        {
+            int totalUsuarios = Controladora.Controladora.ObtenerCantidadTotalUsuarios();
+            int totalPaginas = (int)Math.Ceiling((double)totalUsuarios / tamañoPagina);
+            if (paginaActual < totalPaginas)
+            {
+                paginaActual++;
+                CargarUsuariosEnDataGridView();
+            }
+        }
     }
 }

@@ -261,6 +261,50 @@ namespace Modelo
                 return dataTable;
             }
         }
+
+        public static DataTable ObtenerProveedoresPaginados(int indiceInicio, int tamañoPagina)
+        {
+            string sql = @"SELECT id AS ID, nombre_prov AS Nombre, apellido_prov AS Apellido, email_prov AS Email, telefono_prov AS Telefono 
+                       FROM proveedores
+                       ORDER BY id
+                       OFFSET @IndiceInicio ROWS
+                       FETCH NEXT @TamañoPagina ROWS ONLY";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                // Agregar parámetros para la paginación
+                command.Parameters.AddWithValue("@IndiceInicio", indiceInicio);
+                command.Parameters.AddWithValue("@TamañoPagina", tamañoPagina);
+
+                // Crear un adaptador de datos y llenar el DataTable
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                // Cerrar la conexión
+                ConexionModelo.CerrarConexion();
+
+                return dataTable;
+            }
+        }
+
+        public static int ObtenerCantidadTotalProveedores()
+        {
+            int totalProveedores = 0;
+
+            string sql = "SELECT COUNT(*) FROM proveedores";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                totalProveedores = (int)command.ExecuteScalar();
+
+                ConexionModelo.CerrarConexion();
+            }
+
+            // Retornar el número total de proveedores
+            return totalProveedores;
+        }
+
         public static DataTable ObtenerUsuarios()
         {
             string sql = "SELECT id AS ID, nombre_usuario AS Nombre, email AS Email, rol AS Rol FROM usuarios";
@@ -275,6 +319,43 @@ namespace Modelo
 
                 return dataTable;
             }
+        }
+
+        public static DataTable ObtenerUsuariosPaginados(int indiceInicio, int tamañoPagina)
+        {
+            string sql = @"SELECT id AS ID, nombre_usuario AS Nombre, email AS Email, rol AS Rol 
+                           FROM (SELECT ROW_NUMBER() OVER (ORDER BY id) AS RowNum, * FROM usuarios) AS usuariosConNumeros 
+                           WHERE RowNum BETWEEN @IndiceInicio AND @IndiceFin";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@IndiceInicio", indiceInicio);
+                command.Parameters.AddWithValue("@IndiceFin", indiceInicio + tamañoPagina - 1);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                ConexionModelo.CerrarConexion();
+
+                return dataTable;
+            }
+        }
+
+        public static int ObtenerCantidadTotalUsuarios()
+        {
+            int totalUsuarios = 0;
+
+            string sql = "SELECT COUNT(*) FROM usuarios";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                totalUsuarios = (int)command.ExecuteScalar();
+
+                ConexionModelo.CerrarConexion();
+            }
+
+            return totalUsuarios;
         }
 
         public static DataTable ExecuteQuery(string sql)
@@ -300,6 +381,52 @@ namespace Modelo
 
             return ExecuteQuery(sql);
         }
+
+        public static DataTable ObtenerProductosPaginados(int indiceInicio, int tamañoPagina)
+        {
+            string sql = @"SELECT p.id AS ID, p.nombre AS Nombre, tp.nombre AS TipoProducto, te.nombre AS TipoEspecifico 
+                   FROM productos p 
+                   JOIN tipos_producto tp ON p.tipo_producto_id = tp.id 
+                   JOIN tipos_especifico te ON p.tipo_especifico_id = te.id
+                   ORDER BY p.id
+                   OFFSET @IndiceInicio ROWS
+                   FETCH NEXT @TamañoPagina ROWS ONLY";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                // Agregar parámetros para la paginación
+                command.Parameters.AddWithValue("@IndiceInicio", indiceInicio);
+                command.Parameters.AddWithValue("@TamañoPagina", tamañoPagina);
+
+                // Crear un adaptador de datos y llenar el DataTable
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                // Cerrar la conexión
+                ConexionModelo.CerrarConexion();
+
+                return dataTable;
+            }
+        }
+
+        public static int ObtenerCantidadTotalProductos()
+        {
+            int totalProductos = 0;
+
+            string sql = "SELECT COUNT(*) FROM productos";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                totalProductos = (int)command.ExecuteScalar();
+
+                ConexionModelo.CerrarConexion();
+            }
+
+            // Retornar el número total de productos
+            return totalProductos;
+        }
+
         public static List<string> ObtenerProductosComboBox()
         {
             string sql = "SELECT p.nombre + ' - ' + tp.nombre + ' - ' + te.nombre AS ProductoCompleto " +

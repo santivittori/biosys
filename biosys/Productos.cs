@@ -24,6 +24,9 @@ namespace biosys
 
         private int idProductoSeleccionado = 0;
 
+        private int paginaActual = 1;
+        private int tamañoPagina = 8;
+
         public Productos()
         {
             InitializeComponent();
@@ -136,12 +139,6 @@ namespace biosys
         {
             DashboardInstance.AbrirFormHijo(new Inicio());
             this.Close();
-        }
-
-        private void CargarProductosEnDataGridView()
-        {
-            DataTable dataTable = Controladora.Controladora.ObtenerProductosCompleto();
-            dataGridViewProductos.DataSource = dataTable;
         }
 
         private void Productos_Load(object sender, EventArgs e)
@@ -381,8 +378,8 @@ namespace biosys
                 "1. La primera fila debe contener los títulos de las columnas.\n\n" +
                 "2. Las columnas deben estar en el siguiente orden:\n\n" +
                 "   NOMBRE | TIPO PRODUCTO | TIPO ESPECIFICO\n\n" +
-                "3. En la columna 'TIPO PRODUCTO', debe especificar 'Árbol' o 'Semilla'.\n\n" +
-                "4. En la columna 'TIPO ESPECIFICO', debe especificar 'Éxotica' o 'Nativa'.\n\n" +
+                "3. En la columna 'TIPO PRODUCTO', debe especificar 'Árbol' o 'Semilla'. Respetar tildes y buena tipografía.\n\n" +
+                "4. En la columna 'TIPO ESPECIFICO', debe especificar 'Éxotica' o 'Nativa'. Respetar tildes y buena tipografía.\n\n" +
                 "5. Asegúrese de que no haya espacios vacíos en ninguna de las celdas de estas columnas.";
 
             MessageBox.Show(mensajeInstrucciones, "Instrucciones para cargar el archivo Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -568,6 +565,53 @@ namespace biosys
                 return tipoEspecificoID;
             }
             throw new ArgumentException("Valor de TipoEspecifico no válido.");
+        }
+
+        private void CargarProductosEnDataGridView()
+        {
+            // Calcular el índice de inicio para la paginación
+            int indiceInicio = (paginaActual - 1) * tamañoPagina;
+
+            // Obtener los productos paginados desde la base de datos
+            DataTable dataTable = Controladora.Controladora.ObtenerProductosPaginados(indiceInicio, tamañoPagina);
+
+            // Actualizar el DataSource del DataGridView
+            dataGridViewProductos.DataSource = dataTable;
+
+            // Mostrar información de paginación
+            MostrarInformacionPaginacion();
+        }
+
+        private void MostrarInformacionPaginacion()
+        {
+            // Calcular el número total de productos
+            int totalProductos = Controladora.Controladora.ObtenerCantidadTotalProductos();
+
+            // Calcular el número total de páginas
+            int totalPaginas = (int)Math.Ceiling((double)totalProductos / tamañoPagina);
+
+            // Mostrar información de paginación en una etiqueta o control similar
+            labelPaginacion.Text = $"Página {paginaActual} de {totalPaginas}. Total de productos: {totalProductos}";
+        }
+        private void btnPaginaAnterior_Click(object sender, EventArgs e)
+        {
+            if (paginaActual > 1)
+            {
+                paginaActual--;
+                CargarProductosEnDataGridView();
+            }
+        }
+
+        private void btnPaginaSiguiente_Click(object sender, EventArgs e)
+        {
+            int totalProductos = Controladora.Controladora.ObtenerCantidadTotalProductos();
+            int totalPaginas = (int)Math.Ceiling((double)totalProductos / tamañoPagina);
+
+            if (paginaActual < totalPaginas)
+            {
+                paginaActual++;
+                CargarProductosEnDataGridView();
+            }
         }
     }
 }

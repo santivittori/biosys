@@ -20,6 +20,10 @@ namespace biosys
 
         private int idProveedorSeleccionado = 0;
 
+        // Declarar variables para la paginación
+        private int paginaActual = 1;
+        private int tamañoPagina = 8; // Cantidad de registros por página
+
         public Proveedores()
         {
             InitializeComponent();
@@ -122,12 +126,6 @@ namespace biosys
         {
             DashboardInstance.AbrirFormHijo(new Inicio());
             this.Close();
-        }
-
-        private void CargarProveedoresEnDataGridView()
-        {
-            DataTable dataTable = Controladora.Controladora.ObtenerProveedores();
-            dataGridViewProveedores.DataSource = dataTable;
         }
 
         private void Proveedores_Load(object sender, EventArgs e)
@@ -315,6 +313,54 @@ namespace biosys
 
             // Mostrar todos los proveedores en el DataGridView
             CargarProveedoresEnDataGridView();
+        }
+
+        private void CargarProveedoresEnDataGridView()
+        {
+            // Calcular el índice de inicio para la paginación
+            int indiceInicio = (paginaActual - 1) * tamañoPagina;
+
+            // Obtener los proveedores paginados desde la base de datos
+            DataTable dataTable = Controladora.Controladora.ObtenerProveedoresPaginados(indiceInicio, tamañoPagina);
+
+            // Actualizar el DataSource del DataGridView
+            dataGridViewProveedores.DataSource = dataTable;
+
+            // Mostrar información de paginación
+            MostrarInformacionPaginacion();
+        }
+
+        private void MostrarInformacionPaginacion()
+        {
+            // Calcular el número total de proveedores
+            int totalProveedores = Controladora.Controladora.ObtenerCantidadTotalProveedores();
+
+            // Calcular el número total de páginas
+            int totalPaginas = (int)Math.Ceiling((double)totalProveedores / tamañoPagina);
+
+            // Mostrar información de paginación en una etiqueta o control similar
+            labelPaginacion.Text = $"Página {paginaActual} de {totalPaginas}. Total de proveedores: {totalProveedores}";
+        }
+
+        private void btnPaginaAnterior_Click(object sender, EventArgs e)
+        {
+            if (paginaActual > 1)
+            {
+                paginaActual--;
+                CargarProveedoresEnDataGridView();
+            }
+        }
+
+        private void btnPaginaSiguiente_Click(object sender, EventArgs e)
+        {
+            int totalProveedores = Controladora.Controladora.ObtenerCantidadTotalProveedores();
+            int totalPaginas = (int)Math.Ceiling((double)totalProveedores / tamañoPagina);
+
+            if (paginaActual < totalPaginas)
+            {
+                paginaActual++;
+                CargarProveedoresEnDataGridView();
+            }
         }
     }
 }

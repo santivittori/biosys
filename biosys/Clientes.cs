@@ -21,6 +21,10 @@ namespace biosys
 
         private int idClienteSeleccionado = 0;
 
+        // Declarar variables para la paginación
+        private int paginaActual = 1;
+        private int tamañoPagina = 8; // Cantidad de registros por página
+
         public Clientes()
         {
             InitializeComponent();
@@ -284,10 +288,6 @@ namespace biosys
             comboBoxOrdenar.SelectedIndex = -1;
             CargarClientesEnDataGridView();
         }
-
-        // Declarar variables para la paginación
-        private int paginaActual = 1;
-        private int tamañoPagina = 8; // Cantidad de registros por página
 
         private void CargarClientesEnDataGridView()
         {

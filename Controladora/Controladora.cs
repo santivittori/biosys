@@ -84,9 +84,25 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerProveedores();
         }
+        public static DataTable ObtenerProveedoresPaginados(int indiceInicio, int tamañoPagina)
+        {
+            return ConsultasModelo.ObtenerProveedoresPaginados(indiceInicio, tamañoPagina);
+        }
+        public static int ObtenerCantidadTotalProveedores()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalProveedores();
+        }
         public static DataTable ObtenerUsuarios()
         {
             return ConsultasModelo.ObtenerUsuarios();
+        }
+        public static DataTable ObtenerUsuariosPaginados(int indiceInicio, int tamañoPagina)
+        {
+            return ConsultasModelo.ObtenerUsuariosPaginados(indiceInicio, tamañoPagina);
+        }
+        public static int ObtenerCantidadTotalUsuarios()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalUsuarios();
         }
         public static DataTable ExecuteQuery(string sql)
         {
@@ -95,6 +111,14 @@ namespace Controladora
         public static DataTable ObtenerProductosCompleto()
         {
             return ConsultasModelo.ObtenerProductosCompleto();
+        }
+        public static DataTable ObtenerProductosPaginados(int indiceInicio, int tamañoPagina)
+        {
+            return ConsultasModelo.ObtenerProductosPaginados(indiceInicio, tamañoPagina);
+        }
+        public static int ObtenerCantidadTotalProductos()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalProductos();
         }
         public static List<string> ObtenerProductosComboBox()
         {
