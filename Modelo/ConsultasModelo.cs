@@ -7,6 +7,8 @@ using System.Data.SqlClient;
 using System.Data;
 using Entidad;
 using System.Net.Http.Headers;
+using System.Collections;
+using System.Runtime.Remoting.Messaging;
 
 namespace Modelo
 {
@@ -22,7 +24,7 @@ namespace Modelo
                 command.Parameters.AddWithValue("@clave", claveCifrada);
 
                 int count = (int)command.ExecuteScalar();
-                ConexionModelo.CerrarConexion();
+                
                 return count != 0;
             }
         }
@@ -35,10 +37,8 @@ namespace Modelo
             {
                 command.Parameters.AddWithValue("@email", email);
 
-                count = (int)command.ExecuteScalar();
-                ConexionModelo.CerrarConexion();
+                count = (int)command.ExecuteScalar();   
             }
-
             return count > 0;
         }
 
@@ -77,6 +77,442 @@ namespace Modelo
             }
         }
 
+        public static List<string> ObtenerRolesDisponibles()
+        {
+            string sql = "SELECT nombre_rol FROM roles";
+
+            List<string> rolesDisponibles = new List<string>();
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    rolesDisponibles.Add(reader["nombre_rol"].ToString());
+                }
+                reader.Close();
+            }
+            return rolesDisponibles;
+        }
+
+        public static List<string> ObtenerPermisosPorRol(string rol)
+        {
+            List<string> permisos = new List<string>();
+
+            string sql = @"
+                SELECT p.nombre_permiso 
+                FROM permisos p 
+                JOIN roles_permisos rp ON p.id = rp.id_permiso 
+                JOIN roles r ON rp.id_rol = r.id 
+                WHERE r.nombre_rol = @rol";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@rol", rol);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        permisos.Add(reader["nombre_permiso"].ToString());
+                    }
+                }
+            }
+            return permisos;
+        }
+
+        public static List<string> ObtenerPermisos()
+        {
+            List<string> permisos = new List<string>();
+
+            string sql = "SELECT nombre_permiso FROM permisos";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            permisos.Add(reader["nombre_permiso"].ToString());
+                        }
+                    }
+                }
+            }
+
+            return permisos;
+        }
+        public static DataTable ObtenerPermisosPaginados(int indiceInicio, int tamañoPagina)
+        {
+            string sql = @"SELECT nombre_permiso AS NombrePermiso
+               FROM (SELECT ROW_NUMBER() OVER (ORDER BY id) - 1 AS RowNum, * FROM permisos) AS permisosConNumeros
+               WHERE RowNum >= @IndiceInicio AND RowNum < @IndiceFin";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@IndiceInicio", indiceInicio);
+                command.Parameters.AddWithValue("@IndiceFin", indiceInicio + tamañoPagina);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                return dataTable;
+            }
+        }
+
+        public static bool ActualizarPermiso(string nombrePermisoSeleccionado, string nuevoNombrePermiso)
+        {
+            string sql = "UPDATE permisos SET nombre_permiso = @NuevoNombre WHERE nombre_permiso = @NombrePermiso";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@NuevoNombre", nuevoNombrePermiso);
+                    command.Parameters.AddWithValue("@NombrePermiso", nombrePermisoSeleccionado);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
+        public static int ObtenerCantidadTotalPermisos()
+        {
+            int totalPermisos = 0;
+
+            string sql = "SELECT COUNT(*) FROM permisos";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                totalPermisos = (int)command.ExecuteScalar();
+            }
+
+            return totalPermisos;
+        }
+
+
+        public static void CrearNuevoRol(string nombreRol, List<string> permisos)
+        {
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                // Insertar el nuevo rol en la tabla roles
+                string sqlInsertRol = "INSERT INTO roles (nombre_rol) VALUES (@nombreRol)";
+                using (SqlCommand commandInsertRol = new SqlCommand(sqlInsertRol, connection))
+                {
+                    commandInsertRol.Parameters.AddWithValue("@nombreRol", nombreRol);
+                    commandInsertRol.ExecuteNonQuery();
+                }
+
+                // Obtener el ID del rol recién insertado
+                string sqlSelectRolId = "SELECT @@IDENTITY";
+                int nuevoRolId;
+                using (SqlCommand commandSelectRolId = new SqlCommand(sqlSelectRolId, connection))
+                {
+                    nuevoRolId = Convert.ToInt32(commandSelectRolId.ExecuteScalar());
+                }
+
+                // Insertar los permisos del nuevo rol en la tabla roles_permisos
+                string sqlInsertRolPermisos = "INSERT INTO roles_permisos (id_rol, id_permiso) VALUES (@idRol, @idPermiso)";
+                foreach (string permiso in permisos)
+                {
+                    string sqlSelectPermisoId = "SELECT id FROM permisos WHERE nombre_permiso = @permiso";
+                    int permisoId;
+                    using (SqlCommand commandSelectPermisoId = new SqlCommand(sqlSelectPermisoId, connection))
+                    {
+                        commandSelectPermisoId.Parameters.AddWithValue("@permiso", permiso);
+                        permisoId = Convert.ToInt32(commandSelectPermisoId.ExecuteScalar());
+                    }
+
+                    using (SqlCommand commandInsertRolPermiso = new SqlCommand(sqlInsertRolPermisos, connection))
+                    {
+                        commandInsertRolPermiso.Parameters.AddWithValue("@idRol", nuevoRolId);
+                        commandInsertRolPermiso.Parameters.AddWithValue("@idPermiso", permisoId);
+                        commandInsertRolPermiso.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+        public static List<string> ObtenerNombresRoles()
+        {
+            List<string> nombresRoles = new List<string>();
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                string sql = "SELECT nombre_rol FROM roles";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            nombresRoles.Add(reader["nombre_rol"].ToString());
+                        }
+                    }
+                }
+            }
+
+            return nombresRoles;
+        }
+
+        public static bool ActualizarRol(string nombreRolAnterior, string nuevoNombreRol, List<string> nuevosPermisos)
+        {
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                // Actualizar el nombre del rol en la tabla roles
+                string sqlActualizarNombreRol = "UPDATE roles SET nombre_rol = @nuevoNombre WHERE nombre_rol = @nombreAnterior";
+
+                using (SqlCommand commandActualizarNombreRol = new SqlCommand(sqlActualizarNombreRol, connection))
+                {
+                    commandActualizarNombreRol.Parameters.AddWithValue("@nuevoNombre", nuevoNombreRol);
+                    commandActualizarNombreRol.Parameters.AddWithValue("@nombreAnterior", nombreRolAnterior);
+
+                    commandActualizarNombreRol.ExecuteNonQuery();
+                }
+
+                // Obtener el ID del nuevo rol actualizado
+                string sqlObtenerIdRol = "SELECT id FROM roles WHERE nombre_rol = @nombreRol";
+
+                int idRol;
+                using (SqlCommand commandObtenerIdRol = new SqlCommand(sqlObtenerIdRol, connection))
+                {
+                    commandObtenerIdRol.Parameters.AddWithValue("@nombreRol", nuevoNombreRol);
+                    idRol = (int)commandObtenerIdRol.ExecuteScalar();
+                }
+
+                // Eliminar todos los permisos asociados al rol anterior
+                string sqlEliminarPermisos = "DELETE FROM roles_permisos WHERE id_rol = @idRolAnterior";
+
+                using (SqlCommand commandEliminarPermisos = new SqlCommand(sqlEliminarPermisos, connection))
+                {
+                    commandEliminarPermisos.Parameters.AddWithValue("@idRolAnterior", idRol);
+                    commandEliminarPermisos.ExecuteNonQuery();
+                }
+
+                // Insertar los nuevos permisos asociados al rol actualizado
+                string sqlInsertarPermisos = "INSERT INTO roles_permisos (id_rol, id_permiso) VALUES (@idRol, @idPermiso)";
+
+                foreach (var permiso in nuevosPermisos)
+                {
+                    int idPermiso;
+                    // Obtener el ID del permiso
+                    string sqlObtenerIdPermiso = "SELECT id FROM permisos WHERE nombre_permiso = @nombrePermiso";
+
+                    using (SqlCommand commandObtenerIdPermiso = new SqlCommand(sqlObtenerIdPermiso, connection))
+                    {
+                        commandObtenerIdPermiso.Parameters.AddWithValue("@nombrePermiso", permiso);
+                        idPermiso = (int)commandObtenerIdPermiso.ExecuteScalar();
+                    }
+
+                    // Insertar el nuevo permiso asociado al rol actualizado
+                    using (SqlCommand commandInsertarPermiso = new SqlCommand(sqlInsertarPermisos, connection))
+                    {
+                        commandInsertarPermiso.Parameters.AddWithValue("@idRol", idRol);
+                        commandInsertarPermiso.Parameters.AddWithValue("@idPermiso", idPermiso);
+                        commandInsertarPermiso.ExecuteNonQuery();
+                    }
+                }
+
+                // Actualizar el rol de los usuarios que tenían el rol anterior
+                string sqlActualizarUsuarios = @"UPDATE usuarios SET rol = @nuevoNombreRol WHERE rol = @nombreRolAnterior";
+
+                using (SqlCommand commandActualizarUsuarios = new SqlCommand(sqlActualizarUsuarios, connection))
+                {
+                    commandActualizarUsuarios.Parameters.AddWithValue("@nuevoNombreRol", nuevoNombreRol);
+                    commandActualizarUsuarios.Parameters.AddWithValue("@nombreRolAnterior", nombreRolAnterior);
+                    commandActualizarUsuarios.ExecuteNonQuery();
+                }
+            }
+
+            return true;
+        }
+
+        public static bool EliminarRol(string nombreRol)
+        {
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                // Obtener el ID del rol a eliminar
+                string sqlObtenerIdRol = "SELECT id FROM roles WHERE nombre_rol = @nombreRol";
+
+                int idRol;
+                using (SqlCommand commandObtenerIdRol = new SqlCommand(sqlObtenerIdRol, connection))
+                {
+                    commandObtenerIdRol.Parameters.AddWithValue("@nombreRol", nombreRol);
+                    idRol = (int)commandObtenerIdRol.ExecuteScalar();
+                }
+
+                // Eliminar los permisos asociados al rol
+                string sqlEliminarPermisos = "DELETE FROM roles_permisos WHERE id_rol = @idRol";
+
+                using (SqlCommand commandEliminarPermisos = new SqlCommand(sqlEliminarPermisos, connection))
+                {
+                    commandEliminarPermisos.Parameters.AddWithValue("@idRol", idRol);
+                    commandEliminarPermisos.ExecuteNonQuery();
+                }
+
+                // Eliminar el rol
+                string sqlEliminarRol = "DELETE FROM roles WHERE nombre_rol = @nombreRol";
+
+                using (SqlCommand commandEliminarRol = new SqlCommand(sqlEliminarRol, connection))
+                {
+                    commandEliminarRol.Parameters.AddWithValue("@nombreRol", nombreRol);
+                    commandEliminarRol.ExecuteNonQuery();
+                }
+
+                // Eliminar los usuarios que tenían el rol
+                string sqlEliminarUsuarios = "DELETE FROM usuarios WHERE rol = @nombreRol";
+
+                using (SqlCommand commandEliminarUsuarios = new SqlCommand(sqlEliminarUsuarios, connection))
+                {
+                    commandEliminarUsuarios.Parameters.AddWithValue("@nombreRol", nombreRol);
+                    commandEliminarUsuarios.ExecuteNonQuery();
+                }
+
+                return true;
+            }
+        }
+        public static bool ExisteRol(string nombreRol)
+        {
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                string sql = "SELECT COUNT(*) FROM roles WHERE nombre_rol = @nombreRol";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@nombreRol", nombreRol);
+                    int count = (int)command.ExecuteScalar();
+                    return count > 0;
+                }
+            }
+        }
+        public static int ObtenerCantidadTotalRoles()
+        {
+            int totalRoles = 0;
+
+            string sql = "SELECT COUNT(*) FROM roles";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                totalRoles = (int)command.ExecuteScalar();
+            }
+
+            return totalRoles;
+        }
+
+        public static DataTable ObtenerRolesPaginados(int indiceInicio, int tamañoPagina)
+        {
+            string sql = @"SELECT id AS ID, nombre_rol AS NombreRol
+               FROM (SELECT ROW_NUMBER() OVER (ORDER BY id) - 1 AS RowNum, * FROM roles) AS rolesConNumeros
+               WHERE RowNum >= @IndiceInicio AND RowNum < @IndiceFin";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@IndiceInicio", indiceInicio);
+                command.Parameters.AddWithValue("@IndiceFin", indiceInicio + tamañoPagina);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                return dataTable;
+            }
+        }
+
+        public static DataTable ObtenerTodosLosPermisos()
+        {
+            DataTable dataTablePermisos = new DataTable();
+
+            string sql = "SELECT nombre_permiso FROM permisos";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dataTablePermisos);
+                }
+            }
+
+            return dataTablePermisos;
+        }
+
+        public static void CrearNuevoPermiso(string nombrePermiso)
+        {
+            string sql = "INSERT INTO permisos (nombre_permiso) VALUES (@NombrePermiso)";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@NombrePermiso", nombrePermiso);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public static bool ExistePermiso(string nombrePermiso)
+        {
+            string sql = "SELECT COUNT(*) FROM permisos WHERE nombre_permiso = @NombrePermiso";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@NombrePermiso", nombrePermiso);
+                int count = (int)command.ExecuteScalar();
+                return count > 0;
+            }
+        }
+        public static bool PermisoAsociadoARol(string nombrePermisoSeleccionado)
+        {
+            // Consultar si el permiso está asociado a algún rol en la base de datos
+            string sql = "SELECT COUNT(*) FROM roles_permisos WHERE id_permiso = (SELECT id FROM permisos WHERE nombre_permiso = @NombrePermiso)";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@NombrePermiso", nombrePermisoSeleccionado);
+                int count = (int)command.ExecuteScalar();
+                return count > 0;
+            }
+        }
+        public static bool EliminarPermiso(string nombrePermisoSeleccionado)
+        {
+            // Eliminar el permiso de la base de datos
+            string sqlEliminarPermiso = "DELETE FROM permisos WHERE nombre_permiso = @NombrePermiso";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Eliminar el permiso de la tabla permisos
+                        using (SqlCommand commandEliminarPermiso = new SqlCommand(sqlEliminarPermiso, connection, transaction))
+                        {
+                            commandEliminarPermiso.Parameters.AddWithValue("@NombrePermiso", nombrePermisoSeleccionado);
+                            commandEliminarPermiso.ExecuteNonQuery();
+                        }
+
+                        // Eliminar el registro del permiso de la tabla roles_permisos si existiera
+                        string sqlEliminarRolPermiso = "DELETE FROM roles_permisos WHERE id_permiso = (SELECT id FROM permisos WHERE nombre_permiso = @NombrePermiso)";
+                        using (SqlCommand commandEliminarRolPermiso = new SqlCommand(sqlEliminarRolPermiso, connection, transaction))
+                        {
+                            commandEliminarRolPermiso.Parameters.AddWithValue("@NombrePermiso", nombrePermisoSeleccionado);
+                            commandEliminarRolPermiso.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
+                }
+            }
+        }
+
         public static bool VerificarExistenciaUsuario(string nombreUsuario)
         {
             string sql = "SELECT COUNT(*) FROM usuarios WHERE nombre_usuario = @nombre_usuario";
@@ -85,7 +521,7 @@ namespace Modelo
             {
                 command.Parameters.AddWithValue("@nombre_usuario", nombreUsuario);
                 int count = (int)command.ExecuteScalar();
-                ConexionModelo.CerrarConexion();
+                
                 return count != 0;
             }
         }
@@ -98,7 +534,7 @@ namespace Modelo
             {
                 command.Parameters.AddWithValue("@Email", email);
                 int count = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
+                
                 return count > 0;
             }
         }
@@ -114,7 +550,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@rol", usuario.Rol);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
         public static int ObtenerIdUsuario(string nombreUsuario)
@@ -153,14 +588,11 @@ namespace Modelo
                             Clave = clave,
                             Email = email,
                             Rol = rol
-                        };
-
-                        ConexionModelo.CerrarConexion();
+                        };   
                         return usuario;
                     }
                     else
                     {
-                        ConexionModelo.CerrarConexion();
                         return null;
                     }
                 }
@@ -178,7 +610,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@email", proveedorInfo.Email);
 
                 count = (int)command.ExecuteScalar();
-                ConexionModelo.CerrarConexion();
             }
             return count > 0;
         }
@@ -195,7 +626,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@Telefono", proveedorInfo.Telefono);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
         public static void ActualizarProveedor(ProveedorInfo proveedorInfo)
@@ -211,7 +641,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@id", proveedorInfo.Id);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
 
@@ -219,30 +648,33 @@ namespace Modelo
         {
             List<Proveedor> proveedores = new List<Proveedor>();
 
-            string sql = "SELECT nombre_prov, apellido_prov, email_prov FROM proveedores";
-
-            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
             {
-                using (SqlDataReader reader = command.ExecuteReader())
+                string sql = "SELECT nombre_prov, apellido_prov, email_prov FROM proveedores";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    while (reader.Read())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        string nombre = reader.GetString(0);
-                        string apellido = reader.GetString(1);
-                        string email = reader.GetString(2);
-
-                        Proveedor proveedor = new Proveedor
+                        while (reader.Read())
                         {
-                            Nombre = nombre,
-                            Apellido = apellido,
-                            Email = email
-                        };
+                            string nombre = reader.GetString(0);
+                            string apellido = reader.GetString(1);
+                            string email = reader.GetString(2);
 
-                        proveedores.Add(proveedor);
+                            Proveedor proveedor = new Proveedor
+                            {
+                                Nombre = nombre,
+                                Apellido = apellido,
+                                Email = email
+                            };
+
+                            proveedores.Add(proveedor);
+                        }
                     }
-                    ConexionModelo.CerrarConexion();
                 }
             }
+
             return proveedores;
         }
 
@@ -255,8 +687,6 @@ namespace Modelo
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
-
-                ConexionModelo.CerrarConexion();
 
                 return dataTable;
             }
@@ -281,9 +711,6 @@ namespace Modelo
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
-                // Cerrar la conexión
-                ConexionModelo.CerrarConexion();
-
                 return dataTable;
             }
         }
@@ -297,8 +724,6 @@ namespace Modelo
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 totalProveedores = (int)command.ExecuteScalar();
-
-                ConexionModelo.CerrarConexion();
             }
 
             // Retornar el número total de proveedores
@@ -315,8 +740,6 @@ namespace Modelo
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
-                ConexionModelo.CerrarConexion();
-
                 return dataTable;
             }
         }
@@ -324,19 +747,17 @@ namespace Modelo
         public static DataTable ObtenerUsuariosPaginados(int indiceInicio, int tamañoPagina)
         {
             string sql = @"SELECT id AS ID, nombre_usuario AS Nombre, email AS Email, rol AS Rol 
-                           FROM (SELECT ROW_NUMBER() OVER (ORDER BY id) AS RowNum, * FROM usuarios) AS usuariosConNumeros 
-                           WHERE RowNum BETWEEN @IndiceInicio AND @IndiceFin";
+                   FROM (SELECT ROW_NUMBER() OVER (ORDER BY id) - 1 AS RowNum, * FROM usuarios) AS usuariosConNumeros 
+                   WHERE RowNum >= @IndiceInicio AND RowNum < @IndiceFin";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 command.Parameters.AddWithValue("@IndiceInicio", indiceInicio);
-                command.Parameters.AddWithValue("@IndiceFin", indiceInicio + tamañoPagina - 1);
+                command.Parameters.AddWithValue("@IndiceFin", indiceInicio + tamañoPagina);
 
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
-
-                ConexionModelo.CerrarConexion();
 
                 return dataTable;
             }
@@ -351,8 +772,6 @@ namespace Modelo
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 totalUsuarios = (int)command.ExecuteScalar();
-
-                ConexionModelo.CerrarConexion();
             }
 
             return totalUsuarios;
@@ -365,8 +784,6 @@ namespace Modelo
                 DataTable dataTable = new DataTable();
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 adapter.Fill(dataTable);
-
-                ConexionModelo.CerrarConexion();
 
                 return dataTable;
             }
@@ -403,9 +820,6 @@ namespace Modelo
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
-                // Cerrar la conexión
-                ConexionModelo.CerrarConexion();
-
                 return dataTable;
             }
         }
@@ -419,8 +833,6 @@ namespace Modelo
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 totalProductos = (int)command.ExecuteScalar();
-
-                ConexionModelo.CerrarConexion();
             }
 
             // Retornar el número total de productos
@@ -443,7 +855,6 @@ namespace Modelo
                 string productoCompleto = row["ProductoCompleto"].ToString();
                 productos.Add(productoCompleto);
             }
-
             return productos;
         }
         public static bool VerificarProductoExistente(Producto producto)
@@ -458,7 +869,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@TipoEspecificoID", producto.TipoEspecificoId);
 
                 count = (int)command.ExecuteScalar();
-                ConexionModelo.CerrarConexion();
             }
             return count > 0;
         }
@@ -474,7 +884,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@TipoEspecificoID", producto.TipoEspecificoId);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
         public static void ActualizarProducto(int idProductoSeleccionado, string nuevoNombre)
@@ -487,7 +896,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@idProducto", idProductoSeleccionado);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
 
@@ -508,10 +916,8 @@ namespace Modelo
                 command.Parameters.AddWithValue("@UsuarioId", compraInfo.UsuarioId); 
                 command.Parameters.AddWithValue("@PrecioTotalCompra", compraInfo.PrecioTotalCompra);
 
-                compraId = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
+                compraId = Convert.ToInt32(command.ExecuteScalar());   
             }
-
             return compraId;
         }
 
@@ -529,7 +935,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@PrecioTotalDetalle", detalleCompraInfo.PrecioTotalDetalle); 
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
         public static int GuardarDonacion(DonacionInfo donacionInfo)
@@ -547,9 +952,8 @@ namespace Modelo
                 command.Parameters.AddWithValue("@UsuarioId", donacionInfo.UsuarioId);
 
                 donacionId = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
+                
             }
-
             return donacionId;
         }
         public static void GuardarDetalleDonacion(DetalleDonacionInfo detalleDonacionInfo)
@@ -564,7 +968,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@Cantidad", detalleDonacionInfo.Cantidad);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
         public static int GuardarRecoleccion(RecoleccionInfo recoleccionInfo)
@@ -582,7 +985,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@UsuarioId", recoleccionInfo.UsuarioId);
 
                 recoleccionId = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
             }
 
             return recoleccionId;
@@ -598,8 +1000,7 @@ namespace Modelo
                 command.Parameters.AddWithValue("@ProductoId", detalleRecoleccionInfo.ProductoId);
                 command.Parameters.AddWithValue("@Cantidad", detalleRecoleccionInfo.Cantidad);
 
-                command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
+                command.ExecuteNonQuery();                
             }
         }
         public static void ActualizarStock(int productoId, int cantidad)
@@ -612,7 +1013,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@ProductoId", productoId);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
 
@@ -625,8 +1025,7 @@ namespace Modelo
                 command.Parameters.AddWithValue("@Cantidad", cantidad);
                 command.Parameters.AddWithValue("@ProductoId", productoId);
 
-                command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
+                command.ExecuteNonQuery();                
             }
         }
 
@@ -648,7 +1047,6 @@ namespace Modelo
                 {
                     productoId = Convert.ToInt32(result);
                 }
-                ConexionModelo.CerrarConexion();
             }
             return productoId;
         }
@@ -664,7 +1062,7 @@ namespace Modelo
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
-                ConexionModelo.CerrarConexion();
+                
                 return dataTable;
             }
         }
@@ -681,7 +1079,7 @@ namespace Modelo
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
-                ConexionModelo.CerrarConexion();
+                
                 return dataTable;
             }
         }
@@ -698,7 +1096,7 @@ namespace Modelo
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
-                ConexionModelo.CerrarConexion();
+                
                 return dataTable;
             }
         }
@@ -711,14 +1109,14 @@ namespace Modelo
                 if (result == null || result == DBNull.Value)
                 {
                     // Si el resultado es nulo, devolver cero
-                    ConexionModelo.CerrarConexion();
+                    
                     return 0;
                 }
                 else
                 {
                     // Si el resultado no es nulo, convertir y devolver el valor
                     int totalCompras = Convert.ToInt32(result);
-                    ConexionModelo.CerrarConexion();
+                    
                     return totalCompras;
                 }
             }
@@ -732,14 +1130,13 @@ namespace Modelo
                 if (result == null || result == DBNull.Value)
                 {
                     // Si el resultado es nulo, devolver cero
-                    ConexionModelo.CerrarConexion();
                     return 0;
                 }
                 else
                 {
                     // Si el resultado no es nulo, convertir y devolver el valor
                     int totalDonaciones = Convert.ToInt32(result);
-                    ConexionModelo.CerrarConexion();
+                    
                     return totalDonaciones;
                 }
             }
@@ -753,14 +1150,14 @@ namespace Modelo
                 if (result == null || result == DBNull.Value)
                 {
                     // Si el resultado es nulo, devolver cero
-                    ConexionModelo.CerrarConexion();
+                    
                     return 0;
                 }
                 else
                 {
                     // Si el resultado no es nulo, convertir y devolver el valor
                     int totalRecolecciones = Convert.ToInt32(result);
-                    ConexionModelo.CerrarConexion();
+                    
                     return totalRecolecciones;
                 }
             }
@@ -776,7 +1173,6 @@ namespace Modelo
 
                 // Ejecutar el comando
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
         public static bool VerificarProductoEnCompras(int idProducto)
@@ -788,7 +1184,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@idProducto", idProducto);
 
                 int count = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
 
                 return count > 0;
             }
@@ -802,8 +1197,7 @@ namespace Modelo
                 command.Parameters.AddWithValue("@idProducto", idProducto);
 
                 int count = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
-
+                
                 return count > 0;
             }
         }
@@ -818,7 +1212,6 @@ namespace Modelo
 
                 // Ejecutar el comando
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
 
@@ -832,7 +1225,6 @@ namespace Modelo
 
                 // Ejecutar el comando
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
         public static bool VerificarProveedorEnCompras(int idProveedor)
@@ -844,8 +1236,7 @@ namespace Modelo
                 command.Parameters.AddWithValue("@idProveedor", idProveedor);
 
                 int count = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
-
+                
                 return count > 0;
             }
         }
@@ -865,7 +1256,6 @@ namespace Modelo
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
-                ConexionModelo.CerrarConexion();
                 return dataTable;
             }
         }
@@ -903,7 +1293,6 @@ namespace Modelo
 
                 semillasConStock.Add(semilla);
             }
-
             return semillasConStock;
         }
 
@@ -919,7 +1308,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@UsuarioId", siembraInfo.UsuarioId);
 
                 siembraId = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
             }
             return siembraId;
         }
@@ -935,7 +1323,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@Cantidad", detalleSiembraInfo.Cantidad);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
 
@@ -963,7 +1350,6 @@ namespace Modelo
                         };
                     }
                 }
-                ConexionModelo.CerrarConexion();
             }
 
             return producto;
@@ -983,7 +1369,6 @@ namespace Modelo
                 {
                     stock = stockValue;
                 }
-                ConexionModelo.CerrarConexion();
             }
             return stock;
         }
@@ -1012,7 +1397,6 @@ namespace Modelo
                     }
                 }
             }
-
             return producto;
         }
         public static int InsertarProductoSiembra(Producto producto, int stockInicial)
@@ -1028,8 +1412,7 @@ namespace Modelo
                 command.Parameters.AddWithValue("@Stock", stockInicial);
 
                 int productoId = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
-
+                
                 return productoId;
             }
         }
@@ -1046,7 +1429,6 @@ namespace Modelo
 
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
 
@@ -1111,8 +1493,7 @@ namespace Modelo
                 command.Parameters.AddWithValue("@idUsuario", idUsuario);
 
                 int count = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
-
+                
                 return count > 0;
             }
         }
@@ -1125,7 +1506,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@idUsuario", idUsuario);
 
                 int count = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
 
                 return count > 0;
             }
@@ -1143,7 +1523,7 @@ namespace Modelo
                 command.Parameters.AddWithValue("@email", clienteInfo.Email);
 
                 count = (int)command.ExecuteScalar();
-                ConexionModelo.CerrarConexion();
+                
             }
             return count > 0;
         }
@@ -1161,7 +1541,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@id", clienteInfo.Id);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
         public static void InsertarCliente(ClienteInfo clienteInfo)
@@ -1176,7 +1555,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@Telefono", clienteInfo.Telefono);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
         public static DataTable ObtenerClientes()
@@ -1188,8 +1566,6 @@ namespace Modelo
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
-
-                ConexionModelo.CerrarConexion();
 
                 return dataTable;
             }
@@ -1214,9 +1590,6 @@ namespace Modelo
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
-                // Cerrar la conexión
-                ConexionModelo.CerrarConexion();
-
                 return dataTable;
             }
         }
@@ -1230,8 +1603,6 @@ namespace Modelo
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 totalClientes = (int)command.ExecuteScalar();
-
-                ConexionModelo.CerrarConexion();
             }
 
             // Retornar el número total de clientes
@@ -1248,7 +1619,6 @@ namespace Modelo
 
                 // Ejecutar el comando
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
 
@@ -1261,8 +1631,7 @@ namespace Modelo
                 command.Parameters.AddWithValue("@idCliente", idCliente);
 
                 int count = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
-
+                
                 return count > 0;
             }
         }
@@ -1292,7 +1661,6 @@ namespace Modelo
 
                         clientes.Add(cliente);
                     }
-                    ConexionModelo.CerrarConexion();
                 }
             }
             return clientes;
@@ -1323,7 +1691,6 @@ namespace Modelo
 
                 productos.Add(producto);
             }
-
             return productos;
         }
 
@@ -1343,7 +1710,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@PrecioTotalVenta", ventaInfo.PrecioTotalVenta);
 
                 ventaId = Convert.ToInt32(command.ExecuteScalar());
-                ConexionModelo.CerrarConexion();
             }
 
             return ventaId;
@@ -1363,7 +1729,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@PrecioTotalDetalle", detalleVentaInfo.PrecioTotalDetalle);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
 
@@ -1381,7 +1746,6 @@ namespace Modelo
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
-                ConexionModelo.CerrarConexion();
                 return dataTable;
             }
         }
@@ -1400,8 +1764,7 @@ namespace Modelo
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
-
-                ConexionModelo.CerrarConexion();
+                
                 return dataTable;
             }
         }
@@ -1421,7 +1784,6 @@ namespace Modelo
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
 
-                ConexionModelo.CerrarConexion();
                 return dataTable;
             }
         }
@@ -1456,7 +1818,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@Nombre", productName);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
 
@@ -1472,7 +1833,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@ProductoId", productoId);
 
                 command.ExecuteNonQuery();
-                ConexionModelo.CerrarConexion();
             }
         }
 
@@ -1493,8 +1853,6 @@ namespace Modelo
                 command.Parameters.AddWithValue("@productName", productName);
 
                 command.ExecuteNonQuery();
-
-                ConexionModelo.CerrarConexion();
             }
         }
 
@@ -1509,7 +1867,7 @@ namespace Modelo
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
-                ConexionModelo.CerrarConexion();
+                
                 return dataTable;
             }
         }
@@ -1523,7 +1881,7 @@ namespace Modelo
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
-                ConexionModelo.CerrarConexion();
+                
                 return dataTable;
             }
         }

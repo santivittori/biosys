@@ -21,6 +21,78 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerRolUsuario(nombreUsuario);
         }
+        public static List<string> ObtenerRolesDisponibles()
+        {
+            return ConsultasModelo.ObtenerRolesDisponibles();
+        }
+        public static List<string> ObtenerPermisosPorRol(string rol)
+        {
+            return ConsultasModelo.ObtenerPermisosPorRol(rol);
+        }
+        public static List<string> ObtenerPermisos()
+        {
+            return ConsultasModelo.ObtenerPermisos();
+        }
+        public static DataTable ObtenerPermisosPaginados(int indiceInicio, int tamañoPagina)
+        {
+            return ConsultasModelo.ObtenerPermisosPaginados(indiceInicio, tamañoPagina);
+        }
+        public static bool ActualizarPermiso(string nombrePermisoSeleccionado, string nuevoNombrePermiso)
+        {
+            return ConsultasModelo.ActualizarPermiso(nombrePermisoSeleccionado, nuevoNombrePermiso);
+        }
+        public static int ObtenerCantidadTotalPermisos()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalPermisos();
+        }
+        public static void CrearNuevoRol(string nombreRol, List<string> permisos)
+        {
+            ConsultasModelo.CrearNuevoRol(nombreRol, permisos);
+        }
+        public static List<string> ObtenerNombresRoles()
+        {
+            return ConsultasModelo.ObtenerNombresRoles();
+        }
+        public static bool ActualizarRol(string nombreRolAnterior, string nuevoNombreRol, List<string> nuevosPermisos)
+        {
+            return ConsultasModelo.ActualizarRol(nombreRolAnterior, nuevoNombreRol, nuevosPermisos);
+        }
+        public static bool EliminarRol(string nombreRol)
+        {
+            return ConsultasModelo.EliminarRol(nombreRol);
+        }
+        public static bool ExisteRol(string nombreRol)
+        {
+            return ConsultasModelo.ExisteRol(nombreRol);
+        }
+        public static int ObtenerCantidadTotalRoles()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalRoles();
+        }
+        public static DataTable ObtenerRolesPaginados(int indiceInicio, int tamañoPagina)
+        {
+            return ConsultasModelo.ObtenerRolesPaginados(indiceInicio, tamañoPagina);
+        }
+        public static DataTable ObtenerTodosLosPermisos()
+        {
+            return ConsultasModelo.ObtenerTodosLosPermisos();
+        }
+        public static void CrearNuevoPermiso(string nombrePermiso)
+        {
+            ConsultasModelo.CrearNuevoPermiso(nombrePermiso);
+        }
+        public static bool ExistePermiso(string nombrePermiso)
+        {
+            return ConsultasModelo.ExistePermiso(nombrePermiso);
+        }
+        public static bool PermisoAsociadoARol(string nombrePermisoSeleccionado)
+        {
+            return ConsultasModelo.PermisoAsociadoARol(nombrePermisoSeleccionado);
+        }
+        public static bool EliminarPermiso(string nombrePermisoSeleccionado)
+        {
+            return ConsultasModelo.EliminarPermiso(nombrePermisoSeleccionado);
+        }
         public static bool VerificarExistenciaUsuario(string nombreUsuario)
         {
             return ConsultasModelo.VerificarExistenciaUsuario(nombreUsuario);

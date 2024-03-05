@@ -53,6 +53,7 @@
             this.labelPaginacion = new System.Windows.Forms.Label();
             this.btnPaginaSiguiente = new System.Windows.Forms.Button();
             this.btnPaginaAnterior = new System.Windows.Forms.Button();
+            this.btnRolesyPermisos = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -61,7 +62,7 @@
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(470, 50);
+            this.labelTitulo.Location = new System.Drawing.Point(450, 50);
             this.labelTitulo.Name = "labelTitulo";
             this.labelTitulo.Size = new System.Drawing.Size(570, 55);
             this.labelTitulo.TabIndex = 50;
@@ -87,9 +88,6 @@
             this.comborol.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comborol.ForeColor = System.Drawing.Color.DimGray;
             this.comborol.FormattingEnabled = true;
-            this.comborol.Items.AddRange(new object[] {
-            "Administrador",
-            "Empleado"});
             this.comborol.Location = new System.Drawing.Point(266, 451);
             this.comborol.Name = "comborol";
             this.comborol.Size = new System.Drawing.Size(314, 28);
@@ -218,7 +216,7 @@
             this.dataGridViewUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewUsuarios.Location = new System.Drawing.Point(710, 254);
             this.dataGridViewUsuarios.Name = "dataGridViewUsuarios";
-            this.dataGridViewUsuarios.Size = new System.Drawing.Size(444, 178);
+            this.dataGridViewUsuarios.Size = new System.Drawing.Size(444, 200);
             this.dataGridViewUsuarios.TabIndex = 88;
             // 
             // btnEliminarUsuario
@@ -293,7 +291,7 @@
             // 
             this.labelPaginacion.AutoSize = true;
             this.labelPaginacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPaginacion.Location = new System.Drawing.Point(860, 470);
+            this.labelPaginacion.Location = new System.Drawing.Point(864, 490);
             this.labelPaginacion.Name = "labelPaginacion";
             this.labelPaginacion.Size = new System.Drawing.Size(109, 16);
             this.labelPaginacion.TabIndex = 147;
@@ -303,7 +301,7 @@
             // 
             this.btnPaginaSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPaginaSiguiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPaginaSiguiente.Location = new System.Drawing.Point(781, 460);
+            this.btnPaginaSiguiente.Location = new System.Drawing.Point(785, 480);
             this.btnPaginaSiguiente.Name = "btnPaginaSiguiente";
             this.btnPaginaSiguiente.Size = new System.Drawing.Size(50, 34);
             this.btnPaginaSiguiente.TabIndex = 146;
@@ -315,7 +313,7 @@
             // 
             this.btnPaginaAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPaginaAnterior.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPaginaAnterior.Location = new System.Drawing.Point(706, 460);
+            this.btnPaginaAnterior.Location = new System.Drawing.Point(710, 480);
             this.btnPaginaAnterior.Name = "btnPaginaAnterior";
             this.btnPaginaAnterior.Size = new System.Drawing.Size(50, 34);
             this.btnPaginaAnterior.TabIndex = 145;
@@ -323,12 +321,26 @@
             this.btnPaginaAnterior.UseVisualStyleBackColor = true;
             this.btnPaginaAnterior.Click += new System.EventHandler(this.btnPaginaAnterior_Click);
             // 
+            // btnRolesyPermisos
+            // 
+            this.btnRolesyPermisos.BackColor = System.Drawing.Color.White;
+            this.btnRolesyPermisos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRolesyPermisos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRolesyPermisos.Location = new System.Drawing.Point(795, 618);
+            this.btnRolesyPermisos.Name = "btnRolesyPermisos";
+            this.btnRolesyPermisos.Size = new System.Drawing.Size(291, 48);
+            this.btnRolesyPermisos.TabIndex = 148;
+            this.btnRolesyPermisos.Text = "GESTIONAR ROLES Y PERMISOS";
+            this.btnRolesyPermisos.UseVisualStyleBackColor = false;
+            this.btnRolesyPermisos.Click += new System.EventHandler(this.btnRolesyPermisos_Click);
+            // 
             // GestionarUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnRolesyPermisos);
             this.Controls.Add(this.labelPaginacion);
             this.Controls.Add(this.btnPaginaSiguiente);
             this.Controls.Add(this.btnPaginaAnterior);
@@ -391,5 +403,6 @@
         private System.Windows.Forms.Label labelPaginacion;
         private System.Windows.Forms.Button btnPaginaSiguiente;
         private System.Windows.Forms.Button btnPaginaAnterior;
+        private System.Windows.Forms.Button btnRolesyPermisos;
     }
 }

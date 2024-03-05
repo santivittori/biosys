@@ -19,25 +19,18 @@ namespace biosys
         }
 
         private string rol;
+        private Control[] controles;
 
         public Dashboard(string rol, string nombreUsuario)
         {
             InitializeComponent();
             this.rol = rol;
-
-            IComponenteSeguridad btnInformesSeguridad = new BotonSeguridad(btnInformes);
-            IComponenteSeguridad btnGestionarUsuarioSeguridad = new BotonSeguridad(btnGestionarUsuario);
-            IComponenteSeguridad submenuABMSeguridad = new PanelSeguridad(SubmenuABM);
-            IComponenteSeguridad submenuAltaProdSeguridad = new PanelSeguridad(SubmenuAltaProd);
-
-            btnInformesSeguridad.MostrarElemento(rol);
-            btnGestionarUsuarioSeguridad.MostrarElemento(rol);
-            submenuABMSeguridad.MostrarElemento(rol);
-            submenuAltaProdSeguridad.MostrarElemento(rol);
-
-            // Asignar los valores de usuario y rol
             lblUsuario.Text = "Usuario: " + nombreUsuario;
             lblRol.Text = "Rol: " + rol;
+            controles = GetAllControls(this);
+
+            // Habilitar o deshabilitar los controles según los permisos del usuario
+            HabilitarControlesSegunPermisos();
         }
 
         // Sirve para poder mover la ventana con el mouse
@@ -45,6 +38,37 @@ namespace biosys
         private static extern void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private static extern void SendMessage(System.IntPtr hwnd, int wmsg, int wparam, int lparam);
+
+        private Control[] GetAllControls(Control control)
+        {
+            var controlsList = new List<Control>();
+
+            foreach (Control ctrl in control.Controls)
+            {
+                controlsList.Add(ctrl);
+                controlsList.AddRange(GetAllControls(ctrl));
+            }
+
+            return controlsList.ToArray();
+        }
+
+        private void HabilitarControlesSegunPermisos()
+        {
+            var permisosUsuario = Controladora.Controladora.ObtenerPermisosPorRol(rol);
+
+            foreach (var control in controles)
+            {
+                // Habilitar todos los controles por defecto
+                control.Enabled = true;
+
+                // Verificar si el control tiene un tag y si el tag no está presente en los permisos del usuario
+                if (control.Tag != null && !permisosUsuario.Contains(control.Tag.ToString()))
+                {
+                    // Si el tag del control no está presente en los permisos del usuario, deshabilitar el control
+                    control.Enabled = false;
+                }
+            }
+        }
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
@@ -135,58 +159,6 @@ namespace biosys
             Informes informesForm = new Informes();
             informesForm.DashboardInstance = this;
             AbrirFormHijo(informesForm);
-        }
-
-        public interface IComponenteSeguridad
-        {
-            void MostrarElemento(string rol);
-        }
-
-        public class BotonSeguridad : Button, IComponenteSeguridad
-        {
-            private Button boton;
-
-            public BotonSeguridad(Button boton)
-            {
-                this.boton = boton;
-            }
-
-            public void MostrarElemento(string rol)
-            {
-                // Lógica para mostrar/ocultar el botón según el rol
-                if (rol == "Administrador")
-                {
-                    boton.Visible = true;
-                }
-                else
-                {
-                    boton.Enabled = false;
-                }
-            }
-        }
-
-
-        public class PanelSeguridad : Panel, IComponenteSeguridad
-        {
-            private Panel panel;
-
-            public PanelSeguridad(Panel panel)
-            {
-                this.panel = panel;
-            }
-
-            public void MostrarElemento(string rol)
-            {
-                // Lógica para mostrar/ocultar el panel según el rol
-                if (rol == "Administrador" || rol == "Empleado")
-                {
-                    panel.Visible = true;
-                }
-                else
-                {
-                    panel.Enabled = false;
-                }
-            }
         }
 
         private void btnDonacion_Click(object sender, EventArgs e)

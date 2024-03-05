@@ -31,6 +31,8 @@ namespace biosys
 
             // Deshabilitar la fila de agregar automáticamente en el DataGridView
             dataGridViewUsuarios.AllowUserToAddRows = false;
+
+            CargarRolesDisponibles();
         }
 
         private async void btnAltaUsuario_Click(object sender, EventArgs e)
@@ -407,13 +409,27 @@ namespace biosys
 
         private void btnPaginaSiguiente_Click(object sender, EventArgs e)
         {
-            int totalUsuarios = Controladora.Controladora.ObtenerCantidadTotalUsuarios();
-            int totalPaginas = (int)Math.Ceiling((double)totalUsuarios / tamañoPagina);
+            int totalPaginas = (int)Math.Ceiling((double)Controladora.Controladora.ObtenerCantidadTotalUsuarios() / tamañoPagina);
             if (paginaActual < totalPaginas)
             {
                 paginaActual++;
                 CargarUsuariosEnDataGridView();
             }
+        }
+
+        private void btnRolesyPermisos_Click(object sender, EventArgs e)
+        {
+            RolesPermisos rolesPermisosForm = new RolesPermisos();
+            rolesPermisosForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(rolesPermisosForm);
+        }
+
+
+        // Método para cargar los roles disponibles en el ComboBox
+        private void CargarRolesDisponibles()
+        {
+            List<string> rolesDisponibles = Controladora.Controladora.ObtenerRolesDisponibles();
+            comborol.DataSource = rolesDisponibles;
         }
     }
 }

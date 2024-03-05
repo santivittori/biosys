@@ -131,7 +131,7 @@
             this.btnConfirmarBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnConfirmarBaja.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnConfirmarBaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConfirmarBaja.Location = new System.Drawing.Point(811, 645);
+            this.btnConfirmarBaja.Location = new System.Drawing.Point(852, 629);
             this.btnConfirmarBaja.Name = "btnConfirmarBaja";
             this.btnConfirmarBaja.Size = new System.Drawing.Size(193, 48);
             this.btnConfirmarBaja.TabIndex = 124;
@@ -145,7 +145,7 @@
             this.btnCancelar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(316, 645);
+            this.btnCancelar.Location = new System.Drawing.Point(357, 629);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(127, 48);
             this.btnCancelar.TabIndex = 120;
@@ -157,7 +157,7 @@
             // 
             this.btnLimpiar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(569, 645);
+            this.btnLimpiar.Location = new System.Drawing.Point(610, 629);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(127, 48);
             this.btnLimpiar.TabIndex = 119;

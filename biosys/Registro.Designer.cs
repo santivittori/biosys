@@ -114,9 +114,6 @@
             this.comborol.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comborol.ForeColor = System.Drawing.Color.DimGray;
             this.comborol.FormattingEnabled = true;
-            this.comborol.Items.AddRange(new object[] {
-            "Administrador",
-            "Empleado"});
             this.comborol.Location = new System.Drawing.Point(185, 364);
             this.comborol.Name = "comborol";
             this.comborol.Size = new System.Drawing.Size(314, 28);

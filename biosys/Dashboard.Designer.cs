@@ -41,11 +41,9 @@
             this.btnBajaProductos = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.btnGestionarUsuario = new System.Windows.Forms.Button();
-            this.SubmenuABM = new System.Windows.Forms.Panel();
             this.btnProductos = new System.Windows.Forms.Button();
             this.btnProveedores = new System.Windows.Forms.Button();
             this.btnClientes = new System.Windows.Forms.Button();
-            this.SubmenuAltaProd = new System.Windows.Forms.Panel();
             this.btnCompras = new System.Windows.Forms.Button();
             this.btnRecoleccion = new System.Windows.Forms.Button();
             this.btnDonacion = new System.Windows.Forms.Button();
@@ -68,8 +66,6 @@
             this.MenuVertical.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.Menu.SuspendLayout();
-            this.SubmenuABM.SuspendLayout();
-            this.SubmenuAltaProd.SuspendLayout();
             this.SuspendLayout();
             // 
             // BarraTitulo
@@ -156,12 +152,16 @@
             // 
             // Menu
             // 
+            this.Menu.Controls.Add(this.btnProductos);
+            this.Menu.Controls.Add(this.btnRecoleccion);
+            this.Menu.Controls.Add(this.btnProveedores);
+            this.Menu.Controls.Add(this.btnCompras);
+            this.Menu.Controls.Add(this.btnClientes);
+            this.Menu.Controls.Add(this.btnDonacion);
             this.Menu.Controls.Add(this.panel8);
             this.Menu.Controls.Add(this.btnBajaProductos);
             this.Menu.Controls.Add(this.panel7);
             this.Menu.Controls.Add(this.btnGestionarUsuario);
-            this.Menu.Controls.Add(this.SubmenuABM);
-            this.Menu.Controls.Add(this.SubmenuAltaProd);
             this.Menu.Controls.Add(this.panel2);
             this.Menu.Controls.Add(this.btnABM);
             this.Menu.Controls.Add(this.btnAltaProducto);
@@ -201,7 +201,8 @@
             this.btnBajaProductos.Name = "btnBajaProductos";
             this.btnBajaProductos.Size = new System.Drawing.Size(271, 32);
             this.btnBajaProductos.TabIndex = 32;
-            this.btnBajaProductos.Text = "BAJA PRODUCTOS";
+            this.btnBajaProductos.Tag = "Baja de Productos";
+            this.btnBajaProductos.Text = "BAJA DE PRODUCTOS";
             this.btnBajaProductos.UseVisualStyleBackColor = false;
             this.btnBajaProductos.Click += new System.EventHandler(this.btnBajaProductos_Click);
             // 
@@ -229,20 +230,10 @@
             this.btnGestionarUsuario.Name = "btnGestionarUsuario";
             this.btnGestionarUsuario.Size = new System.Drawing.Size(271, 32);
             this.btnGestionarUsuario.TabIndex = 30;
+            this.btnGestionarUsuario.Tag = "Gestionar Usuarios";
             this.btnGestionarUsuario.Text = "GESTIONAR USUARIOS";
             this.btnGestionarUsuario.UseVisualStyleBackColor = false;
             this.btnGestionarUsuario.Click += new System.EventHandler(this.btnGestionarUsuario_Click);
-            // 
-            // SubmenuABM
-            // 
-            this.SubmenuABM.Controls.Add(this.btnProductos);
-            this.SubmenuABM.Controls.Add(this.btnProveedores);
-            this.SubmenuABM.Controls.Add(this.btnClientes);
-            this.SubmenuABM.Location = new System.Drawing.Point(51, 301);
-            this.SubmenuABM.Name = "SubmenuABM";
-            this.SubmenuABM.Size = new System.Drawing.Size(226, 112);
-            this.SubmenuABM.TabIndex = 15;
-            this.SubmenuABM.Visible = false;
             // 
             // btnProductos
             // 
@@ -256,10 +247,11 @@
             this.btnProductos.ForeColor = System.Drawing.Color.Black;
             this.btnProductos.Image = ((System.Drawing.Image)(resources.GetObject("btnProductos.Image")));
             this.btnProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnProductos.Location = new System.Drawing.Point(0, 76);
+            this.btnProductos.Location = new System.Drawing.Point(40, 377);
             this.btnProductos.Name = "btnProductos";
             this.btnProductos.Size = new System.Drawing.Size(237, 32);
             this.btnProductos.TabIndex = 17;
+            this.btnProductos.Tag = "ABMs";
             this.btnProductos.Text = "PRODUCTOS";
             this.btnProductos.UseVisualStyleBackColor = false;
             this.btnProductos.Click += new System.EventHandler(this.btnProductos_Click);
@@ -276,10 +268,11 @@
             this.btnProveedores.ForeColor = System.Drawing.Color.Black;
             this.btnProveedores.Image = ((System.Drawing.Image)(resources.GetObject("btnProveedores.Image")));
             this.btnProveedores.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnProveedores.Location = new System.Drawing.Point(0, 38);
+            this.btnProveedores.Location = new System.Drawing.Point(43, 339);
             this.btnProveedores.Name = "btnProveedores";
             this.btnProveedores.Size = new System.Drawing.Size(237, 32);
             this.btnProveedores.TabIndex = 17;
+            this.btnProveedores.Tag = "ABMs";
             this.btnProveedores.Text = "PROVEEDORES";
             this.btnProveedores.UseVisualStyleBackColor = false;
             this.btnProveedores.Click += new System.EventHandler(this.btnProveedores_Click);
@@ -296,24 +289,14 @@
             this.btnClientes.ForeColor = System.Drawing.Color.Black;
             this.btnClientes.Image = ((System.Drawing.Image)(resources.GetObject("btnClientes.Image")));
             this.btnClientes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClientes.Location = new System.Drawing.Point(0, 0);
+            this.btnClientes.Location = new System.Drawing.Point(43, 301);
             this.btnClientes.Name = "btnClientes";
             this.btnClientes.Size = new System.Drawing.Size(237, 32);
             this.btnClientes.TabIndex = 15;
+            this.btnClientes.Tag = "ABMs";
             this.btnClientes.Text = "CLIENTES";
             this.btnClientes.UseVisualStyleBackColor = false;
             this.btnClientes.Click += new System.EventHandler(this.btnClientes_Click);
-            // 
-            // SubmenuAltaProd
-            // 
-            this.SubmenuAltaProd.Controls.Add(this.btnCompras);
-            this.SubmenuAltaProd.Controls.Add(this.btnRecoleccion);
-            this.SubmenuAltaProd.Controls.Add(this.btnDonacion);
-            this.SubmenuAltaProd.Location = new System.Drawing.Point(51, 34);
-            this.SubmenuAltaProd.Name = "SubmenuAltaProd";
-            this.SubmenuAltaProd.Size = new System.Drawing.Size(226, 112);
-            this.SubmenuAltaProd.TabIndex = 29;
-            this.SubmenuAltaProd.Visible = false;
             // 
             // btnCompras
             // 
@@ -327,10 +310,11 @@
             this.btnCompras.ForeColor = System.Drawing.Color.Black;
             this.btnCompras.Image = ((System.Drawing.Image)(resources.GetObject("btnCompras.Image")));
             this.btnCompras.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCompras.Location = new System.Drawing.Point(3, 3);
+            this.btnCompras.Location = new System.Drawing.Point(43, 38);
             this.btnCompras.Name = "btnCompras";
             this.btnCompras.Size = new System.Drawing.Size(234, 32);
             this.btnCompras.TabIndex = 23;
+            this.btnCompras.Tag = "Alta de Productos";
             this.btnCompras.Text = "COMPRAS";
             this.btnCompras.UseVisualStyleBackColor = false;
             this.btnCompras.Click += new System.EventHandler(this.btnCompras_Click);
@@ -347,10 +331,11 @@
             this.btnRecoleccion.ForeColor = System.Drawing.Color.Black;
             this.btnRecoleccion.Image = ((System.Drawing.Image)(resources.GetObject("btnRecoleccion.Image")));
             this.btnRecoleccion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecoleccion.Location = new System.Drawing.Point(3, 76);
+            this.btnRecoleccion.Location = new System.Drawing.Point(46, 114);
             this.btnRecoleccion.Name = "btnRecoleccion";
             this.btnRecoleccion.Size = new System.Drawing.Size(234, 32);
             this.btnRecoleccion.TabIndex = 27;
+            this.btnRecoleccion.Tag = "Alta de Productos";
             this.btnRecoleccion.Text = "RECOLECCIÓN";
             this.btnRecoleccion.UseVisualStyleBackColor = false;
             this.btnRecoleccion.Click += new System.EventHandler(this.btnRecoleccion_Click);
@@ -367,10 +352,11 @@
             this.btnDonacion.ForeColor = System.Drawing.Color.Black;
             this.btnDonacion.Image = ((System.Drawing.Image)(resources.GetObject("btnDonacion.Image")));
             this.btnDonacion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDonacion.Location = new System.Drawing.Point(3, 40);
+            this.btnDonacion.Location = new System.Drawing.Point(43, 76);
             this.btnDonacion.Name = "btnDonacion";
             this.btnDonacion.Size = new System.Drawing.Size(234, 32);
             this.btnDonacion.TabIndex = 25;
+            this.btnDonacion.Tag = "Alta de Productos";
             this.btnDonacion.Text = "DONACIÓN";
             this.btnDonacion.UseVisualStyleBackColor = false;
             this.btnDonacion.Click += new System.EventHandler(this.btnDonacion_Click);
@@ -399,6 +385,7 @@
             this.btnABM.Name = "btnABM";
             this.btnABM.Size = new System.Drawing.Size(271, 32);
             this.btnABM.TabIndex = 13;
+            this.btnABM.Tag = "ABMs";
             this.btnABM.Text = "ABM\'s";
             this.btnABM.UseVisualStyleBackColor = false;
             // 
@@ -418,7 +405,8 @@
             this.btnAltaProducto.Name = "btnAltaProducto";
             this.btnAltaProducto.Size = new System.Drawing.Size(271, 32);
             this.btnAltaProducto.TabIndex = 3;
-            this.btnAltaProducto.Text = "ALTA PRODUCTO";
+            this.btnAltaProducto.Tag = "Alta de Productos";
+            this.btnAltaProducto.Text = "ALTA DE PRODUCTOS";
             this.btnAltaProducto.UseVisualStyleBackColor = false;
             // 
             // panel3
@@ -453,6 +441,7 @@
             this.btnReproduccion.Name = "btnReproduccion";
             this.btnReproduccion.Size = new System.Drawing.Size(271, 32);
             this.btnReproduccion.TabIndex = 5;
+            this.btnReproduccion.Tag = "Reproduccion";
             this.btnReproduccion.Text = "REPRODUCCIÓN";
             this.btnReproduccion.UseVisualStyleBackColor = false;
             this.btnReproduccion.Click += new System.EventHandler(this.btnReproduccion_Click);
@@ -489,6 +478,7 @@
             this.btnInformes.Name = "btnInformes";
             this.btnInformes.Size = new System.Drawing.Size(271, 32);
             this.btnInformes.TabIndex = 9;
+            this.btnInformes.Tag = "Informes";
             this.btnInformes.Text = "INFORMES";
             this.btnInformes.UseVisualStyleBackColor = false;
             this.btnInformes.Click += new System.EventHandler(this.btnInformes_Click);
@@ -509,6 +499,7 @@
             this.btnVentas.Name = "btnVentas";
             this.btnVentas.Size = new System.Drawing.Size(271, 32);
             this.btnVentas.TabIndex = 7;
+            this.btnVentas.Tag = "Ventas";
             this.btnVentas.Text = "VENTAS";
             this.btnVentas.UseVisualStyleBackColor = false;
             this.btnVentas.Click += new System.EventHandler(this.btnVentas_Click);
@@ -574,8 +565,6 @@
             this.MenuVertical.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.Menu.ResumeLayout(false);
-            this.SubmenuABM.ResumeLayout(false);
-            this.SubmenuAltaProd.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -598,7 +587,6 @@
         private System.Windows.Forms.Button btnAltaProducto;
         private System.Windows.Forms.Panel Menu;
         private System.Windows.Forms.Panel panel2;
-        public System.Windows.Forms.Panel SubmenuABM;
         private System.Windows.Forms.Button btnProductos;
         private System.Windows.Forms.Button btnProveedores;
         private System.Windows.Forms.Button btnClientes;
@@ -606,7 +594,6 @@
         private System.Windows.Forms.Button btnRecoleccion;
         private System.Windows.Forms.Button btnDonacion;
         private System.Windows.Forms.Button btnCompras;
-        public System.Windows.Forms.Panel SubmenuAltaProd;
         private System.Windows.Forms.Label lblRol;
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.PictureBox pictureBox1;

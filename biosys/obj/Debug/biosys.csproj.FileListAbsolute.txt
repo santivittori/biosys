@@ -60,3 +60,4 @@ C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.Ventas.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.InformesReproduccion.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.BajaProductos.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.csproj.Up2Date
+C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.RolesPermisos.resources

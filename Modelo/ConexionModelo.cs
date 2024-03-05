@@ -11,24 +11,24 @@ namespace Modelo
 {
     public class ConexionModelo
     {
-        private static SqlConnection Conexion = new SqlConnection("Server=LAPTOP-SANTI;Database=biosys;Integrated Security=true");
+        private static string cadenaConexion = "Server=LAPTOP-SANTI;Database=biosys;Integrated Security=true";
 
         public static SqlConnection AbrirConexion()
         {
-            if (Conexion.State == ConnectionState.Closed)
+            SqlConnection conexion = new SqlConnection(cadenaConexion);
+            if (conexion.State == ConnectionState.Closed)
             {
-                Conexion.Open();
+                conexion.Open();
             }
-            return Conexion;
+            return conexion;
         }
 
-        public static SqlConnection CerrarConexion()
+        public static void CerrarConexion(SqlConnection conexion)
         {
-            if (Conexion.State == ConnectionState.Open)
+            if (conexion.State == ConnectionState.Open)
             {
-                Conexion.Close();
+                conexion.Close();
             }
-            return Conexion;
         }
     }
 

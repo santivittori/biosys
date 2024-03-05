@@ -21,6 +21,7 @@ namespace biosys
         public Registro()
         {
             InitializeComponent();
+            CargarRolesDisponibles();
         }
 
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
@@ -115,6 +116,7 @@ namespace biosys
                 return builder.ToString();
             }
         }
+
         // Crea el usuario y lo guarda en la base de datos
         private void btnCrearUsuario_Click(object sender, EventArgs e)
         {
@@ -228,6 +230,13 @@ namespace biosys
                 txtUsuario.SelectionStart = 60; // Establece el cursor al final del texto.
                 msgError("No se pueden ingresar mas caracteres");
             }
+        }
+
+        // Método para cargar los roles disponibles en el ComboBox
+        private void CargarRolesDisponibles()
+        {
+            List<string> rolesDisponibles = Controladora.Controladora.ObtenerRolesDisponibles();
+            comborol.DataSource = rolesDisponibles;
         }
     }   
 }

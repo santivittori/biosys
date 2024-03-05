@@ -119,7 +119,6 @@ namespace biosys
             }
         }
 
-
         // Método para cifrar la contraseña utilizando SHA256
         private string GetHash(string input)
         {
@@ -204,6 +203,7 @@ namespace biosys
             {
                 Registro registro = new Registro();
                 this.Hide();
+                registro.comborol.Enabled = true;
                 registro.ShowDialog();
             }
             else if (codigoVerificacionIngresado == "CÓDIGO DE VERIFICACIÓN")
@@ -220,7 +220,7 @@ namespace biosys
         {
             Registro registro = new Registro();
             this.Hide();
-            registro.comborol.SelectedIndex = 1;
+            registro.comborol.SelectedIndex = registro.comborol.Items.IndexOf("Empleado");
             registro.comborol.Enabled = false;
             registro.ShowDialog();
         }
