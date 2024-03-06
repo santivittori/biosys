@@ -221,5 +221,25 @@ namespace biosys
 
             MessageBox.Show("La recolección se registró correctamente.", "Recolección registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void btnCancelar_MouseEnter(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.Red;
+        }
+
+        private void btnCancelar_MouseLeave(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.White;
+        }
+
+        private void btnRegistrarRecoleccion_MouseEnter(object sender, EventArgs e)
+        {
+            btnRegistrarRecoleccion.BackColor = Color.FromArgb(0, 192, 0);
+        }
+
+        private void btnRegistrarRecoleccion_MouseLeave(object sender, EventArgs e)
+        {
+            btnRegistrarRecoleccion.BackColor = Color.White;
+        }
     }
 }

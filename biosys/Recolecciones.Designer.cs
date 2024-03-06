@@ -269,6 +269,8 @@
             this.btnCancelar.Text = "CANCELAR";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
+            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
             // 
             // btnGuardarDetalle
             // 
@@ -293,6 +295,8 @@
             this.btnRegistrarRecoleccion.Text = "REGISTRAR RECOLECCIÓN";
             this.btnRegistrarRecoleccion.UseVisualStyleBackColor = true;
             this.btnRegistrarRecoleccion.Click += new System.EventHandler(this.btnRegistrarRecoleccion_Click);
+            this.btnRegistrarRecoleccion.MouseEnter += new System.EventHandler(this.btnRegistrarRecoleccion_MouseEnter);
+            this.btnRegistrarRecoleccion.MouseLeave += new System.EventHandler(this.btnRegistrarRecoleccion_MouseLeave);
             // 
             // Recolecciones
             // 

@@ -57,7 +57,7 @@
             this.labelPaginacion = new System.Windows.Forms.Label();
             this.btnQuitarFiltros = new biosys.RoundedButton();
             this.btnEliminarCliente = new biosys.RoundedButton();
-            this.brnCancelar = new biosys.RoundedButton();
+            this.btnCancelar = new biosys.RoundedButton();
             this.btnLimpiar = new biosys.RoundedButton();
             this.btnGuardarCliente = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -359,18 +359,22 @@
             this.btnEliminarCliente.Text = "ELIMINAR CLIENTE";
             this.btnEliminarCliente.UseVisualStyleBackColor = true;
             this.btnEliminarCliente.Click += new System.EventHandler(this.btnEliminarCliente_Click);
+            this.btnEliminarCliente.MouseEnter += new System.EventHandler(this.btnEliminarCliente_MouseEnter);
+            this.btnEliminarCliente.MouseLeave += new System.EventHandler(this.btnEliminarCliente_MouseLeave);
             // 
-            // brnCancelar
+            // btnCancelar
             // 
-            this.brnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.brnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.brnCancelar.Location = new System.Drawing.Point(959, 309);
-            this.brnCancelar.Name = "brnCancelar";
-            this.brnCancelar.Size = new System.Drawing.Size(119, 48);
-            this.brnCancelar.TabIndex = 147;
-            this.brnCancelar.Text = "CANCELAR";
-            this.brnCancelar.UseVisualStyleBackColor = true;
-            this.brnCancelar.Click += new System.EventHandler(this.brnCancelar_Click);
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Location = new System.Drawing.Point(959, 309);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(119, 48);
+            this.btnCancelar.TabIndex = 147;
+            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
+            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
             // 
             // btnLimpiar
             // 
@@ -395,6 +399,8 @@
             this.btnGuardarCliente.Text = "GUARDAR CLIENTE";
             this.btnGuardarCliente.UseVisualStyleBackColor = true;
             this.btnGuardarCliente.Click += new System.EventHandler(this.btnGuardarCliente_Click);
+            this.btnGuardarCliente.MouseEnter += new System.EventHandler(this.btnGuardarCliente_MouseEnter);
+            this.btnGuardarCliente.MouseLeave += new System.EventHandler(this.btnGuardarCliente_MouseLeave);
             // 
             // Clientes
             // 
@@ -404,7 +410,7 @@
             this.ClientSize = new System.Drawing.Size(1400, 782);
             this.Controls.Add(this.btnGuardarCliente);
             this.Controls.Add(this.btnLimpiar);
-            this.Controls.Add(this.brnCancelar);
+            this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnEliminarCliente);
             this.Controls.Add(this.btnQuitarFiltros);
             this.Controls.Add(this.labelPaginacion);
@@ -476,7 +482,7 @@
         private System.Windows.Forms.Label labelPaginacion;
         private RoundedButton btnQuitarFiltros;
         private RoundedButton btnEliminarCliente;
-        private RoundedButton brnCancelar;
+        private RoundedButton btnCancelar;
         private RoundedButton btnLimpiar;
         private RoundedButton btnGuardarCliente;
     }

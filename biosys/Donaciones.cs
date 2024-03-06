@@ -226,5 +226,25 @@ namespace biosys
 
             MessageBox.Show("La donación se registró correctamente.", "Donación registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void btnCancelar_MouseEnter(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.Red;
+        }
+
+        private void btnCancelar_MouseLeave(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.White;
+        }
+
+        private void btnRegistrarDonacion_MouseEnter(object sender, EventArgs e)
+        {
+            btnRegistrarDonacion.BackColor = Color.FromArgb(0, 192, 0);
+        }
+
+        private void btnRegistrarDonacion_MouseLeave(object sender, EventArgs e)
+        {
+            btnRegistrarDonacion.BackColor = Color.White;
+        }
     }
 }

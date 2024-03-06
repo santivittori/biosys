@@ -55,10 +55,10 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.txtPrecioUnitario = new System.Windows.Forms.TextBox();
-            this.btnCancelar = new biosys.RoundedButton();
-            this.btnLimpiar = new biosys.RoundedButton();
-            this.btnGuardarDetalle = new biosys.RoundedButton();
             this.btnRegistrarCompra = new biosys.RoundedButton();
+            this.btnGuardarDetalle = new biosys.RoundedButton();
+            this.btnLimpiar = new biosys.RoundedButton();
+            this.btnCancelar = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantidad)).BeginInit();
             this.SuspendLayout();
             // 
@@ -337,29 +337,19 @@
             this.txtPrecioUnitario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecioUnitario_KeyPress);
             this.txtPrecioUnitario.Leave += new System.EventHandler(this.txtPrecioUnitario_Leave);
             // 
-            // btnCancelar
+            // btnRegistrarCompra
             // 
-            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(119, 605);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(119, 48);
-            this.btnCancelar.TabIndex = 140;
-            this.btnCancelar.Text = "CANCELAR";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(284, 605);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(119, 48);
-            this.btnLimpiar.TabIndex = 141;
-            this.btnLimpiar.Text = "LIMPIAR CAMPOS";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            this.btnRegistrarCompra.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRegistrarCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistrarCompra.Location = new System.Drawing.Point(614, 605);
+            this.btnRegistrarCompra.Name = "btnRegistrarCompra";
+            this.btnRegistrarCompra.Size = new System.Drawing.Size(119, 48);
+            this.btnRegistrarCompra.TabIndex = 143;
+            this.btnRegistrarCompra.Text = "REGISTRAR COMPRA";
+            this.btnRegistrarCompra.UseVisualStyleBackColor = true;
+            this.btnRegistrarCompra.Click += new System.EventHandler(this.btnRegistrarCompra_Click);
+            this.btnRegistrarCompra.MouseEnter += new System.EventHandler(this.btnRegistrarCompra_MouseEnter);
+            this.btnRegistrarCompra.MouseLeave += new System.EventHandler(this.btnRegistrarCompra_MouseLeave);
             // 
             // btnGuardarDetalle
             // 
@@ -373,17 +363,31 @@
             this.btnGuardarDetalle.UseVisualStyleBackColor = true;
             this.btnGuardarDetalle.Click += new System.EventHandler(this.btnGuardarDetalle_Click);
             // 
-            // btnRegistrarCompra
+            // btnLimpiar
             // 
-            this.btnRegistrarCompra.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRegistrarCompra.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistrarCompra.Location = new System.Drawing.Point(614, 605);
-            this.btnRegistrarCompra.Name = "btnRegistrarCompra";
-            this.btnRegistrarCompra.Size = new System.Drawing.Size(119, 48);
-            this.btnRegistrarCompra.TabIndex = 143;
-            this.btnRegistrarCompra.Text = "REGISTRAR COMPRA";
-            this.btnRegistrarCompra.UseVisualStyleBackColor = true;
-            this.btnRegistrarCompra.Click += new System.EventHandler(this.btnRegistrarCompra_Click);
+            this.btnLimpiar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.Location = new System.Drawing.Point(284, 605);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(119, 48);
+            this.btnLimpiar.TabIndex = 141;
+            this.btnLimpiar.Text = "LIMPIAR CAMPOS";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Location = new System.Drawing.Point(119, 605);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(119, 48);
+            this.btnCancelar.TabIndex = 140;
+            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
+            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
             // 
             // Compras
             // 

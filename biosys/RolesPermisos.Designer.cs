@@ -143,7 +143,7 @@
             this.checkedListBoxPermisos.FormattingEnabled = true;
             this.checkedListBoxPermisos.Location = new System.Drawing.Point(247, 245);
             this.checkedListBoxPermisos.Name = "checkedListBoxPermisos";
-            this.checkedListBoxPermisos.Size = new System.Drawing.Size(336, 94);
+            this.checkedListBoxPermisos.Size = new System.Drawing.Size(336, 89);
             this.checkedListBoxPermisos.TabIndex = 113;
             // 
             // label2
@@ -365,6 +365,8 @@
             this.btnCrearPermiso.Text = "CREAR";
             this.btnCrearPermiso.UseVisualStyleBackColor = true;
             this.btnCrearPermiso.Click += new System.EventHandler(this.btnCrearPermiso_Click);
+            this.btnCrearPermiso.MouseEnter += new System.EventHandler(this.btnCrearPermiso_MouseEnter);
+            this.btnCrearPermiso.MouseLeave += new System.EventHandler(this.btnCrearPermiso_MouseLeave);
             // 
             // btnCrearRol
             // 
@@ -377,6 +379,8 @@
             this.btnCrearRol.Text = "CREAR";
             this.btnCrearRol.UseVisualStyleBackColor = true;
             this.btnCrearRol.Click += new System.EventHandler(this.btnCrearRol_Click);
+            this.btnCrearRol.MouseEnter += new System.EventHandler(this.btnCrearRol_MouseEnter);
+            this.btnCrearRol.MouseLeave += new System.EventHandler(this.btnCrearRol_MouseLeave);
             // 
             // btnGuardarRol
             // 
@@ -389,6 +393,8 @@
             this.btnGuardarRol.Text = "GUARDAR EDICIÓN";
             this.btnGuardarRol.UseVisualStyleBackColor = true;
             this.btnGuardarRol.Click += new System.EventHandler(this.btnGuardarRol_Click);
+            this.btnGuardarRol.MouseEnter += new System.EventHandler(this.btnGuardarRol_MouseEnter);
+            this.btnGuardarRol.MouseLeave += new System.EventHandler(this.btnGuardarRol_MouseLeave);
             // 
             // btnLimpiarRol
             // 
@@ -413,6 +419,8 @@
             this.btnHabilitar.Text = "HABILITAR O DESHABILITAR";
             this.btnHabilitar.UseVisualStyleBackColor = true;
             this.btnHabilitar.Click += new System.EventHandler(this.btnHabilitar_Click);
+            this.btnHabilitar.MouseEnter += new System.EventHandler(this.btnHabilitar_MouseEnter);
+            this.btnHabilitar.MouseLeave += new System.EventHandler(this.btnHabilitar_MouseLeave);
             // 
             // btnEliminarRol
             // 
@@ -425,6 +433,8 @@
             this.btnEliminarRol.Text = "ELIMINAR";
             this.btnEliminarRol.UseVisualStyleBackColor = true;
             this.btnEliminarRol.Click += new System.EventHandler(this.btnEliminarRol_Click);
+            this.btnEliminarRol.MouseEnter += new System.EventHandler(this.btnEliminarRol_MouseEnter);
+            this.btnEliminarRol.MouseLeave += new System.EventHandler(this.btnEliminarRol_MouseLeave);
             // 
             // btnGuardarPermiso
             // 
@@ -437,6 +447,8 @@
             this.btnGuardarPermiso.Text = "GUARDAR EDICIÓN";
             this.btnGuardarPermiso.UseVisualStyleBackColor = true;
             this.btnGuardarPermiso.Click += new System.EventHandler(this.btnGuardarPermiso_Click);
+            this.btnGuardarPermiso.MouseEnter += new System.EventHandler(this.btnGuardarPermiso_MouseEnter);
+            this.btnGuardarPermiso.MouseLeave += new System.EventHandler(this.btnGuardarPermiso_MouseLeave);
             // 
             // btnLimpiarPermisos
             // 
@@ -461,6 +473,8 @@
             this.btnEliminarPermiso.Text = "ELIMINAR";
             this.btnEliminarPermiso.UseVisualStyleBackColor = true;
             this.btnEliminarPermiso.Click += new System.EventHandler(this.btnEliminarPermiso_Click);
+            this.btnEliminarPermiso.MouseEnter += new System.EventHandler(this.btnEliminarPermiso_MouseEnter);
+            this.btnEliminarPermiso.MouseLeave += new System.EventHandler(this.btnEliminarPermiso_MouseLeave);
             // 
             // RolesPermisos
             // 

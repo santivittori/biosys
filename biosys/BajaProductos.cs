@@ -229,5 +229,25 @@ namespace biosys
             // Limpiar los campos
             LimpiarCampos();
         }
+
+        private void btnCancelar_MouseEnter(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.Red;
+        }
+
+        private void btnCancelar_MouseLeave(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.White;
+        }
+
+        private void btnConfirmarBaja_MouseEnter(object sender, EventArgs e)
+        {
+            btnConfirmarBaja.BackColor = Color.FromArgb(0, 192, 0);
+        }
+
+        private void btnConfirmarBaja_MouseLeave(object sender, EventArgs e)
+        {
+            btnConfirmarBaja.BackColor = Color.White;
+        }
     }
 }

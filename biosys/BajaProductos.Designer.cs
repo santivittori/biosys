@@ -46,9 +46,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.comboMotivo = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnCancelar = new biosys.RoundedButton();
-            this.btnLimpiar = new biosys.RoundedButton();
             this.btnConfirmarBaja = new biosys.RoundedButton();
+            this.btnLimpiar = new biosys.RoundedButton();
+            this.btnCancelar = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantidad)).BeginInit();
             this.SuspendLayout();
             // 
@@ -235,17 +235,19 @@
             this.label2.TabIndex = 136;
             this.label2.Text = "Motivo:";
             // 
-            // btnCancelar
+            // btnConfirmarBaja
             // 
-            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(430, 604);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(119, 48);
-            this.btnCancelar.TabIndex = 139;
-            this.btnCancelar.Text = "CANCELAR";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnConfirmarBaja.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnConfirmarBaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnConfirmarBaja.Location = new System.Drawing.Point(845, 604);
+            this.btnConfirmarBaja.Name = "btnConfirmarBaja";
+            this.btnConfirmarBaja.Size = new System.Drawing.Size(119, 48);
+            this.btnConfirmarBaja.TabIndex = 141;
+            this.btnConfirmarBaja.Text = "CONFIRMAR BAJA";
+            this.btnConfirmarBaja.UseVisualStyleBackColor = true;
+            this.btnConfirmarBaja.Click += new System.EventHandler(this.btnConfirmarBaja_Click);
+            this.btnConfirmarBaja.MouseEnter += new System.EventHandler(this.btnConfirmarBaja_MouseEnter);
+            this.btnConfirmarBaja.MouseLeave += new System.EventHandler(this.btnConfirmarBaja_MouseLeave);
             // 
             // btnLimpiar
             // 
@@ -259,17 +261,19 @@
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
-            // btnConfirmarBaja
+            // btnCancelar
             // 
-            this.btnConfirmarBaja.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnConfirmarBaja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConfirmarBaja.Location = new System.Drawing.Point(845, 604);
-            this.btnConfirmarBaja.Name = "btnConfirmarBaja";
-            this.btnConfirmarBaja.Size = new System.Drawing.Size(119, 48);
-            this.btnConfirmarBaja.TabIndex = 141;
-            this.btnConfirmarBaja.Text = "CONFIRMAR BAJA";
-            this.btnConfirmarBaja.UseVisualStyleBackColor = true;
-            this.btnConfirmarBaja.Click += new System.EventHandler(this.btnConfirmarBaja_Click);
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Location = new System.Drawing.Point(430, 604);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(119, 48);
+            this.btnCancelar.TabIndex = 139;
+            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
+            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
             // 
             // BajaProductos
             // 

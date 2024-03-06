@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -280,21 +281,6 @@ namespace biosys
                 return;
             }
         }
-
-        private void brnCancelar_Click(object sender, EventArgs e)
-        {
-            // Mostrar un cuadro de diálogo de confirmación
-            DialogResult result = MessageBox.Show("¿Está seguro de que desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            // Verificar si el usuario ha confirmado la cancelación
-            if (result == DialogResult.Yes)
-            {
-                // Si el usuario confirma, cerrar el formulario
-                DashboardInstance.AbrirFormHijo(new Inicio());
-                this.Close();
-            }
-        }
-
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             LimpiarCamposCliente();
@@ -352,6 +338,49 @@ namespace biosys
             }
             LimpiarCamposCliente();
             CargarClientesEnDataGridView();
+        }
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            // Mostrar un cuadro de diálogo de confirmación
+            DialogResult result = MessageBox.Show("¿Está seguro de que desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // Verificar si el usuario ha confirmado la cancelación
+            if (result == DialogResult.Yes)
+            {
+                // Si el usuario confirma, cerrar el formulario
+                DashboardInstance.AbrirFormHijo(new Inicio());
+                this.Close();
+            }
+        }
+
+        private void btnEliminarCliente_MouseEnter(object sender, EventArgs e)
+        {
+            btnEliminarCliente.BackColor = Color.Red;
+        }
+
+        private void btnEliminarCliente_MouseLeave(object sender, EventArgs e)
+        {
+            btnEliminarCliente.BackColor = Color.White;
+        }
+
+        private void btnGuardarCliente_MouseEnter(object sender, EventArgs e)
+        {
+            btnGuardarCliente.BackColor = Color.FromArgb(0, 192, 0);
+        }
+
+        private void btnGuardarCliente_MouseLeave(object sender, EventArgs e)
+        {
+            btnGuardarCliente.BackColor = Color.White;
+        }
+
+        private void btnCancelar_MouseEnter(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.Red;
+        }
+
+        private void btnCancelar_MouseLeave(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.White;
         }
     }
 }

@@ -406,5 +406,23 @@ namespace biosys
             numericCantidad.Value = 0;
             numericCantidad.Value = 0;
         }
+        private void btnRegistrarSiembra_MouseEnter(object sender, EventArgs e)
+        {
+            btnRegistrarSiembra.BackColor = Color.FromArgb(0, 192, 0);
+        }
+        private void btnRegistrarSiembra_MouseLeave(object sender, EventArgs e)
+        {
+            btnRegistrarSiembra.BackColor = Color.White;
+        }
+
+        private void btnCancelar_MouseEnter(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.Red;
+        }
+
+        private void btnCancelar_MouseLeave(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.White;
+        }
     }
 }

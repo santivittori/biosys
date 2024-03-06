@@ -441,5 +441,35 @@ namespace biosys
                 return;
             }
         }
+
+        private void btnAltaUsuario_MouseEnter(object sender, EventArgs e)
+        {
+            btnAltaUsuario.BackColor = Color.FromArgb(0, 192, 0);
+        }
+
+        private void btnAltaUsuario_MouseLeave(object sender, EventArgs e)
+        {
+            btnAltaUsuario.BackColor = Color.White;
+        }
+
+        private void btnEliminarUsuario_MouseEnter(object sender, EventArgs e)
+        {
+            btnEliminarUsuario.BackColor = Color.Red;
+        }
+
+        private void btnEliminarUsuario_MouseLeave(object sender, EventArgs e)
+        {
+            btnEliminarUsuario.BackColor = Color.White;
+        }
+
+        private void btnGuardarEdicion_MouseEnter(object sender, EventArgs e)
+        {
+            btnGuardarEdicion.BackColor = Color.FromArgb(0, 192, 0);
+        }
+
+        private void btnGuardarEdicion_MouseLeave(object sender, EventArgs e)
+        {
+            btnGuardarEdicion.BackColor = Color.White;
+        }
     }
 }

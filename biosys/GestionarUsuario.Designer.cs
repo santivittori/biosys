@@ -281,6 +281,8 @@
             this.btnAltaUsuario.Text = "DAR DE ALTA USUARIO";
             this.btnAltaUsuario.UseVisualStyleBackColor = true;
             this.btnAltaUsuario.Click += new System.EventHandler(this.btnAltaUsuario_Click);
+            this.btnAltaUsuario.MouseEnter += new System.EventHandler(this.btnAltaUsuario_MouseEnter);
+            this.btnAltaUsuario.MouseLeave += new System.EventHandler(this.btnAltaUsuario_MouseLeave);
             // 
             // btnEliminarUsuario
             // 
@@ -293,6 +295,8 @@
             this.btnEliminarUsuario.Text = "ELIMINAR";
             this.btnEliminarUsuario.UseVisualStyleBackColor = true;
             this.btnEliminarUsuario.Click += new System.EventHandler(this.btnEliminarUsuario_Click);
+            this.btnEliminarUsuario.MouseEnter += new System.EventHandler(this.btnEliminarUsuario_MouseEnter);
+            this.btnEliminarUsuario.MouseLeave += new System.EventHandler(this.btnEliminarUsuario_MouseLeave);
             // 
             // btnGuardarEdicion
             // 
@@ -305,6 +309,8 @@
             this.btnGuardarEdicion.Text = "GUARDAR EDICIÓN";
             this.btnGuardarEdicion.UseVisualStyleBackColor = true;
             this.btnGuardarEdicion.Click += new System.EventHandler(this.btnGuardarEdicion_Click);
+            this.btnGuardarEdicion.MouseEnter += new System.EventHandler(this.btnGuardarEdicion_MouseEnter);
+            this.btnGuardarEdicion.MouseLeave += new System.EventHandler(this.btnGuardarEdicion_MouseLeave);
             // 
             // btnLimpiarCampos
             // 

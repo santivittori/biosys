@@ -307,6 +307,8 @@
             this.btnEliminarProd.Text = "ELIMINAR PRODUCTO";
             this.btnEliminarProd.UseVisualStyleBackColor = true;
             this.btnEliminarProd.Click += new System.EventHandler(this.btnEliminarProd_Click);
+            this.btnEliminarProd.MouseEnter += new System.EventHandler(this.btnEliminarProd_MouseEnter);
+            this.btnEliminarProd.MouseLeave += new System.EventHandler(this.btnEliminarProd_MouseLeave);
             // 
             // btnCancelar
             // 
@@ -319,6 +321,8 @@
             this.btnCancelar.Text = "CANCELAR";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
+            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
             // 
             // btnLimpiar
             // 
@@ -343,6 +347,8 @@
             this.btnGuardarProd.Text = "GUARDAR PRODUCTO";
             this.btnGuardarProd.UseVisualStyleBackColor = true;
             this.btnGuardarProd.Click += new System.EventHandler(this.btnGuardarProd_Click);
+            this.btnGuardarProd.MouseEnter += new System.EventHandler(this.btnGuardarProd_MouseEnter);
+            this.btnGuardarProd.MouseLeave += new System.EventHandler(this.btnGuardarProd_MouseLeave);
             // 
             // btnCargarExcel
             // 

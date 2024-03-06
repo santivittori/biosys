@@ -257,6 +257,8 @@
             this.btnCancelar.Text = "CANCELAR";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
+            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
             // 
             // btnLimpiar
             // 
@@ -293,6 +295,8 @@
             this.btnRegistrarDonacion.Text = "REGISTRAR DONACIÓN";
             this.btnRegistrarDonacion.UseVisualStyleBackColor = true;
             this.btnRegistrarDonacion.Click += new System.EventHandler(this.btnRegistrarDonacion_Click);
+            this.btnRegistrarDonacion.MouseEnter += new System.EventHandler(this.btnRegistrarDonacion_MouseEnter);
+            this.btnRegistrarDonacion.MouseLeave += new System.EventHandler(this.btnRegistrarDonacion_MouseLeave);
             // 
             // Donaciones
             // 

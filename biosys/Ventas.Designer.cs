@@ -305,6 +305,8 @@
             this.btnCancelar.Text = "CANCELAR";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
+            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
             // 
             // btnGuardarDetalle
             // 
@@ -341,6 +343,8 @@
             this.btnRegistrarVenta.Text = "REGISTRAR VENTA";
             this.btnRegistrarVenta.UseVisualStyleBackColor = true;
             this.btnRegistrarVenta.Click += new System.EventHandler(this.btnRegistrarVenta_Click);
+            this.btnRegistrarVenta.MouseEnter += new System.EventHandler(this.btnRegistrarVenta_MouseEnter);
+            this.btnRegistrarVenta.MouseLeave += new System.EventHandler(this.btnRegistrarVenta_MouseLeave);
             // 
             // Ventas
             // 

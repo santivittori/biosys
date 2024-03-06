@@ -499,5 +499,25 @@ namespace biosys
 
             MessageBox.Show($"La venta se registró correctamente.\n\nPrecio total: ${ventaInfo.PrecioTotalVenta}", "Venta registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void btnCancelar_MouseEnter(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.Red;
+        }
+
+        private void btnCancelar_MouseLeave(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.White;
+        }
+
+        private void btnRegistrarVenta_MouseEnter(object sender, EventArgs e)
+        {
+            btnRegistrarVenta.BackColor = Color.FromArgb(0, 192, 0);
+        }
+
+        private void btnRegistrarVenta_MouseLeave(object sender, EventArgs e)
+        {
+            btnRegistrarVenta.BackColor = Color.White;
+        }
     }
 }

@@ -359,6 +359,8 @@
             this.btnEliminarProv.Text = "ELIMINAR PROVEEDOR";
             this.btnEliminarProv.UseVisualStyleBackColor = true;
             this.btnEliminarProv.Click += new System.EventHandler(this.btnEliminarProv_Click);
+            this.btnEliminarProv.MouseEnter += new System.EventHandler(this.btnEliminarProv_MouseEnter);
+            this.btnEliminarProv.MouseLeave += new System.EventHandler(this.btnEliminarProv_MouseLeave);
             // 
             // btnCancelar
             // 
@@ -371,6 +373,8 @@
             this.btnCancelar.Text = "CANCELAR";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
+            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
             // 
             // btnLimpiar
             // 
@@ -395,6 +399,8 @@
             this.btnGuardarProv.Text = "GUARDAR PROVEEDOR";
             this.btnGuardarProv.UseVisualStyleBackColor = true;
             this.btnGuardarProv.Click += new System.EventHandler(this.btnGuardarProv_Click);
+            this.btnGuardarProv.MouseEnter += new System.EventHandler(this.btnGuardarProv_MouseEnter);
+            this.btnGuardarProv.MouseLeave += new System.EventHandler(this.btnGuardarProv_MouseLeave);
             // 
             // Proveedores
             // 

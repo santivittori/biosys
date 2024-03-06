@@ -235,6 +235,8 @@
             this.btnCancelar.Text = "CANCELAR";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
+            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
             // 
             // btnGuardarDetalle
             // 
@@ -260,6 +262,8 @@
             this.btnRegistrarSiembra.Text = "REGISTRAR SIEMBRA";
             this.btnRegistrarSiembra.UseVisualStyleBackColor = true;
             this.btnRegistrarSiembra.Click += new System.EventHandler(this.btnRegistrarSiembra_Click);
+            this.btnRegistrarSiembra.MouseEnter += new System.EventHandler(this.btnRegistrarSiembra_MouseEnter);
+            this.btnRegistrarSiembra.MouseLeave += new System.EventHandler(this.btnRegistrarSiembra_MouseLeave);
             // 
             // Reproduccion
             // 

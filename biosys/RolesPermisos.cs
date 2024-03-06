@@ -116,8 +116,16 @@ namespace biosys
                 // Verificar si el rol está deshabilitado
                 if (!Controladora.Controladora.VerificarRolHabilitado(nombreRol))
                 {
-                    // Cambiar el color de fondo de la fila a gris claro para indicar que el rol está deshabilitado
+                    // Cambiar el color de fondo de la fila a amarillo para indicar que el rol está deshabilitado
                     dataGridViewRoles.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+
+                    // Agregar un tooltip que explique por qué el rol está inhabilitado
+                    dataGridViewRoles.Rows[e.RowIndex].Cells[0].ToolTipText = "Este rol está inhabilitado actualmente.";
+                }
+                else
+                {
+                    // Limpiar el tooltip si el rol está habilitado
+                    dataGridViewRoles.Rows[e.RowIndex].Cells[0].ToolTipText = "";
                 }
             }
         }
@@ -489,7 +497,7 @@ namespace biosys
             // Verificar si se seleccionó una fila
             if (dataGridViewRoles.SelectedRows.Count == 0)
             {
-                msgError("Debe seleccionar un rol antes de deshabilitarlo.");
+                msgError("Debe seleccionar un rol antes de habilitarlo o deshabilitarlo.");
                 return;
             }
 
@@ -677,6 +685,76 @@ namespace biosys
                     MessageBox.Show($"Error al intentar eliminar el permiso '{nombrePermisoSeleccionado}'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void btnCrearRol_MouseEnter(object sender, EventArgs e)
+        {
+            btnCrearRol.BackColor = Color.FromArgb(0, 192, 0);
+        }
+
+        private void btnCrearRol_MouseLeave(object sender, EventArgs e)
+        {
+            btnCrearRol.BackColor = Color.White;
+        }
+
+        private void btnCrearPermiso_MouseEnter(object sender, EventArgs e)
+        {
+            btnCrearPermiso.BackColor = Color.FromArgb(0, 192, 0);
+        }
+
+        private void btnCrearPermiso_MouseLeave(object sender, EventArgs e)
+        {
+            btnCrearPermiso.BackColor = Color.White;
+        }
+
+        private void btnHabilitar_MouseEnter(object sender, EventArgs e)
+        {
+            btnHabilitar.BackColor = Color.Yellow;
+        }
+
+        private void btnHabilitar_MouseLeave(object sender, EventArgs e)
+        {
+            btnHabilitar.BackColor = Color.White;
+        }
+
+        private void btnEliminarRol_MouseEnter(object sender, EventArgs e)
+        {
+            btnEliminarRol.BackColor = Color.Red;
+        }
+
+        private void btnEliminarRol_MouseLeave(object sender, EventArgs e)
+        {
+            btnEliminarRol.BackColor = Color.White;
+        }
+
+        private void btnEliminarPermiso_MouseEnter(object sender, EventArgs e)
+        {
+            btnEliminarPermiso.BackColor = Color.Red;
+        }
+
+        private void btnEliminarPermiso_MouseLeave(object sender, EventArgs e)
+        {
+            btnEliminarPermiso.BackColor = Color.White;
+        }
+
+        private void btnGuardarPermiso_MouseEnter(object sender, EventArgs e)
+        {
+            btnGuardarPermiso.BackColor = Color.FromArgb(0, 192, 0);
+        }
+
+        private void btnGuardarPermiso_MouseLeave(object sender, EventArgs e)
+        {
+            btnGuardarPermiso.BackColor = Color.White;
+        }
+
+        private void btnGuardarRol_MouseEnter(object sender, EventArgs e)
+        {
+            btnGuardarRol.BackColor = Color.FromArgb(0, 192, 0);
+        }
+
+        private void btnGuardarRol_MouseLeave(object sender, EventArgs e)
+        {
+            btnGuardarRol.BackColor = Color.White;
         }
     }
 }

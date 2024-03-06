@@ -376,5 +376,35 @@ namespace biosys
             // Actualizar el DataGridView
             CargarProveedoresEnDataGridView();
         }
+
+        private void btnEliminarProv_MouseEnter(object sender, EventArgs e)
+        {
+            btnEliminarProv.BackColor = Color.Red;
+        }
+
+        private void btnEliminarProv_MouseLeave(object sender, EventArgs e)
+        {
+            btnEliminarProv.BackColor = Color.White;
+        }
+
+        private void btnCancelar_MouseEnter(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.Red;
+        }
+
+        private void btnCancelar_MouseLeave(object sender, EventArgs e)
+        {
+            btnCancelar.BackColor = Color.White;
+        }
+
+        private void btnGuardarProv_MouseEnter(object sender, EventArgs e)
+        {
+            btnGuardarProv.BackColor = Color.FromArgb(0, 192, 0);
+        }
+
+        private void btnGuardarProv_MouseLeave(object sender, EventArgs e)
+        {
+            btnGuardarProv.BackColor = Color.White;
+        }
     }
 }
