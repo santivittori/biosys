@@ -37,16 +37,16 @@
             this.lblRol = new System.Windows.Forms.Label();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.Menu = new System.Windows.Forms.Panel();
+            this.btnProductos = new System.Windows.Forms.Button();
+            this.btnRecoleccion = new System.Windows.Forms.Button();
+            this.btnProveedores = new System.Windows.Forms.Button();
+            this.btnCompras = new System.Windows.Forms.Button();
+            this.btnClientes = new System.Windows.Forms.Button();
+            this.btnDonacion = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.btnBajaProductos = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.btnGestionarUsuario = new System.Windows.Forms.Button();
-            this.btnProductos = new System.Windows.Forms.Button();
-            this.btnProveedores = new System.Windows.Forms.Button();
-            this.btnClientes = new System.Windows.Forms.Button();
-            this.btnCompras = new System.Windows.Forms.Button();
-            this.btnRecoleccion = new System.Windows.Forms.Button();
-            this.btnDonacion = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnABM = new System.Windows.Forms.Button();
             this.btnAltaProducto = new System.Windows.Forms.Button();
@@ -177,6 +177,132 @@
             this.Menu.Size = new System.Drawing.Size(277, 492);
             this.Menu.TabIndex = 16;
             // 
+            // btnProductos
+            // 
+            this.btnProductos.BackColor = System.Drawing.Color.Teal;
+            this.btnProductos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnProductos.FlatAppearance.BorderSize = 0;
+            this.btnProductos.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
+            this.btnProductos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
+            this.btnProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProductos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProductos.ForeColor = System.Drawing.Color.Black;
+            this.btnProductos.Image = ((System.Drawing.Image)(resources.GetObject("btnProductos.Image")));
+            this.btnProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProductos.Location = new System.Drawing.Point(40, 377);
+            this.btnProductos.Name = "btnProductos";
+            this.btnProductos.Size = new System.Drawing.Size(237, 32);
+            this.btnProductos.TabIndex = 17;
+            this.btnProductos.Tag = "ABMs";
+            this.btnProductos.Text = "PRODUCTOS";
+            this.btnProductos.UseVisualStyleBackColor = false;
+            this.btnProductos.Click += new System.EventHandler(this.btnProductos_Click);
+            // 
+            // btnRecoleccion
+            // 
+            this.btnRecoleccion.BackColor = System.Drawing.Color.Teal;
+            this.btnRecoleccion.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRecoleccion.FlatAppearance.BorderSize = 0;
+            this.btnRecoleccion.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
+            this.btnRecoleccion.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
+            this.btnRecoleccion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRecoleccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRecoleccion.ForeColor = System.Drawing.Color.Black;
+            this.btnRecoleccion.Image = ((System.Drawing.Image)(resources.GetObject("btnRecoleccion.Image")));
+            this.btnRecoleccion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRecoleccion.Location = new System.Drawing.Point(46, 114);
+            this.btnRecoleccion.Name = "btnRecoleccion";
+            this.btnRecoleccion.Size = new System.Drawing.Size(234, 32);
+            this.btnRecoleccion.TabIndex = 27;
+            this.btnRecoleccion.Tag = "Alta de Productos";
+            this.btnRecoleccion.Text = "RECOLECCIÓN";
+            this.btnRecoleccion.UseVisualStyleBackColor = false;
+            this.btnRecoleccion.Click += new System.EventHandler(this.btnRecoleccion_Click);
+            // 
+            // btnProveedores
+            // 
+            this.btnProveedores.BackColor = System.Drawing.Color.Teal;
+            this.btnProveedores.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnProveedores.FlatAppearance.BorderSize = 0;
+            this.btnProveedores.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
+            this.btnProveedores.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
+            this.btnProveedores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnProveedores.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProveedores.ForeColor = System.Drawing.Color.Black;
+            this.btnProveedores.Image = ((System.Drawing.Image)(resources.GetObject("btnProveedores.Image")));
+            this.btnProveedores.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnProveedores.Location = new System.Drawing.Point(43, 339);
+            this.btnProveedores.Name = "btnProveedores";
+            this.btnProveedores.Size = new System.Drawing.Size(237, 32);
+            this.btnProveedores.TabIndex = 17;
+            this.btnProveedores.Tag = "ABMs";
+            this.btnProveedores.Text = "PROVEEDORES";
+            this.btnProveedores.UseVisualStyleBackColor = false;
+            this.btnProveedores.Click += new System.EventHandler(this.btnProveedores_Click);
+            // 
+            // btnCompras
+            // 
+            this.btnCompras.BackColor = System.Drawing.Color.Teal;
+            this.btnCompras.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCompras.FlatAppearance.BorderSize = 0;
+            this.btnCompras.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
+            this.btnCompras.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
+            this.btnCompras.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCompras.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCompras.ForeColor = System.Drawing.Color.Black;
+            this.btnCompras.Image = ((System.Drawing.Image)(resources.GetObject("btnCompras.Image")));
+            this.btnCompras.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCompras.Location = new System.Drawing.Point(43, 38);
+            this.btnCompras.Name = "btnCompras";
+            this.btnCompras.Size = new System.Drawing.Size(234, 32);
+            this.btnCompras.TabIndex = 23;
+            this.btnCompras.Tag = "Alta de Productos";
+            this.btnCompras.Text = "COMPRAS";
+            this.btnCompras.UseVisualStyleBackColor = false;
+            this.btnCompras.Click += new System.EventHandler(this.btnCompras_Click);
+            // 
+            // btnClientes
+            // 
+            this.btnClientes.BackColor = System.Drawing.Color.Teal;
+            this.btnClientes.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnClientes.FlatAppearance.BorderSize = 0;
+            this.btnClientes.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
+            this.btnClientes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
+            this.btnClientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClientes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClientes.ForeColor = System.Drawing.Color.Black;
+            this.btnClientes.Image = ((System.Drawing.Image)(resources.GetObject("btnClientes.Image")));
+            this.btnClientes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClientes.Location = new System.Drawing.Point(43, 301);
+            this.btnClientes.Name = "btnClientes";
+            this.btnClientes.Size = new System.Drawing.Size(237, 32);
+            this.btnClientes.TabIndex = 15;
+            this.btnClientes.Tag = "ABMs";
+            this.btnClientes.Text = "CLIENTES";
+            this.btnClientes.UseVisualStyleBackColor = false;
+            this.btnClientes.Click += new System.EventHandler(this.btnClientes_Click);
+            // 
+            // btnDonacion
+            // 
+            this.btnDonacion.BackColor = System.Drawing.Color.Teal;
+            this.btnDonacion.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDonacion.FlatAppearance.BorderSize = 0;
+            this.btnDonacion.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
+            this.btnDonacion.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
+            this.btnDonacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDonacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDonacion.ForeColor = System.Drawing.Color.Black;
+            this.btnDonacion.Image = ((System.Drawing.Image)(resources.GetObject("btnDonacion.Image")));
+            this.btnDonacion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDonacion.Location = new System.Drawing.Point(43, 76);
+            this.btnDonacion.Name = "btnDonacion";
+            this.btnDonacion.Size = new System.Drawing.Size(234, 32);
+            this.btnDonacion.TabIndex = 25;
+            this.btnDonacion.Tag = "Alta de Productos";
+            this.btnDonacion.Text = "DONACIÓN";
+            this.btnDonacion.UseVisualStyleBackColor = false;
+            this.btnDonacion.Click += new System.EventHandler(this.btnDonacion_Click);
+            // 
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.CadetBlue;
@@ -234,132 +360,6 @@
             this.btnGestionarUsuario.Text = "GESTIONAR USUARIOS";
             this.btnGestionarUsuario.UseVisualStyleBackColor = false;
             this.btnGestionarUsuario.Click += new System.EventHandler(this.btnGestionarUsuario_Click);
-            // 
-            // btnProductos
-            // 
-            this.btnProductos.BackColor = System.Drawing.Color.Teal;
-            this.btnProductos.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnProductos.FlatAppearance.BorderSize = 0;
-            this.btnProductos.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
-            this.btnProductos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
-            this.btnProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnProductos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProductos.ForeColor = System.Drawing.Color.Black;
-            this.btnProductos.Image = ((System.Drawing.Image)(resources.GetObject("btnProductos.Image")));
-            this.btnProductos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnProductos.Location = new System.Drawing.Point(40, 377);
-            this.btnProductos.Name = "btnProductos";
-            this.btnProductos.Size = new System.Drawing.Size(237, 32);
-            this.btnProductos.TabIndex = 17;
-            this.btnProductos.Tag = "ABMs";
-            this.btnProductos.Text = "PRODUCTOS";
-            this.btnProductos.UseVisualStyleBackColor = false;
-            this.btnProductos.Click += new System.EventHandler(this.btnProductos_Click);
-            // 
-            // btnProveedores
-            // 
-            this.btnProveedores.BackColor = System.Drawing.Color.Teal;
-            this.btnProveedores.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnProveedores.FlatAppearance.BorderSize = 0;
-            this.btnProveedores.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
-            this.btnProveedores.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
-            this.btnProveedores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnProveedores.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnProveedores.ForeColor = System.Drawing.Color.Black;
-            this.btnProveedores.Image = ((System.Drawing.Image)(resources.GetObject("btnProveedores.Image")));
-            this.btnProveedores.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnProveedores.Location = new System.Drawing.Point(43, 339);
-            this.btnProveedores.Name = "btnProveedores";
-            this.btnProveedores.Size = new System.Drawing.Size(237, 32);
-            this.btnProveedores.TabIndex = 17;
-            this.btnProveedores.Tag = "ABMs";
-            this.btnProveedores.Text = "PROVEEDORES";
-            this.btnProveedores.UseVisualStyleBackColor = false;
-            this.btnProveedores.Click += new System.EventHandler(this.btnProveedores_Click);
-            // 
-            // btnClientes
-            // 
-            this.btnClientes.BackColor = System.Drawing.Color.Teal;
-            this.btnClientes.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnClientes.FlatAppearance.BorderSize = 0;
-            this.btnClientes.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
-            this.btnClientes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
-            this.btnClientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClientes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClientes.ForeColor = System.Drawing.Color.Black;
-            this.btnClientes.Image = ((System.Drawing.Image)(resources.GetObject("btnClientes.Image")));
-            this.btnClientes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClientes.Location = new System.Drawing.Point(43, 301);
-            this.btnClientes.Name = "btnClientes";
-            this.btnClientes.Size = new System.Drawing.Size(237, 32);
-            this.btnClientes.TabIndex = 15;
-            this.btnClientes.Tag = "ABMs";
-            this.btnClientes.Text = "CLIENTES";
-            this.btnClientes.UseVisualStyleBackColor = false;
-            this.btnClientes.Click += new System.EventHandler(this.btnClientes_Click);
-            // 
-            // btnCompras
-            // 
-            this.btnCompras.BackColor = System.Drawing.Color.Teal;
-            this.btnCompras.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCompras.FlatAppearance.BorderSize = 0;
-            this.btnCompras.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
-            this.btnCompras.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
-            this.btnCompras.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCompras.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCompras.ForeColor = System.Drawing.Color.Black;
-            this.btnCompras.Image = ((System.Drawing.Image)(resources.GetObject("btnCompras.Image")));
-            this.btnCompras.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCompras.Location = new System.Drawing.Point(43, 38);
-            this.btnCompras.Name = "btnCompras";
-            this.btnCompras.Size = new System.Drawing.Size(234, 32);
-            this.btnCompras.TabIndex = 23;
-            this.btnCompras.Tag = "Alta de Productos";
-            this.btnCompras.Text = "COMPRAS";
-            this.btnCompras.UseVisualStyleBackColor = false;
-            this.btnCompras.Click += new System.EventHandler(this.btnCompras_Click);
-            // 
-            // btnRecoleccion
-            // 
-            this.btnRecoleccion.BackColor = System.Drawing.Color.Teal;
-            this.btnRecoleccion.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRecoleccion.FlatAppearance.BorderSize = 0;
-            this.btnRecoleccion.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
-            this.btnRecoleccion.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
-            this.btnRecoleccion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRecoleccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRecoleccion.ForeColor = System.Drawing.Color.Black;
-            this.btnRecoleccion.Image = ((System.Drawing.Image)(resources.GetObject("btnRecoleccion.Image")));
-            this.btnRecoleccion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRecoleccion.Location = new System.Drawing.Point(46, 114);
-            this.btnRecoleccion.Name = "btnRecoleccion";
-            this.btnRecoleccion.Size = new System.Drawing.Size(234, 32);
-            this.btnRecoleccion.TabIndex = 27;
-            this.btnRecoleccion.Tag = "Alta de Productos";
-            this.btnRecoleccion.Text = "RECOLECCIÓN";
-            this.btnRecoleccion.UseVisualStyleBackColor = false;
-            this.btnRecoleccion.Click += new System.EventHandler(this.btnRecoleccion_Click);
-            // 
-            // btnDonacion
-            // 
-            this.btnDonacion.BackColor = System.Drawing.Color.Teal;
-            this.btnDonacion.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDonacion.FlatAppearance.BorderSize = 0;
-            this.btnDonacion.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
-            this.btnDonacion.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
-            this.btnDonacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDonacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDonacion.ForeColor = System.Drawing.Color.Black;
-            this.btnDonacion.Image = ((System.Drawing.Image)(resources.GetObject("btnDonacion.Image")));
-            this.btnDonacion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDonacion.Location = new System.Drawing.Point(43, 76);
-            this.btnDonacion.Name = "btnDonacion";
-            this.btnDonacion.Size = new System.Drawing.Size(234, 32);
-            this.btnDonacion.TabIndex = 25;
-            this.btnDonacion.Tag = "Alta de Productos";
-            this.btnDonacion.Text = "DONACIÓN";
-            this.btnDonacion.UseVisualStyleBackColor = false;
-            this.btnDonacion.Click += new System.EventHandler(this.btnDonacion_Click);
             // 
             // panel2
             // 
@@ -590,7 +590,6 @@
         private System.Windows.Forms.Button btnProductos;
         private System.Windows.Forms.Button btnProveedores;
         private System.Windows.Forms.Button btnClientes;
-        private System.Windows.Forms.Panel PanelContenedor;
         private System.Windows.Forms.Button btnRecoleccion;
         private System.Windows.Forms.Button btnDonacion;
         private System.Windows.Forms.Button btnCompras;
@@ -601,5 +600,6 @@
         private System.Windows.Forms.Button btnGestionarUsuario;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Button btnBajaProductos;
+        private System.Windows.Forms.Panel PanelContenedor;
     }
 }

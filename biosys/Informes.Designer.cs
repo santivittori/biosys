@@ -46,10 +46,10 @@
             this.SemillasTipo = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ArbolesTipo = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.TotalporDivision = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.btnInfEconomicos = new System.Windows.Forms.Button();
-            this.btnExportarPDF = new System.Windows.Forms.Button();
-            this.btnInfReproduccion = new System.Windows.Forms.Button();
-            this.btnDescargaGrafica = new System.Windows.Forms.Button();
+            this.btnDescargaGrafica = new biosys.RoundedButton();
+            this.btnExportarPDF = new biosys.RoundedButton();
+            this.btnInfEconomicos = new biosys.RoundedButton();
+            this.btnInfReproduccion = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.CantTotal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SemillasTipo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ArbolesTipo)).BeginInit();
@@ -131,53 +131,53 @@
             this.TotalporDivision.TabIndex = 55;
             this.TotalporDivision.Text = "chart1";
             // 
-            // btnInfEconomicos
+            // btnDescargaGrafica
             // 
-            this.btnInfEconomicos.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnInfEconomicos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInfEconomicos.Location = new System.Drawing.Point(1224, 290);
-            this.btnInfEconomicos.Name = "btnInfEconomicos";
-            this.btnInfEconomicos.Size = new System.Drawing.Size(150, 63);
-            this.btnInfEconomicos.TabIndex = 65;
-            this.btnInfEconomicos.Text = "INFORMES ECONÓMICOS";
-            this.btnInfEconomicos.UseVisualStyleBackColor = true;
-            this.btnInfEconomicos.Click += new System.EventHandler(this.btnInfEconomicos_Click);
+            this.btnDescargaGrafica.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDescargaGrafica.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDescargaGrafica.Location = new System.Drawing.Point(1238, 505);
+            this.btnDescargaGrafica.Name = "btnDescargaGrafica";
+            this.btnDescargaGrafica.Size = new System.Drawing.Size(119, 48);
+            this.btnDescargaGrafica.TabIndex = 142;
+            this.btnDescargaGrafica.Text = "DESCARGA GRÁFICA";
+            this.btnDescargaGrafica.UseVisualStyleBackColor = true;
+            this.btnDescargaGrafica.Click += new System.EventHandler(this.btnDescargaGrafica_Click);
             // 
             // btnExportarPDF
             // 
             this.btnExportarPDF.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnExportarPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportarPDF.Location = new System.Drawing.Point(1224, 473);
+            this.btnExportarPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExportarPDF.Location = new System.Drawing.Point(1238, 441);
             this.btnExportarPDF.Name = "btnExportarPDF";
-            this.btnExportarPDF.Size = new System.Drawing.Size(150, 59);
-            this.btnExportarPDF.TabIndex = 66;
-            this.btnExportarPDF.Text = "DESCARGAR COMPLETA";
+            this.btnExportarPDF.Size = new System.Drawing.Size(119, 48);
+            this.btnExportarPDF.TabIndex = 143;
+            this.btnExportarPDF.Text = "DESCARGA ESCRITA";
             this.btnExportarPDF.UseVisualStyleBackColor = true;
             this.btnExportarPDF.Click += new System.EventHandler(this.btnExportarPDF_Click);
+            // 
+            // btnInfEconomicos
+            // 
+            this.btnInfEconomicos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnInfEconomicos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInfEconomicos.Location = new System.Drawing.Point(1238, 350);
+            this.btnInfEconomicos.Name = "btnInfEconomicos";
+            this.btnInfEconomicos.Size = new System.Drawing.Size(119, 48);
+            this.btnInfEconomicos.TabIndex = 144;
+            this.btnInfEconomicos.Text = "INFORMES ECONÓMICOS";
+            this.btnInfEconomicos.UseVisualStyleBackColor = true;
+            this.btnInfEconomicos.Click += new System.EventHandler(this.btnInfEconomicos_Click);
             // 
             // btnInfReproduccion
             // 
             this.btnInfReproduccion.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnInfReproduccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInfReproduccion.Location = new System.Drawing.Point(1224, 190);
+            this.btnInfReproduccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInfReproduccion.Location = new System.Drawing.Point(1238, 284);
             this.btnInfReproduccion.Name = "btnInfReproduccion";
-            this.btnInfReproduccion.Size = new System.Drawing.Size(150, 59);
-            this.btnInfReproduccion.TabIndex = 67;
+            this.btnInfReproduccion.Size = new System.Drawing.Size(119, 48);
+            this.btnInfReproduccion.TabIndex = 145;
             this.btnInfReproduccion.Text = "INFORMES REPRODUCCIÓN";
             this.btnInfReproduccion.UseVisualStyleBackColor = true;
             this.btnInfReproduccion.Click += new System.EventHandler(this.btnInfReproduccion_Click);
-            // 
-            // btnDescargaGrafica
-            // 
-            this.btnDescargaGrafica.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDescargaGrafica.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDescargaGrafica.Location = new System.Drawing.Point(1224, 576);
-            this.btnDescargaGrafica.Name = "btnDescargaGrafica";
-            this.btnDescargaGrafica.Size = new System.Drawing.Size(150, 59);
-            this.btnDescargaGrafica.TabIndex = 68;
-            this.btnDescargaGrafica.Text = "DESCARGA GRÁFICA";
-            this.btnDescargaGrafica.UseVisualStyleBackColor = true;
-            this.btnDescargaGrafica.Click += new System.EventHandler(this.btnDescargaGrafica_Click);
             // 
             // Informes
             // 
@@ -185,10 +185,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
-            this.Controls.Add(this.btnDescargaGrafica);
             this.Controls.Add(this.btnInfReproduccion);
-            this.Controls.Add(this.btnExportarPDF);
             this.Controls.Add(this.btnInfEconomicos);
+            this.Controls.Add(this.btnExportarPDF);
+            this.Controls.Add(this.btnDescargaGrafica);
             this.Controls.Add(this.TotalporDivision);
             this.Controls.Add(this.ArbolesTipo);
             this.Controls.Add(this.SemillasTipo);
@@ -215,9 +215,9 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart SemillasTipo;
         private System.Windows.Forms.DataVisualization.Charting.Chart ArbolesTipo;
         private System.Windows.Forms.DataVisualization.Charting.Chart TotalporDivision;
-        private System.Windows.Forms.Button btnInfEconomicos;
-        private System.Windows.Forms.Button btnExportarPDF;
-        private System.Windows.Forms.Button btnInfReproduccion;
-        private System.Windows.Forms.Button btnDescargaGrafica;
+        private RoundedButton btnDescargaGrafica;
+        private RoundedButton btnExportarPDF;
+        private RoundedButton btnInfEconomicos;
+        private RoundedButton btnInfReproduccion;
     }
 }

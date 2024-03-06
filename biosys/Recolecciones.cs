@@ -38,6 +38,55 @@ namespace biosys
         private void Recolecciones_Load(object sender, EventArgs e)
         {
             CargarProductos();
+
+            // Calcular la posición x para centrar el Label horizontalmente
+            int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            // Establecer la posición del Label
+            labelTitulo.Location = new Point(labelPosX, 50);
+        }
+        private void ActualizarListBox()
+        {
+            // Limpiar el contenido actual del ListBox
+            listDetalleRecoleccion.Items.Clear();
+
+            // Agregar cada elemento de la lista al ListBox
+            foreach (Recoleccion recoleccion in recoleccionList)
+            {
+                string item = $"ID: {recoleccion.ProductoId} - {recoleccion.Producto} - Cantidad: {recoleccion.Cantidad}";
+                listDetalleRecoleccion.Items.Add(item);
+            }
+        }
+        public void msgError(string msg)
+        {
+            lblError.Text = "      " + msg;
+            lblError.Visible = true;
+        }
+        private void LimpiarCampos()
+        {
+            // Limpiar los campos de entrada de datos
+            comboProductos.SelectedIndex = -1;
+            numericCantidad.Value = 0;
+
+            // Limpiar el contenido del ListBox
+            listDetalleRecoleccion.Items.Clear();
+
+            // Limpiar los textbox
+            txtLugar.Text = string.Empty;
+
+            // Habilitar campos nuevamente
+            txtLugar.Enabled = true;
+            fechaRecoleccion.Enabled = true;
+        }
+        private void txtLugar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e = MetodosComunes.KeyPressSoloLetras(e);
+
+            if (e.Handled)
+            {
+                // Cancela el evento KeyPress
+                e.Handled = true;
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -73,18 +122,7 @@ namespace biosys
                 // Habilitar campos nuevamente
                 txtLugar.Enabled = true;
                 fechaRecoleccion.Enabled = true;
-            }
-        }
-        private void ActualizarListBox()
-        {
-            // Limpiar el contenido actual del ListBox
-            listDetalleRecoleccion.Items.Clear();
-
-            // Agregar cada elemento de la lista al ListBox
-            foreach (Recoleccion recoleccion in recoleccionList)
-            {
-                string item = $"ID: {recoleccion.ProductoId} - {recoleccion.Producto} - Cantidad: {recoleccion.Cantidad}";
-                listDetalleRecoleccion.Items.Add(item);
+                lblError.Visible = false;
             }
         }
 
@@ -138,11 +176,7 @@ namespace biosys
             // Actualizar el contenido del ListBox
             ActualizarListBox();
         }
-        public void msgError(string msg)
-        {
-            lblError.Text = "      " + msg;
-            lblError.Visible = true;
-        }
+
         private void btnRegistrarRecoleccion_Click(object sender, EventArgs e)
         {
             if (recoleccionList.Count == 0)
@@ -186,32 +220,6 @@ namespace biosys
             recoleccionList.Clear();
 
             MessageBox.Show("La recolección se registró correctamente.", "Recolección registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        private void LimpiarCampos()
-        {
-            // Limpiar los campos de entrada de datos
-            comboProductos.SelectedIndex = -1;
-            numericCantidad.Value = 0;
-
-            // Limpiar el contenido del ListBox
-            listDetalleRecoleccion.Items.Clear();
-
-            // Limpiar los textbox
-            txtLugar.Text = string.Empty;
-
-            // Habilitar campos nuevamente
-            txtLugar.Enabled = true;
-            fechaRecoleccion.Enabled = true;
-        }
-        private void txtLugar_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e = MetodosComunes.KeyPressSoloLetras(e);
-
-            if (e.Handled)
-            {
-                // Cancela el evento KeyPress
-                e.Handled = true;
-            }
         }
     }
 }

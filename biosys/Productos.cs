@@ -71,74 +71,11 @@ namespace biosys
                 comboTipoProducto.Enabled = false;
             }
         }
-
-        private void btnGuardarProd_Click(object sender, EventArgs e)
-        {
-            // Validar que se ingresen todos los campos obligatorios
-            if (string.IsNullOrEmpty(txtNombreProd.Text) || comboTipoProducto.SelectedItem == null || comboTipoEspecifico.SelectedItem == null)
-            {
-                msgError("Por favor, complete todos los campos obligatorios.");
-                return;
-            }
-
-            // Obtener los valores ingresados
-            string nombre = txtNombreProd.Text;
-            int tipoProductoID = Convert.ToInt32(comboTipoProducto.SelectedValue);
-            int tipoEspecificoID = Convert.ToInt32(comboTipoEspecifico.SelectedValue);
-
-            Producto producto = new Producto()
-            {
-                Nombre = nombre,
-                TipoProductoId = tipoProductoID,
-                TipoEspecificoId = tipoEspecificoID,
-            };
-
-            // Verificar si el producto ya existe
-            bool productoExistente = Controladora.Controladora.VerificarProductoExistente(producto);
-
-            if (productoExistente)
-            {
-                msgError("El producto ya existe en la base de datos.");
-                return;
-            }
-
-            // Verificar si se seleccionó una fila para modificar
-            if (idProductoSeleccionado != 0)
-            {
-                // Actualizar el producto en la base de datos utilizando el ID del producto seleccionado
-                Controladora.Controladora.ActualizarProducto(idProductoSeleccionado, nombre);
-
-                // Mostrar mensaje de éxito
-                MessageBox.Show("Producto modificado exitosamente.", "Modificación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                // No se seleccionó una fila previamente, se creará un nuevo registro
-                // Insertar el producto en la base de datos
-                Controladora.Controladora.InsertarProducto(producto);
-
-                // Mostrar mensaje de éxito
-                MessageBox.Show("Producto guardado exitosamente.", "Guardado exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
-            // Limpiar los campos
-            LimpiarCampos();
-
-            // Actualizar el DataGridView
-            CargarProductosEnDataGridView();
-        }
-
         private void LimpiarCampos()
         {
             txtNombreProd.Text = string.Empty;
             comboTipoProducto.SelectedIndex = -1;
             comboTipoEspecifico.SelectedIndex = -1;
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            DashboardInstance.AbrirFormHijo(new Inicio());
-            this.Close();
         }
 
         private void Productos_Load(object sender, EventArgs e)
@@ -172,6 +109,12 @@ namespace biosys
             comboBoxOrdenar.SelectedIndex = -1;
 
             CargarProductosEnDataGridView();
+
+            // Calcular la posición x para centrar el Label horizontalmente
+            int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            // Establecer la posición del Label
+            labelTitulo.Location = new Point(labelPosX, 50);
         }
 
         public void msgError(string msg)
@@ -200,71 +143,6 @@ namespace biosys
                 e.Handled = true;
             }
         }
-
-        private void btnEliminarProd_Click(object sender, EventArgs e)
-        {
-            // Verificar si se seleccionó una fila en el DataGridView
-            if (dataGridViewProductos.SelectedRows.Count > 0)
-            {
-                // Obtener el ID del producto seleccionado
-                int idProducto = Convert.ToInt32(dataGridViewProductos.SelectedRows[0].Cells["ID"].Value);
-
-                // Verificar si el producto ha sido utilizado en una compra
-                bool productoEnCompra = Controladora.Controladora.VerificarProductoEnCompra(idProducto);
-
-                // Verificar si el producto ha sido utilizado en detalle_siembra
-                bool productoEnDetalleSiembra = Controladora.Controladora.VerificarProductoEnDetalleSiembra(idProducto);
-
-                if (productoEnCompra || productoEnDetalleSiembra)
-                {
-                    msgError("El producto no puede ser eliminado porque ha sido utilizado.");
-                    return;
-                }
-
-                // Mostrar un cuadro de diálogo de confirmación
-                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este producto?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                // Si el usuario confirma la eliminación
-                if (result == DialogResult.Yes)
-                {
-                    // Eliminar el producto de la base de datos
-                    Controladora.Controladora.EliminarProducto(idProducto);
-
-                    // Mostrar mensaje de éxito y actualizar el DataGridView
-                    MessageBox.Show("Producto eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CargarProductosEnDataGridView();
-                }
-            }
-            else
-            {
-                msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
-                return;
-            }
-        }
-
-        private void btnLimpiar_Click(object sender, EventArgs e)
-        {
-            LimpiarCampos();
-            comboTipoEspecifico.Enabled = true;
-            comboTipoProducto.Enabled = true;
-
-            // Deseleccionar la fila en el DataGridView
-            dataGridViewProductos.ClearSelection();
-            idProductoSeleccionado = 0;
-        }
-
-        private void btnQuitarFiltros_Click(object sender, EventArgs e)
-        {
-            // Limpiar el TextBox de búsqueda
-            txtBusqueda.Text = string.Empty;
-
-            // Deseleccionar el ComboBox
-            comboBoxOrdenar.SelectedIndex = -1;
-
-            // Mostrar todos los proveedores en el DataGridView
-            CargarProductosEnDataGridView();
-        }
-
         private void txtBusqueda_KeyPress(object sender, KeyPressEventArgs e)
         {
             e = MetodosComunes.KeyPressSoloLetras(e);
@@ -366,71 +244,6 @@ namespace biosys
                 else if (opcionOrdenamiento == "TipoEspecifico descendente")
                 {
                     OrdenarPorTipoEspecificoDescendente();
-                }
-            }
-        }
-
-        private void btnCargarExcel_Click(object sender, EventArgs e)
-        {
-            // Mensaje informativo sobre cómo debe estar estructurado el archivo Excel
-            string mensajeInstrucciones =
-                "El archivo Excel debe tener el siguiente formato:\n\n" +
-                "1. La primera fila debe contener los títulos de las columnas.\n\n" +
-                "2. Las columnas deben estar en el siguiente orden:\n\n" +
-                "   NOMBRE | TIPO PRODUCTO | TIPO ESPECIFICO\n\n" +
-                "3. En la columna 'TIPO PRODUCTO', debe especificar 'Árbol' o 'Semilla'. Respetar tildes y buena tipografía.\n\n" +
-                "4. En la columna 'TIPO ESPECIFICO', debe especificar 'Éxotica' o 'Nativa'. Respetar tildes y buena tipografía.\n\n" +
-                "5. Asegúrese de que no haya espacios vacíos en ninguna de las celdas de estas columnas.";
-
-            MessageBox.Show(mensajeInstrucciones, "Instrucciones para cargar el archivo Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            EstablecerContextoLicencia();
-
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Archivos Excel (*.xlsx)|*.xlsx|Todos los archivos (*.*)|*.*";
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string path = openFileDialog.FileName;
-
-                // Leer el contenido del archivo Excel y obtener los datos en una lista de objetos
-                List<Producto> productos = LeerExcel(path);
-
-                if (productos != null && productos.Count > 0)
-                {
-                    // Normalizar los datos y verificar su validez
-                    List<Producto> productosNormalizados = NormalizarDatos(productos);
-
-                    if (productosNormalizados != null && productosNormalizados.Count > 0)
-                    {
-                        // Agregar los productos normalizados a la base de datos
-                        foreach (Producto producto in productosNormalizados)
-                        {
-                            // Verificar si el producto ya existe en la base de datos
-                            bool productoExistente = Controladora.Controladora.VerificarProductoExistente(producto);
-                            if (productoExistente)
-                            {
-                                // Omitir la inserción de este producto, ya que ya existe en la base de datos.
-                                continue;
-                            }
-
-                            // Si el producto no existe, proceder con la inserción
-                            Controladora.Controladora.InsertarProducto(producto);
-                        }
-
-                        MessageBox.Show("Los productos se han cargado exitosamente.", "Carga exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        CargarProductosEnDataGridView();
-                    }
-                    else
-                    {
-                        msgError("El archivo Excel no contiene datos válidos o no se pudo normalizar.");
-                        return;
-                    }
-                }
-                else
-                {
-                    msgError("El archivo Excel no contiene datos válidos o está vacío.");
-                    return;
                 }
             }
         }
@@ -612,6 +425,206 @@ namespace biosys
                 paginaActual++;
                 CargarProductosEnDataGridView();
             }
+        }
+
+        private void btnQuitarFiltros_Click(object sender, EventArgs e)
+        {
+            // Limpiar el TextBox de búsqueda
+            txtBusqueda.Text = string.Empty;
+
+            // Deseleccionar el ComboBox
+            comboBoxOrdenar.SelectedIndex = -1;
+
+            // Mostrar todos los proveedores en el DataGridView
+            CargarProductosEnDataGridView();
+        }
+
+        private void btnEliminarProd_Click(object sender, EventArgs e)
+        {
+            // Verificar si se seleccionó una fila en el DataGridView
+            if (dataGridViewProductos.SelectedRows.Count > 0)
+            {
+                // Obtener el ID del producto seleccionado
+                int idProducto = Convert.ToInt32(dataGridViewProductos.SelectedRows[0].Cells["ID"].Value);
+
+                // Verificar si el producto ha sido utilizado en una compra
+                bool productoEnCompra = Controladora.Controladora.VerificarProductoEnCompra(idProducto);
+
+                // Verificar si el producto ha sido utilizado en detalle_siembra
+                bool productoEnDetalleSiembra = Controladora.Controladora.VerificarProductoEnDetalleSiembra(idProducto);
+
+                if (productoEnCompra || productoEnDetalleSiembra)
+                {
+                    msgError("El producto no puede ser eliminado porque ha sido utilizado.");
+                    return;
+                }
+
+                // Mostrar un cuadro de diálogo de confirmación
+                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este producto?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                // Si el usuario confirma la eliminación
+                if (result == DialogResult.Yes)
+                {
+                    // Eliminar el producto de la base de datos
+                    Controladora.Controladora.EliminarProducto(idProducto);
+
+                    // Mostrar mensaje de éxito y actualizar el DataGridView
+                    MessageBox.Show("Producto eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarProductosEnDataGridView();
+                }
+            }
+            else
+            {
+                msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
+                return;
+            }
+        }
+
+        private void btnCargarExcel_Click(object sender, EventArgs e)
+        {
+            // Mensaje informativo sobre cómo debe estar estructurado el archivo Excel
+            string mensajeInstrucciones =
+                "El archivo Excel debe tener el siguiente formato:\n\n" +
+                "1. La primera fila debe contener los títulos de las columnas.\n\n" +
+                "2. Las columnas deben estar en el siguiente orden:\n\n" +
+                "   NOMBRE | TIPO PRODUCTO | TIPO ESPECIFICO\n\n" +
+                "3. En la columna 'TIPO PRODUCTO', debe especificar 'Árbol' o 'Semilla'. Respetar tildes y buena tipografía.\n\n" +
+                "4. En la columna 'TIPO ESPECIFICO', debe especificar 'Éxotica' o 'Nativa'. Respetar tildes y buena tipografía.\n\n" +
+                "5. Asegúrese de que no haya espacios vacíos en ninguna de las celdas de estas columnas.";
+
+            MessageBox.Show(mensajeInstrucciones, "Instrucciones para cargar el archivo Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            EstablecerContextoLicencia();
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos Excel (*.xlsx)|*.xlsx|Todos los archivos (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = openFileDialog.FileName;
+
+                // Leer el contenido del archivo Excel y obtener los datos en una lista de objetos
+                List<Producto> productos = LeerExcel(path);
+
+                if (productos != null && productos.Count > 0)
+                {
+                    // Normalizar los datos y verificar su validez
+                    List<Producto> productosNormalizados = NormalizarDatos(productos);
+
+                    if (productosNormalizados != null && productosNormalizados.Count > 0)
+                    {
+                        // Agregar los productos normalizados a la base de datos
+                        foreach (Producto producto in productosNormalizados)
+                        {
+                            // Verificar si el producto ya existe en la base de datos
+                            bool productoExistente = Controladora.Controladora.VerificarProductoExistente(producto);
+                            if (productoExistente)
+                            {
+                                // Omitir la inserción de este producto, ya que ya existe en la base de datos.
+                                continue;
+                            }
+
+                            // Si el producto no existe, proceder con la inserción
+                            Controladora.Controladora.InsertarProducto(producto);
+                        }
+
+                        MessageBox.Show("Los productos se han cargado exitosamente.", "Carga exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CargarProductosEnDataGridView();
+                    }
+                    else
+                    {
+                        msgError("El archivo Excel no contiene datos válidos o no se pudo normalizar.");
+                        return;
+                    }
+                }
+                else
+                {
+                    msgError("El archivo Excel no contiene datos válidos o está vacío.");
+                    return;
+                }
+            }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            // Mostrar un cuadro de diálogo de confirmación
+            DialogResult result = MessageBox.Show("¿Está seguro de que desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // Verificar si el usuario ha confirmado la cancelación
+            if (result == DialogResult.Yes)
+            {
+                // Si el usuario confirma, cerrar el formulario
+                DashboardInstance.AbrirFormHijo(new Inicio());
+                this.Close();
+            }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            LimpiarCampos();
+            comboTipoEspecifico.Enabled = true;
+            comboTipoProducto.Enabled = true;
+
+            // Deseleccionar la fila en el DataGridView
+            dataGridViewProductos.ClearSelection();
+            idProductoSeleccionado = 0;
+            lblError.Visible = false;
+        }
+
+        private void btnGuardarProd_Click(object sender, EventArgs e)
+        {
+            // Validar que se ingresen todos los campos obligatorios
+            if (string.IsNullOrEmpty(txtNombreProd.Text) || comboTipoProducto.SelectedItem == null || comboTipoEspecifico.SelectedItem == null)
+            {
+                msgError("Por favor, complete todos los campos obligatorios.");
+                return;
+            }
+
+            // Obtener los valores ingresados
+            string nombre = txtNombreProd.Text;
+            int tipoProductoID = Convert.ToInt32(comboTipoProducto.SelectedValue);
+            int tipoEspecificoID = Convert.ToInt32(comboTipoEspecifico.SelectedValue);
+
+            Producto producto = new Producto()
+            {
+                Nombre = nombre,
+                TipoProductoId = tipoProductoID,
+                TipoEspecificoId = tipoEspecificoID,
+            };
+
+            // Verificar si el producto ya existe
+            bool productoExistente = Controladora.Controladora.VerificarProductoExistente(producto);
+
+            if (productoExistente)
+            {
+                msgError("El producto ya existe en la base de datos.");
+                return;
+            }
+
+            // Verificar si se seleccionó una fila para modificar
+            if (idProductoSeleccionado != 0)
+            {
+                // Actualizar el producto en la base de datos utilizando el ID del producto seleccionado
+                Controladora.Controladora.ActualizarProducto(idProductoSeleccionado, nombre);
+
+                // Mostrar mensaje de éxito
+                MessageBox.Show("Producto modificado exitosamente.", "Modificación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                // No se seleccionó una fila previamente, se creará un nuevo registro
+                // Insertar el producto en la base de datos
+                Controladora.Controladora.InsertarProducto(producto);
+
+                // Mostrar mensaje de éxito
+                MessageBox.Show("Producto guardado exitosamente.", "Guardado exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            // Limpiar los campos
+            LimpiarCampos();
+
+            // Actualizar el DataGridView
+            CargarProductosEnDataGridView();
         }
     }
 }

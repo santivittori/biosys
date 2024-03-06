@@ -33,6 +33,12 @@ namespace biosys
             SemillasTipoCant();
             ArbolesTipoCant();
             TotalPorDivision();
+
+            // Calcular la posición x para centrar el Label horizontalmente
+            int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            // Establecer la posición del Label
+            labelTitulo.Location = new Point(labelPosX, 50);
         }
         // Metodo para obtener la cant total de semillas y árboles
         private void CantTotalArbolesySemillas()
@@ -349,25 +355,6 @@ namespace biosys
             }
         }
 
-        private void btnExportarPDF_Click(object sender, EventArgs e)
-        {
-            ExportarPDF();
-        }
-
-        private void btnInfEconomicos_Click(object sender, EventArgs e)
-        {
-            InformesEconomicos informesEconomicosForm = new InformesEconomicos();
-            informesEconomicosForm.DashboardInstance = DashboardInstance;
-            DashboardInstance.AbrirFormHijo(informesEconomicosForm);
-        }
-
-        private void btnInfReproduccion_Click(object sender, EventArgs e)
-        {
-            InformesReproduccion informesReproduccionForm = new InformesReproduccion();
-            informesReproduccionForm.DashboardInstance = DashboardInstance;
-            DashboardInstance.AbrirFormHijo(informesReproduccionForm);
-        }
-
         private void ExportarPDFGrafico()
         {
             // Crear el documento PDF
@@ -462,6 +449,25 @@ namespace biosys
             {
                 doc.Add(new Paragraph($"Cantidad de {seriesArbol.Name} = {seriesArbol.Points.FirstOrDefault()?.YValues[0] ?? 0}.", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.NORMAL)));
             }
+        }
+
+        private void btnInfEconomicos_Click(object sender, EventArgs e)
+        {
+            InformesEconomicos informesEconomicosForm = new InformesEconomicos();
+            informesEconomicosForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(informesEconomicosForm);
+        }
+
+        private void btnInfReproduccion_Click(object sender, EventArgs e)
+        {
+            InformesReproduccion informesReproduccionForm = new InformesReproduccion();
+            informesReproduccionForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(informesReproduccionForm);
+        }
+
+        private void btnExportarPDF_Click(object sender, EventArgs e)
+        {
+            ExportarPDF();
         }
 
         private void btnDescargaGrafica_Click(object sender, EventArgs e)

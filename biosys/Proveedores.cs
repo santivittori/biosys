@@ -52,80 +52,12 @@ namespace biosys
                 txtTelefonoProv.Text = proveedorSeleccionado.Telefono;
             }
         }
-        private void btnGuardarProv_Click(object sender, EventArgs e)
-        {
-            // Verificar campos vacíos
-            if (string.IsNullOrEmpty(txtNombreProv.Text) || string.IsNullOrEmpty(txtApellidoProv.Text) ||
-                string.IsNullOrEmpty(txtEmailProv.Text) || string.IsNullOrEmpty(txtTelefonoProv.Text))
-            {
-                msgError("Por favor, complete todos los campos obligatorios.");
-                return;
-            }
-            
-            string nombre = txtNombreProv.Text;
-            string apellido = txtApellidoProv.Text;
-            string email = txtEmailProv.Text;
-            string telefono = txtTelefonoProv.Text;
-
-            bool esValido = MetodosComunes.ValidacionEMAIL(null, email);
-
-            // Crear el objeto ProveedorInfo con los datos del proveedor
-            ProveedorInfo proveedorInfo = new ProveedorInfo
-            {
-                Id = idProveedorSeleccionado,
-                Nombre = nombre,
-                Apellido = apellido,
-                Email = email,
-                Telefono = telefono
-            };
-
-            bool proveedorExistente = Controladora.Controladora.VerificarProveedorExistente(proveedorInfo);
-
-            if (!esValido)
-            {
-                msgError("Debe ingresar un email válido, por favor verifíquelo.");
-                return;
-            }
-            else if (proveedorExistente)
-            {
-                msgError("El proveedor ya existe en la base de datos.");
-                return;
-            }
-
-            // Verificar si se seleccionó una fila para modificar
-            if (idProveedorSeleccionado != 0)
-            {
-                // Actualizar el producto en la base de datos utilizando el ID del producto seleccionado
-                Controladora.Controladora.ActualizarProveedor(proveedorInfo);
-
-                // Mostrar mensaje de éxito
-                MessageBox.Show("Proveedor modificado exitosamente.", "Modificación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                Controladora.Controladora.InsertarProveedor(proveedorInfo);
-
-                // Mostrar mensaje de éxito y limpiar campos
-                MessageBox.Show("Proveedor guardado exitosamente.", "Guardado exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            LimpiarCamposProveedor();
-
-            // Actualizar el DataGridView
-            CargarProveedoresEnDataGridView();
-        }
-
         private void LimpiarCamposProveedor()
         {
             txtNombreProv.Text = string.Empty;
             txtApellidoProv.Text = string.Empty;
             txtEmailProv.Text = string.Empty;
             txtTelefonoProv.Text = string.Empty;
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            DashboardInstance.AbrirFormHijo(new Inicio());
-            this.Close();
         }
 
         private void Proveedores_Load(object sender, EventArgs e)
@@ -140,6 +72,12 @@ namespace biosys
             comboBoxOrdenar.SelectedIndex = -1;
 
             CargarProveedoresEnDataGridView();
+
+            // Calcular la posición x para centrar el Label horizontalmente
+            int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            // Establecer la posición del Label
+            labelTitulo.Location = new Point(labelPosX, 50);
         }
         public void msgError(string msg)
         {
@@ -177,53 +115,6 @@ namespace biosys
                 e.Handled = true;
             }
         }
-
-        private void btnEliminarProv_Click(object sender, EventArgs e)
-        {
-            // Verificar si se seleccionó una fila en el DataGridView
-            if (dataGridViewProveedores.SelectedRows.Count > 0)
-            {
-                // Obtener el ID del proveedor seleccionado
-                int idProveedor = Convert.ToInt32(dataGridViewProveedores.SelectedRows[0].Cells["ID"].Value);
-
-                // Verificar si el proveedor ha sido utilizado en una compra
-                bool proveedorEnCompra = Controladora.Controladora.VerificarProveedorEnCompras(idProveedor);
-
-                if (proveedorEnCompra)
-                {
-                    msgError("El proveedor no puede ser eliminado porque ha sido utilizado en una compra.");
-                    return;
-                }
-
-                // Mostrar un cuadro de diálogo de confirmación
-                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este proveedor?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                // Si el usuario confirma la eliminación
-                if (result == DialogResult.Yes)
-                {
-                    // Eliminar el proveedor de la base de datos
-                    Controladora.Controladora.EliminarProveedor(idProveedor);
-
-                    // Mostrar mensaje de éxito y actualizar el DataGridView
-                    MessageBox.Show("Proveedor eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CargarProveedoresEnDataGridView();
-                }
-            }
-            else
-            {
-                msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
-                return;
-            }
-        }
-
-        private void btnLimpiar_Click(object sender, EventArgs e)
-        {
-            LimpiarCamposProveedor();
-            // Deseleccionar la fila en el DataGridView
-            dataGridViewProveedores.ClearSelection();
-            idProveedorSeleccionado = 0;
-        }
-
         private void txtBusqueda_TextChanged(object sender, EventArgs e)
         {
             string criterioBusqueda = txtBusqueda.Text;
@@ -303,18 +194,6 @@ namespace biosys
             }
         }
 
-        private void btnQuitarFiltros_Click(object sender, EventArgs e)
-        {
-            // Limpiar el TextBox de búsqueda
-            txtBusqueda.Text = string.Empty;
-
-            // Deseleccionar el ComboBox
-            comboBoxOrdenar.SelectedIndex = -1;
-
-            // Mostrar todos los proveedores en el DataGridView
-            CargarProveedoresEnDataGridView();
-        }
-
         private void CargarProveedoresEnDataGridView()
         {
             // Calcular el índice de inicio para la paginación
@@ -361,6 +240,141 @@ namespace biosys
                 paginaActual++;
                 CargarProveedoresEnDataGridView();
             }
+        }
+
+        private void btnQuitarFiltros_Click(object sender, EventArgs e)
+        {
+            // Limpiar el TextBox de búsqueda
+            txtBusqueda.Text = string.Empty;
+
+            // Deseleccionar el ComboBox
+            comboBoxOrdenar.SelectedIndex = -1;
+
+            // Mostrar todos los proveedores en el DataGridView
+            CargarProveedoresEnDataGridView();
+        }
+
+        private void btnEliminarProv_Click(object sender, EventArgs e)
+        {
+            // Verificar si se seleccionó una fila en el DataGridView
+            if (dataGridViewProveedores.SelectedRows.Count > 0)
+            {
+                // Obtener el ID del proveedor seleccionado
+                int idProveedor = Convert.ToInt32(dataGridViewProveedores.SelectedRows[0].Cells["ID"].Value);
+
+                // Verificar si el proveedor ha sido utilizado en una compra
+                bool proveedorEnCompra = Controladora.Controladora.VerificarProveedorEnCompras(idProveedor);
+
+                if (proveedorEnCompra)
+                {
+                    msgError("El proveedor no puede ser eliminado porque ha sido utilizado en una compra.");
+                    return;
+                }
+
+                // Mostrar un cuadro de diálogo de confirmación
+                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este proveedor?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                // Si el usuario confirma la eliminación
+                if (result == DialogResult.Yes)
+                {
+                    // Eliminar el proveedor de la base de datos
+                    Controladora.Controladora.EliminarProveedor(idProveedor);
+
+                    // Mostrar mensaje de éxito y actualizar el DataGridView
+                    MessageBox.Show("Proveedor eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarProveedoresEnDataGridView();
+                }
+            }
+            else
+            {
+                msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
+                return;
+            }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            // Mostrar un cuadro de diálogo de confirmación
+            DialogResult result = MessageBox.Show("¿Está seguro de que desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // Verificar si el usuario ha confirmado la cancelación
+            if (result == DialogResult.Yes)
+            {
+                // Si el usuario confirma, cerrar el formulario
+                DashboardInstance.AbrirFormHijo(new Inicio());
+                this.Close();
+            }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            LimpiarCamposProveedor();
+            // Deseleccionar la fila en el DataGridView
+            dataGridViewProveedores.ClearSelection();
+            idProveedorSeleccionado = 0;
+            lblError.Visible = false;
+        }
+
+        private void btnGuardarProv_Click(object sender, EventArgs e)
+        {
+            // Verificar campos vacíos
+            if (string.IsNullOrEmpty(txtNombreProv.Text) || string.IsNullOrEmpty(txtApellidoProv.Text) ||
+                string.IsNullOrEmpty(txtEmailProv.Text) || string.IsNullOrEmpty(txtTelefonoProv.Text))
+            {
+                msgError("Por favor, complete todos los campos obligatorios.");
+                return;
+            }
+
+            string nombre = txtNombreProv.Text;
+            string apellido = txtApellidoProv.Text;
+            string email = txtEmailProv.Text;
+            string telefono = txtTelefonoProv.Text;
+
+            bool esValido = MetodosComunes.ValidacionEMAIL(null, email);
+
+            // Crear el objeto ProveedorInfo con los datos del proveedor
+            ProveedorInfo proveedorInfo = new ProveedorInfo
+            {
+                Id = idProveedorSeleccionado,
+                Nombre = nombre,
+                Apellido = apellido,
+                Email = email,
+                Telefono = telefono
+            };
+
+            bool proveedorExistente = Controladora.Controladora.VerificarProveedorExistente(proveedorInfo);
+
+            if (!esValido)
+            {
+                msgError("Debe ingresar un email válido, por favor verifíquelo.");
+                return;
+            }
+            else if (proveedorExistente)
+            {
+                msgError("El proveedor ya existe en la base de datos.");
+                return;
+            }
+
+            // Verificar si se seleccionó una fila para modificar
+            if (idProveedorSeleccionado != 0)
+            {
+                // Actualizar el producto en la base de datos utilizando el ID del producto seleccionado
+                Controladora.Controladora.ActualizarProveedor(proveedorInfo);
+
+                // Mostrar mensaje de éxito
+                MessageBox.Show("Proveedor modificado exitosamente.", "Modificación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                Controladora.Controladora.InsertarProveedor(proveedorInfo);
+
+                // Mostrar mensaje de éxito y limpiar campos
+                MessageBox.Show("Proveedor guardado exitosamente.", "Guardado exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            LimpiarCamposProveedor();
+
+            // Actualizar el DataGridView
+            CargarProveedoresEnDataGridView();
         }
     }
 }

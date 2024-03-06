@@ -103,15 +103,24 @@ namespace biosys
                 string rol = Controladora.Controladora.ObtenerRolUsuario(nombreUsuario);
                 string correoElectronico = Controladora.Controladora.ObtenerCorreoUsuario(nombreUsuario);
 
-                // Guardar la información del usuario logueado
-                UsuarioActual.UsuarioLogueado = new Usuario { NombreUsuario = nombreUsuario, Rol = rol, Email = correoElectronico };
+                // Verificar si el rol del usuario está habilitado
+                if (Controladora.Controladora.VerificarRolHabilitado(rol))
+                {
+                    // Guardar la información del usuario logueado
+                    UsuarioActual.UsuarioLogueado = new Usuario { NombreUsuario = nombreUsuario, Rol = rol, Email = correoElectronico };
 
-                // Cerrar el formulario actual (Login)
-                this.Hide();
+                    // Cerrar el formulario actual (Login)
+                    this.Hide();
 
-                // Mostrar el formulario principal (Dashboard) según el rol del usuario
-                Dashboard root = new Dashboard(rol, nombreUsuario);
-                root.ShowDialog();
+                    // Mostrar el formulario principal (Dashboard) según el rol del usuario
+                    Dashboard root = new Dashboard(rol, nombreUsuario);
+                    root.ShowDialog();
+                }
+                else
+                {
+                    // Mostrar mensaje indicando que el rol está deshabilitado
+                    msgError("Su rol ha sido deshabilitado. No puede iniciar sesión.");
+                }
             }
             else
             {

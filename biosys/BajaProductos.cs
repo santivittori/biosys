@@ -28,30 +28,6 @@ namespace biosys
             productos = Controladora.Controladora.ObtenerProductosStockComboBox();
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la baja de productos? \n\nLa información se perderá", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                DashboardInstance.AbrirFormHijo(new Inicio());
-                this.Close();
-            }
-        }
-
-        private void btnLimpiar_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea limpiar los campos? \n\nLa información se perderá", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                // Limpiar los campos de entrada de datos
-                comboProductos.SelectedIndex = -1;
-                comboMotivo.SelectedIndex = -1;
-                numericCantidad.Value = 0;
-            }
-        }
-
         public void msgError(string msg)
         {
             lblError.Text = "      " + msg;
@@ -96,6 +72,12 @@ namespace biosys
         {
             CargarProductos();
             CargarMotivos();
+
+            // Calcular la posición x para centrar el Label horizontalmente
+            int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            // Establecer la posición del Label
+            labelTitulo.Location = new Point(labelPosX, 50);
         }
 
         private void LimpiarCampos()
@@ -103,62 +85,6 @@ namespace biosys
             comboProductos.SelectedIndex = -1;
             comboMotivo.SelectedIndex = -1;
             numericCantidad.Value = 0;
-        }
-
-        private void btnConfirmarBaja_Click(object sender, EventArgs e)
-        {
-            // Verificar que se ha seleccionado un producto y un motivo
-            if (string.IsNullOrWhiteSpace(comboProductos.Text))
-            {
-                msgError("Por favor, seleccione un producto antes de confirmar la baja.");
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(comboMotivo.Text))
-            {
-                msgError("Por favor, seleccione un motivo para la baja.");
-                return;
-            }
-
-            // Obtener el producto seleccionado
-            string productName = comboProductos.SelectedItem.ToString();
-
-            // Extraer el nombre del producto seleccionado
-            productName = productName.Split('-')[0].Trim();
-
-            // Obtener la cantidad ingresada por el usuario
-            int cantidadBaja = (int)numericCantidad.Value;
-
-            // Verificar que la cantidad sea mayor a cero
-            if (cantidadBaja <= 0)
-            {
-                msgError("La cantidad ingresada debe ser mayor que cero.");
-                return;
-            }
-
-            int stock = Controladora.Controladora.ObtenerStockProducto(productName);
-
-            if (cantidadBaja > stock)
-            {
-                msgError("La cantidad ingresada es mayor que el stock disponible. Verifique la cantidad.");
-                return;
-            }
-
-            Controladora.Controladora.DisminuirStockProducto(productName, cantidadBaja);
-
-            // Actualizar la lista de productos con stock
-            productos = Controladora.Controladora.ObtenerProductosStockComboBox();
-
-            MessageBox.Show($"Se realizó la baja de {cantidadBaja} unidad/es de {productName}.", "Baja Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Registrar la baja del producto
-            Controladora.Controladora.RegistrarBajaProducto(productName, cantidadBaja, comboMotivo.Text);
-
-            // Ocultar el mensaje de error
-            lblError.Visible = false;
-
-            // Limpiar los campos
-            LimpiarCampos();
         }
 
         private void comboProductos_SelectedIndexChanged(object sender, EventArgs e)
@@ -224,5 +150,84 @@ namespace biosys
             }
         }
 
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la baja de productos? \n\nLa información se perderá", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                DashboardInstance.AbrirFormHijo(new Inicio());
+                this.Close();
+            }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea limpiar los campos? \n\nLa información se perderá", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                // Limpiar los campos de entrada de datos
+                comboProductos.SelectedIndex = -1;
+                comboMotivo.SelectedIndex = -1;
+                numericCantidad.Value = 0;
+            }
+        }
+
+        private void btnConfirmarBaja_Click(object sender, EventArgs e)
+        {
+            // Verificar que se ha seleccionado un producto y un motivo
+            if (string.IsNullOrWhiteSpace(comboProductos.Text))
+            {
+                msgError("Por favor, seleccione un producto antes de confirmar la baja.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(comboMotivo.Text))
+            {
+                msgError("Por favor, seleccione un motivo para la baja.");
+                return;
+            }
+
+            // Obtener el producto seleccionado
+            string productName = comboProductos.SelectedItem.ToString();
+
+            // Extraer el nombre del producto seleccionado
+            productName = productName.Split('-')[0].Trim();
+
+            // Obtener la cantidad ingresada por el usuario
+            int cantidadBaja = (int)numericCantidad.Value;
+
+            // Verificar que la cantidad sea mayor a cero
+            if (cantidadBaja <= 0)
+            {
+                msgError("La cantidad ingresada debe ser mayor que cero.");
+                return;
+            }
+
+            int stock = Controladora.Controladora.ObtenerStockProducto(productName);
+
+            if (cantidadBaja > stock)
+            {
+                msgError("La cantidad ingresada es mayor que el stock disponible. Verifique la cantidad.");
+                return;
+            }
+
+            Controladora.Controladora.DisminuirStockProducto(productName, cantidadBaja);
+
+            // Actualizar la lista de productos con stock
+            productos = Controladora.Controladora.ObtenerProductosStockComboBox();
+
+            MessageBox.Show($"Se realizó la baja de {cantidadBaja} unidad/es de {productName}.", "Baja Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Registrar la baja del producto
+            Controladora.Controladora.RegistrarBajaProducto(productName, cantidadBaja, comboMotivo.Text);
+
+            // Ocultar el mensaje de error
+            lblError.Visible = false;
+
+            // Limpiar los campos
+            LimpiarCampos();
+        }
     }
 }

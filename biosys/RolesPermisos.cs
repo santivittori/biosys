@@ -56,47 +56,6 @@ namespace biosys
             lblErrorRol.Visible = true;
         }
 
-        private void btnCrearRol_Click(object sender, EventArgs e)
-        {
-            // Verificar si hay una fila seleccionada en el DataGridView
-            if (dataGridViewRoles.SelectedRows.Count > 0)
-            {
-                msgError("Por favor, limpie los campos antes de crear un nuevo rol.");
-                return;
-            }
-
-            // Verificar si el nombre del rol está ingresado
-            if (string.IsNullOrWhiteSpace(txtNombreRol.Text))
-            {
-                msgError("Debe ingresar un nombre para el rol.");
-                return;
-            }
-
-            // Verificar si ya existe un rol con el mismo nombre
-            string nombreRol = txtNombreRol.Text.Trim();
-            if (Controladora.Controladora.ExisteRol(nombreRol))
-            {
-                msgError("Ya existe un rol con este nombre.");
-                return;
-            }
-
-            // Verificar si al menos un permiso está seleccionado
-            if (checkedListBoxPermisos.CheckedItems.Count == 0)
-            {
-                msgError("Debe seleccionar al menos un permiso para el rol.");
-                return;
-            }
-
-            // Crear el nuevo rol con los permisos seleccionados
-            CrearNuevoRol(nombreRol, checkedListBoxPermisos.CheckedItems.Cast<string>().ToList());
-
-            LimpiarCampos();
-            // Actualizar el DataGridView
-            CargarRolesEnDataGridView();
-
-            MessageBox.Show("¡El nuevo rol se creó correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         private void LimpiarCampos()
         {
             // Limpiar el TextBox
@@ -141,7 +100,26 @@ namespace biosys
             // Establecer el origen de datos después de configurar las columnas
             dataGridViewRoles.DataSource = dataTable;
 
+            // Suscribirse al evento CellFormatting para cambiar el color de fondo de las filas según el estado del rol
+            dataGridViewRoles.CellFormatting += dataGridViewRoles_CellFormatting;
+
             MostrarInformacionPaginacionRoles();
+        }
+        private void dataGridViewRoles_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Verificar si la celda actual es de la columna "NombreRol" y si hay datos en la fila
+            if (e.ColumnIndex == dataGridViewRoles.Columns[0].Index && e.RowIndex >= 0)
+            {
+                // Obtener el nombre del rol de la celda actual
+                string nombreRol = dataGridViewRoles.Rows[e.RowIndex].Cells[0].Value.ToString();
+
+                // Verificar si el rol está deshabilitado
+                if (!Controladora.Controladora.VerificarRolHabilitado(nombreRol))
+                {
+                    // Cambiar el color de fondo de la fila a gris claro para indicar que el rol está deshabilitado
+                    dataGridViewRoles.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
         }
 
         private void dataGridViewRoles_SelectionChanged(object sender, EventArgs e)
@@ -192,21 +170,6 @@ namespace biosys
             }
         }
 
-        private void btnLimpiarRol_Click(object sender, EventArgs e)
-        {
-            // Limpiar el TextBox
-            txtNombreRol.Clear();
-
-            // Deseleccionar todos los elementos en el CheckedListBox
-            for (int i = 0; i < checkedListBoxPermisos.Items.Count; i++)
-            {
-                checkedListBoxPermisos.SetItemChecked(i, false);
-            }
-
-            lblErrorRol.Visible = false;
-            dataGridViewRoles.ClearSelection();
-        }
-
         private void SeleccionarPermisos(List<string> permisos)
         {
             // Deseleccionar todos los elementos en el CheckedListBox
@@ -223,58 +186,6 @@ namespace biosys
                 {
                     checkedListBoxPermisos.SetItemChecked(index, true);
                 }
-            }
-        }
-
-        private void btnGuardarRol_Click(object sender, EventArgs e)
-        {
-            // Verificar si se ha seleccionado una fila en el DataGridView
-            if (dataGridViewRoles.SelectedRows.Count == 0)
-            {
-                msgError("Por favor, seleccione una fila para editar.");
-                return;
-            }
-
-            // Obtener el nombre del rol seleccionado en el DataGridView
-            string nombreRolSeleccionado = dataGridViewRoles.SelectedRows[0].Cells[0].Value.ToString();
-
-            // Verificar si el rol seleccionado es "Administrador"
-            if (nombreRolSeleccionado.Equals("Administrador", StringComparison.OrdinalIgnoreCase))
-            {
-                MessageBox.Show("No se puede modificar el rol de Administrador.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                LimpiarCampos();
-                return;
-            }
-
-            // Verificar si se realizaron cambios en el nombre del rol
-            string nuevoNombreRol = txtNombreRol.Text.Trim();
-            if (nuevoNombreRol == nombreRolSeleccionado && !HuboCambiosEnPermisos())
-            {
-                msgError("No se realizaron cambios en el rol.");
-                return;
-            }
-
-            // Obtener los permisos seleccionados
-            List<string> permisosSeleccionados = new List<string>();
-            foreach (var item in checkedListBoxPermisos.CheckedItems)
-            {
-                permisosSeleccionados.Add(item.ToString());
-            }
-
-            // Realizar la actualización del rol
-            bool actualizacionExitosa = Controladora.Controladora.ActualizarRol(nombreRolSeleccionado, nuevoNombreRol, permisosSeleccionados);
-
-            if (actualizacionExitosa)
-            {
-                MessageBox.Show("Se realizó la modificación del rol con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Limpiar los campos y actualizar el DataGridView
-                LimpiarCampos();
-                CargarRolesEnDataGridView();
-            }
-            else
-            {
-                MessageBox.Show("Error al intentar actualizar el rol.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -302,60 +213,16 @@ namespace biosys
             DashboardInstance.AbrirFormHijo(gestionarUsuarioForm);
         }
 
-        private void btnEliminarRol_Click(object sender, EventArgs e)
-        {
-            // Verificar si se seleccionó una fila
-            if (dataGridViewRoles.SelectedRows.Count == 0)
-            {
-                msgError("Debe seleccionar un rol antes de eliminarlo.");
-                return;
-            }
-
-            string nombreRol = dataGridViewRoles.SelectedRows[0].Cells[0].Value.ToString();
-
-            // Verificar si el rol es "Administrador"
-            if (nombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase))
-            {
-                MessageBox.Show("El rol de Administrador no se puede eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                LimpiarCampos();
-                return;
-            }
-
-            // Verificar si el rol tiene al menos uno de los permisos que requieren protección
-            List<string> permisosProtegidos = new List<string> { "Alta de Productos", "Ventas", "Reproduccion" };
-            List<string> permisosRol = Controladora.Controladora.ObtenerPermisosPorRol(nombreRol);
-
-            if (permisosRol.Intersect(permisosProtegidos).Any())
-            {
-                MessageBox.Show($"El rol '{nombreRol}' no se puede eliminar porque tiene permisos que requieren protección.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Preguntar al usuario si está seguro de eliminar el rol
-            DialogResult result = MessageBox.Show($"¿Está seguro de eliminar el rol '{nombreRol}'? Esto eliminará también los usuarios asociados.", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                bool eliminacionExitosa = Controladora.Controladora.EliminarRol(nombreRol);
-
-                if (eliminacionExitosa)
-                {
-                    MessageBox.Show($"El rol '{nombreRol}' se eliminó con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    // Actualizar el DataGridView
-                    CargarRolesEnDataGridView();
-                    LimpiarCampos();
-                }
-                else
-                {
-                    MessageBox.Show($"No se pudo eliminar el rol '{nombreRol}'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
         private void RolesPermisos_Load(object sender, EventArgs e)
         {
             CargarRolesEnDataGridView();
             CargarPermisosEnDataGridView();
+
+            // Calcular la posición x para centrar el Label horizontalmente
+            int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            // Establecer la posición del Label
+            labelTitulo.Location = new Point(labelPosX, 50);
         }
 
         private void CargarPermisosEnDataGridView()
@@ -410,21 +277,61 @@ namespace biosys
             labelPermiso.Text = $"Página {paginaActualPermiso} de {totalPaginas}. Total de permisos: {totalPermisos}";
         }
 
-        private void btnLimpiarPermiso_Click(object sender, EventArgs e)
-        {
-            // Limpiar el TextBox
-            txtNombrePermiso.Clear();
-
-            lblErrorPermiso.Visible = false;
-            dataGridViewPermisos.ClearSelection();
-            txtNombrePermiso.Enabled = true;
-        }
-
         public void msgErrorPermiso(string msg)
         {
             lblErrorPermiso.Text = "      " + msg;
             lblErrorPermiso.Visible = true;
         }
+
+        private void LimpiarCamposPermiso()
+        {
+            txtNombrePermiso.Clear();
+            lblErrorPermiso.Visible = false;
+            dataGridViewPermisos.ClearSelection();
+            txtNombrePermiso.Enabled = true;
+        }
+
+        private void dataGridViewPermisos_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridViewPermisos.SelectedRows.Count > 0)
+            {
+                string nombrePermiso = dataGridViewPermisos.SelectedRows[0].Cells[0].Value.ToString();
+
+                // Verificar si el nombre del permiso está en la lista de permisos deshabilitados
+                List<string> permisosDeshabilitados = new List<string> {
+                    "Alta de Productos",
+                    "Ventas",
+                    "Informes",
+                    "Baja de Productos",
+                    "Reproduccion",
+                    "Gestionar Usuarios",
+                    "ABMs"
+                };
+
+                // Deshabilitar el TextBox de permisos si el nombre del permiso está en la lista de permisos deshabilitados
+                txtNombrePermiso.Enabled = !permisosDeshabilitados.Contains(nombrePermiso);
+
+                // Asignar el nombre del permiso al TextBox de permisos
+                txtNombrePermiso.Text = nombrePermiso;
+            }
+        }
+        private bool ConfirmarCambioEstadoRol(string nombreRol, bool nuevoEstado)
+        {
+            string mensaje = nuevoEstado ? $"¿Está seguro de habilitar el rol '{nombreRol}'?" : $"¿Está seguro de deshabilitar el rol '{nombreRol}'? Esto impedirá que los usuarios con este rol inicien sesión.";
+            DialogResult result = MessageBox.Show(mensaje, "Confirmar cambio de estado", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            return result == DialogResult.Yes;
+        }
+
+        private void dataGridViewRoles_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridViewRoles.ClearSelection();
+        }
+
+        private void dataGridViewPermisos_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridViewPermisos.ClearSelection();
+        }
+
         private void btnCrearPermiso_Click(object sender, EventArgs e)
         {
             // Verificar si hay una fila seleccionada en el DataGridView
@@ -462,14 +369,270 @@ namespace biosys
             MessageBox.Show("¡El nuevo permiso se creó correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void LimpiarCamposPermiso()
+        private void btnCrearRol_Click(object sender, EventArgs e)
         {
+            // Verificar si hay una fila seleccionada en el DataGridView
+            if (dataGridViewRoles.SelectedRows.Count > 0)
+            {
+                msgError("Por favor, limpie los campos antes de crear un nuevo rol.");
+                return;
+            }
+
+            // Verificar si el nombre del rol está ingresado
+            if (string.IsNullOrWhiteSpace(txtNombreRol.Text))
+            {
+                msgError("Debe ingresar un nombre para el rol.");
+                return;
+            }
+
+            // Verificar si ya existe un rol con el mismo nombre
+            string nombreRol = txtNombreRol.Text.Trim();
+            if (Controladora.Controladora.ExisteRol(nombreRol))
+            {
+                msgError("Ya existe un rol con este nombre.");
+                return;
+            }
+
+            // Verificar si al menos un permiso está seleccionado
+            if (checkedListBoxPermisos.CheckedItems.Count == 0)
+            {
+                msgError("Debe seleccionar al menos un permiso para el rol.");
+                return;
+            }
+
+            // Crear el nuevo rol con los permisos seleccionados
+            CrearNuevoRol(nombreRol, checkedListBoxPermisos.CheckedItems.Cast<string>().ToList());
+
+            LimpiarCampos();
+            // Actualizar el DataGridView
+            CargarRolesEnDataGridView();
+
+            MessageBox.Show("¡El nuevo rol se creó correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnGuardarRol_Click(object sender, EventArgs e)
+        {
+            // Verificar si se ha seleccionado una fila en el DataGridView
+            if (dataGridViewRoles.SelectedRows.Count == 0)
+            {
+                msgError("Por favor, seleccione una fila para editar.");
+                return;
+            }
+
+            // Obtener el nombre del rol seleccionado en el DataGridView
+            string nombreRolSeleccionado = dataGridViewRoles.SelectedRows[0].Cells[0].Value.ToString();
+
+            // Verificar si el rol está deshabilitado
+            if (!Controladora.Controladora.VerificarRolHabilitado(nombreRolSeleccionado))
+            {
+                msgError("El rol ha sido deshabilitado y no puede ser editado.");
+                return;
+            }
+
+            // Verificar si el rol seleccionado es "Administrador"
+            if (nombreRolSeleccionado.Equals("Administrador", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("No se puede modificar el rol de Administrador.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LimpiarCampos();
+                return;
+            }
+
+            // Verificar si se realizaron cambios en el nombre del rol
+            string nuevoNombreRol = txtNombreRol.Text.Trim();
+            if (nuevoNombreRol == nombreRolSeleccionado && !HuboCambiosEnPermisos())
+            {
+                msgError("No se realizaron cambios en el rol.");
+                return;
+            }
+
+            // Obtener los permisos seleccionados
+            List<string> permisosSeleccionados = new List<string>();
+            foreach (var item in checkedListBoxPermisos.CheckedItems)
+            {
+                permisosSeleccionados.Add(item.ToString());
+            }
+
+            // Realizar la actualización del rol
+            bool actualizacionExitosa = Controladora.Controladora.ActualizarRol(nombreRolSeleccionado, nuevoNombreRol, permisosSeleccionados);
+
+            if (actualizacionExitosa)
+            {
+                MessageBox.Show("Se realizó la modificación del rol con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Limpiar los campos y actualizar el DataGridView
+                LimpiarCampos();
+                CargarRolesEnDataGridView();
+            }
+            else
+            {
+                MessageBox.Show("Error al intentar actualizar el rol.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnLimpiarRol_Click(object sender, EventArgs e)
+        {
+            // Limpiar el TextBox
+            txtNombreRol.Clear();
+
+            // Deseleccionar todos los elementos en el CheckedListBox
+            for (int i = 0; i < checkedListBoxPermisos.Items.Count; i++)
+            {
+                checkedListBoxPermisos.SetItemChecked(i, false);
+            }
+
+            lblErrorRol.Visible = false;
+            dataGridViewRoles.ClearSelection();
+        }
+
+        private void btnHabilitar_Click(object sender, EventArgs e)
+        {
+            // Verificar si se seleccionó una fila
+            if (dataGridViewRoles.SelectedRows.Count == 0)
+            {
+                msgError("Debe seleccionar un rol antes de deshabilitarlo.");
+                return;
+            }
+
+            string nombreRol = dataGridViewRoles.SelectedRows[0].Cells[0].Value.ToString();
+
+            // Verificar si el rol es "Administrador"
+            if (nombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("El rol de Administrador no se puede deshabilitar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LimpiarCampos();
+                return;
+            }
+
+            // Obtener el estado actual del rol
+            bool rolHabilitado = Controladora.Controladora.VerificarRolHabilitado(nombreRol);
+
+            // Invertir el estado del rol
+            bool nuevoEstadoRol = !rolHabilitado;
+
+            // Si se intenta cambiar el estado del rol, solicitar confirmación al usuario
+            if (ConfirmarCambioEstadoRol(nombreRol, nuevoEstadoRol))
+            {
+                // Actualizar el estado del rol en la base de datos
+                bool actualizacionExitosa = Controladora.Controladora.ActualizarEstadoRol(nombreRol, nuevoEstadoRol);
+
+                if (actualizacionExitosa)
+                {
+                    if (nuevoEstadoRol)
+                    {
+                        MessageBox.Show($"El rol '{nombreRol}' se habilitó con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"El rol '{nombreRol}' se deshabilitó con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    // Actualizar el DataGridView
+                    CargarRolesEnDataGridView();
+                    LimpiarCampos();
+                }
+                else
+                {
+                    MessageBox.Show($"No se pudo cambiar el estado del rol '{nombreRol}'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnEliminarRol_Click(object sender, EventArgs e)
+        {
+            // Verificar si se seleccionó una fila
+            if (dataGridViewRoles.SelectedRows.Count == 0)
+            {
+                msgError("Debe seleccionar un rol antes de eliminarlo.");
+                return;
+            }
+
+            string nombreRol = dataGridViewRoles.SelectedRows[0].Cells[0].Value.ToString();
+
+            // Verificar si el rol es "Administrador"
+            if (nombreRol.Equals("Administrador", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("El rol de Administrador no se puede eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LimpiarCampos();
+                return;
+            }
+
+            // Verificar si el rol tiene al menos uno de los permisos que requieren protección
+            List<string> permisosProtegidos = new List<string> { "Alta de Productos", "Ventas", "Reproduccion" };
+            List<string> permisosRol = Controladora.Controladora.ObtenerPermisosPorRol(nombreRol);
+
+            if (permisosRol.Intersect(permisosProtegidos).Any())
+            {
+                MessageBox.Show($"El rol '{nombreRol}' no se puede eliminar porque tiene permisos que requieren protección.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Preguntar al usuario si está seguro de eliminar el rol
+            DialogResult result = MessageBox.Show($"¿Está seguro de eliminar el rol '{nombreRol}'? Esto eliminará también los usuarios asociados.", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                bool eliminacionExitosa = Controladora.Controladora.EliminarRol(nombreRol);
+
+                if (eliminacionExitosa)
+                {
+                    MessageBox.Show($"El rol '{nombreRol}' se eliminó con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Actualizar el DataGridView
+                    CargarRolesEnDataGridView();
+                    LimpiarCampos();
+                }
+                else
+                {
+                    MessageBox.Show($"No se pudo eliminar el rol '{nombreRol}'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnGuardarPermiso_Click(object sender, EventArgs e)
+        {
+            // Verificar si se ha seleccionado una fila en el DataGridView
+            if (dataGridViewPermisos.SelectedRows.Count == 0)
+            {
+                msgErrorPermiso("Por favor, seleccione una fila para editar.");
+                return;
+            }
+
+            // Obtener el nombre del permiso seleccionado en el DataGridView
+            string nombrePermisoSeleccionado = dataGridViewPermisos.SelectedRows[0].Cells[0].Value.ToString();
+
+            // Verificar si se realizaron cambios en el nombre del permiso
+            string nuevoNombrePermiso = txtNombrePermiso.Text.Trim();
+            if (nuevoNombrePermiso == nombrePermisoSeleccionado)
+            {
+                msgErrorPermiso("No se realizaron cambios en el permiso.");
+                return;
+            }
+
+            // Realizar la actualización del permiso
+            bool actualizacionExitosa = Controladora.Controladora.ActualizarPermiso(nombrePermisoSeleccionado, nuevoNombrePermiso);
+
+            if (actualizacionExitosa)
+            {
+                MessageBox.Show("Se realizó la modificación del permiso con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Limpiar los campos y actualizar el DataGridView de empleados y el CheckedListBox de permisos
+                LimpiarCamposPermiso();
+                CargarPermisosEnDataGridView();
+                CargarPermisos();
+            }
+            else
+            {
+                MessageBox.Show("Error al intentar actualizar el permiso.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void btnLimpiarPermisos_Click(object sender, EventArgs e)
+        {
+            // Limpiar el TextBox
             txtNombrePermiso.Clear();
+
             lblErrorPermiso.Visible = false;
             dataGridViewPermisos.ClearSelection();
             txtNombrePermiso.Enabled = true;
         }
-
         private void btnEliminarPermiso_Click(object sender, EventArgs e)
         {
             // Verificar si se ha seleccionado una fila en el DataGridView
@@ -513,70 +676,6 @@ namespace biosys
                 {
                     MessageBox.Show($"Error al intentar eliminar el permiso '{nombrePermisoSeleccionado}'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-        }
-
-        private void dataGridViewPermisos_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dataGridViewPermisos.SelectedRows.Count > 0)
-            {
-                string nombrePermiso = dataGridViewPermisos.SelectedRows[0].Cells[0].Value.ToString();
-
-                // Verificar si el nombre del permiso está en la lista de permisos deshabilitados
-                List<string> permisosDeshabilitados = new List<string> {
-                    "Alta de Productos",
-                    "Ventas",
-                    "Informes",
-                    "Baja de Productos",
-                    "Reproduccion",
-                    "Gestionar Usuarios",
-                    "ABMs"
-                };
-
-                // Deshabilitar el TextBox de permisos si el nombre del permiso está en la lista de permisos deshabilitados
-                txtNombrePermiso.Enabled = !permisosDeshabilitados.Contains(nombrePermiso);
-
-                // Asignar el nombre del permiso al TextBox de permisos
-                txtNombrePermiso.Text = nombrePermiso;
-            }
-        }
-
-
-        private void btnGuardarPermiso_Click(object sender, EventArgs e)
-        {
-            // Verificar si se ha seleccionado una fila en el DataGridView
-            if (dataGridViewPermisos.SelectedRows.Count == 0)
-            {
-                msgErrorPermiso("Por favor, seleccione una fila para editar.");
-                return;
-            }
-
-            // Obtener el nombre del permiso seleccionado en el DataGridView
-            string nombrePermisoSeleccionado = dataGridViewPermisos.SelectedRows[0].Cells[0].Value.ToString();
-
-            // Verificar si se realizaron cambios en el nombre del permiso
-            string nuevoNombrePermiso = txtNombrePermiso.Text.Trim();
-            if (nuevoNombrePermiso == nombrePermisoSeleccionado)
-            {
-                msgErrorPermiso("No se realizaron cambios en el permiso.");
-                return;
-            }
-
-            // Realizar la actualización del permiso
-            bool actualizacionExitosa = Controladora.Controladora.ActualizarPermiso(nombrePermisoSeleccionado, nuevoNombrePermiso);
-
-            if (actualizacionExitosa)
-            {
-                MessageBox.Show("Se realizó la modificación del permiso con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Limpiar los campos y actualizar el DataGridView de empleados y el CheckedListBox de permisos
-                LimpiarCamposPermiso();
-                CargarPermisosEnDataGridView();
-                CargarPermisos();
-            }
-            else
-            {
-                MessageBox.Show("Error al intentar actualizar el permiso.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

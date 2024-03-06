@@ -376,6 +376,56 @@ namespace Modelo
                 return true;
             }
         }
+        public static bool DeshabilitarRol(string nombreRol)
+        {
+            string sql = "UPDATE roles SET habilitado = 0 WHERE nombre_rol = @NombreRol";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@NombreRol", nombreRol);
+                    int filasActualizadas = command.ExecuteNonQuery();
+
+                    return filasActualizadas > 0;
+                }
+            }
+        }
+        public static bool VerificarRolHabilitado(string rol)
+        {
+            string sql = "SELECT COUNT(*) FROM roles WHERE nombre_rol = @NombreRol AND Habilitado = 1";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@NombreRol", rol);
+
+                    int count = (int)command.ExecuteScalar();
+
+                    // Si count es mayor que 0, significa que el rol está habilitado
+                    return count > 0;
+                }
+            }
+        }
+        public static bool ActualizarEstadoRol(string nombreRol, bool nuevoEstado)
+        {
+            string sql = "UPDATE roles SET habilitado = @NuevoEstado WHERE nombre_rol = @NombreRol";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@NuevoEstado", nuevoEstado);
+                    command.Parameters.AddWithValue("@NombreRol", nombreRol);
+
+                    int filasActualizadas = command.ExecuteNonQuery();
+
+                    // Si se actualizó al menos una fila, se considera una actualización exitosa
+                    return filasActualizadas > 0;
+                }
+            }
+        }
         public static bool ExisteRol(string nombreRol)
         {
             using (SqlConnection connection = ConexionModelo.AbrirConexion())

@@ -45,101 +45,6 @@ namespace biosys
         private int stockInicial = 0;
         private int stockDisponible = 0;
 
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la compra? \n\nLa información se perderá", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                DashboardInstance.AbrirFormHijo(new Inicio());
-                this.Close();
-            }
-        }
-
-        private void btnGuardarDetalle_Click(object sender, EventArgs e)
-        {
-            // Validar que los campos tengan información
-            if (comboProductos.SelectedIndex == -1 || numericCantidad.Value <= 0)
-            {
-                msgError("Completar los campos obligatorios. La cantidad debe ser mayor que cero.");
-                return;
-            }
-
-            // Obtener la cantidad ingresada
-            int cantidad = (int)numericCantidad.Value;
-
-            // Obtener el producto seleccionado
-            string productoCompleto = comboProductos.SelectedItem.ToString();
-            string[] partesProducto = productoCompleto.Split(new string[] { " - " }, StringSplitOptions.None);
-
-            if (partesProducto.Length != 3)
-            {
-                msgError("El formato del producto seleccionado es incorrecto.");
-                return;
-            }
-
-            string nombreProducto = partesProducto[0];
-            string tipoProductoTexto = partesProducto[1];
-            string tipoEspecificoTexto = partesProducto[2];
-
-            // Obtener los valores de tipoProducto y tipoEspecifico como enteros
-            int tipoProducto = ObtenerTipoProductoSegunTexto(tipoProductoTexto);
-            int tipoEspecifico = ObtenerTipoEspecificoSegunTexto(tipoEspecificoTexto);
-
-            int productoId = Controladora.Controladora.ObtenerIdProducto(nombreProducto, tipoProducto, tipoEspecifico);
-
-            // Verificar si ya existe información de stock para este producto
-            StockProducto stockProducto = stockPorProductos.FirstOrDefault(s => s.ProductoId == productoId);
-
-            if (stockProducto == null)
-            {
-                msgError("No se encontró información de stock para el producto seleccionado.");
-                return;
-            }
-
-            // Validar que la cantidad no exceda el stock disponible
-            if (cantidad > stockProducto.StockDisponible)
-            {
-                msgError("La cantidad de semillas a plantar excede el stock disponible.");
-                return;
-            }
-
-            // Verificar si el producto es de tipo "Semilla"
-            if (tipoProducto == 2)
-            {
-                // Actualizar el stock de producto de tipo "Árbol"
-                Controladora.Controladora.ActualizarStockArbol(productoId, cantidad);
-
-                // Restar la cantidad de semillas sembradas del stock de semillas
-                Controladora.Controladora.DisminuirStock(productoId, cantidad);
-            }
-
-            // Crear el objeto Siembra y agregarlo a la lista
-            Siembra siembra = new Siembra
-            {
-                ProductoId = productoId,
-                Producto = productoCompleto,
-                Cantidad = cantidad
-            };
-            siembraList.Add(siembra);
-
-            // Restar la cantidad de semillas sembradas al stock disponible
-            stockProducto.StockDisponible -= cantidad;
-
-            // Actualizar la etiqueta de stock disponible
-            lblStockDisponible.Text = $"Stock disponible: {stockProducto.StockDisponible}";
-
-            // Actualizar el contenido del ListBox
-            ActualizarListBox();
-
-            // No dejar acceder a cambiar algunos campos
-            fechaCompra.Enabled = false;
-
-            // Limpiar los campos de entrada de datos
-            comboProductos.SelectedIndex = -1;
-            numericCantidad.Value = 0;
-        }
-
         public static int ObtenerTipoProductoSegunTexto(string tipoProductoTexto)
         {
             switch (tipoProductoTexto)
@@ -242,6 +147,12 @@ namespace biosys
             // Ocultar la etiqueta al cargar la ventana
             lblStockDisponible.Visible = false;
             CargarProductos();
+
+            // Calcular la posición x para centrar el Label horizontalmente
+            int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            // Establecer la posición del Label
+            labelTitulo.Location = new Point(labelPosX, 50);
         }
 
         private void LimpiarCampos()
@@ -254,6 +165,66 @@ namespace biosys
 
             // Habilitar campos nuevamente
             fechaCompra.Enabled = true;
+        }
+
+        private void comboProductos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Actualizar el stock disponible cada vez que cambie la selección del producto
+            if (comboProductos.SelectedIndex >= 0)
+            {
+                string productoSeleccionado = comboProductos.SelectedItem.ToString();
+                string[] partesProducto = productoSeleccionado.Split(new string[] { " - " }, StringSplitOptions.None);
+
+                if (partesProducto.Length == 3)
+                {
+                    string nombreProducto = partesProducto[0];
+                    string tipoProductoTexto = partesProducto[1];
+                    string tipoEspecificoTexto = partesProducto[2];
+
+                    int tipoProducto = ObtenerTipoProductoSegunTexto(tipoProductoTexto);
+                    int tipoEspecifico = ObtenerTipoEspecificoSegunTexto(tipoEspecificoTexto);
+
+                    int productoId = Controladora.Controladora.ObtenerIdProducto(nombreProducto, tipoProducto, tipoEspecifico);
+
+                    Producto productoSemilla = Controladora.Controladora.ObtenerProductoPorId(productoId);
+                    if (productoSemilla != null && productoSemilla.TipoProductoId == 2)
+                    {
+                        // Verificar si ya existe información de stock para este producto
+                        StockProducto stockProducto = stockPorProductos.FirstOrDefault(s => s.ProductoId == productoId);
+
+                        if (stockProducto == null)
+                        {
+                            // Si no hay información, crear una nueva entrada para el producto
+                            stockProducto = new StockProducto
+                            {
+                                ProductoId = productoId,
+                                StockInicial = productoSemilla.Stock,
+                                StockDisponible = productoSemilla.Stock
+                            };
+                            stockPorProductos.Add(stockProducto);
+                        }
+
+                        // Actualizar el stock disponible del producto seleccionado
+                        lblStockDisponible.Text = $"Stock disponible: {stockProducto.StockDisponible}";
+                        lblStockDisponible.Visible = true;
+                    }
+                    else
+                    {
+                        lblStockDisponible.Visible = false;
+                    }
+                }
+            }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la compra? \n\nLa información se perderá", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                DashboardInstance.AbrirFormHijo(new Inicio());
+                this.Close();
+            }
         }
 
         private void btnRegistrarSiembra_Click(object sender, EventArgs e)
@@ -351,53 +322,89 @@ namespace biosys
             MessageBox.Show($"La siembra se registró correctamente.", "Siembra registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void comboProductos_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnGuardarDetalle_Click(object sender, EventArgs e)
         {
-            // Actualizar el stock disponible cada vez que cambie la selección del producto
-            if (comboProductos.SelectedIndex >= 0)
+            // Validar que los campos tengan información
+            if (comboProductos.SelectedIndex == -1 || numericCantidad.Value <= 0)
             {
-                string productoSeleccionado = comboProductos.SelectedItem.ToString();
-                string[] partesProducto = productoSeleccionado.Split(new string[] { " - " }, StringSplitOptions.None);
-
-                if (partesProducto.Length == 3)
-                {
-                    string nombreProducto = partesProducto[0];
-                    string tipoProductoTexto = partesProducto[1];
-                    string tipoEspecificoTexto = partesProducto[2];
-
-                    int tipoProducto = ObtenerTipoProductoSegunTexto(tipoProductoTexto);
-                    int tipoEspecifico = ObtenerTipoEspecificoSegunTexto(tipoEspecificoTexto);
-
-                    int productoId = Controladora.Controladora.ObtenerIdProducto(nombreProducto, tipoProducto, tipoEspecifico);
-
-                    Producto productoSemilla = Controladora.Controladora.ObtenerProductoPorId(productoId);
-                    if (productoSemilla != null && productoSemilla.TipoProductoId == 2)
-                    {
-                        // Verificar si ya existe información de stock para este producto
-                        StockProducto stockProducto = stockPorProductos.FirstOrDefault(s => s.ProductoId == productoId);
-
-                        if (stockProducto == null)
-                        {
-                            // Si no hay información, crear una nueva entrada para el producto
-                            stockProducto = new StockProducto
-                            {
-                                ProductoId = productoId,
-                                StockInicial = productoSemilla.Stock,
-                                StockDisponible = productoSemilla.Stock
-                            };
-                            stockPorProductos.Add(stockProducto);
-                        }
-
-                        // Actualizar el stock disponible del producto seleccionado
-                        lblStockDisponible.Text = $"Stock disponible: {stockProducto.StockDisponible}";
-                        lblStockDisponible.Visible = true;
-                    }
-                    else
-                    {
-                        lblStockDisponible.Visible = false;
-                    }
-                }
+                msgError("Completar los campos obligatorios. La cantidad debe ser mayor que cero.");
+                return;
             }
+
+            // Obtener la cantidad ingresada
+            int cantidad = (int)numericCantidad.Value;
+
+            // Obtener el producto seleccionado
+            string productoCompleto = comboProductos.SelectedItem.ToString();
+            string[] partesProducto = productoCompleto.Split(new string[] { " - " }, StringSplitOptions.None);
+
+            if (partesProducto.Length != 3)
+            {
+                msgError("El formato del producto seleccionado es incorrecto.");
+                return;
+            }
+
+            string nombreProducto = partesProducto[0];
+            string tipoProductoTexto = partesProducto[1];
+            string tipoEspecificoTexto = partesProducto[2];
+
+            // Obtener los valores de tipoProducto y tipoEspecifico como enteros
+            int tipoProducto = ObtenerTipoProductoSegunTexto(tipoProductoTexto);
+            int tipoEspecifico = ObtenerTipoEspecificoSegunTexto(tipoEspecificoTexto);
+
+            int productoId = Controladora.Controladora.ObtenerIdProducto(nombreProducto, tipoProducto, tipoEspecifico);
+
+            // Verificar si ya existe información de stock para este producto
+            StockProducto stockProducto = stockPorProductos.FirstOrDefault(s => s.ProductoId == productoId);
+
+            if (stockProducto == null)
+            {
+                msgError("No se encontró información de stock para el producto seleccionado.");
+                return;
+            }
+
+            // Validar que la cantidad no exceda el stock disponible
+            if (cantidad > stockProducto.StockDisponible)
+            {
+                msgError("La cantidad de semillas a plantar excede el stock disponible.");
+                return;
+            }
+
+            // Verificar si el producto es de tipo "Semilla"
+            if (tipoProducto == 2)
+            {
+                // Actualizar el stock de producto de tipo "Árbol"
+                Controladora.Controladora.ActualizarStockArbol(productoId, cantidad);
+
+                // Restar la cantidad de semillas sembradas del stock de semillas
+                Controladora.Controladora.DisminuirStock(productoId, cantidad);
+            }
+
+            // Crear el objeto Siembra y agregarlo a la lista
+            Siembra siembra = new Siembra
+            {
+                ProductoId = productoId,
+                Producto = productoCompleto,
+                Cantidad = cantidad
+            };
+            siembraList.Add(siembra);
+
+            // Restar la cantidad de semillas sembradas al stock disponible
+            stockProducto.StockDisponible -= cantidad;
+
+            // Actualizar la etiqueta de stock disponible
+            lblStockDisponible.Text = $"Stock disponible: {stockProducto.StockDisponible}";
+
+            // Actualizar el contenido del ListBox
+            ActualizarListBox();
+
+            // No dejar acceder a cambiar algunos campos
+            fechaCompra.Enabled = false;
+
+            // Limpiar los campos de entrada de datos
+            comboProductos.SelectedIndex = -1;
+            numericCantidad.Value = 0;
+            numericCantidad.Value = 0;
         }
     }
 }

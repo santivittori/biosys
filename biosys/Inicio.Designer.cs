@@ -30,30 +30,21 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inicio));
             this.btnHome = new System.Windows.Forms.PictureBox();
-            this.labelTitulo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.btnHome)).BeginInit();
             this.SuspendLayout();
             // 
             // btnHome
             // 
+            this.btnHome.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHome.Image = ((System.Drawing.Image)(resources.GetObject("btnHome.Image")));
-            this.btnHome.Location = new System.Drawing.Point(254, 172);
+            this.btnHome.Location = new System.Drawing.Point(339, 97);
             this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(841, 598);
-            this.btnHome.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnHome.Size = new System.Drawing.Size(782, 579);
+            this.btnHome.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.btnHome.TabIndex = 18;
             this.btnHome.TabStop = false;
-            // 
-            // labelTitulo
-            // 
-            this.labelTitulo.AutoSize = true;
-            this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(515, 50);
-            this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(329, 55);
-            this.labelTitulo.TabIndex = 50;
-            this.labelTitulo.Text = "DASHBOARD";
-            this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Inicio
             // 
@@ -61,12 +52,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
-            this.Controls.Add(this.labelTitulo);
             this.Controls.Add(this.btnHome);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Inicio";
             this.Text = "Inicio";
+            this.Load += new System.EventHandler(this.Inicio_Load);
             ((System.ComponentModel.ISupportInitialize)(this.btnHome)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -76,6 +67,5 @@
         #endregion
 
         private System.Windows.Forms.PictureBox btnHome;
-        private System.Windows.Forms.Label labelTitulo;
     }
 }

@@ -36,125 +36,6 @@ namespace biosys
             // Inicializar la lista de productos en el constructor
             productos = Controladora.Controladora.ObtenerProductosStockComboBox();
         }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la venta? \n\nLa información se perderá", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                DashboardInstance.AbrirFormHijo(new Inicio());
-                this.Close();
-            }
-        }
-
-        private void btnLimpiar_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea limpiar los campos? \n\nLa información se perderá", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                // Restaurar el stock original de los productos
-                CargarProductos(); // Recargar productos desde la base de datos
-                labelStockDisponible.Visible = false;
-
-                // Limpiar los campos de entrada de datos
-                comboProductos.SelectedIndex = -1;
-                comboCliente.SelectedIndex = -1;
-                numericCantidad.Value = 0;
-
-                // Reiniciar la lista de compras
-                ventasList.Clear();
-
-                // Limpiar el contenido del ListBox
-                listDetalleVenta.Items.Clear();
-
-                // Limpiar el textbox
-                txtPrecioUnitario.Text = string.Empty;
-
-                // Habilitar campos nuevamente
-                comboCliente.Enabled = true;
-                fechaVenta.Enabled = true;
-            }
-        }
-
-        private void btnGuardarDetalle_Click(object sender, EventArgs e)
-        {
-            // Validar que los campos tengan información
-            if (comboProductos.SelectedIndex == -1 || numericCantidad.Value <= 0 || string.IsNullOrWhiteSpace(txtPrecioUnitario.Text) || txtPrecioUnitario.Text == "Ejemplo: 1350,70")
-            {
-                msgError("Completar los campos obligatorios. La cantidad debe ser mayor que cero.");
-                return;
-            }
-
-            // Obtener la cantidad ingresada
-            int cantidad = (int)numericCantidad.Value;
-
-            // Obtener el producto seleccionado
-            string productoCompleto = comboProductos.SelectedItem.ToString();
-            string[] partesProducto = productoCompleto.Split(new string[] { " - " }, StringSplitOptions.None);
-
-            if (partesProducto.Length != 3)
-            {
-                msgError("El formato del producto seleccionado es incorrecto.");
-                return;
-            }
-
-            string nombreProducto = partesProducto[0];
-            string tipoProductoTexto = partesProducto[1];
-            string tipoEspecificoTexto = partesProducto[2];
-
-            // Obtener los valores de tipoProducto y tipoEspecifico como enteros
-            int tipoProducto = ObtenerTipoProductoSegunTexto(tipoProductoTexto);
-            int tipoEspecifico = ObtenerTipoEspecificoSegunTexto(tipoEspecificoTexto);
-
-            int productoId = Controladora.Controladora.ObtenerIdProducto(nombreProducto, tipoProducto, tipoEspecifico);
-
-            // Obtener el stock disponible del producto seleccionado
-            ProductoInfo productoSeleccionado = productos.FirstOrDefault(p => p.Id == productoId);
-
-            if (productoSeleccionado != null && cantidad > productoSeleccionado.Stock)
-            {
-                msgError("La cantidad ingresada es mayor que el stock disponible.");
-                return;
-            }
-
-            // Si el texto no contiene una coma, agregar la coma y dos ceros después del número
-            if (!txtPrecioUnitario.Text.Contains(","))
-            {
-                txtPrecioUnitario.Text += ",00";
-            }
-
-            decimal precioUnitario = decimal.Parse(txtPrecioUnitario.Text);
-
-            // Crear el objeto Venta y agregarlo a la lista de ventas
-            Venta venta = new Venta
-            {
-                ProductoId = productoId,
-                Producto = productoCompleto,
-                Cantidad = cantidad,
-                PrecioUnitario = precioUnitario,
-                StockOriginal = productoSeleccionado.Stock
-            };
-            ventasList.Add(venta);
-
-            // Restar temporalmente la cantidad al stock disponible
-            productoSeleccionado.Stock -= cantidad;
-
-            // No dejar acceder a cambiar algunos campos
-            comboCliente.Enabled = false;
-            fechaVenta.Enabled = false;
-
-            // Limpiar los campos de entrada de datos
-            comboProductos.SelectedIndex = -1;
-            numericCantidad.Value = 0;
-            txtPrecioUnitario.Text = string.Empty;
-            labelStockDisponible.Visible = false;
-
-            // Actualizar el contenido del ListBox
-            ActualizarListBox();
-        }
-
         public void msgError(string msg)
         {
             lblError.Text = "      " + msg;
@@ -235,71 +116,13 @@ namespace biosys
             txtPrecioUnitario.Text = "Ejemplo: 1350,70";
             // Asignar el color gris al texto de ayuda
             txtPrecioUnitario.ForeColor = System.Drawing.Color.Gray;
+
+            // Calcular la posición x para centrar el Label horizontalmente
+            int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            // Establecer la posición del Label
+            labelTitulo.Location = new Point(labelPosX, 50);
         }
-
-        private void btnRegistrarVenta_Click(object sender, EventArgs e)
-        {
-            if (ventasList.Count == 0)
-            {
-                msgError("Debe ingresar al menos un detalle de venta.");
-                return;
-            }
-
-            string clienteEmail = comboCliente.SelectedValue.ToString();
-            DateTime fechaVenta = this.fechaVenta.Value;
-            string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
-            int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
-            string nombreCliente = comboCliente.Text;
-
-            decimal precioTotalVenta = 0;
-
-            // Crear un objeto VentaInfo con los datos de la venta
-            VentaInfo ventaInfo = new VentaInfo
-            {
-                ClienteEmail = clienteEmail,
-                FechaVenta = fechaVenta,
-                UsuarioId = usuarioId,
-                PrecioTotalVenta = precioTotalVenta
-            };
-
-            foreach (Venta venta in ventasList)
-            {
-                ventaInfo.PrecioTotalVenta += venta.PrecioTotal;
-            }
-
-            int ventaId = Controladora.Controladora.GuardarVenta(ventaInfo);
-
-            // Crear un objeto DetalleVentaInfo para cada venta en la lista
-            DetalleVentaInfo detalleVentaInfo = new DetalleVentaInfo();
-
-            foreach (Venta venta in ventasList)
-            {
-                int productoId = venta.ProductoId;
-                int cantidad = venta.Cantidad;
-                decimal precioUnitario = venta.PrecioUnitario;
-                decimal precioTotalDetalle = venta.PrecioTotal;
-
-                // Asignar los valores del detalle de venta al objeto DetalleVentaInfo
-                detalleVentaInfo.VentaId = ventaId;
-                detalleVentaInfo.ProductoId = productoId;
-                detalleVentaInfo.Cantidad = cantidad;
-                detalleVentaInfo.PrecioUnitario = precioUnitario;
-                detalleVentaInfo.PrecioTotalDetalle = precioTotalDetalle;
-
-                Controladora.Controladora.GuardarDetalleVenta(detalleVentaInfo);
-                Controladora.Controladora.DisminuirStock(productoId, cantidad);
-            }
-
-            // Llamar a las funciones de generación de PDF
-            GenerarFacturaPDF(nombreCliente, fechaVenta, ventasList);
-            GenerarRemitoPDF(nombreCliente, fechaVenta, ventasList);
-
-            LimpiarCampos();
-            ventasList.Clear();
-
-            MessageBox.Show($"La venta se registró correctamente.\n\nPrecio total: ${ventaInfo.PrecioTotalVenta}", "Venta registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         private void LimpiarCampos()
         {
             comboProductos.SelectedIndex = -1;
@@ -496,5 +319,185 @@ namespace biosys
             }
         }
 
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la venta? \n\nLa información se perderá", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                DashboardInstance.AbrirFormHijo(new Inicio());
+                this.Close();
+            }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea limpiar los campos? \n\nLa información se perderá", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                // Restaurar el stock original de los productos
+                CargarProductos(); // Recargar productos desde la base de datos
+                labelStockDisponible.Visible = false;
+
+                // Limpiar los campos de entrada de datos
+                comboProductos.SelectedIndex = -1;
+                comboCliente.SelectedIndex = -1;
+                numericCantidad.Value = 0;
+
+                // Reiniciar la lista de compras
+                ventasList.Clear();
+
+                // Limpiar el contenido del ListBox
+                listDetalleVenta.Items.Clear();
+
+                // Limpiar el textbox
+                txtPrecioUnitario.Text = string.Empty;
+
+                // Habilitar campos nuevamente
+                comboCliente.Enabled = true;
+                fechaVenta.Enabled = true;
+            }
+        }
+
+        private void btnGuardarDetalle_Click(object sender, EventArgs e)
+        {
+            // Validar que los campos tengan información
+            if (comboProductos.SelectedIndex == -1 || numericCantidad.Value <= 0 || string.IsNullOrWhiteSpace(txtPrecioUnitario.Text) || txtPrecioUnitario.Text == "Ejemplo: 1350,70")
+            {
+                msgError("Completar los campos obligatorios. La cantidad debe ser mayor que cero.");
+                return;
+            }
+
+            // Obtener la cantidad ingresada
+            int cantidad = (int)numericCantidad.Value;
+
+            // Obtener el producto seleccionado
+            string productoCompleto = comboProductos.SelectedItem.ToString();
+            string[] partesProducto = productoCompleto.Split(new string[] { " - " }, StringSplitOptions.None);
+
+            if (partesProducto.Length != 3)
+            {
+                msgError("El formato del producto seleccionado es incorrecto.");
+                return;
+            }
+
+            string nombreProducto = partesProducto[0];
+            string tipoProductoTexto = partesProducto[1];
+            string tipoEspecificoTexto = partesProducto[2];
+
+            // Obtener los valores de tipoProducto y tipoEspecifico como enteros
+            int tipoProducto = ObtenerTipoProductoSegunTexto(tipoProductoTexto);
+            int tipoEspecifico = ObtenerTipoEspecificoSegunTexto(tipoEspecificoTexto);
+
+            int productoId = Controladora.Controladora.ObtenerIdProducto(nombreProducto, tipoProducto, tipoEspecifico);
+
+            // Obtener el stock disponible del producto seleccionado
+            ProductoInfo productoSeleccionado = productos.FirstOrDefault(p => p.Id == productoId);
+
+            if (productoSeleccionado != null && cantidad > productoSeleccionado.Stock)
+            {
+                msgError("La cantidad ingresada es mayor que el stock disponible.");
+                return;
+            }
+
+            // Si el texto no contiene una coma, agregar la coma y dos ceros después del número
+            if (!txtPrecioUnitario.Text.Contains(","))
+            {
+                txtPrecioUnitario.Text += ",00";
+            }
+
+            decimal precioUnitario = decimal.Parse(txtPrecioUnitario.Text);
+
+            // Crear el objeto Venta y agregarlo a la lista de ventas
+            Venta venta = new Venta
+            {
+                ProductoId = productoId,
+                Producto = productoCompleto,
+                Cantidad = cantidad,
+                PrecioUnitario = precioUnitario,
+                StockOriginal = productoSeleccionado.Stock
+            };
+            ventasList.Add(venta);
+
+            // Restar temporalmente la cantidad al stock disponible
+            productoSeleccionado.Stock -= cantidad;
+
+            // No dejar acceder a cambiar algunos campos
+            comboCliente.Enabled = false;
+            fechaVenta.Enabled = false;
+
+            // Limpiar los campos de entrada de datos
+            comboProductos.SelectedIndex = -1;
+            numericCantidad.Value = 0;
+            txtPrecioUnitario.Text = string.Empty;
+            labelStockDisponible.Visible = false;
+
+            // Actualizar el contenido del ListBox
+            ActualizarListBox();
+        }
+
+        private void btnRegistrarVenta_Click(object sender, EventArgs e)
+        {
+            if (ventasList.Count == 0)
+            {
+                msgError("Debe ingresar al menos un detalle de venta.");
+                return;
+            }
+
+            string clienteEmail = comboCliente.SelectedValue.ToString();
+            DateTime fechaVenta = this.fechaVenta.Value;
+            string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
+            int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
+            string nombreCliente = comboCliente.Text;
+
+            decimal precioTotalVenta = 0;
+
+            // Crear un objeto VentaInfo con los datos de la venta
+            VentaInfo ventaInfo = new VentaInfo
+            {
+                ClienteEmail = clienteEmail,
+                FechaVenta = fechaVenta,
+                UsuarioId = usuarioId,
+                PrecioTotalVenta = precioTotalVenta
+            };
+
+            foreach (Venta venta in ventasList)
+            {
+                ventaInfo.PrecioTotalVenta += venta.PrecioTotal;
+            }
+
+            int ventaId = Controladora.Controladora.GuardarVenta(ventaInfo);
+
+            // Crear un objeto DetalleVentaInfo para cada venta en la lista
+            DetalleVentaInfo detalleVentaInfo = new DetalleVentaInfo();
+
+            foreach (Venta venta in ventasList)
+            {
+                int productoId = venta.ProductoId;
+                int cantidad = venta.Cantidad;
+                decimal precioUnitario = venta.PrecioUnitario;
+                decimal precioTotalDetalle = venta.PrecioTotal;
+
+                // Asignar los valores del detalle de venta al objeto DetalleVentaInfo
+                detalleVentaInfo.VentaId = ventaId;
+                detalleVentaInfo.ProductoId = productoId;
+                detalleVentaInfo.Cantidad = cantidad;
+                detalleVentaInfo.PrecioUnitario = precioUnitario;
+                detalleVentaInfo.PrecioTotalDetalle = precioTotalDetalle;
+
+                Controladora.Controladora.GuardarDetalleVenta(detalleVentaInfo);
+                Controladora.Controladora.DisminuirStock(productoId, cantidad);
+            }
+
+            // Llamar a las funciones de generación de PDF
+            GenerarFacturaPDF(nombreCliente, fechaVenta, ventasList);
+            GenerarRemitoPDF(nombreCliente, fechaVenta, ventasList);
+
+            LimpiarCampos();
+            ventasList.Clear();
+
+            MessageBox.Show($"La venta se registró correctamente.\n\nPrecio total: ${ventaInfo.PrecioTotalVenta}", "Venta registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

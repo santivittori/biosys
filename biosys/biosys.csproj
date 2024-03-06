@@ -205,6 +205,9 @@
     <Compile Include="RolesPermisos.Designer.cs">
       <DependentUpon>RolesPermisos.cs</DependentUpon>
     </Compile>
+    <Compile Include="RoundedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Ventas.cs">
       <SubType>Form</SubType>
     </Compile>

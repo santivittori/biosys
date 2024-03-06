@@ -29,6 +29,12 @@ namespace biosys
             VentasTotal();
             CrearGraficoArboles();
             CrearGraficoSemillas();
+
+            // Calcular la posición x para centrar el Label horizontalmente
+            int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            // Establecer la posición del Label
+            labelTitulo.Location = new Point(labelPosX, 50);
         }
         public void ComprasTotal()
         {

@@ -148,6 +148,12 @@ namespace biosys
         private void GestionarUsuario_Load(object sender, EventArgs e)
         {
             CargarUsuariosEnDataGridView();
+
+            // Calcular la posición x para centrar el Label horizontalmente
+            int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            // Establecer la posición del Label
+            labelTitulo.Location = new Point(labelPosX, 50);
         }
 
         private void txtUsuario_TextChanged(object sender, EventArgs e)
@@ -159,67 +165,6 @@ namespace biosys
                 msgError("No se pueden ingresar mas caracteres");
             }
         }
-
-        private void btnEliminarUsuario_Click(object sender, EventArgs e)
-        {
-            // Verificar si se seleccionó una fila en el DataGridView
-            if (dataGridViewUsuarios.SelectedRows.Count > 0)
-            {
-                // Obtener el ID del usuario seleccionado
-                int idUsuario = Convert.ToInt32(dataGridViewUsuarios.SelectedRows[0].Cells["ID"].Value);
-
-                // Obtener el correo electrónico del usuario que está actualmente logueado
-                string correoUsuarioLogueado = Entidad.UsuarioActual.UsuarioLogueado.Email;
-
-                // Obtener el correo electrónico del usuario que se intenta eliminar
-                string correoUsuarioAEliminar = Controladora.Controladora.ObtenerCorreoUsuarioAEliminar(idUsuario);
-
-                // Verificar si el usuario ha sido utilizado en alguna compra
-                bool usuarioUtilizadoEnCompras = Controladora.Controladora.UsuarioUtilizadoEnCompras(idUsuario);
-
-                // Verificar si el usuario ha sido utilizado en alguna venta
-                bool usuarioUtilizadoEnVentas = Controladora.Controladora.UsuarioUtilizadoEnVentas(idUsuario);
-
-                // Comparar los correos electrónicos
-                if (correoUsuarioAEliminar == correoUsuarioLogueado)
-                {
-                    // No permitir eliminar al usuario logueado
-                    MessageBox.Show("No puedes eliminar al usuario con el que has iniciado sesión.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else if (usuarioUtilizadoEnCompras)
-                {
-                    // No permitir eliminar al usuario si ha sido utilizado en compras
-                    MessageBox.Show("No puedes eliminar un usuario que ha sido utilizado en el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else if (usuarioUtilizadoEnVentas)
-                {
-                    // No permitir eliminar al usuario si ha sido utilizado en ventas
-                    MessageBox.Show("No puedes eliminar un usuario que ha sido utilizado en el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    // Mostrar un cuadro de diálogo de confirmación
-                    DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este usuario?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                    // Si el usuario confirma la eliminación
-                    if (result == DialogResult.Yes)
-                    {
-                        // Eliminar el usuario de la base de datos
-                        Controladora.Controladora.EliminarUsuario(idUsuario);
-
-                        // Mostrar mensaje de éxito y actualizar el DataGridView
-                        MessageBox.Show("Usuario eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        CargarUsuariosEnDataGridView();
-                    }
-                }
-            }
-            else
-            {
-                msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
-                return;
-            }
-        }
-
         private void dataGridViewUsuarios_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridViewUsuarios.SelectedRows.Count > 0)
@@ -236,43 +181,6 @@ namespace biosys
                 txtUsuario.Enabled = true;
                 comborol.Enabled = true;
                 txtEmail.Enabled = true;
-            }
-        }
-
-        private void btnGuardarEdicion_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewUsuarios.SelectedRows.Count > 0)
-            {
-                // Obtener los datos del usuario seleccionado
-                int idUsuario = Convert.ToInt32(dataGridViewUsuarios.SelectedRows[0].Cells["ID"].Value);
-                Usuario usuario = Controladora.Controladora.ObtenerUsuarioPorId(idUsuario);
-
-                // Guarda el valor actual del correo electrónico en una variable
-                string correoElectronicoAnterior = usuario.Email;
-
-                // Actualizar los datos del usuario con los valores de los campos editados
-                usuario.NombreUsuario = txtUsuario.Text;
-                usuario.Rol = comborol.SelectedItem.ToString();
-                usuario.Email = txtEmail.Text;
-
-                // Guardar los cambios en la base de datos
-                Controladora.Controladora.ActualizarUsuario(usuario);
-
-                txtUsuario.Enabled = false;
-                comborol.Enabled = false;
-                txtEmail.Enabled = false;
-
-                // Actualiza el DataGridView
-                CargarUsuariosEnDataGridView();
-
-                // Envía un correo al usuario notificando los cambios
-                EnviarCorreoNotificacion(usuario, correoElectronicoAnterior);
-
-                MessageBox.Show("Usuario editado exitosamente.", "Edición exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                msgError("Debe seleccionar una fila en el DataGridView para editar un usuario.");
             }
         }
 
@@ -349,18 +257,6 @@ namespace biosys
             }
         }
 
-        private void btnLimpiarCampos_Click(object sender, EventArgs e)
-        {
-            txtUsuario.Text = string.Empty;
-            txtEmail.Text = string.Empty;
-            comborol.SelectedIndex = -1;
-
-            // Habilitar todos los campos
-            txtUsuario.Enabled = true;
-            comborol.Enabled = true;
-            txtEmail.Enabled = true;
-        }
-
         private void txtBusqueda_TextChanged(object sender, EventArgs e)
         {
             string criterioBusqueda = txtBusqueda.Text;
@@ -417,6 +313,18 @@ namespace biosys
             }
         }
 
+        // Método para cargar los roles disponibles en el ComboBox
+        private void CargarRolesDisponibles()
+        {
+            List<string> rolesDisponibles = Controladora.Controladora.ObtenerRolesDisponibles();
+            comborol.DataSource = rolesDisponibles;
+        }
+
+        private void dataGridViewUsuarios_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridViewUsuarios.ClearSelection();
+        }
+
         private void btnRolesyPermisos_Click(object sender, EventArgs e)
         {
             RolesPermisos rolesPermisosForm = new RolesPermisos();
@@ -424,12 +332,114 @@ namespace biosys
             DashboardInstance.AbrirFormHijo(rolesPermisosForm);
         }
 
-
-        // Método para cargar los roles disponibles en el ComboBox
-        private void CargarRolesDisponibles()
+        private void btnLimpiarCampos_Click(object sender, EventArgs e)
         {
-            List<string> rolesDisponibles = Controladora.Controladora.ObtenerRolesDisponibles();
-            comborol.DataSource = rolesDisponibles;
+            txtUsuario.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+            comborol.SelectedIndex = -1;
+
+            // Habilitar todos los campos
+            txtUsuario.Enabled = true;
+            comborol.Enabled = true;
+            txtEmail.Enabled = true;
+            lblError.Visible = false;
+        }
+
+        private void btnGuardarEdicion_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewUsuarios.SelectedRows.Count > 0)
+            {
+                // Obtener los datos del usuario seleccionado
+                int idUsuario = Convert.ToInt32(dataGridViewUsuarios.SelectedRows[0].Cells["ID"].Value);
+                Usuario usuario = Controladora.Controladora.ObtenerUsuarioPorId(idUsuario);
+
+                // Guarda el valor actual del correo electrónico en una variable
+                string correoElectronicoAnterior = usuario.Email;
+
+                // Actualizar los datos del usuario con los valores de los campos editados
+                usuario.NombreUsuario = txtUsuario.Text;
+                usuario.Rol = comborol.SelectedItem.ToString();
+                usuario.Email = txtEmail.Text;
+
+                // Guardar los cambios en la base de datos
+                Controladora.Controladora.ActualizarUsuario(usuario);
+
+                txtUsuario.Enabled = false;
+                comborol.Enabled = false;
+                txtEmail.Enabled = false;
+
+                // Actualiza el DataGridView
+                CargarUsuariosEnDataGridView();
+
+                // Envía un correo al usuario notificando los cambios
+                EnviarCorreoNotificacion(usuario, correoElectronicoAnterior);
+
+                MessageBox.Show("Usuario editado exitosamente.", "Edición exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                msgError("Debe seleccionar una fila en el DataGridView para editar un usuario.");
+            }
+        }
+
+        private void btnEliminarUsuario_Click(object sender, EventArgs e)
+        {
+            // Verificar si se seleccionó una fila en el DataGridView
+            if (dataGridViewUsuarios.SelectedRows.Count > 0)
+            {
+                // Obtener el ID del usuario seleccionado
+                int idUsuario = Convert.ToInt32(dataGridViewUsuarios.SelectedRows[0].Cells["ID"].Value);
+
+                // Obtener el correo electrónico del usuario que está actualmente logueado
+                string correoUsuarioLogueado = Entidad.UsuarioActual.UsuarioLogueado.Email;
+
+                // Obtener el correo electrónico del usuario que se intenta eliminar
+                string correoUsuarioAEliminar = Controladora.Controladora.ObtenerCorreoUsuarioAEliminar(idUsuario);
+
+                // Verificar si el usuario ha sido utilizado en alguna compra
+                bool usuarioUtilizadoEnCompras = Controladora.Controladora.UsuarioUtilizadoEnCompras(idUsuario);
+
+                // Verificar si el usuario ha sido utilizado en alguna venta
+                bool usuarioUtilizadoEnVentas = Controladora.Controladora.UsuarioUtilizadoEnVentas(idUsuario);
+
+                // Comparar los correos electrónicos
+                if (correoUsuarioAEliminar == correoUsuarioLogueado)
+                {
+                    // No permitir eliminar al usuario logueado
+                    MessageBox.Show("No puedes eliminar al usuario con el que has iniciado sesión.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (usuarioUtilizadoEnCompras)
+                {
+                    // No permitir eliminar al usuario si ha sido utilizado en compras
+                    MessageBox.Show("No puedes eliminar un usuario que ha sido utilizado en el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (usuarioUtilizadoEnVentas)
+                {
+                    // No permitir eliminar al usuario si ha sido utilizado en ventas
+                    MessageBox.Show("No puedes eliminar un usuario que ha sido utilizado en el sistema.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    // Mostrar un cuadro de diálogo de confirmación
+                    DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este usuario?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    // Si el usuario confirma la eliminación
+                    if (result == DialogResult.Yes)
+                    {
+                        // Eliminar el usuario de la base de datos
+                        Controladora.Controladora.EliminarUsuario(idUsuario);
+
+                        // Mostrar mensaje de éxito y actualizar el DataGridView
+                        MessageBox.Show("Usuario eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CargarUsuariosEnDataGridView();
+                    }
+                }
+            }
+            else
+            {
+                msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
+                return;
+            }
         }
     }
 }

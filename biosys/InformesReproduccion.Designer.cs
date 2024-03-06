@@ -40,7 +40,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.chartBajas = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chartBajasTotales = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.btnDescargaGrafica = new System.Windows.Forms.Button();
+            this.btnDescargaGrafica = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartBajas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartBajasTotales)).BeginInit();
@@ -113,11 +113,11 @@
             // btnDescargaGrafica
             // 
             this.btnDescargaGrafica.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDescargaGrafica.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDescargaGrafica.Location = new System.Drawing.Point(1196, 355);
+            this.btnDescargaGrafica.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDescargaGrafica.Location = new System.Drawing.Point(1221, 373);
             this.btnDescargaGrafica.Name = "btnDescargaGrafica";
-            this.btnDescargaGrafica.Size = new System.Drawing.Size(150, 59);
-            this.btnDescargaGrafica.TabIndex = 69;
+            this.btnDescargaGrafica.Size = new System.Drawing.Size(119, 48);
+            this.btnDescargaGrafica.TabIndex = 144;
             this.btnDescargaGrafica.Text = "DESCARGA GRÁFICA";
             this.btnDescargaGrafica.UseVisualStyleBackColor = true;
             this.btnDescargaGrafica.Click += new System.EventHandler(this.btnDescargaGrafica_Click);
@@ -154,6 +154,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartBajas;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartBajasTotales;
-        private System.Windows.Forms.Button btnDescargaGrafica;
+        private RoundedButton btnDescargaGrafica;
     }
 }

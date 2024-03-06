@@ -61,6 +61,18 @@ namespace Controladora
         {
             return ConsultasModelo.EliminarRol(nombreRol);
         }
+        public static bool DeshabilitarRol(string nombreRol)
+        {
+            return ConsultasModelo.DeshabilitarRol(nombreRol);
+        }
+        public static bool VerificarRolHabilitado(string rol)
+        {
+            return ConsultasModelo.VerificarRolHabilitado(rol);
+        }
+        public static bool ActualizarEstadoRol(string nombreRol, bool nuevoEstado)
+        {
+            return ConsultasModelo.ActualizarEstadoRol(nombreRol, nuevoEstado);
+        }
         public static bool ExisteRol(string nombreRol)
         {
             return ConsultasModelo.ExisteRol(nombreRol);

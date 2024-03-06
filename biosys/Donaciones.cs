@@ -31,6 +31,12 @@ namespace biosys
         private void Donaciones_Load(object sender, EventArgs e)
         {
             CargarProductos();
+
+            // Calcular la posición x para centrar el Label horizontalmente
+            int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            // Establecer la posición del Label
+            labelTitulo.Location = new Point(labelPosX, 50);
         }
 
         private void CargarProductos()
@@ -40,6 +46,52 @@ namespace biosys
             comboProductos.Items.Clear();
             comboProductos.Items.AddRange(productos.ToArray());
             comboProductos.SelectedIndex = -1;
+        }
+
+        private void ActualizarListBox()
+        {
+            // Limpiar el contenido actual del ListBox
+            listDetalleDonacion.Items.Clear();
+
+            // Agregar cada elemento de la lista al ListBox
+            foreach (Donacion donacion in donacionList)
+            {
+                string item = $"ID: {donacion.ProductoId} - {donacion.Producto} - Cantidad: {donacion.Cantidad}";
+                listDetalleDonacion.Items.Add(item);
+            }
+        }
+
+        private void LimpiarCampos()
+        {
+            // Limpiar los campos de entrada de datos
+            comboProductos.SelectedIndex = -1;
+            numericCantidad.Value = 0;
+
+            // Limpiar el contenido del ListBox
+            listDetalleDonacion.Items.Clear();
+
+            // Limpiar los textbox
+            txtDonante.Text = string.Empty;
+
+            // Habilitar campos nuevamente
+            txtDonante.Enabled = true;
+            fechaDonacion.Enabled = true;
+        }
+
+        public void msgError(string msg)
+        {
+            lblError.Text = "      " + msg;
+            lblError.Visible = true;
+        }
+        private void txtDonante_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e = MetodosComunes.KeyPressSoloLetras(e);
+
+            if (e.Handled)
+            {
+                // Cancela el evento KeyPress
+                e.Handled = true;
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -75,19 +127,7 @@ namespace biosys
                 // Habilitar campos nuevamente
                 txtDonante.Enabled = true;
                 fechaDonacion.Enabled = true;
-            }
-        }
-
-        private void ActualizarListBox()
-        {
-            // Limpiar el contenido actual del ListBox
-            listDetalleDonacion.Items.Clear();
-
-            // Agregar cada elemento de la lista al ListBox
-            foreach (Donacion donacion in donacionList)
-            {
-                string item = $"ID: {donacion.ProductoId} - {donacion.Producto} - Cantidad: {donacion.Cantidad}";
-                listDetalleDonacion.Items.Add(item);
+                lblError.Visible = false;
             }
         }
 
@@ -142,29 +182,6 @@ namespace biosys
             ActualizarListBox();
         }
 
-        private void LimpiarCampos()
-        {
-            // Limpiar los campos de entrada de datos
-            comboProductos.SelectedIndex = -1;
-            numericCantidad.Value = 0;
-
-            // Limpiar el contenido del ListBox
-            listDetalleDonacion.Items.Clear();
-
-            // Limpiar los textbox
-            txtDonante.Text = string.Empty;
-
-            // Habilitar campos nuevamente
-            txtDonante.Enabled = true;
-            fechaDonacion.Enabled = true;
-        }
-
-        public void msgError(string msg)
-        {
-            lblError.Text = "      " + msg;
-            lblError.Visible = true;
-        }
-
         private void btnRegistrarDonacion_Click(object sender, EventArgs e)
         {
             if (donacionList.Count == 0)
@@ -208,17 +225,6 @@ namespace biosys
             donacionList.Clear();
 
             MessageBox.Show("La donación se registró correctamente.", "Donación registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void txtDonante_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e = MetodosComunes.KeyPressSoloLetras(e);
-
-            if (e.Handled)
-            {
-                // Cancela el evento KeyPress
-                e.Handled = true;
-            }
         }
     }
 }

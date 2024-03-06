@@ -51,69 +51,12 @@ namespace biosys
             }
         }
 
-        private void btnGuardarCliente_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtNombreCliente.Text) || string.IsNullOrEmpty(txtApellidoCliente.Text) || string.IsNullOrEmpty(txtEmailCliente.Text) || string.IsNullOrEmpty(txtTelefonoCliente.Text))
-            {
-                msgError("Por favor, complete todos los campos obligatorios.");
-                return;
-            }
-
-            string nombre = txtNombreCliente.Text;
-            string apellido = txtApellidoCliente.Text;
-            string email = txtEmailCliente.Text;
-            string telefono = txtTelefonoCliente.Text;
-
-            bool esValido = MetodosComunes.ValidacionEMAIL(null, email);
-
-            ClienteInfo clienteInfo = new ClienteInfo
-            {
-                Id = idClienteSeleccionado,
-                Nombre = nombre,
-                Apellido = apellido,
-                Email = email,
-                Telefono = telefono
-            };
-
-            bool clienteExistente = Controladora.Controladora.VerificarClienteExistente(clienteInfo);
-
-            if (!esValido)
-            {
-                msgError("Debe ingresar un email válido, por favor verifíquelo.");
-                return;
-            }
-            else if (clienteExistente)
-            {
-                msgError("El cliente ya existe en la base de datos.");
-                return;
-            }
-
-            if (idClienteSeleccionado != 0)
-            {
-                Controladora.Controladora.ActualizarCliente(clienteInfo);
-                MessageBox.Show("Cliente modificado exitosamente.", "Modificación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                Controladora.Controladora.InsertarCliente(clienteInfo);
-                MessageBox.Show("Cliente guardado exitosamente.", "Guardado exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            LimpiarCamposCliente();
-            CargarClientesEnDataGridView();
-        }
-
         private void LimpiarCamposCliente()
         {
             txtNombreCliente.Text = string.Empty;
             txtApellidoCliente.Text = string.Empty;
             txtEmailCliente.Text = string.Empty;
             txtTelefonoCliente.Text = string.Empty;
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            DashboardInstance.AbrirFormHijo(new Inicio());
-            this.Close();
         }
 
         private void Clientes_Load(object sender, EventArgs e)
@@ -125,6 +68,12 @@ namespace biosys
             comboBoxOrdenar.SelectedIndex = -1;
 
             CargarClientesEnDataGridView();
+
+            // Calcular la posición x para centrar el Label horizontalmente
+            int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            // Establecer la posición del Label
+            labelTitulo.Location = new Point(labelPosX, 50);
         }
 
         public void msgError(string msg)
@@ -160,44 +109,7 @@ namespace biosys
                 e.Handled = true;
             }
         }
-        private void btnEliminarCliente_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewClientes.SelectedRows.Count > 0)
-            {
-                // Obtener el ID del cliente seleccionado
-                int idCliente = Convert.ToInt32(dataGridViewClientes.SelectedRows[0].Cells["ID"].Value);
 
-                // Verificar si el cliente está asociado a alguna compra
-                bool clienteEnCompra = Controladora.Controladora.VerificarClienteEnVentas(idCliente);
-
-                // Mostrar un cuadro de diálogo de confirmación
-                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este cliente?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                // Si el usuario confirma la eliminación
-                if (result == DialogResult.Yes)
-                {
-                    // Eliminar el cliente
-                    Controladora.Controladora.EliminarCliente(idCliente);
-
-                    // Actualizar la vista
-                    MessageBox.Show("Cliente eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CargarClientesEnDataGridView();
-                }
-            }
-            else
-            {
-                // Si no se ha seleccionado ningún cliente, mostrar un mensaje de error
-                msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
-                return;
-            }
-        }
-
-        private void btnLimpiar_Click(object sender, EventArgs e)
-        {
-            LimpiarCamposCliente();
-            dataGridViewClientes.ClearSelection();
-            idClienteSeleccionado = 0;
-        }
         private void txtBusqueda_TextChanged(object sender, EventArgs e)
         {
             string criterioBusqueda = txtBusqueda.Text;
@@ -282,13 +194,6 @@ namespace biosys
             }
         }
 
-        private void btnQuitarFiltros_Click(object sender, EventArgs e)
-        {
-            txtBusqueda.Text = string.Empty;
-            comboBoxOrdenar.SelectedIndex = -1;
-            CargarClientesEnDataGridView();
-        }
-
         private void CargarClientesEnDataGridView()
         {
             // Calcular el índice de inicio para la paginación
@@ -335,6 +240,118 @@ namespace biosys
                 paginaActual++;
                 CargarClientesEnDataGridView();
             }
+        }
+
+        private void btnQuitarFiltros_Click(object sender, EventArgs e)
+        {
+            txtBusqueda.Text = string.Empty;
+            comboBoxOrdenar.SelectedIndex = -1;
+            CargarClientesEnDataGridView();
+        }
+
+        private void btnEliminarCliente_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewClientes.SelectedRows.Count > 0)
+            {
+                // Obtener el ID del cliente seleccionado
+                int idCliente = Convert.ToInt32(dataGridViewClientes.SelectedRows[0].Cells["ID"].Value);
+
+                // Verificar si el cliente está asociado a alguna compra
+                bool clienteEnCompra = Controladora.Controladora.VerificarClienteEnVentas(idCliente);
+
+                // Mostrar un cuadro de diálogo de confirmación
+                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este cliente?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                // Si el usuario confirma la eliminación
+                if (result == DialogResult.Yes)
+                {
+                    // Eliminar el cliente
+                    Controladora.Controladora.EliminarCliente(idCliente);
+
+                    // Actualizar la vista
+                    MessageBox.Show("Cliente eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarClientesEnDataGridView();
+                }
+            }
+            else
+            {
+                // Si no se ha seleccionado ningún cliente, mostrar un mensaje de error
+                msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
+                return;
+            }
+        }
+
+        private void brnCancelar_Click(object sender, EventArgs e)
+        {
+            // Mostrar un cuadro de diálogo de confirmación
+            DialogResult result = MessageBox.Show("¿Está seguro de que desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // Verificar si el usuario ha confirmado la cancelación
+            if (result == DialogResult.Yes)
+            {
+                // Si el usuario confirma, cerrar el formulario
+                DashboardInstance.AbrirFormHijo(new Inicio());
+                this.Close();
+            }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            LimpiarCamposCliente();
+            dataGridViewClientes.ClearSelection();
+            idClienteSeleccionado = 0;
+            lblError.Visible = false;
+        }
+
+        private void btnGuardarCliente_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtNombreCliente.Text) || string.IsNullOrEmpty(txtApellidoCliente.Text) || string.IsNullOrEmpty(txtEmailCliente.Text) || string.IsNullOrEmpty(txtTelefonoCliente.Text))
+            {
+                msgError("Por favor, complete todos los campos obligatorios.");
+                return;
+            }
+
+            string nombre = txtNombreCliente.Text;
+            string apellido = txtApellidoCliente.Text;
+            string email = txtEmailCliente.Text;
+            string telefono = txtTelefonoCliente.Text;
+
+            bool esValido = MetodosComunes.ValidacionEMAIL(null, email);
+
+            ClienteInfo clienteInfo = new ClienteInfo
+            {
+                Id = idClienteSeleccionado,
+                Nombre = nombre,
+                Apellido = apellido,
+                Email = email,
+                Telefono = telefono
+            };
+
+            bool clienteExistente = Controladora.Controladora.VerificarClienteExistente(clienteInfo);
+
+            if (!esValido)
+            {
+                msgError("Debe ingresar un email válido, por favor verifíquelo.");
+                return;
+            }
+            else if (clienteExistente)
+            {
+                msgError("El cliente ya existe en la base de datos.");
+                return;
+            }
+
+            if (idClienteSeleccionado != 0)
+            {
+                Controladora.Controladora.ActualizarCliente(clienteInfo);
+                MessageBox.Show("Cliente modificado exitosamente.", "Modificación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                Controladora.Controladora.InsertarCliente(clienteInfo);
+                MessageBox.Show("Cliente guardado exitosamente.", "Guardado exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            LimpiarCamposCliente();
+            CargarClientesEnDataGridView();
         }
     }
 }
