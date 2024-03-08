@@ -576,6 +576,91 @@ namespace Modelo
             }
         }
 
+        public static string ObtenerCorreoUsuarioPorID(int idUsuario)
+        {
+            string correoUsuario = null;
+
+            string sql = "SELECT email FROM usuarios WHERE id = @IdUsuario";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+                    // Ejecutar el comando y obtener el resultado
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    // Verificar si se encontraron resultados
+                    if (reader.Read())
+                    {
+                        correoUsuario = reader["email"].ToString();
+                    }
+
+                    // Cerrar el lector
+                    reader.Close();
+                }
+            }
+
+            return correoUsuario;
+        }
+        public static bool VerificarUsuarioHabilitadoPorID(int idUsuario)
+        {
+            bool usuarioHabilitado = false;
+
+            string sql = "SELECT COUNT(*) FROM usuarios WHERE id = @IdUsuario AND habilitado = 1";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+                    int count = (int)command.ExecuteScalar();
+
+                    // Si count es mayor que 0, significa que el usuario está habilitado
+                    usuarioHabilitado = count > 0;
+                }
+            }
+
+            return usuarioHabilitado;
+        }
+        public static bool VerificarUsuarioHabilitado(string nombreUsuario)
+        {
+            string sql = "SELECT COUNT(*) FROM usuarios WHERE nombre_usuario = @NombreUsuario AND habilitado = 1";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@NombreUsuario", nombreUsuario);
+
+                    int count = (int)command.ExecuteScalar();
+
+                    // Si count es mayor que 0, significa que el usuario está habilitado
+                    return count > 0;
+                }
+            }
+        }
+        public static bool ActualizarEstadoUsuarioPorID(int idUsuario, bool nuevoEstadoUsuario)
+        {
+            string sql = "UPDATE usuarios SET Habilitado = @NuevoEstadoUsuario WHERE id = @IdUsuario";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@NuevoEstadoUsuario", nuevoEstadoUsuario);
+                    command.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+                    int filasActualizadas = command.ExecuteNonQuery();
+
+                    // Si se actualizó al menos una fila, se considera una actualización exitosa
+                    return filasActualizadas > 0;
+                }
+            }
+        }
+
         public static bool VerificarExistenciaEmail(string email)
         {
             string sql = "SELECT COUNT(*) FROM usuarios WHERE email = @Email;";

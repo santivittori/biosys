@@ -517,8 +517,10 @@ namespace biosys
             // Invertir el estado del rol
             bool nuevoEstadoRol = !rolHabilitado;
 
-            // Si se intenta cambiar el estado del rol, solicitar confirmación al usuario
-            if (ConfirmarCambioEstadoRol(nombreRol, nuevoEstadoRol))
+            // Confirmar con el usuario si desea cambiar el estado del rol
+            DialogResult result = MessageBox.Show($"¿Está seguro/a de que desea {(nuevoEstadoRol ? "habilitar" : "deshabilitar")} el rol '{nombreRol}'?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
             {
                 // Actualizar el estado del rol en la base de datos
                 bool actualizacionExitosa = Controladora.Controladora.ActualizarEstadoRol(nombreRol, nuevoEstadoRol);
@@ -575,7 +577,7 @@ namespace biosys
             }
 
             // Preguntar al usuario si está seguro de eliminar el rol
-            DialogResult result = MessageBox.Show($"¿Está seguro de eliminar el rol '{nombreRol}'? Esto eliminará también los usuarios asociados.", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show($"¿Está seguro/a de eliminar el rol '{nombreRol}'? Esto eliminará también los usuarios asociados.", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -661,7 +663,7 @@ namespace biosys
             }
 
             // Preguntar al usuario si está seguro de eliminar el permiso
-            DialogResult result = MessageBox.Show($"¿Está seguro de eliminar el permiso '{nombrePermisoSeleccionado}'?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show($"¿Está seguro/a de eliminar el permiso '{nombrePermisoSeleccionado}'?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {

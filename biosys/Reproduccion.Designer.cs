@@ -166,7 +166,7 @@
             this.lblError.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lblError.Image = ((System.Drawing.Image)(resources.GetObject("lblError.Image")));
             this.lblError.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblError.Location = new System.Drawing.Point(141, 433);
+            this.lblError.Location = new System.Drawing.Point(194, 433);
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(122, 18);
             this.lblError.TabIndex = 88;

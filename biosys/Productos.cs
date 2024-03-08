@@ -76,6 +76,7 @@ namespace biosys
             txtNombreProd.Text = string.Empty;
             comboTipoProducto.SelectedIndex = -1;
             comboTipoEspecifico.SelectedIndex = -1;
+            lblError.Visible = false;
         }
 
         private void Productos_Load(object sender, EventArgs e)
@@ -460,7 +461,7 @@ namespace biosys
                 }
 
                 // Mostrar un cuadro de diálogo de confirmación
-                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este producto?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("¿Está seguro/a de que desea eliminar este producto?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 // Si el usuario confirma la eliminación
                 if (result == DialogResult.Yes)
@@ -470,6 +471,7 @@ namespace biosys
 
                     // Mostrar mensaje de éxito y actualizar el DataGridView
                     MessageBox.Show("Producto eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarCampos();
                     CargarProductosEnDataGridView();
                 }
             }

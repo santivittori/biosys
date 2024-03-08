@@ -73,6 +73,7 @@ namespace biosys
 
             // Limpiar los textbox
             txtLugar.Text = string.Empty;
+            lblError.Visible = false;
 
             // Habilitar campos nuevamente
             txtLugar.Enabled = true;
@@ -168,6 +169,7 @@ namespace biosys
             // No dejar acceder a cambiar algunos campos
             txtLugar.Enabled = false;
             fechaRecoleccion.Enabled = false;
+            lblError.Visible = false;
 
             // Limpiar los campos de entrada de datos
             comboProductos.SelectedIndex = -1;
@@ -185,41 +187,48 @@ namespace biosys
                 return;
             }
 
-            string lugar = txtLugar.Text;
-            DateTime fechaRecoleccion = this.fechaRecoleccion.Value;
+            // Mostrar cuadro de diálogo de confirmación
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea registrar la recolección?", "Confirmar Recolección", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
-
-            int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
-
-            RecoleccionInfo recoleccionInfo = new RecoleccionInfo
+            // Verificar si el usuario confirmó la acción
+            if (result == DialogResult.Yes)
             {
-                Lugar = lugar,
-                FechaRecoleccion = fechaRecoleccion,
-                UsuarioId = usuarioId
-            };
+                string lugar = txtLugar.Text;
+                DateTime fechaRecoleccion = this.fechaRecoleccion.Value;
 
-            int recoleccionId = Controladora.Controladora.GuardarRecoleccion(recoleccionInfo);
+                string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
 
-            DetalleRecoleccionInfo detalleRecoleccionInfo = new DetalleRecoleccionInfo();
+                int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
 
-            foreach (Recoleccion recoleccion in recoleccionList)
-            {
-                int productoId = recoleccion.ProductoId;
-                int cantidad = recoleccion.Cantidad;
+                RecoleccionInfo recoleccionInfo = new RecoleccionInfo
+                {
+                    Lugar = lugar,
+                    FechaRecoleccion = fechaRecoleccion,
+                    UsuarioId = usuarioId
+                };
 
-                detalleRecoleccionInfo.RecoleccionId = recoleccionId;
-                detalleRecoleccionInfo.ProductoId = productoId;
-                detalleRecoleccionInfo.Cantidad = cantidad;
+                int recoleccionId = Controladora.Controladora.GuardarRecoleccion(recoleccionInfo);
 
-                Controladora.Controladora.GuardarDetalleRecoleccion(detalleRecoleccionInfo);
-                Controladora.Controladora.ActualizarStock(productoId, cantidad);
+                DetalleRecoleccionInfo detalleRecoleccionInfo = new DetalleRecoleccionInfo();
+
+                foreach (Recoleccion recoleccion in recoleccionList)
+                {
+                    int productoId = recoleccion.ProductoId;
+                    int cantidad = recoleccion.Cantidad;
+
+                    detalleRecoleccionInfo.RecoleccionId = recoleccionId;
+                    detalleRecoleccionInfo.ProductoId = productoId;
+                    detalleRecoleccionInfo.Cantidad = cantidad;
+
+                    Controladora.Controladora.GuardarDetalleRecoleccion(detalleRecoleccionInfo);
+                    Controladora.Controladora.ActualizarStock(productoId, cantidad);
+                }
+
+                LimpiarCampos();
+                recoleccionList.Clear();
+
+                MessageBox.Show("La recolección se registró correctamente.", "Recolección registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-            LimpiarCampos();
-            recoleccionList.Clear();
-
-            MessageBox.Show("La recolección se registró correctamente.", "Recolección registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnCancelar_MouseEnter(object sender, EventArgs e)

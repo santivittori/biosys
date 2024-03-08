@@ -284,6 +284,7 @@ namespace biosys
             int indiceInicio = (paginaActual - 1) * tamañoPagina;
             DataTable dataTable = Controladora.Controladora.ObtenerUsuariosPaginados(indiceInicio, tamañoPagina);
             dataGridViewUsuarios.DataSource = dataTable;
+            dataGridViewUsuarios.CellFormatting += dataGridViewUsuarios_CellFormatting;
             MostrarInformacionPaginacion();
         }
 
@@ -374,6 +375,8 @@ namespace biosys
                 // Envía un correo al usuario notificando los cambios
                 EnviarCorreoNotificacion(usuario, correoElectronicoAnterior);
 
+                lblError.Visible = false;
+
                 MessageBox.Show("Usuario editado exitosamente.", "Edición exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
@@ -421,7 +424,7 @@ namespace biosys
                 else
                 {
                     // Mostrar un cuadro de diálogo de confirmación
-                    DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este usuario?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show("¿Está seguro/a de que desea eliminar este usuario?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     // Si el usuario confirma la eliminación
                     if (result == DialogResult.Yes)
@@ -432,6 +435,7 @@ namespace biosys
                         // Mostrar mensaje de éxito y actualizar el DataGridView
                         MessageBox.Show("Usuario eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         CargarUsuariosEnDataGridView();
+                        btnLimpiarCampos.PerformClick();
                     }
                 }
             }
@@ -470,6 +474,111 @@ namespace biosys
         private void btnGuardarEdicion_MouseLeave(object sender, EventArgs e)
         {
             btnGuardarEdicion.BackColor = Color.White;
+        }
+
+        private void btnHabilitarUsuario_MouseEnter(object sender, EventArgs e)
+        {
+            btnHabilitarUsuario.BackColor = Color.Yellow;
+        }
+
+        private void btnHabilitarUsuario_MouseLeave(object sender, EventArgs e)
+        {
+            btnHabilitarUsuario.BackColor = Color.White;
+        }
+
+        private void btnHabilitarUsuario_Click(object sender, EventArgs e)
+        {
+            // Verificar si se seleccionó una fila en el DataGridView
+            if (dataGridViewUsuarios.SelectedRows.Count > 0)
+            {
+                // Obtener el ID del usuario seleccionado
+                int idUsuario = Convert.ToInt32(dataGridViewUsuarios.SelectedRows[0].Cells["ID"].Value);
+
+                // Obtener el correo electrónico del usuario que está actualmente logueado
+                string correoUsuarioLogueado = UsuarioActual.UsuarioLogueado.Email;
+
+                // Obtener el correo electrónico del usuario que se intenta deshabilitar
+                string correoUsuarioADeshabilitar = Controladora.Controladora.ObtenerCorreoUsuarioPorID(idUsuario);
+
+                // Comparar los correos electrónicos
+                if (correoUsuarioADeshabilitar == correoUsuarioLogueado)
+                {
+                    // No permitir deshabilitar al usuario logueado
+                    MessageBox.Show("No puedes deshabilitar al usuario con el que has iniciado sesión.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    // Mostrar un cuadro de diálogo de confirmación
+                    string mensaje = "¿Está seguro/a de que desea ";
+                    mensaje += Controladora.Controladora.VerificarUsuarioHabilitadoPorID(idUsuario) ? "deshabilitar" : "habilitar";
+                    mensaje += " este usuario?";
+
+                    DialogResult result = MessageBox.Show(mensaje, "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    // Si el usuario confirma la acción
+                    if (result == DialogResult.Yes)
+                    {
+                        // Obtener el estado actual del usuario
+                        bool usuarioHabilitado = Controladora.Controladora.VerificarUsuarioHabilitadoPorID(idUsuario);
+
+                        // Invertir el estado del usuario
+                        bool nuevoEstadoUsuario = !usuarioHabilitado;
+
+                        // Actualizar el estado del usuario en la base de datos
+                        bool actualizacionExitosa = Controladora.Controladora.ActualizarEstadoUsuarioPorID(idUsuario, nuevoEstadoUsuario);
+
+                        if (actualizacionExitosa)
+                        {
+                            // Mostrar mensaje de éxito y actualizar el DataGridView
+                            if (nuevoEstadoUsuario)
+                            {
+                                MessageBox.Show("Usuario habilitado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Usuario deshabilitado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            btnLimpiarCampos.PerformClick();
+                            // Actualizar el DataGridView
+                            CargarUsuariosEnDataGridView();
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se pudo cambiar el estado del usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                msgError("Debe seleccionar una fila en el DataGridView para habilitar o deshabilitar un usuario.");
+                return;
+            }
+        }
+
+        private void dataGridViewUsuarios_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Verificar si la celda actual es de la columna "NombreUsuario" y si hay datos en la fila
+            if (e.ColumnIndex == dataGridViewUsuarios.Columns[0].Index && e.RowIndex >= 0)
+            {
+                // Obtener el ID del usuario de la celda actual
+                int idUsuario = Convert.ToInt32(dataGridViewUsuarios.Rows[e.RowIndex].Cells["ID"].Value);
+
+                // Verificar si el usuario está habilitado
+                if (!Controladora.Controladora.VerificarUsuarioHabilitadoPorID(idUsuario))
+                {
+                    // Cambiar el color de fondo de la fila a amarillo para indicar que el usuario está deshabilitado
+                    dataGridViewUsuarios.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+
+                    // Agregar un tooltip que explique por qué el usuario está inhabilitado
+                    dataGridViewUsuarios.Rows[e.RowIndex].Cells[0].ToolTipText = "Este usuario está inhabilitado actualmente.";
+                }
+                else
+                {
+                    // Limpiar el tooltip si el usuario está habilitado
+                    dataGridViewUsuarios.Rows[e.RowIndex].Cells[0].ToolTipText = "";
+                }
+            }
         }
     }
 }

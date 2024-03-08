@@ -109,6 +109,22 @@ namespace Controladora
         {
             return ConsultasModelo.VerificarExistenciaUsuario(nombreUsuario);
         }
+        public static string ObtenerCorreoUsuarioPorID(int idUsuario)
+        {
+            return ConsultasModelo.ObtenerCorreoUsuarioPorID(idUsuario);
+        }
+        public static bool VerificarUsuarioHabilitadoPorID(int idUsuario)
+        {
+            return ConsultasModelo.VerificarUsuarioHabilitadoPorID(idUsuario);
+        }
+        public static bool ActualizarEstadoUsuarioPorID(int idUsuario, bool nuevoEstadoUsuario)
+        {
+            return ConsultasModelo.ActualizarEstadoUsuarioPorID(idUsuario, nuevoEstadoUsuario);
+        }
+        public static bool VerificarUsuarioHabilitado(string nombreUsuario)
+        {
+            return ConsultasModelo.VerificarUsuarioHabilitado(nombreUsuario);
+        }
         public static bool VerificarExistenciaEmail(string email)
         {
             return ConsultasModelo.VerificarExistenciaEmail(email);

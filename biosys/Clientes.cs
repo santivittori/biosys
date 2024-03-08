@@ -58,6 +58,7 @@ namespace biosys
             txtApellidoCliente.Text = string.Empty;
             txtEmailCliente.Text = string.Empty;
             txtTelefonoCliente.Text = string.Empty;
+            lblError.Visible = false;
         }
 
         private void Clientes_Load(object sender, EventArgs e)
@@ -261,7 +262,7 @@ namespace biosys
                 bool clienteEnCompra = Controladora.Controladora.VerificarClienteEnVentas(idCliente);
 
                 // Mostrar un cuadro de diálogo de confirmación
-                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este cliente?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("¿Está seguro/a de que desea eliminar este cliente?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 // Si el usuario confirma la eliminación
                 if (result == DialogResult.Yes)
@@ -271,6 +272,7 @@ namespace biosys
 
                     // Actualizar la vista
                     MessageBox.Show("Cliente eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarCamposCliente();
                     CargarClientesEnDataGridView();
                 }
             }

@@ -138,6 +138,9 @@ namespace biosys
             // Habilitar campos nuevamente
             comboCliente.Enabled = true;
             fechaVenta.Enabled = true;
+
+            lblError.Visible = false;
+            labelStockDisponible.Visible = false;
         }
 
         private void txtPrecioUnitario_KeyPress(object sender, KeyPressEventArgs e)
@@ -432,6 +435,7 @@ namespace biosys
             numericCantidad.Value = 0;
             txtPrecioUnitario.Text = string.Empty;
             labelStockDisponible.Visible = false;
+            lblError.Visible = false;
 
             // Actualizar el contenido del ListBox
             ActualizarListBox();
@@ -445,59 +449,66 @@ namespace biosys
                 return;
             }
 
-            string clienteEmail = comboCliente.SelectedValue.ToString();
-            DateTime fechaVenta = this.fechaVenta.Value;
-            string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
-            int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
-            string nombreCliente = comboCliente.Text;
+            // Mostrar cuadro de diálogo de confirmación
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea realizar la venta?", "Confirmar Venta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            decimal precioTotalVenta = 0;
-
-            // Crear un objeto VentaInfo con los datos de la venta
-            VentaInfo ventaInfo = new VentaInfo
+            // Verificar si el usuario confirmó la acción
+            if (result == DialogResult.Yes)
             {
-                ClienteEmail = clienteEmail,
-                FechaVenta = fechaVenta,
-                UsuarioId = usuarioId,
-                PrecioTotalVenta = precioTotalVenta
-            };
+                string clienteEmail = comboCliente.SelectedValue.ToString();
+                DateTime fechaVenta = this.fechaVenta.Value;
+                string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
+                int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
+                string nombreCliente = comboCliente.Text;
 
-            foreach (Venta venta in ventasList)
-            {
-                ventaInfo.PrecioTotalVenta += venta.PrecioTotal;
+                decimal precioTotalVenta = 0;
+
+                // Crear un objeto VentaInfo con los datos de la venta
+                VentaInfo ventaInfo = new VentaInfo
+                {
+                    ClienteEmail = clienteEmail,
+                    FechaVenta = fechaVenta,
+                    UsuarioId = usuarioId,
+                    PrecioTotalVenta = precioTotalVenta
+                };
+
+                foreach (Venta venta in ventasList)
+                {
+                    ventaInfo.PrecioTotalVenta += venta.PrecioTotal;
+                }
+
+                int ventaId = Controladora.Controladora.GuardarVenta(ventaInfo);
+
+                // Crear un objeto DetalleVentaInfo para cada venta en la lista
+                DetalleVentaInfo detalleVentaInfo = new DetalleVentaInfo();
+
+                foreach (Venta venta in ventasList)
+                {
+                    int productoId = venta.ProductoId;
+                    int cantidad = venta.Cantidad;
+                    decimal precioUnitario = venta.PrecioUnitario;
+                    decimal precioTotalDetalle = venta.PrecioTotal;
+
+                    // Asignar los valores del detalle de venta al objeto DetalleVentaInfo
+                    detalleVentaInfo.VentaId = ventaId;
+                    detalleVentaInfo.ProductoId = productoId;
+                    detalleVentaInfo.Cantidad = cantidad;
+                    detalleVentaInfo.PrecioUnitario = precioUnitario;
+                    detalleVentaInfo.PrecioTotalDetalle = precioTotalDetalle;
+
+                    Controladora.Controladora.GuardarDetalleVenta(detalleVentaInfo);
+                    Controladora.Controladora.DisminuirStock(productoId, cantidad);
+                }
+
+                // Llamar a las funciones de generación de PDF
+                GenerarFacturaPDF(nombreCliente, fechaVenta, ventasList);
+                GenerarRemitoPDF(nombreCliente, fechaVenta, ventasList);
+
+                LimpiarCampos();
+                ventasList.Clear();
+
+                MessageBox.Show($"La venta se registró correctamente.\n\nPrecio total: ${ventaInfo.PrecioTotalVenta}", "Venta registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-            int ventaId = Controladora.Controladora.GuardarVenta(ventaInfo);
-
-            // Crear un objeto DetalleVentaInfo para cada venta en la lista
-            DetalleVentaInfo detalleVentaInfo = new DetalleVentaInfo();
-
-            foreach (Venta venta in ventasList)
-            {
-                int productoId = venta.ProductoId;
-                int cantidad = venta.Cantidad;
-                decimal precioUnitario = venta.PrecioUnitario;
-                decimal precioTotalDetalle = venta.PrecioTotal;
-
-                // Asignar los valores del detalle de venta al objeto DetalleVentaInfo
-                detalleVentaInfo.VentaId = ventaId;
-                detalleVentaInfo.ProductoId = productoId;
-                detalleVentaInfo.Cantidad = cantidad;
-                detalleVentaInfo.PrecioUnitario = precioUnitario;
-                detalleVentaInfo.PrecioTotalDetalle = precioTotalDetalle;
-
-                Controladora.Controladora.GuardarDetalleVenta(detalleVentaInfo);
-                Controladora.Controladora.DisminuirStock(productoId, cantidad);
-            }
-
-            // Llamar a las funciones de generación de PDF
-            GenerarFacturaPDF(nombreCliente, fechaVenta, ventasList);
-            GenerarRemitoPDF(nombreCliente, fechaVenta, ventasList);
-
-            LimpiarCampos();
-            ventasList.Clear();
-
-            MessageBox.Show($"La venta se registró correctamente.\n\nPrecio total: ${ventaInfo.PrecioTotalVenta}", "Venta registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnCancelar_MouseEnter(object sender, EventArgs e)

@@ -118,6 +118,7 @@ namespace biosys
             txtNroFactura.Text = string.Empty;
             txtNroRemito.Text = string.Empty;
             txtPrecioUnitario.Text = string.Empty;
+            lblError.Visible = false;
 
             // Habilitar campos nuevamente
             txtNroFactura.Enabled = true;
@@ -287,6 +288,7 @@ namespace biosys
             comboProductos.SelectedIndex = -1;
             numericCantidad.Text = string.Empty;
             txtPrecioUnitario.Text = string.Empty;
+            lblError.Visible = false;
 
             // Actualizar el contenido del ListBox
             ActualizarListBox();
@@ -300,60 +302,67 @@ namespace biosys
                 return;
             }
 
-            string nroFactura = txtNroFactura.Text;
-            string nroRemito = txtNroRemito.Text;
-            string proveedorEmail = comboProveedor.SelectedValue.ToString();
-            DateTime fechaCompra = this.fechaCompra.Value;
+            // Mostrar cuadro de diálogo de confirmación
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea realizar la compra?", "Confirmar Compra", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
-
-            int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
-
-            decimal precioTotalCompra = 0;
-
-            // Crear un objeto CompraInfo con los datos de la compra
-            CompraInfo compraInfo = new CompraInfo
+            // Verificar si el usuario confirmó la acción
+            if (result == DialogResult.Yes)
             {
-                NroFactura = nroFactura,
-                NroRemito = nroRemito,
-                ProveedorEmail = proveedorEmail,
-                FechaCompra = fechaCompra,
-                UsuarioId = usuarioId,
-                PrecioTotalCompra = precioTotalCompra
-            };
+                string nroFactura = txtNroFactura.Text;
+                string nroRemito = txtNroRemito.Text;
+                string proveedorEmail = comboProveedor.SelectedValue.ToString();
+                DateTime fechaCompra = this.fechaCompra.Value;
 
-            foreach (Compra compra in comprasList)
-            {
-                compraInfo.PrecioTotalCompra += compra.PrecioTotal;
+                string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
+
+                int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
+
+                decimal precioTotalCompra = 0;
+
+                // Crear un objeto CompraInfo con los datos de la compra
+                CompraInfo compraInfo = new CompraInfo
+                {
+                    NroFactura = nroFactura,
+                    NroRemito = nroRemito,
+                    ProveedorEmail = proveedorEmail,
+                    FechaCompra = fechaCompra,
+                    UsuarioId = usuarioId,
+                    PrecioTotalCompra = precioTotalCompra
+                };
+
+                foreach (Compra compra in comprasList)
+                {
+                    compraInfo.PrecioTotalCompra += compra.PrecioTotal;
+                }
+
+                int compraId = Controladora.Controladora.GuardarCompra(compraInfo);
+
+                // Crear un objeto DetalleCompraInfo fuera del foreach
+                DetalleCompraInfo detalleCompraInfo = new DetalleCompraInfo();
+
+                foreach (Compra compra in comprasList)
+                {
+                    int productoId = compra.ProductoId;
+                    int cantidad = compra.Cantidad;
+                    decimal precioUnitario = compra.PrecioUnitario;
+                    decimal precioTotalDetalle = compra.PrecioTotal;
+
+                    // Asignar los valores del detalle de compra al objeto DetalleCompraInfo
+                    detalleCompraInfo.CompraId = compraId;
+                    detalleCompraInfo.ProductoId = productoId;
+                    detalleCompraInfo.Cantidad = cantidad;
+                    detalleCompraInfo.PrecioUnitario = precioUnitario;
+                    detalleCompraInfo.PrecioTotalDetalle = precioTotalDetalle;
+
+                    Controladora.Controladora.GuardarDetalleCompra(detalleCompraInfo);
+                    Controladora.Controladora.ActualizarStock(productoId, cantidad);
+                }
+
+                LimpiarCampos();
+                comprasList.Clear();
+
+                MessageBox.Show($"La compra se registró correctamente.\n\nPrecio total: ${compraInfo.PrecioTotalCompra}", "Compra registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-            int compraId = Controladora.Controladora.GuardarCompra(compraInfo);
-
-            // Crear un objeto DetalleCompraInfo fuera del foreach
-            DetalleCompraInfo detalleCompraInfo = new DetalleCompraInfo();
-
-            foreach (Compra compra in comprasList)
-            {
-                int productoId = compra.ProductoId;
-                int cantidad = compra.Cantidad;
-                decimal precioUnitario = compra.PrecioUnitario;
-                decimal precioTotalDetalle = compra.PrecioTotal;
-
-                // Asignar los valores del detalle de compra al objeto DetalleCompraInfo
-                detalleCompraInfo.CompraId = compraId;
-                detalleCompraInfo.ProductoId = productoId;
-                detalleCompraInfo.Cantidad = cantidad;
-                detalleCompraInfo.PrecioUnitario = precioUnitario;
-                detalleCompraInfo.PrecioTotalDetalle = precioTotalDetalle;
-
-                Controladora.Controladora.GuardarDetalleCompra(detalleCompraInfo);
-                Controladora.Controladora.ActualizarStock(productoId, cantidad);
-            }
-
-            LimpiarCampos();
-            comprasList.Clear();
-
-            MessageBox.Show($"La compra se registró correctamente.\n\nPrecio total: ${compraInfo.PrecioTotalCompra}", "Compra registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnCancelar_MouseEnter(object sender, EventArgs e)

@@ -165,6 +165,8 @@ namespace biosys
 
             // Habilitar campos nuevamente
             fechaCompra.Enabled = true;
+            lblError.Visible = false;
+            lblStockDisponible.Visible = false;
         }
 
         private void comboProductos_SelectedIndexChanged(object sender, EventArgs e)
@@ -235,91 +237,98 @@ namespace biosys
                 return;
             }
 
-            DateTime fechaCompra = this.fechaCompra.Value;
-            string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
-            int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
+            // Mostrar cuadro de diálogo de confirmación
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea registrar la siembra?", "Confirmar Siembra", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            SiembraInfo siembraInfo = new SiembraInfo
+            // Verificar si el usuario confirmó la acción
+            if (result == DialogResult.Yes)
             {
-                FechaSiembra = fechaCompra,
-                UsuarioId = usuarioId
-            };
+                DateTime fechaCompra = this.fechaCompra.Value;
+                string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
+                int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
 
-            int siembraId = Controladora.Controladora.GuardarSiembra(siembraInfo);
-
-            Producto productoArbol = null;
-
-            foreach (Siembra siembra in siembraList)
-            {
-                int productoId = siembra.ProductoId;
-                int cantidad = siembra.Cantidad;
-
-                // Obtener el producto de tipo "Semilla" que será reducido del stock
-                Producto productoSemilla = Controladora.Controladora.ObtenerProductoPorId(productoId);
-
-                if (productoSemilla == null || productoSemilla.TipoProductoId != 2)
+                SiembraInfo siembraInfo = new SiembraInfo
                 {
-                    // No se encontró el producto de tipo "Semilla" o el producto no es de tipo "Semilla"
-                    msgError("El producto seleccionado no es una semilla válida.");
-                    return;
-                }
-
-                // Comprobar que la cantidad de semillas a plantar no exceda el stock disponible
-                if (cantidad > productoSemilla.Stock)
-                {
-                    msgError("La cantidad de semillas a plantar excede el stock disponible.");
-                    return;
-                }
-
-                // Restar la cantidad de semillas utilizadas en la siembra del stock actual
-                int nuevoStockSemilla = productoSemilla.Stock - cantidad;
-
-                // Actualizar el stock de semillas
-                Controladora.Controladora.DisminuirStock(productoId, cantidad);
-
-                productoArbol = Controladora.Controladora.ObtenerProductoArbolPorNombre(productoSemilla.Nombre);
-
-                if (productoArbol == null)
-                {
-                    productoArbol = new Producto
-                    {
-                        Nombre = productoSemilla.Nombre,
-                        TipoProductoId = 1, // 1 representa el tipo de producto "Árbol"
-                        TipoEspecificoId = productoSemilla.TipoEspecificoId, // Mantenemos el tipo específico
-                    };
-
-                    // Guardar el nuevo producto de tipo "Árbol" en la base de datos con el stock inicial igual a cero
-                    int nuevoProductoId = Controladora.Controladora.InsertarProductoSiembra(productoArbol, 0);
-                    productoArbol.Id = nuevoProductoId; // Asignar el nuevo Id del producto de árbol
-
-                    // Como el producto de árbol es nuevo, ahora lo agregamos a la lista de stock por productos
-                    stockPorProductos.Add(new StockProducto
-                    {
-                        ProductoId = nuevoProductoId,
-                        StockInicial = 0, // Stock inicial en cero
-                        StockDisponible = 0 // Stock disponible en cero
-                    });
-                }
-
-                // Actualizar el stock de árboles con la cantidad sembrada
-                Controladora.Controladora.ActualizarStock(productoArbol.Id, cantidad);
-
-                // Crear un objeto DetalleSiembraInfo para cada siembra en la lista
-                DetalleSiembraInfo detalleSiembraInfo = new DetalleSiembraInfo
-                {
-                    SiembraId = siembraId,
-                    ProductoId = productoId,
-                    Cantidad = cantidad
+                    FechaSiembra = fechaCompra,
+                    UsuarioId = usuarioId
                 };
 
-                // Guardar el detalle de la siembra en la base de datos
-                Controladora.Controladora.GuardarDetalleSiembra(detalleSiembraInfo);
+                int siembraId = Controladora.Controladora.GuardarSiembra(siembraInfo);
+
+                Producto productoArbol = null;
+
+                foreach (Siembra siembra in siembraList)
+                {
+                    int productoId = siembra.ProductoId;
+                    int cantidad = siembra.Cantidad;
+
+                    // Obtener el producto de tipo "Semilla" que será reducido del stock
+                    Producto productoSemilla = Controladora.Controladora.ObtenerProductoPorId(productoId);
+
+                    if (productoSemilla == null || productoSemilla.TipoProductoId != 2)
+                    {
+                        // No se encontró el producto de tipo "Semilla" o el producto no es de tipo "Semilla"
+                        msgError("El producto seleccionado no es una semilla válida.");
+                        return;
+                    }
+
+                    // Comprobar que la cantidad de semillas a plantar no exceda el stock disponible
+                    if (cantidad > productoSemilla.Stock)
+                    {
+                        msgError("La cantidad de semillas a plantar excede el stock disponible.");
+                        return;
+                    }
+
+                    // Restar la cantidad de semillas utilizadas en la siembra del stock actual
+                    int nuevoStockSemilla = productoSemilla.Stock - cantidad;
+
+                    // Actualizar el stock de semillas
+                    Controladora.Controladora.DisminuirStock(productoId, cantidad);
+
+                    productoArbol = Controladora.Controladora.ObtenerProductoArbolPorNombre(productoSemilla.Nombre);
+
+                    if (productoArbol == null)
+                    {
+                        productoArbol = new Producto
+                        {
+                            Nombre = productoSemilla.Nombre,
+                            TipoProductoId = 1, // 1 representa el tipo de producto "Árbol"
+                            TipoEspecificoId = productoSemilla.TipoEspecificoId, // Mantenemos el tipo específico
+                        };
+
+                        // Guardar el nuevo producto de tipo "Árbol" en la base de datos con el stock inicial igual a cero
+                        int nuevoProductoId = Controladora.Controladora.InsertarProductoSiembra(productoArbol, 0);
+                        productoArbol.Id = nuevoProductoId; // Asignar el nuevo Id del producto de árbol
+
+                        // Como el producto de árbol es nuevo, ahora lo agregamos a la lista de stock por productos
+                        stockPorProductos.Add(new StockProducto
+                        {
+                            ProductoId = nuevoProductoId,
+                            StockInicial = 0, // Stock inicial en cero
+                            StockDisponible = 0 // Stock disponible en cero
+                        });
+                    }
+
+                    // Actualizar el stock de árboles con la cantidad sembrada
+                    Controladora.Controladora.ActualizarStock(productoArbol.Id, cantidad);
+
+                    // Crear un objeto DetalleSiembraInfo para cada siembra en la lista
+                    DetalleSiembraInfo detalleSiembraInfo = new DetalleSiembraInfo
+                    {
+                        SiembraId = siembraId,
+                        ProductoId = productoId,
+                        Cantidad = cantidad
+                    };
+
+                    // Guardar el detalle de la siembra en la base de datos
+                    Controladora.Controladora.GuardarDetalleSiembra(detalleSiembraInfo);
+                }
+
+                LimpiarCampos();
+                siembraList.Clear();
+
+                MessageBox.Show($"La siembra se registró correctamente.", "Siembra registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-            LimpiarCampos();
-            siembraList.Clear();
-
-            MessageBox.Show($"La siembra se registró correctamente.", "Siembra registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnGuardarDetalle_Click(object sender, EventArgs e)
@@ -393,7 +402,8 @@ namespace biosys
             stockProducto.StockDisponible -= cantidad;
 
             // Actualizar la etiqueta de stock disponible
-            lblStockDisponible.Text = $"Stock disponible: {stockProducto.StockDisponible}";
+            //lblStockDisponible.Text = $"Stock disponible: {stockProducto.StockDisponible}";
+            lblStockDisponible.Visible = false;
 
             // Actualizar el contenido del ListBox
             ActualizarListBox();
@@ -405,6 +415,7 @@ namespace biosys
             comboProductos.SelectedIndex = -1;
             numericCantidad.Value = 0;
             numericCantidad.Value = 0;
+            lblError.Visible = false;
         }
         private void btnRegistrarSiembra_MouseEnter(object sender, EventArgs e)
         {

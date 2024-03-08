@@ -85,6 +85,7 @@ namespace biosys
             comboProductos.SelectedIndex = -1;
             comboMotivo.SelectedIndex = -1;
             numericCantidad.Value = 0;
+            lblError.Visible = false;
         }
 
         private void comboProductos_SelectedIndexChanged(object sender, EventArgs e)
@@ -171,6 +172,7 @@ namespace biosys
                 comboProductos.SelectedIndex = -1;
                 comboMotivo.SelectedIndex = -1;
                 numericCantidad.Value = 0;
+                lblError.Visible = false;
             }
         }
 
@@ -213,21 +215,29 @@ namespace biosys
                 return;
             }
 
-            Controladora.Controladora.DisminuirStockProducto(productName, cantidadBaja);
+            // Mostrar cuadro de diálogo de confirmación
+            DialogResult result = MessageBox.Show($"¿Está seguro de que desea realizar la baja de {cantidadBaja} unidad/es de {productName}?", "Confirmar Baja", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            // Actualizar la lista de productos con stock
-            productos = Controladora.Controladora.ObtenerProductosStockComboBox();
+            // Verificar si el usuario confirmó la acción
+            if (result == DialogResult.Yes)
+            {
+                // Realizar la baja del producto
+                Controladora.Controladora.DisminuirStockProducto(productName, cantidadBaja);
 
-            MessageBox.Show($"Se realizó la baja de {cantidadBaja} unidad/es de {productName}.", "Baja Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Actualizar la lista de productos con stock
+                productos = Controladora.Controladora.ObtenerProductosStockComboBox();
 
-            // Registrar la baja del producto
-            Controladora.Controladora.RegistrarBajaProducto(productName, cantidadBaja, comboMotivo.Text);
+                MessageBox.Show($"Se realizó la baja de {cantidadBaja} unidad/es de {productName}.", "Baja Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            // Ocultar el mensaje de error
-            lblError.Visible = false;
+                // Registrar la baja del producto
+                Controladora.Controladora.RegistrarBajaProducto(productName, cantidadBaja, comboMotivo.Text);
 
-            // Limpiar los campos
-            LimpiarCampos();
+                // Ocultar el mensaje de error
+                lblError.Visible = false;
+
+                // Limpiar los campos
+                LimpiarCampos();
+            }
         }
 
         private void btnCancelar_MouseEnter(object sender, EventArgs e)

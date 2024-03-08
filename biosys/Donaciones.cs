@@ -76,6 +76,8 @@ namespace biosys
             // Habilitar campos nuevamente
             txtDonante.Enabled = true;
             fechaDonacion.Enabled = true;
+
+            lblError.Visible = false;
         }
 
         public void msgError(string msg)
@@ -173,6 +175,7 @@ namespace biosys
             // No dejar acceder a cambiar algunos campos
             txtDonante.Enabled = false;
             fechaDonacion.Enabled = false;
+            lblError.Visible = false;
 
             // Limpiar los campos de entrada de datos
             comboProductos.SelectedIndex = -1;
@@ -190,41 +193,48 @@ namespace biosys
                 return;
             }
 
-            string donante = txtDonante.Text;
-            DateTime fechaDonacion = this.fechaDonacion.Value;
+            // Mostrar cuadro de diálogo de confirmación
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea registrar la donación?", "Confirmar Donación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
-
-            int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
-
-            DonacionInfo donacionInfo = new DonacionInfo
+            // Verificar si el usuario confirmó la acción
+            if (result == DialogResult.Yes)
             {
-                Donante = donante,
-                FechaDonacion = fechaDonacion,
-                UsuarioId = usuarioId
-            };
+                string donante = txtDonante.Text;
+                DateTime fechaDonacion = this.fechaDonacion.Value;
 
-            int donacionId = Controladora.Controladora.GuardarDonacion(donacionInfo);
+                string nombreUsuario = ((Dashboard)Application.OpenForms["Dashboard"]).NombreUsuarioActual;
 
-            DetalleDonacionInfo detalleDonacionInfo = new DetalleDonacionInfo();
+                int usuarioId = Controladora.Controladora.ObtenerIdUsuario(nombreUsuario);
 
-            foreach (Donacion donacion in donacionList)
-            {
-                int productoId = donacion.ProductoId;
-                int cantidad = donacion.Cantidad;
+                DonacionInfo donacionInfo = new DonacionInfo
+                {
+                    Donante = donante,
+                    FechaDonacion = fechaDonacion,
+                    UsuarioId = usuarioId
+                };
 
-                detalleDonacionInfo.DonacionId = donacionId;
-                detalleDonacionInfo.ProductoId = productoId;
-                detalleDonacionInfo.Cantidad = cantidad;
+                int donacionId = Controladora.Controladora.GuardarDonacion(donacionInfo);
 
-                Controladora.Controladora.GuardarDetalleDonacion(detalleDonacionInfo);
-                Controladora.Controladora.ActualizarStock(productoId, cantidad);
+                DetalleDonacionInfo detalleDonacionInfo = new DetalleDonacionInfo();
+
+                foreach (Donacion donacion in donacionList)
+                {
+                    int productoId = donacion.ProductoId;
+                    int cantidad = donacion.Cantidad;
+
+                    detalleDonacionInfo.DonacionId = donacionId;
+                    detalleDonacionInfo.ProductoId = productoId;
+                    detalleDonacionInfo.Cantidad = cantidad;
+
+                    Controladora.Controladora.GuardarDetalleDonacion(detalleDonacionInfo);
+                    Controladora.Controladora.ActualizarStock(productoId, cantidad);
+                }
+
+                LimpiarCampos();
+                donacionList.Clear();
+
+                MessageBox.Show("La donación se registró correctamente.", "Donación registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-            LimpiarCampos();
-            donacionList.Clear();
-
-            MessageBox.Show("La donación se registró correctamente.", "Donación registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnCancelar_MouseEnter(object sender, EventArgs e)

@@ -54,6 +54,7 @@
             this.btnGuardarEdicion = new biosys.RoundedButton();
             this.btnLimpiarCampos = new biosys.RoundedButton();
             this.btnRolesyPermisos = new biosys.RoundedButton();
+            this.btnHabilitarUsuario = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -205,6 +206,7 @@
             this.dataGridViewUsuarios.Name = "dataGridViewUsuarios";
             this.dataGridViewUsuarios.Size = new System.Drawing.Size(444, 200);
             this.dataGridViewUsuarios.TabIndex = 88;
+            this.dataGridViewUsuarios.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewUsuarios_CellFormatting);
             this.dataGridViewUsuarios.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridViewUsuarios_DataBindingComplete);
             // 
             // pictureBox1
@@ -288,7 +290,7 @@
             // 
             this.btnEliminarUsuario.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEliminarUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminarUsuario.Location = new System.Drawing.Point(1192, 406);
+            this.btnEliminarUsuario.Location = new System.Drawing.Point(1192, 426);
             this.btnEliminarUsuario.Name = "btnEliminarUsuario";
             this.btnEliminarUsuario.Size = new System.Drawing.Size(119, 48);
             this.btnEliminarUsuario.TabIndex = 152;
@@ -302,7 +304,7 @@
             // 
             this.btnGuardarEdicion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnGuardarEdicion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuardarEdicion.Location = new System.Drawing.Point(1192, 254);
+            this.btnGuardarEdicion.Location = new System.Drawing.Point(1192, 228);
             this.btnGuardarEdicion.Name = "btnGuardarEdicion";
             this.btnGuardarEdicion.Size = new System.Drawing.Size(119, 48);
             this.btnGuardarEdicion.TabIndex = 151;
@@ -316,7 +318,7 @@
             // 
             this.btnLimpiarCampos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLimpiarCampos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiarCampos.Location = new System.Drawing.Point(1192, 327);
+            this.btnLimpiarCampos.Location = new System.Drawing.Point(1192, 294);
             this.btnLimpiarCampos.Name = "btnLimpiarCampos";
             this.btnLimpiarCampos.Size = new System.Drawing.Size(119, 48);
             this.btnLimpiarCampos.TabIndex = 150;
@@ -328,7 +330,7 @@
             // 
             this.btnRolesyPermisos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRolesyPermisos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRolesyPermisos.Location = new System.Drawing.Point(1192, 489);
+            this.btnRolesyPermisos.Location = new System.Drawing.Point(1192, 496);
             this.btnRolesyPermisos.Name = "btnRolesyPermisos";
             this.btnRolesyPermisos.Size = new System.Drawing.Size(119, 48);
             this.btnRolesyPermisos.TabIndex = 149;
@@ -336,12 +338,27 @@
             this.btnRolesyPermisos.UseVisualStyleBackColor = true;
             this.btnRolesyPermisos.Click += new System.EventHandler(this.btnRolesyPermisos_Click);
             // 
+            // btnHabilitarUsuario
+            // 
+            this.btnHabilitarUsuario.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHabilitarUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHabilitarUsuario.Location = new System.Drawing.Point(1192, 361);
+            this.btnHabilitarUsuario.Name = "btnHabilitarUsuario";
+            this.btnHabilitarUsuario.Size = new System.Drawing.Size(119, 48);
+            this.btnHabilitarUsuario.TabIndex = 179;
+            this.btnHabilitarUsuario.Text = "HABILITAR O DESHABILITAR";
+            this.btnHabilitarUsuario.UseVisualStyleBackColor = true;
+            this.btnHabilitarUsuario.Click += new System.EventHandler(this.btnHabilitarUsuario_Click);
+            this.btnHabilitarUsuario.MouseEnter += new System.EventHandler(this.btnHabilitarUsuario_MouseEnter);
+            this.btnHabilitarUsuario.MouseLeave += new System.EventHandler(this.btnHabilitarUsuario_MouseLeave);
+            // 
             // GestionarUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnHabilitarUsuario);
             this.Controls.Add(this.btnAltaUsuario);
             this.Controls.Add(this.btnEliminarUsuario);
             this.Controls.Add(this.btnGuardarEdicion);
@@ -406,5 +423,6 @@
         private RoundedButton btnGuardarEdicion;
         private RoundedButton btnEliminarUsuario;
         private RoundedButton btnAltaUsuario;
+        private RoundedButton btnHabilitarUsuario;
     }
 }

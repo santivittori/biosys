@@ -58,6 +58,7 @@ namespace biosys
             txtApellidoProv.Text = string.Empty;
             txtEmailProv.Text = string.Empty;
             txtTelefonoProv.Text = string.Empty;
+            lblError.Visible = false;
         }
 
         private void Proveedores_Load(object sender, EventArgs e)
@@ -272,7 +273,7 @@ namespace biosys
                 }
 
                 // Mostrar un cuadro de diálogo de confirmación
-                DialogResult result = MessageBox.Show("¿Está seguro de que desea eliminar este proveedor?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("¿Está seguro/a de que desea eliminar este proveedor?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 // Si el usuario confirma la eliminación
                 if (result == DialogResult.Yes)
@@ -282,6 +283,7 @@ namespace biosys
 
                     // Mostrar mensaje de éxito y actualizar el DataGridView
                     MessageBox.Show("Proveedor eliminado exitosamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarCamposProveedor();
                     CargarProveedoresEnDataGridView();
                 }
             }
