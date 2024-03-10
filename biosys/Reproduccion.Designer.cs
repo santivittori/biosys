@@ -199,7 +199,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(977, 146);
+            this.label10.Location = new System.Drawing.Point(985, 146);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(132, 18);
             this.label10.TabIndex = 90;
@@ -212,7 +212,7 @@
             this.listDetalleSiembra.ItemHeight = 18;
             this.listDetalleSiembra.Location = new System.Drawing.Point(749, 180);
             this.listDetalleSiembra.Name = "listDetalleSiembra";
-            this.listDetalleSiembra.Size = new System.Drawing.Size(605, 310);
+            this.listDetalleSiembra.Size = new System.Drawing.Size(610, 310);
             this.listDetalleSiembra.TabIndex = 89;
             // 
             // lblStockDisponible
@@ -270,7 +270,7 @@
             // 
             this.btnHistorialReproduccion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHistorialReproduccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHistorialReproduccion.Location = new System.Drawing.Point(990, 513);
+            this.btnHistorialReproduccion.Location = new System.Drawing.Point(993, 514);
             this.btnHistorialReproduccion.Name = "btnHistorialReproduccion";
             this.btnHistorialReproduccion.Size = new System.Drawing.Size(119, 48);
             this.btnHistorialReproduccion.TabIndex = 158;

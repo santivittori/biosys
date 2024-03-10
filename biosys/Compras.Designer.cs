@@ -112,7 +112,7 @@
             this.listDetalleCompra.ItemHeight = 18;
             this.listDetalleCompra.Location = new System.Drawing.Point(743, 159);
             this.listDetalleCompra.Name = "listDetalleCompra";
-            this.listDetalleCompra.Size = new System.Drawing.Size(605, 310);
+            this.listDetalleCompra.Size = new System.Drawing.Size(610, 310);
             this.listDetalleCompra.TabIndex = 67;
             // 
             // label9
@@ -364,7 +364,7 @@
             // 
             this.btnHistorialCompras.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHistorialCompras.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHistorialCompras.Location = new System.Drawing.Point(980, 506);
+            this.btnHistorialCompras.Location = new System.Drawing.Point(992, 503);
             this.btnHistorialCompras.Name = "btnHistorialCompras";
             this.btnHistorialCompras.Size = new System.Drawing.Size(119, 48);
             this.btnHistorialCompras.TabIndex = 146;

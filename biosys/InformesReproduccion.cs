@@ -83,7 +83,7 @@ namespace biosys
 
         private void CantTotalBajas()
         {
-            // Obtener los datos de las bajas de productos
+            // Obtener los datos de las bajas totales de productos
             DataTable datosBajas = Controladora.Controladora.ObtenerDatosBajasTotales();
 
             // Limpiar la serie existente en el control Chart (si la hay)
@@ -93,19 +93,23 @@ namespace biosys
             Series series = new Series("Bajas de Productos");
             series.ChartType = SeriesChartType.Pie;
 
-            // Agregar los datos a la serie
+            // Obtener la cantidad total de bajas
+            int totalBajas = 0;
             foreach (DataRow row in datosBajas.Rows)
             {
-                int cantidad = row["Total"] != DBNull.Value ? Convert.ToInt32(row["Total"]) : 0;
-                string motivo = "Total";
-
-                // Agregar un punto al gráfico de torta
-                DataPoint point = new DataPoint();
-                point.AxisLabel = motivo;
-                point.Label = motivo + " (" + cantidad + ")";
-                point.YValues = new double[] { cantidad };
-                series.Points.Add(point);
+                // Verificar si el valor no es DBNull antes de intentar convertirlo
+                if (row["Total"] != DBNull.Value)
+                {
+                    totalBajas += Convert.ToInt32(row["Total"]);
+                }
             }
+
+            // Agregar un punto al gráfico de torta para la cantidad total
+            DataPoint point = new DataPoint();
+            point.AxisLabel = "Total";
+            point.Label = "Total (" + totalBajas + ")";
+            point.YValues = new double[] { totalBajas };
+            series.Points.Add(point);
 
             // Agregar el título al gráfico
             chartBajasTotales.Titles.Clear();

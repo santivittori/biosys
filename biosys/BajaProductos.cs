@@ -175,6 +175,7 @@ namespace biosys
                 comboMotivo.SelectedIndex = -1;
                 numericCantidad.Value = 0;
                 lblError.Visible = false;
+                labelStockDisponible.Visible = false;
             }
         }
 

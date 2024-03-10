@@ -1980,28 +1980,56 @@ namespace Modelo
         {
             DateTime fechaBaja = DateTime.Now;
 
-            string sql = "INSERT INTO bajas_productos (producto_id, cantidad, motivo, fecha_baja) " +
-                         "SELECT p.id, @cantidadBaja, @motivo, @fechaBaja " +
-                         "FROM productos p " +
-                         "WHERE p.nombre = @productName";
+            // Verificar si ya existe una entrada para el producto y la fecha de baja actual
+            string sqlCheckExistence = "SELECT COUNT(*) FROM bajas_productos WHERE producto_id = (SELECT TOP 1 id FROM productos WHERE nombre = @productName) AND fecha_baja = @fechaBaja";
 
-            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            using (SqlCommand commandCheckExistence = new SqlCommand(sqlCheckExistence, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@cantidadBaja", cantidadBaja);
-                command.Parameters.AddWithValue("@motivo", motivo);
-                command.Parameters.AddWithValue("@fechaBaja", fechaBaja);
-                command.Parameters.AddWithValue("@productName", productName);
+                commandCheckExistence.Parameters.AddWithValue("@fechaBaja", fechaBaja);
+                commandCheckExistence.Parameters.AddWithValue("@productName", productName);
 
-                command.ExecuteNonQuery();
+                int existingCount = (int)commandCheckExistence.ExecuteScalar();
+
+                if (existingCount > 0)
+                {
+                    // Si ya existe una entrada para el producto y la fecha de baja actual, actualizar la cantidad en lugar de insertar una nueva fila
+                    string sqlUpdate = "UPDATE bajas_productos SET cantidad += @cantidadBaja WHERE producto_id = (SELECT id FROM productos WHERE nombre = @productName) AND fecha_baja = @fechaBaja";
+
+                    using (SqlCommand commandUpdate = new SqlCommand(sqlUpdate, ConexionModelo.AbrirConexion()))
+                    {
+                        commandUpdate.Parameters.AddWithValue("@cantidadBaja", cantidadBaja);
+                        commandUpdate.Parameters.AddWithValue("@fechaBaja", fechaBaja);
+                        commandUpdate.Parameters.AddWithValue("@productName", productName);
+
+                        commandUpdate.ExecuteNonQuery();
+                    }
+                }
+                else
+                {
+                    // Si no existe una entrada para el producto y la fecha de baja actual, insertar una nueva fila
+                    string sqlInsert = "INSERT INTO bajas_productos (producto_id, cantidad, motivo, fecha_baja) " +
+                                       "SELECT p.id, @cantidadBaja, @motivo, @fechaBaja " +
+                                       "FROM productos p " +
+                                       "WHERE p.nombre = @productName";
+
+                    using (SqlCommand commandInsert = new SqlCommand(sqlInsert, ConexionModelo.AbrirConexion()))
+                    {
+                        commandInsert.Parameters.AddWithValue("@cantidadBaja", cantidadBaja);
+                        commandInsert.Parameters.AddWithValue("@motivo", motivo);
+                        commandInsert.Parameters.AddWithValue("@fechaBaja", fechaBaja);
+                        commandInsert.Parameters.AddWithValue("@productName", productName);
+
+                        commandInsert.ExecuteNonQuery();
+                    }
+                }
             }
         }
 
         public static DataTable ObtenerDatosBajasProductos()
         {
-            string sql = @"SELECT bp.motivo, SUM(bp.cantidad) AS Total 
-                   FROM bajas_productos bp
-                   INNER JOIN productos p ON bp.producto_id = p.id
-                   GROUP BY bp.motivo;";
+            string sql = @"SELECT motivo, SUM(cantidad) AS Total
+                   FROM (SELECT DISTINCT motivo, cantidad FROM bajas_productos) AS UniqueBajas
+                   GROUP BY motivo";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
@@ -2015,15 +2043,22 @@ namespace Modelo
 
         public static DataTable ObtenerDatosBajasTotales()
         {
-            string sql = "SELECT 'Total' AS motivo, SUM(cantidad) AS Total " +
-                         "FROM bajas_productos";
+            string sql = @"SELECT 'Total' AS motivo, SUM(Total) AS Total
+                   FROM (
+                       SELECT SUM(cantidad) AS Total
+                       FROM (
+                           SELECT DISTINCT motivo, cantidad 
+                           FROM bajas_productos
+                       ) AS UniqueBajas
+                       GROUP BY motivo
+                   ) AS TotalPorMotivo";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
-                
+
                 return dataTable;
             }
         }
