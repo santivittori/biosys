@@ -51,6 +51,7 @@
             this.btnLimpiar = new biosys.RoundedButton();
             this.btnGuardarDetalle = new biosys.RoundedButton();
             this.btnRegistrarDonacion = new biosys.RoundedButton();
+            this.btnHistorialDonaciones = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantidad)).BeginInit();
             this.SuspendLayout();
             // 
@@ -298,12 +299,25 @@
             this.btnRegistrarDonacion.MouseEnter += new System.EventHandler(this.btnRegistrarDonacion_MouseEnter);
             this.btnRegistrarDonacion.MouseLeave += new System.EventHandler(this.btnRegistrarDonacion_MouseLeave);
             // 
+            // btnHistorialDonaciones
+            // 
+            this.btnHistorialDonaciones.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHistorialDonaciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHistorialDonaciones.Location = new System.Drawing.Point(1039, 519);
+            this.btnHistorialDonaciones.Name = "btnHistorialDonaciones";
+            this.btnHistorialDonaciones.Size = new System.Drawing.Size(119, 48);
+            this.btnHistorialDonaciones.TabIndex = 147;
+            this.btnHistorialDonaciones.Text = "HISTORIAL DE DONACIONES";
+            this.btnHistorialDonaciones.UseVisualStyleBackColor = true;
+            this.btnHistorialDonaciones.Click += new System.EventHandler(this.btnHistorialDonaciones_Click);
+            // 
             // Donaciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnHistorialDonaciones);
             this.Controls.Add(this.btnRegistrarDonacion);
             this.Controls.Add(this.btnGuardarDetalle);
             this.Controls.Add(this.btnLimpiar);
@@ -361,5 +375,6 @@
         private RoundedButton btnLimpiar;
         private RoundedButton btnGuardarDetalle;
         private RoundedButton btnRegistrarDonacion;
+        private RoundedButton btnHistorialDonaciones;
     }
 }

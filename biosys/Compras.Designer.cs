@@ -53,8 +53,11 @@
             this.label14 = new System.Windows.Forms.Label();
             this.lblError = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
+            this.labelPrecioUnitario = new System.Windows.Forms.Label();
             this.txtPrecioUnitario = new System.Windows.Forms.TextBox();
+            this.txtPrecioTotal = new System.Windows.Forms.TextBox();
+            this.labelPrecioTotal = new System.Windows.Forms.Label();
+            this.btnHistorialCompras = new biosys.RoundedButton();
             this.btnRegistrarCompra = new biosys.RoundedButton();
             this.btnGuardarDetalle = new biosys.RoundedButton();
             this.btnLimpiar = new biosys.RoundedButton();
@@ -179,6 +182,7 @@
             this.comboProductos.Name = "comboProductos";
             this.comboProductos.Size = new System.Drawing.Size(336, 26);
             this.comboProductos.TabIndex = 58;
+            this.comboProductos.SelectedIndexChanged += new System.EventHandler(this.comboProductos_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -315,15 +319,15 @@
             this.label15.TabIndex = 78;
             this.label15.Text = "*";
             // 
-            // label16
+            // labelPrecioUnitario
             // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(116, 468);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(110, 18);
-            this.label16.TabIndex = 77;
-            this.label16.Text = "Precio Unitario:";
+            this.labelPrecioUnitario.AutoSize = true;
+            this.labelPrecioUnitario.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPrecioUnitario.Location = new System.Drawing.Point(116, 468);
+            this.labelPrecioUnitario.Name = "labelPrecioUnitario";
+            this.labelPrecioUnitario.Size = new System.Drawing.Size(110, 18);
+            this.labelPrecioUnitario.TabIndex = 77;
+            this.labelPrecioUnitario.Text = "Precio Unitario:";
             // 
             // txtPrecioUnitario
             // 
@@ -336,6 +340,37 @@
             this.txtPrecioUnitario.Enter += new System.EventHandler(this.txtPrecioUnitario_Enter);
             this.txtPrecioUnitario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrecioUnitario_KeyPress);
             this.txtPrecioUnitario.Leave += new System.EventHandler(this.txtPrecioUnitario_Leave);
+            // 
+            // txtPrecioTotal
+            // 
+            this.txtPrecioTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrecioTotal.Location = new System.Drawing.Point(308, 464);
+            this.txtPrecioTotal.Name = "txtPrecioTotal";
+            this.txtPrecioTotal.Size = new System.Drawing.Size(336, 24);
+            this.txtPrecioTotal.TabIndex = 144;
+            this.txtPrecioTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // labelPrecioTotal
+            // 
+            this.labelPrecioTotal.AutoSize = true;
+            this.labelPrecioTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPrecioTotal.Location = new System.Drawing.Point(116, 468);
+            this.labelPrecioTotal.Name = "labelPrecioTotal";
+            this.labelPrecioTotal.Size = new System.Drawing.Size(92, 18);
+            this.labelPrecioTotal.TabIndex = 145;
+            this.labelPrecioTotal.Text = "Precio Total:";
+            // 
+            // btnHistorialCompras
+            // 
+            this.btnHistorialCompras.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHistorialCompras.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHistorialCompras.Location = new System.Drawing.Point(980, 506);
+            this.btnHistorialCompras.Name = "btnHistorialCompras";
+            this.btnHistorialCompras.Size = new System.Drawing.Size(119, 48);
+            this.btnHistorialCompras.TabIndex = 146;
+            this.btnHistorialCompras.Text = "HISTORIAL DE COMPRAS";
+            this.btnHistorialCompras.UseVisualStyleBackColor = true;
+            this.btnHistorialCompras.Click += new System.EventHandler(this.btnHistorialCompras_Click);
             // 
             // btnRegistrarCompra
             // 
@@ -395,13 +430,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnHistorialCompras);
+            this.Controls.Add(this.labelPrecioTotal);
+            this.Controls.Add(this.txtPrecioTotal);
             this.Controls.Add(this.btnRegistrarCompra);
             this.Controls.Add(this.btnGuardarDetalle);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.txtPrecioUnitario);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.label16);
+            this.Controls.Add(this.labelPrecioUnitario);
             this.Controls.Add(this.lblError);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
@@ -462,11 +500,14 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label lblError;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label labelPrecioUnitario;
         private System.Windows.Forms.TextBox txtPrecioUnitario;
         private RoundedButton btnCancelar;
         private RoundedButton btnLimpiar;
         private RoundedButton btnGuardarDetalle;
         private RoundedButton btnRegistrarCompra;
+        private System.Windows.Forms.TextBox txtPrecioTotal;
+        private System.Windows.Forms.Label labelPrecioTotal;
+        private RoundedButton btnHistorialCompras;
     }
 }

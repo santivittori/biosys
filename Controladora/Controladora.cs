@@ -455,5 +455,37 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerDatosBajasTotales();
         }
+        public static DataTable ObtenerHistorialComprasConNombres()
+        {
+            return ConsultasModelo.ObtenerHistorialComprasConNombres();
+        }
+        public static int ObtenerCantidadTotalCompras()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalCompras();
+        }
+        public static DataTable ObtenerHistorialDonacionesConNombres()
+        {
+            return ConsultasModelo.ObtenerHistorialDonacionesConNombres();
+        }
+        public static int ObtenerCantidadTotalDonaciones()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalDonaciones();
+        }
+        public static DataTable ObtenerHistorialRecoleccionesConNombres()
+        {
+            return ConsultasModelo.ObtenerHistorialRecoleccionesConNombres();
+        }
+        public static int ObtenerCantidadTotalRecolecciones()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalRecolecciones();
+        }
+        public static DataTable ObtenerHistorialReproduccionesConNombres()
+        {
+            return ConsultasModelo.ObtenerHistorialReproduccionesConNombres();
+        }
+        public static int ObtenerCantidadTotalReproducciones()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalReproducciones();
+        }
     }
 }

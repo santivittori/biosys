@@ -250,5 +250,12 @@ namespace biosys
         {
             btnRegistrarRecoleccion.BackColor = Color.White;
         }
+
+        private void btnHistorialRecolecciones_Click(object sender, EventArgs e)
+        {
+            HistorialRecolecciones historialRecoleccionesForm = new HistorialRecolecciones();
+            historialRecoleccionesForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(historialRecoleccionesForm);
+        }
     }
 }

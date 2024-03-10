@@ -435,5 +435,12 @@ namespace biosys
         {
             btnCancelar.BackColor = Color.White;
         }
+
+        private void btnHistorialReproduccion_Click(object sender, EventArgs e)
+        {
+            HistorialReproducciones historialReproduccionesForm = new HistorialReproducciones();
+            historialReproduccionesForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(historialReproduccionesForm);
+        }
     }
 }

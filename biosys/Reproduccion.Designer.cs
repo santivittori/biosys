@@ -48,6 +48,7 @@
             this.btnCancelar = new biosys.RoundedButton();
             this.btnGuardarDetalle = new biosys.RoundedButton();
             this.btnRegistrarSiembra = new biosys.RoundedButton();
+            this.btnHistorialReproduccion = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantidad)).BeginInit();
             this.SuspendLayout();
             // 
@@ -265,12 +266,25 @@
             this.btnRegistrarSiembra.MouseEnter += new System.EventHandler(this.btnRegistrarSiembra_MouseEnter);
             this.btnRegistrarSiembra.MouseLeave += new System.EventHandler(this.btnRegistrarSiembra_MouseLeave);
             // 
+            // btnHistorialReproduccion
+            // 
+            this.btnHistorialReproduccion.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHistorialReproduccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHistorialReproduccion.Location = new System.Drawing.Point(990, 513);
+            this.btnHistorialReproduccion.Name = "btnHistorialReproduccion";
+            this.btnHistorialReproduccion.Size = new System.Drawing.Size(119, 48);
+            this.btnHistorialReproduccion.TabIndex = 158;
+            this.btnHistorialReproduccion.Text = "HISTORIAL DE REPRODUCCIONES";
+            this.btnHistorialReproduccion.UseVisualStyleBackColor = true;
+            this.btnHistorialReproduccion.Click += new System.EventHandler(this.btnHistorialReproduccion_Click);
+            // 
             // Reproduccion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnHistorialReproduccion);
             this.Controls.Add(this.btnRegistrarSiembra);
             this.Controls.Add(this.btnGuardarDetalle);
             this.Controls.Add(this.btnCancelar);
@@ -322,5 +336,6 @@
         private RoundedButton btnCancelar;
         private RoundedButton btnGuardarDetalle;
         private RoundedButton btnRegistrarSiembra;
+        private RoundedButton btnHistorialReproduccion;
     }
 }

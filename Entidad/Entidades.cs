@@ -25,7 +25,17 @@ namespace Entidad
         public string Producto { get; set; }
         public int Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
-        public decimal PrecioTotal => Cantidad * PrecioUnitario;
+        public decimal PrecioTotal { get; set; }
+
+        // Constructor que acepta todos los parámetros, incluyendo el precio total
+        public Compra(int productoId, string producto, int cantidad, decimal precioUnitario, decimal precioTotal)
+        {
+            ProductoId = productoId;
+            Producto = producto;
+            Cantidad = cantidad;
+            PrecioUnitario = precioUnitario;
+            PrecioTotal = precioTotal;
+        }
     }
     public class Donacion
     {

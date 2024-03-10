@@ -256,5 +256,12 @@ namespace biosys
         {
             btnRegistrarDonacion.BackColor = Color.White;
         }
+
+        private void btnHistorialDonaciones_Click(object sender, EventArgs e)
+        {
+            HistorialDonaciones historialDonacionesForm = new HistorialDonaciones();
+            historialDonacionesForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(historialDonacionesForm);
+        }
     }
 }

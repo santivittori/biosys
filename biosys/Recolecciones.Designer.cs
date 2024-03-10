@@ -51,6 +51,7 @@
             this.btnCancelar = new biosys.RoundedButton();
             this.btnGuardarDetalle = new biosys.RoundedButton();
             this.btnRegistrarRecoleccion = new biosys.RoundedButton();
+            this.btnHistorialRecolecciones = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantidad)).BeginInit();
             this.SuspendLayout();
             // 
@@ -298,12 +299,25 @@
             this.btnRegistrarRecoleccion.MouseEnter += new System.EventHandler(this.btnRegistrarRecoleccion_MouseEnter);
             this.btnRegistrarRecoleccion.MouseLeave += new System.EventHandler(this.btnRegistrarRecoleccion_MouseLeave);
             // 
+            // btnHistorialRecolecciones
+            // 
+            this.btnHistorialRecolecciones.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHistorialRecolecciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHistorialRecolecciones.Location = new System.Drawing.Point(1059, 545);
+            this.btnHistorialRecolecciones.Name = "btnHistorialRecolecciones";
+            this.btnHistorialRecolecciones.Size = new System.Drawing.Size(119, 48);
+            this.btnHistorialRecolecciones.TabIndex = 157;
+            this.btnHistorialRecolecciones.Text = "HISTORIAL DE RECOLECCIONES";
+            this.btnHistorialRecolecciones.UseVisualStyleBackColor = true;
+            this.btnHistorialRecolecciones.Click += new System.EventHandler(this.btnHistorialRecolecciones_Click);
+            // 
             // Recolecciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnHistorialRecolecciones);
             this.Controls.Add(this.btnRegistrarRecoleccion);
             this.Controls.Add(this.btnGuardarDetalle);
             this.Controls.Add(this.btnCancelar);
@@ -361,5 +375,6 @@
         private RoundedButton btnCancelar;
         private RoundedButton btnGuardarDetalle;
         private RoundedButton btnRegistrarRecoleccion;
+        private RoundedButton btnHistorialRecolecciones;
     }
 }

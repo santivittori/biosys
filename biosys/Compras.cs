@@ -104,6 +104,9 @@ namespace biosys
 
             // Establecer la posición del Label
             labelTitulo.Location = new Point(labelPosX, 50);
+
+            labelPrecioTotal.Visible = false;
+            txtPrecioTotal.Visible = false;
         }
         private void LimpiarCampos()
         {
@@ -232,8 +235,7 @@ namespace biosys
         private void btnGuardarDetalle_Click(object sender, EventArgs e)
         {
             // Validar que los campos tengan información
-            if (string.IsNullOrWhiteSpace(txtNroFactura.Text) || string.IsNullOrWhiteSpace(txtPrecioUnitario.Text) || txtPrecioUnitario.Text == "Ejemplo: 1350,70"
-                || comboProveedor.SelectedIndex == -1 || comboProductos.SelectedIndex == -1 || numericCantidad.Value <= 0)
+            if (string.IsNullOrWhiteSpace(txtNroFactura.Text) || string.IsNullOrWhiteSpace(txtNroRemito.Text) || comboProveedor.SelectedIndex == -1 || comboProductos.SelectedIndex == -1 || numericCantidad.Value <= 0)
             {
                 msgError("Completar los campos obligatorios. La cantidad debe ser mayor que cero.");
                 return;
@@ -260,22 +262,38 @@ namespace biosys
             int productoId = Controladora.Controladora.ObtenerIdProducto(nombreProducto, tipoProducto, tipoEspecifico);
             int cantidad = int.Parse(numericCantidad.Text);
 
-            // Si el texto no contiene una coma, agregar la coma y dos ceros después del número
-            if (!txtPrecioUnitario.Text.Contains(","))
+            decimal precioTotal = 0;
+            decimal precioUnitario = 0; // Declarar precioUnitario aquí para que esté disponible en todo el método
+
+            // Si el producto es una semilla, obtener el precio total del TextBox
+            if (tipoProductoTexto.Equals("Semilla"))
             {
-                txtPrecioUnitario.Text += ",00";
+                if (!decimal.TryParse(txtPrecioTotal.Text, out precioTotal))
+                {
+                    msgError("Ingrese un precio total válido para la semilla.");
+                    return;
+                }
+            }
+            else
+            {
+                // Si el texto no contiene una coma, agregar la coma y dos ceros después del número
+                if (!txtPrecioUnitario.Text.Contains(","))
+                {
+                    txtPrecioUnitario.Text += ",00";
+                }
+
+                if (!decimal.TryParse(txtPrecioUnitario.Text, out precioUnitario))
+                {
+                    msgError("Ingrese un precio unitario válido para el producto.");
+                    return;
+                }
+
+                // Calcular el precio total
+                precioTotal = precioUnitario * cantidad;
             }
 
-            decimal precioUnitario = decimal.Parse(txtPrecioUnitario.Text);
-
             // Crear una instancia de la clase Compra y agregarla a la lista
-            Compra compra = new Compra
-            {
-                ProductoId = productoId,
-                Producto = productoCompleto,
-                Cantidad = cantidad,
-                PrecioUnitario = precioUnitario
-            };
+            Compra compra = new Compra(productoId, productoCompleto, cantidad, precioUnitario, precioTotal);
             comprasList.Add(compra);
 
             // No dejar acceder a cambiar algunos campos
@@ -288,6 +306,7 @@ namespace biosys
             comboProductos.SelectedIndex = -1;
             numericCantidad.Text = string.Empty;
             txtPrecioUnitario.Text = string.Empty;
+            txtPrecioTotal.Text = string.Empty;
             lblError.Visible = false;
 
             // Actualizar el contenido del ListBox
@@ -383,6 +402,54 @@ namespace biosys
         private void btnRegistrarCompra_MouseLeave(object sender, EventArgs e)
         {
             btnRegistrarCompra.BackColor = Color.White;
+        }
+
+        private void comboProductos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboProductos.SelectedItem != null)
+            {
+                string productoCompleto = comboProductos.SelectedItem.ToString();
+                string[] partesProducto = productoCompleto.Split(new string[] { " - " }, StringSplitOptions.None);
+
+                if (partesProducto.Length == 3)
+                {
+                    string tipoProductoTexto = partesProducto[1];
+
+                    // Verificar si el producto seleccionado es una semilla
+                    if (tipoProductoTexto.Equals("Semilla"))
+                    {
+                        txtPrecioTotal.Visible = true;
+                        labelPrecioTotal.Visible = true;
+
+                        // Habilitar el TextBox de precio total y deshabilitar el de precio unitario
+                        txtPrecioTotal.Enabled = true;
+                        txtPrecioUnitario.Enabled = false;
+
+                        txtPrecioUnitario.Visible = false;
+                        labelPrecioUnitario.Visible = false;
+
+                    }
+                    else
+                    {
+                        txtPrecioUnitario.Visible = true;
+                        labelPrecioUnitario.Visible = true;
+
+                        // Habilitar el TextBox de precio unitario y deshabilitar el de precio total
+                        txtPrecioTotal.Enabled = false;
+                        txtPrecioUnitario.Enabled = true;
+
+                        txtPrecioTotal.Visible = false;
+                        labelPrecioTotal.Visible = false;
+                    }
+                }
+            }
+        }
+
+        private void btnHistorialCompras_Click(object sender, EventArgs e)
+        {
+            HistorialCompras historialComprasForm = new HistorialCompras();
+            historialComprasForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(historialComprasForm);
         }
     }
 }

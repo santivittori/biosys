@@ -61,3 +61,7 @@ C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.InformesReproduccion.
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.BajaProductos.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.csproj.Up2Date
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.RolesPermisos.resources
+C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.HistorialCompras.resources
+C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.HistorialDonaciones.resources
+C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.HistorialRecolecciones.resources
+C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.HistorialReproducciones.resources

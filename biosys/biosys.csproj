@@ -131,6 +131,30 @@
     <Compile Include="GestionarUsuario.Designer.cs">
       <DependentUpon>GestionarUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="HistorialCompras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistorialCompras.Designer.cs">
+      <DependentUpon>HistorialCompras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HistorialDonaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistorialDonaciones.Designer.cs">
+      <DependentUpon>HistorialDonaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HistorialRecolecciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistorialRecolecciones.Designer.cs">
+      <DependentUpon>HistorialRecolecciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HistorialReproducciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistorialReproducciones.Designer.cs">
+      <DependentUpon>HistorialReproducciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="Informes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,6 +255,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GestionarUsuario.resx">
       <DependentUpon>GestionarUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HistorialCompras.resx">
+      <DependentUpon>HistorialCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HistorialDonaciones.resx">
+      <DependentUpon>HistorialDonaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HistorialRecolecciones.resx">
+      <DependentUpon>HistorialRecolecciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HistorialReproducciones.resx">
+      <DependentUpon>HistorialReproducciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Informes.resx">
       <DependentUpon>Informes.cs</DependentUpon>

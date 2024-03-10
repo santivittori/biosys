@@ -2021,5 +2021,194 @@ namespace Modelo
             }
         }
 
+        public static DataTable ObtenerHistorialComprasConNombres()
+        {
+            DataTable dtHistorialCompras = new DataTable();
+
+            string sql = @"SELECT c.id AS ID, 
+                            c.nro_factura AS 'Nro. Factura', 
+                            c.nro_remito AS 'Nro. Remito', 
+                            c.fecha AS 'Fecha', 
+                            p.nombre_prov AS 'Proveedor', 
+                            CASE 
+                                WHEN u.nombre_usuario = 'admin' THEN 'Usuario Privilegiado'
+                                ELSE u.nombre_usuario 
+                            END AS 'Usuario', 
+                            dp.cantidad AS 'Cantidad',
+                            pr.nombre AS 'Producto'
+                     FROM compras c
+                     INNER JOIN proveedores p ON c.proveedor_id = p.id
+                     INNER JOIN usuarios u ON c.usuario_id = u.id
+                     INNER JOIN detalle_compra dp ON c.id = dp.compra_id
+                     INNER JOIN productos pr ON dp.producto_id = pr.id";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dtHistorialCompras);
+                }
+            }
+
+            return dtHistorialCompras;
+        }
+        public static int ObtenerCantidadTotalCompras()
+        {
+            int totalCompras = 0;
+
+            string sql = "SELECT COUNT(*) FROM compras";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    // Ejecutar el comando y obtener el resultado
+                    totalCompras = (int)command.ExecuteScalar();
+                }
+            }
+
+            return totalCompras;
+        }
+        public static DataTable ObtenerHistorialDonacionesConNombres()
+        {
+            DataTable dtHistorialDonaciones = new DataTable();
+
+            string sql = @"SELECT d.id AS ID,
+                            d.entidad_donante AS 'Entidad Donante',
+                            d.fecha AS 'Fecha',
+                            CASE 
+                                WHEN u.nombre_usuario = 'admin' THEN 'Usuario Privilegiado'
+                                ELSE u.nombre_usuario 
+                            END AS 'Usuario',
+                            p.nombre AS 'Producto',
+                            dr.cantidad AS 'Cantidad'
+                     FROM donaciones d
+                     INNER JOIN usuarios u ON d.usuario_id = u.id
+                     INNER JOIN detalle_donacion dr ON d.id = dr.donacion_id
+                     INNER JOIN productos p ON dr.producto_id = p.id";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dtHistorialDonaciones);
+                }
+            }
+
+            return dtHistorialDonaciones;
+        }
+
+        public static int ObtenerCantidadTotalDonaciones()
+        {
+            int totalDonaciones = 0;
+
+            string sql = "SELECT COUNT(*) FROM donaciones";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    // Ejecutar el comando y obtener el resultado
+                    totalDonaciones = (int)command.ExecuteScalar();
+                }
+            }
+
+            return totalDonaciones;
+        }
+        public static DataTable ObtenerHistorialRecoleccionesConNombres()
+        {
+            DataTable dtHistorialRecolecciones = new DataTable();
+
+            string sql = @"SELECT r.id AS ID,
+                            r.lugar AS 'Lugar',
+                            r.fecha AS 'Fecha',
+                            CASE 
+                                WHEN u.nombre_usuario = 'admin' THEN 'Usuario Privilegiado'
+                                ELSE u.nombre_usuario 
+                            END AS 'Usuario',
+                            p.nombre AS 'Producto',
+                            dr.cantidad AS 'Cantidad'
+                     FROM recolecciones r
+                     INNER JOIN usuarios u ON r.usuario_id = u.id
+                     INNER JOIN detalle_recoleccion dr ON r.id = dr.recoleccion_id
+                     INNER JOIN productos p ON dr.producto_id = p.id";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dtHistorialRecolecciones);
+                }
+            }
+
+            return dtHistorialRecolecciones;
+        }
+
+        public static int ObtenerCantidadTotalRecolecciones()
+        {
+            int totalRecolecciones = 0;
+
+            string sql = "SELECT COUNT(*) FROM recolecciones";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    // Ejecutar el comando y obtener el resultado
+                    totalRecolecciones = (int)command.ExecuteScalar();
+                }
+            }
+
+            return totalRecolecciones;
+        }
+        public static DataTable ObtenerHistorialReproduccionesConNombres()
+        {
+            DataTable dtHistorialReproducciones = new DataTable();
+
+            string sql = @"SELECT s.id AS ID,
+                            s.fecha AS 'Fecha',
+                            CASE 
+                                WHEN u.nombre_usuario = 'admin' THEN 'Usuario Privilegiado'
+                                ELSE u.nombre_usuario 
+                            END AS 'Usuario',
+                            p.nombre AS 'Producto',
+                            ds.cantidad AS 'Cantidad'
+                     FROM siembra s
+                     INNER JOIN usuarios u ON s.usuario_id = u.id
+                     INNER JOIN detalle_siembra ds ON s.id = ds.siembra_id
+                     INNER JOIN productos p ON ds.producto_id = p.id";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dtHistorialReproducciones);
+                }
+            }
+
+            return dtHistorialReproducciones;
+        }
+
+        public static int ObtenerCantidadTotalReproducciones()
+        {
+            int totalReproducciones = 0;
+
+            string sql = "SELECT COUNT(*) FROM siembra";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    // Ejecutar el comando y obtener el resultado
+                    totalReproducciones = (int)command.ExecuteScalar();
+                }
+            }
+
+            return totalReproducciones;
+        }
     }
 }
