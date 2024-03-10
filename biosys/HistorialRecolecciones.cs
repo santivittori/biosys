@@ -146,5 +146,12 @@ namespace biosys
                 MostrarInformacionPaginacionRecolecciones();
             }
         }
+
+        private void pictureBack_Click(object sender, EventArgs e)
+        {
+            Recolecciones recoleccionesForm = new Recolecciones();
+            recoleccionesForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(recoleccionesForm);
+        }
     }
 }

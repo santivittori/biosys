@@ -431,13 +431,13 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerTresSemillasMasCompradas();
         }
-        public static int ObtenerStockProducto(string productName)
+        public static int ObtenerStockProducto(string productName, string tipoProducto)
         {
-            return ConsultasModelo.ObtenerStockProducto(productName);
+            return ConsultasModelo.ObtenerStockProducto(productName, tipoProducto);
         }
-        public static void DisminuirStockProducto(string productName, int cantidad)
+        public static void DisminuirStockProducto(string productName, int cantidad, string tipoProducto)
         {
-            ConsultasModelo.DisminuirStockProducto(productName, cantidad);
+            ConsultasModelo.DisminuirStockProducto(productName, cantidad, tipoProducto);
         }
         public static void ActualizarStockArbol(int productoId, int cantidad)
         {

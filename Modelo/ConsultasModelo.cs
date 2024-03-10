@@ -1923,13 +1923,14 @@ namespace Modelo
             }
         }
 
-        public static int ObtenerStockProducto(string productName)
+        public static int ObtenerStockProducto(string productName, string tipoProducto)
         {
-            string sql = "SELECT stock FROM productos WHERE nombre = @Nombre";
+            string sql = "SELECT stock FROM productos WHERE nombre = @Nombre AND tipo_producto_id = (SELECT id FROM tipos_producto WHERE nombre = @Tipo)";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 command.Parameters.AddWithValue("@Nombre", productName);
+                command.Parameters.AddWithValue("@Tipo", tipoProducto);
 
                 object result = command.ExecuteScalar();
                 if (result != null)
@@ -1938,19 +1939,23 @@ namespace Modelo
                 }
                 else
                 {
-                    return -1;
+                    return -1; // Otra manera de manejar este caso especial
                 }
             }
         }
 
-        public static void DisminuirStockProducto(string productName, int cantidad)
+        public static void DisminuirStockProducto(string productName, int cantidad, string tipoProducto)
         {
-            string sql = "UPDATE productos SET stock = stock - @Cantidad WHERE nombre = @Nombre";
+            string sql = @"UPDATE productos 
+                   SET stock = stock - @Cantidad 
+                   WHERE nombre = @Nombre 
+                   AND tipo_producto_id = (SELECT id FROM tipos_producto WHERE nombre = @TipoProducto)";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 command.Parameters.AddWithValue("@Cantidad", cantidad);
                 command.Parameters.AddWithValue("@Nombre", productName);
+                command.Parameters.AddWithValue("@TipoProducto", tipoProducto);
 
                 command.ExecuteNonQuery();
             }
@@ -1993,19 +1998,21 @@ namespace Modelo
 
         public static DataTable ObtenerDatosBajasProductos()
         {
-            string sql = "SELECT motivo, SUM(cantidad) AS Total " +
-                         "FROM bajas_productos " +
-                         "GROUP BY motivo";
+            string sql = @"SELECT bp.motivo, SUM(bp.cantidad) AS Total 
+                   FROM bajas_productos bp
+                   INNER JOIN productos p ON bp.producto_id = p.id
+                   GROUP BY bp.motivo;";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
-                
+
                 return dataTable;
             }
         }
+
         public static DataTable ObtenerDatosBajasTotales()
         {
             string sql = "SELECT 'Total' AS motivo, SUM(cantidad) AS Total " +

@@ -41,7 +41,10 @@
             this.btnSigReproducciones = new System.Windows.Forms.Button();
             this.btnAntReproducciones = new System.Windows.Forms.Button();
             this.dataGridViewHistorialReproducciones = new System.Windows.Forms.DataGridView();
+            this.label4 = new System.Windows.Forms.Label();
+            this.pictureBack = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistorialReproducciones)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
@@ -175,12 +178,35 @@
             this.dataGridViewHistorialReproducciones.Size = new System.Drawing.Size(1020, 550);
             this.dataGridViewHistorialReproducciones.TabIndex = 183;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(88, 26);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(49, 20);
+            this.label4.TabIndex = 199;
+            this.label4.Text = "Back";
+            // 
+            // pictureBack
+            // 
+            this.pictureBack.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBack.Image = ((System.Drawing.Image)(resources.GetObject("pictureBack.Image")));
+            this.pictureBack.Location = new System.Drawing.Point(44, 12);
+            this.pictureBack.Name = "pictureBack";
+            this.pictureBack.Size = new System.Drawing.Size(50, 44);
+            this.pictureBack.TabIndex = 198;
+            this.pictureBack.TabStop = false;
+            this.pictureBack.Click += new System.EventHandler(this.pictureBack_Click);
+            // 
             // HistorialReproducciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.pictureBack);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -199,6 +225,7 @@
             this.Text = "HistorialReproducciones";
             this.Load += new System.EventHandler(this.HistorialReproducciones_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistorialReproducciones)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,5 +245,7 @@
         private System.Windows.Forms.Button btnSigReproducciones;
         private System.Windows.Forms.Button btnAntReproducciones;
         private System.Windows.Forms.DataGridView dataGridViewHistorialReproducciones;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox pictureBack;
     }
 }

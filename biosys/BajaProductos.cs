@@ -86,6 +86,7 @@ namespace biosys
             comboMotivo.SelectedIndex = -1;
             numericCantidad.Value = 0;
             lblError.Visible = false;
+            labelStockDisponible.Visible = false;
         }
 
         private void comboProductos_SelectedIndexChanged(object sender, EventArgs e)
@@ -117,6 +118,7 @@ namespace biosys
                         // Muestra el stock disponible del producto seleccionado
                         labelStockDisponible.Text = $"Stock Disponible: {producto.Stock}";
                         labelStockDisponible.Visible = true;
+                        lblError.Visible = false;
                     }
                     else
                     {
@@ -192,10 +194,12 @@ namespace biosys
             }
 
             // Obtener el producto seleccionado
-            string productName = comboProductos.SelectedItem.ToString();
+            string productoInfo = comboProductos.SelectedItem.ToString();
 
             // Extraer el nombre del producto seleccionado
-            productName = productName.Split('-')[0].Trim();
+            string[] partesProducto = productoInfo.Split(new string[] { " - " }, StringSplitOptions.None);
+            string productName = partesProducto[0].Trim();
+            string tipoProducto = partesProducto[1].Trim(); // Obtener el tipo de producto
 
             // Obtener la cantidad ingresada por el usuario
             int cantidadBaja = (int)numericCantidad.Value;
@@ -207,13 +211,27 @@ namespace biosys
                 return;
             }
 
-            int stock = Controladora.Controladora.ObtenerStockProducto(productName);
+            // Obtener el stock del producto seleccionado
+            int stock = Controladora.Controladora.ObtenerStockProducto(productName, tipoProducto);
 
+            // Verificar que la cantidad de baja no sea mayor que el stock disponible
             if (cantidadBaja > stock)
             {
                 msgError("La cantidad ingresada es mayor que el stock disponible. Verifique la cantidad.");
                 return;
             }
+
+            // Realizar la baja del producto
+            Controladora.Controladora.DisminuirStockProducto(productName, cantidadBaja, tipoProducto);
+
+            // Actualizar la lista de productos con stock después de la baja
+            productos = Controladora.Controladora.ObtenerProductosStockComboBox();
+
+            // Eliminar el producto de la lista si su stock es cero
+            productos = productos.Where(p => p.Stock > 0).ToList();
+
+            // Volver a cargar los productos en el ComboBox
+            CargarProductos();
 
             // Mostrar cuadro de diálogo de confirmación
             DialogResult result = MessageBox.Show($"¿Está seguro de que desea realizar la baja de {cantidadBaja} unidad/es de {productName}?", "Confirmar Baja", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -221,12 +239,6 @@ namespace biosys
             // Verificar si el usuario confirmó la acción
             if (result == DialogResult.Yes)
             {
-                // Realizar la baja del producto
-                Controladora.Controladora.DisminuirStockProducto(productName, cantidadBaja);
-
-                // Actualizar la lista de productos con stock
-                productos = Controladora.Controladora.ObtenerProductosStockComboBox();
-
                 MessageBox.Show($"Se realizó la baja de {cantidadBaja} unidad/es de {productName}.", "Baja Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Registrar la baja del producto

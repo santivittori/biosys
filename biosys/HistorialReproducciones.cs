@@ -147,5 +147,12 @@ namespace biosys
             dateInicio.Value = DateTime.Today;
             dateFin.Value = DateTime.Today;
         }
+
+        private void pictureBack_Click(object sender, EventArgs e)
+        {
+            Reproduccion reproduccionesForm = new Reproduccion();
+            reproduccionesForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(reproduccionesForm);
+        }
     }
 }
