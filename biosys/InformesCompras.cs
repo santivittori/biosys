@@ -110,7 +110,7 @@ namespace biosys
         {
             // Crear el documento PDF
             Document doc = new Document(PageSize.A4);
-            string fileName = $"Graficos Economicos Biosys {DateTime.Now:dd-MM-yyyy}.pdf";
+            string fileName = $"Graficos Compras Biosys {DateTime.Now:dd-MM-yyyy}.pdf";
 
             try
             {
