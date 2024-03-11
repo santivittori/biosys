@@ -326,6 +326,12 @@ namespace biosys
                     doc.Add(new Paragraph($"Total de Donaciones = {TotalporDivision.Series["Donaciones"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
                     doc.Add(new Paragraph($"Total de Recolecciones = {TotalporDivision.Series["Recolecciones"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
 
+                    InformesCompras informesComprasForm = new InformesCompras();
+                    informesComprasForm.ObtenerInformacionGraficos();
+                    string informacionGraficosCompras = informesComprasForm.ObtenerInformacionGraficos();
+                    doc.Add(new Paragraph("\nInformes Compras:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph(informacionGraficosCompras, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
+
 
                     InformesEconomicos informesEconomicosForm = new InformesEconomicos();
                     informesEconomicosForm.ObtenerInformacionGraficos();
@@ -473,6 +479,13 @@ namespace biosys
         private void btnDescargaGrafica_Click(object sender, EventArgs e)
         {
             ExportarPDFGrafico();
+        }
+
+        private void btnInfCompras_Click(object sender, EventArgs e)
+        {
+            InformesCompras informesComprasForm = new InformesCompras();
+            informesComprasForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(informesComprasForm);
         }
     }
 }

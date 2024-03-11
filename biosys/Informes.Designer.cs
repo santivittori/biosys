@@ -50,6 +50,7 @@
             this.btnExportarPDF = new biosys.RoundedButton();
             this.btnInfEconomicos = new biosys.RoundedButton();
             this.btnInfReproduccion = new biosys.RoundedButton();
+            this.btnInfCompras = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.CantTotal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SemillasTipo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ArbolesTipo)).BeginInit();
@@ -179,12 +180,25 @@
             this.btnInfReproduccion.UseVisualStyleBackColor = true;
             this.btnInfReproduccion.Click += new System.EventHandler(this.btnInfReproduccion_Click);
             // 
+            // btnInfCompras
+            // 
+            this.btnInfCompras.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnInfCompras.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInfCompras.Location = new System.Drawing.Point(1238, 218);
+            this.btnInfCompras.Name = "btnInfCompras";
+            this.btnInfCompras.Size = new System.Drawing.Size(119, 48);
+            this.btnInfCompras.TabIndex = 146;
+            this.btnInfCompras.Text = "INFORMES COMPRAS";
+            this.btnInfCompras.UseVisualStyleBackColor = true;
+            this.btnInfCompras.Click += new System.EventHandler(this.btnInfCompras_Click);
+            // 
             // Informes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnInfCompras);
             this.Controls.Add(this.btnInfReproduccion);
             this.Controls.Add(this.btnInfEconomicos);
             this.Controls.Add(this.btnExportarPDF);
@@ -219,5 +233,6 @@
         private RoundedButton btnExportarPDF;
         private RoundedButton btnInfEconomicos;
         private RoundedButton btnInfReproduccion;
+        private RoundedButton btnInfCompras;
     }
 }

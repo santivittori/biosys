@@ -1885,25 +1885,6 @@ namespace Modelo
             }
         }
 
-        public static DataTable ObtenerTresArbolesMasVendidos()
-        {
-            string sql = "SELECT TOP 3 p.nombre AS Producto, SUM(dv.cantidad) AS CantidadVendida, SUM(dv.precio_total) AS MontoTotal " +
-                         "FROM detalle_venta dv " +
-                         "JOIN productos p ON dv.producto_id = p.id " +
-                         "WHERE p.tipo_producto_id = 1 " + // 1 representa el ID de Árbol en tu tabla de tipos de producto
-                         "GROUP BY p.nombre " +
-                         "ORDER BY CantidadVendida DESC";
-
-            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
-            {
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
-                
-                return dataTable;
-            }
-        }
-
         public static DataTable ObtenerTresSemillasMasCompradas()
         {
             string sql = "SELECT TOP 3 p.nombre AS Producto, SUM(dc.cantidad) AS CantidadComprada, SUM(dc.precio_total) AS MontoTotal " +
@@ -1912,6 +1893,57 @@ namespace Modelo
                          "WHERE p.tipo_producto_id = 2 " + // 2 representa el ID de Semilla en tu tabla de tipos de producto
                          "GROUP BY p.nombre " +
                          "ORDER BY CantidadComprada DESC";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                return dataTable;
+            }
+        }
+        public static DataTable ObtenerTresArbolesMasComprados()
+        {
+            string sql = "SELECT TOP 3 p.nombre AS Producto, SUM(dc.cantidad) AS CantidadComprada, SUM(dc.precio_total) AS MontoTotal " +
+                         "FROM detalle_compra dc " +
+                         "JOIN productos p ON dc.producto_id = p.id " +
+                         "WHERE p.tipo_producto_id = 1 " + // 1 representa el ID de Árbol en tu tabla de tipos de producto
+                         "GROUP BY p.nombre " +
+                         "ORDER BY CantidadComprada DESC";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                return dataTable;
+            }
+        }
+
+        public static DataTable ObtenerComprasPorProveedor()
+        {
+            string sql = @"SELECT pr.nombre_prov AS Proveedor, COUNT(c.id) AS CantidadCompras
+                   FROM proveedores pr
+                   LEFT JOIN compras c ON pr.id = c.proveedor_id
+                   GROUP BY pr.nombre_prov";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                return dataTable;
+            }
+        }
+        public static DataTable ObtenerPreciosUnitariosArboles()
+        {
+            string sql = @"SELECT p.nombre AS Producto, dc.precio_unitario AS PrecioUnitario
+                   FROM detalle_compra dc
+                   JOIN productos p ON dc.producto_id = p.id
+                   WHERE p.tipo_producto_id = 1"; // Seleccionar productos que sean árboles
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {

@@ -161,6 +161,12 @@
     <Compile Include="Informes.Designer.cs">
       <DependentUpon>Informes.cs</DependentUpon>
     </Compile>
+    <Compile Include="InformesCompras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InformesCompras.Designer.cs">
+      <DependentUpon>InformesCompras.cs</DependentUpon>
+    </Compile>
     <Compile Include="InformesEconomicos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -270,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Informes.resx">
       <DependentUpon>Informes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InformesCompras.resx">
+      <DependentUpon>InformesCompras.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InformesEconomicos.resx">
       <DependentUpon>InformesEconomicos.cs</DependentUpon>

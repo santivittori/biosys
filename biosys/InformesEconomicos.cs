@@ -27,8 +27,6 @@ namespace biosys
         {
             ComprasTotal();
             VentasTotal();
-            CrearGraficoArboles();
-            CrearGraficoSemillas();
 
             // Calcular la posición x para centrar el Label horizontalmente
             int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
@@ -120,8 +118,6 @@ namespace biosys
         {
             ComprasTotal();
             VentasTotal();
-            CrearGraficoArboles();
-            CrearGraficoSemillas();
 
             StringBuilder sb = new StringBuilder();
 
@@ -132,29 +128,6 @@ namespace biosys
             // Información del gráfico de Ventas
             sb.AppendLine($"Total de Ventas = ${VentaTotal.Titles[1].Text.Replace("Total: $", "")}");
             sb.AppendLine();
-
-            // Información de los tres árboles más vendidos
-            sb.AppendLine("Los tres árboles más vendidos:");
-            DataTable arbolesData = Controladora.Controladora.ObtenerTresArbolesMasVendidos();
-            for (int i = 0; i < arbolesData.Rows.Count; i++)
-            {
-                DataRow row = arbolesData.Rows[i];
-                string producto = row.Field<string>("Producto");
-                decimal importe = row.Field<decimal>("MontoTotal");
-                sb.AppendLine($"{i + 1}. {producto} - ${importe.ToString("N2")}");
-            }
-            sb.AppendLine();
-
-            // Información de las tres semillas más compradas
-            sb.AppendLine("Las tres semillas más compradas:");
-            DataTable semillasData = Controladora.Controladora.ObtenerTresSemillasMasCompradas();
-            for (int i = 0; i < semillasData.Rows.Count; i++)
-            {
-                DataRow row = semillasData.Rows[i];
-                string producto = row.Field<string>("Producto");
-                decimal importe = row.Field<decimal>("MontoTotal");
-                sb.AppendLine($"{i + 1}. {producto} - ${importe.ToString("N2")}");
-            }
 
             return sb.ToString();
         }
@@ -230,81 +203,6 @@ namespace biosys
             // Actualizar el gráfico
             VentaTotal.DataBind();
         }
-        public void CrearGraficoArboles()
-        {
-            DataTable arbolesData = Controladora.Controladora.ObtenerTresArbolesMasVendidos();
-
-            // Verifica si hay datos disponibles
-            if (arbolesData.Rows.Count > 0)
-            {
-                // Configurar el gráfico de barras para los árboles más vendidos
-                ConfigurarGraficoBarras(chartArboles, arbolesData, "Los tres árboles más vendidos", "Árboles", "Monto");
-            }
-            else
-            {
-                // No hay datos, mostrar un mensaje predeterminado
-                chartArboles.Series.Clear();
-                chartArboles.Titles.Clear();
-                chartArboles.Titles.Add(new Title("Aún no hay ventas de árboles", Docking.Top, new System.Drawing.Font("Arial", 12, FontStyle.Bold), Color.Black));
-            }
-        }
-
-        public void CrearGraficoSemillas()
-        {
-            DataTable semillasData = Controladora.Controladora.ObtenerTresSemillasMasCompradas();
-
-            // Verifica si hay datos disponibles
-            if (semillasData.Rows.Count > 0)
-            {
-                // Configurar el gráfico de barras para las semillas más compradas
-                ConfigurarGraficoBarras(chartSemillas, semillasData, "Las tres semillas más compradas", "Semillas", "Monto");
-            }
-            else
-            {
-                // No hay datos, mostrar un mensaje predeterminado
-                chartSemillas.Series.Clear();
-                chartSemillas.Titles.Clear();
-                chartSemillas.Titles.Add(new Title("Aún no hay compras de semillas", Docking.Top, new System.Drawing.Font("Arial", 12, FontStyle.Bold), Color.Black));
-            }
-        }
-
-        public void ConfigurarGraficoBarras(Chart chart, DataTable data, string titulo, string ejeX, string ejeY)
-        {
-            chart.Series.Clear();
-            chart.ChartAreas.Clear();
-            chart.ChartAreas.Add(new ChartArea());
-
-            Series seriesBarras = new Series();
-            seriesBarras.ChartType = SeriesChartType.Bar;
-            seriesBarras.IsVisibleInLegend = false; // Ocultar leyenda
-
-            foreach (DataRow row in data.Rows)
-            {
-                string producto = row.Field<string>("Producto");
-                decimal importe = row.Field<decimal>("MontoTotal");
-
-                DataPoint dataPoint = new DataPoint();
-                dataPoint.AxisLabel = producto;
-                dataPoint.Label = "$" + importe.ToString("N2"); // Mostrar el monto en negrita dentro de la barra
-                dataPoint.YValues = new double[] { (double)importe };
-
-                seriesBarras.Points.Add(dataPoint);
-            }
-
-            chart.Series.Add(seriesBarras);
-            chart.Titles.Clear();
-            chart.Titles.Add(new Title(titulo, Docking.Top, new System.Drawing.Font("Arial", 12, FontStyle.Bold), Color.Black));
-
-            chart.ChartAreas[0].AxisX.Title = ejeX;
-            chart.ChartAreas[0].AxisY.Title = ejeY;
-            chart.ChartAreas[0].AxisX.Interval = 1;
-
-            // Quitar las líneas de la grilla interna
-            chart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-            chart.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-
-            chart.DataBind();
-        }
 
         private void ExportarPDFGraficosEconomicos()
         {
@@ -342,8 +240,6 @@ namespace biosys
                     doc.Add(new Paragraph("Información de los gráficos:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 14, iTextSharp.text.Font.BOLD)));
 
                     // Agregar los gráficos
-                    AgregarGraficoAPDF(doc, chartArboles);
-                    AgregarGraficoAPDF(doc, chartSemillas);
                     AgregarGraficoAPDF(doc, CompraTotal);
                     AgregarGraficoAPDF(doc, VentaTotal);
 

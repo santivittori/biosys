@@ -423,13 +423,21 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerMontosVentasPorTipo();
         }
-        public static DataTable ObtenerTresArbolesMasVendidos()
-        {
-            return ConsultasModelo.ObtenerTresArbolesMasVendidos();
-        }
         public static DataTable ObtenerTresSemillasMasCompradas()
         {
             return ConsultasModelo.ObtenerTresSemillasMasCompradas();
+        }
+        public static DataTable ObtenerTresArbolesMasComprados()
+        {
+            return ConsultasModelo.ObtenerTresArbolesMasComprados();
+        }
+        public static DataTable ObtenerComprasPorProveedor()
+        {
+            return ConsultasModelo.ObtenerComprasPorProveedor();
+        }
+        public static DataTable ObtenerPreciosUnitariosArboles()
+        {
+            return ConsultasModelo.ObtenerPreciosUnitariosArboles();
         }
         public static int ObtenerStockProducto(string productName, string tipoProducto)
         {
