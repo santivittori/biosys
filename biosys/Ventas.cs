@@ -34,7 +34,7 @@ namespace biosys
             ventasList = new List<Venta>();
 
             // Inicializar la lista de productos en el constructor
-            productos = Controladora.Controladora.ObtenerProductosStockComboBox();
+            productos = Controladora.Controladora.ObtenerProductosArbolStockComboBox();
         }
         public void msgError(string msg)
         {
@@ -95,7 +95,7 @@ namespace biosys
         private void CargarProductos()
         {
             // Obtener los productos directamente desde la base de datos
-            productos = Controladora.Controladora.ObtenerProductosStockComboBox();
+            productos = Controladora.Controladora.ObtenerProductosArbolStockComboBox();
 
             comboProductos.Items.Clear();
 

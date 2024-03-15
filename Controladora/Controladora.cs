@@ -268,6 +268,14 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerIdProducto(nombre, tipoProducto, tipoEspecifico);
         }
+        public static int ObtenerTamSemillaIdDeProducto(int productoId)
+        {
+            return ConsultasModelo.ObtenerTamSemillaIdDeProducto(productoId);
+        }
+        public static int ObtenerSemillasPorGramo(int tamSemillaId)
+        {
+            return ConsultasModelo.ObtenerSemillasPorGramo(tamSemillaId);
+        }
         public static DataTable ObtenerDatosGraficoProductos()
         {
             return ConsultasModelo.ObtenerDatosGraficoProductos();
@@ -410,6 +418,10 @@ namespace Controladora
         public static List<ProductoInfo> ObtenerProductosStockComboBox()
         {
             return ConsultasModelo.ObtenerProductosStockComboBox();
+        }
+        public static List<ProductoInfo> ObtenerProductosArbolStockComboBox()
+        {
+            return ConsultasModelo.ObtenerProductosArbolStockComboBox();
         }
         public static int GuardarVenta(VentaInfo ventaInfo)
         {

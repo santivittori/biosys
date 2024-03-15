@@ -64,8 +64,22 @@ namespace biosys
             // Agregar cada elemento de la lista al ListBox
             foreach (Compra compra in comprasList)
             {
-                string item = $"ID: {compra.ProductoId} - {compra.Producto} - Cantidad: {compra.Cantidad} - Precio Total: ${compra.PrecioTotal}";
+                string unidadMedida = compra.TipoProducto == "Semilla" ? ObtenerUnidadMedida(compra.UnidadMedida) : ""; // Obtener la unidad de medida solo si el producto es una semilla
+                string item = $"ID: {compra.ProductoId} - {compra.Producto} - Cantidad: {compra.Cantidad} {unidadMedida} - Precio Total: ${compra.PrecioTotal}";
                 listDetalleCompra.Items.Add(item);
+            }
+        }
+
+        private string ObtenerUnidadMedida(string unidad)
+        {
+            switch (unidad)
+            {
+                case "gramos":
+                    return "gramos";
+                case "kilogramos":
+                    return "kilogramos";
+                default:
+                    return ""; // En caso de que la unidad no sea ni gramos ni kilogramos
             }
         }
 
@@ -89,10 +103,23 @@ namespace biosys
             comboProductos.SelectedIndex = -1;
         }
 
+        private void CargarUnidades()
+        {
+            // Lista de unidades disponibles (esto puede venir de tu lógica de negocio o base de datos)
+            List<string> unidades = new List<string> { "Unidades", "Gramos", "Kilogramos" };
+
+            // Asignar la lista de unidades al ComboBox
+            comboUnidadMedida.DataSource = unidades;
+
+            // Establecer el valor predeterminado
+            comboUnidadMedida.SelectedIndex = -1;
+        }
+
         private void Compras_Load(object sender, EventArgs e)
         {
             CargarProveedores();
             CargarProductos();
+            CargarUnidades();
 
             // Agregar el texto de ayuda al TextBox
             txtPrecioUnitario.Text = "Ejemplo: 1350,70";
@@ -107,11 +134,16 @@ namespace biosys
 
             labelPrecioTotal.Visible = false;
             txtPrecioTotal.Visible = false;
+            labelgramo.Visible = false;
+            labelkilogramo.Visible = false;
+
+            comboUnidadMedida.Enabled = false;
         }
         private void LimpiarCampos()
         {
             comboProductos.SelectedIndex = -1;
             comboProveedor.SelectedIndex = -1;
+            comboUnidadMedida.SelectedIndex = -1;
             numericCantidad.Value = 0;
 
             // Limpiar el contenido del ListBox
@@ -128,6 +160,10 @@ namespace biosys
             txtNroRemito.Enabled = true;
             comboProveedor.Enabled = true;
             fechaCompra.Enabled = true;
+
+            labelgramo.Visible = false;
+            labelkilogramo.Visible = false;
+            comboUnidadMedida.Enabled = false;
         }
 
         public void msgError(string msg)
@@ -192,7 +228,7 @@ namespace biosys
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la compra? \n\nLa información se perderá", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la compra? \n\nLa información se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -203,13 +239,14 @@ namespace biosys
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea limpiar los campos? \n\nLa información se perderá", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea limpiar los campos? \n\nLa información se perderá.", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
                 // Limpiar los campos de entrada de datos
                 comboProductos.SelectedIndex = -1;
                 comboProveedor.SelectedIndex = -1;
+                comboUnidadMedida.SelectedIndex = -1;
                 numericCantidad.Value = 0;
 
                 // Reiniciar la lista de compras
@@ -229,6 +266,9 @@ namespace biosys
                 comboProveedor.Enabled = true;
                 fechaCompra.Enabled = true;
                 lblError.Visible = false;
+                labelgramo.Visible = false;
+                labelkilogramo.Visible = false;
+                comboUnidadMedida.Enabled = false;
             }
         }
 
@@ -265,14 +305,71 @@ namespace biosys
             decimal precioTotal = 0;
             decimal precioUnitario = 0; // Declarar precioUnitario aquí para que esté disponible en todo el método
 
-            // Si el producto es una semilla, obtener el precio total del TextBox
+            // Obtener la unidad de medida seleccionada
+            string unidadMedida = comboUnidadMedida.SelectedItem?.ToString(); // Usando el operador de navegación segura
+
+            // Verificar si la unidad de medida es null
+            if (unidadMedida == null)
+            {
+                msgError("Debe seleccionar una unidad de medida.");
+                return;
+            }
+
+            // Calcular la cantidad de semillas según el tamaño de semilla del producto y la unidad de medida seleccionada
+            int cantidadSemillas = 0;
             if (tipoProductoTexto.Equals("Semilla"))
             {
+                // Obtener el tamaño de semilla del producto
+                int tamSemillaId = Controladora.Controladora.ObtenerTamSemillaIdDeProducto(productoId);
+
+                if (unidadMedida == "Gramos")
+                {
+                    // Obtener el número de semillas por gramo del tamaño de semilla
+                    int semillasPorGramo = Controladora.Controladora.ObtenerSemillasPorGramo(tamSemillaId);
+
+                    // Calcular la cantidad de semillas
+                    cantidadSemillas = cantidad * semillasPorGramo;
+                }
+                else if (unidadMedida == "Kilogramos")
+                {
+                    // Obtener el número de semillas por gramo del tamaño de semilla
+                    int semillasPorGramo = Controladora.Controladora.ObtenerSemillasPorGramo(tamSemillaId);
+
+                    // Convertir kilogramos a gramos y luego calcular la cantidad de semillas
+                    cantidadSemillas = cantidad * 1000 * semillasPorGramo;
+                }
+                else
+                {
+                    // La cantidad ingresada ya está en semillas
+                    cantidadSemillas = cantidad;
+                }
+
+                // Obtener el precio total del TextBox para productos de tipo semilla
                 if (!decimal.TryParse(txtPrecioTotal.Text, out precioTotal))
                 {
                     msgError("Ingrese un precio total válido para la semilla.");
                     return;
                 }
+                // Si el texto no contiene una coma, agregar la coma y dos ceros después del número
+                else if (!txtPrecioTotal.Text.Contains(","))
+                {
+                    txtPrecioTotal.Text += ",00";
+                }
+            }
+            else if (tipoProductoTexto.Equals("Árbol"))
+            {
+                // Para los árboles, la cantidad siempre es igual al valor ingresado en el campo de cantidad
+                cantidadSemillas = cantidad;
+
+                // Obtener el precio unitario del TextBox
+                if (!decimal.TryParse(txtPrecioUnitario.Text, out precioUnitario))
+                {
+                    msgError("Ingrese un precio unitario válido para el árbol.");
+                    return;
+                }
+
+                // Calcular el precio total para los árboles
+                precioTotal = precioUnitario * cantidad;
             }
             else
             {
@@ -288,12 +385,13 @@ namespace biosys
                     return;
                 }
 
-                // Calcular el precio total
+                // Calcular el precio total para productos que no son semilla
                 precioTotal = precioUnitario * cantidad;
             }
 
             // Crear una instancia de la clase Compra y agregarla a la lista
-            Compra compra = new Compra(productoId, productoCompleto, cantidad, precioUnitario, precioTotal);
+            Compra compra = new Compra(productoId, productoCompleto, cantidadSemillas, precioUnitario, precioTotal, tipoProductoTexto, unidadMedida);
+
             comprasList.Add(compra);
 
             // No dejar acceder a cambiar algunos campos
@@ -308,6 +406,10 @@ namespace biosys
             txtPrecioUnitario.Text = string.Empty;
             txtPrecioTotal.Text = string.Empty;
             lblError.Visible = false;
+            comboUnidadMedida.SelectedIndex = -1;
+            comboUnidadMedida.Enabled = false;
+            labelgramo.Visible = false;
+            labelkilogramo.Visible = false;
 
             // Actualizar el contenido del ListBox
             ActualizarListBox();
@@ -428,6 +530,12 @@ namespace biosys
                         txtPrecioUnitario.Visible = false;
                         labelPrecioUnitario.Visible = false;
 
+                        comboUnidadMedida.Enabled = true;
+                    }
+                    else if (tipoProductoTexto.Equals("Árbol")) // Si es un árbol, establecer la unidad de medida en "Unidades"
+                    {
+                        comboUnidadMedida.SelectedIndex = comboUnidadMedida.FindStringExact("Unidades");
+                        comboUnidadMedida.Enabled = false; // Deshabilitar el combo de unidad de medida
                     }
                     else
                     {
@@ -440,6 +548,8 @@ namespace biosys
 
                         txtPrecioTotal.Visible = false;
                         labelPrecioTotal.Visible = false;
+
+                        comboUnidadMedida.Enabled = false;
                     }
                 }
             }
@@ -450,6 +560,41 @@ namespace biosys
             HistorialCompras historialComprasForm = new HistorialCompras();
             historialComprasForm.DashboardInstance = DashboardInstance;
             DashboardInstance.AbrirFormHijo(historialComprasForm);
+        }
+
+        private void comboUnidadMedida_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Verificar si hay un elemento seleccionado en el combo box
+            if (comboUnidadMedida.SelectedItem != null)
+            {
+                string selectedUnit = comboUnidadMedida.SelectedItem.ToString();
+
+                if (selectedUnit == "Gramos")
+                {
+                    // Hacer visible el label de gramos y ocultar el de kilogramos
+                    labelgramo.Visible = true;
+                    labelkilogramo.Visible = false;
+                }
+                else if (selectedUnit == "Kilogramos")
+                {
+                    // Hacer visible el label de kilogramos y ocultar el de gramos
+                    labelkilogramo.Visible = true;
+                    labelgramo.Visible = false;
+                }
+                else
+                {
+                    // Si se selecciona "Unidades", ocultar ambos labels
+                    labelgramo.Visible = false;
+                    labelkilogramo.Visible = false;
+                }
+            }
+            else
+            {
+                // Manejar el caso cuando no hay ningún elemento seleccionado en el combo box
+                // Por ejemplo, puedes dejar ambos labels ocultos
+                labelgramo.Visible = false;
+                labelkilogramo.Visible = false;
+            }
         }
     }
 }

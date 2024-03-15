@@ -936,13 +936,18 @@ namespace Modelo
 
         public static DataTable ObtenerProductosPaginados(int indiceInicio, int tamañoPagina)
         {
-            string sql = @"SELECT p.id AS ID, p.nombre AS Nombre, tp.nombre AS TipoProducto, te.nombre AS TipoEspecifico 
-                   FROM productos p 
-                   JOIN tipos_producto tp ON p.tipo_producto_id = tp.id 
-                   JOIN tipos_especifico te ON p.tipo_especifico_id = te.id
-                   ORDER BY p.id
-                   OFFSET @IndiceInicio ROWS
-                   FETCH NEXT @TamañoPagina ROWS ONLY";
+            string sql = @"SELECT p.id AS ID, p.nombre AS Nombre, tp.nombre AS TipoProducto, te.nombre AS TipoEspecifico, 
+                    CASE 
+                        WHEN tp.nombre = 'Semilla' THEN ISNULL(ts.nombre, '')
+                        ELSE ''
+                    END AS [Tamaño de Semilla]
+                FROM productos p 
+                JOIN tipos_producto tp ON p.tipo_producto_id = tp.id 
+                JOIN tipos_especifico te ON p.tipo_especifico_id = te.id
+                LEFT JOIN tam_semilla ts ON p.tam_semilla_id = ts.id
+                ORDER BY p.id
+                OFFSET @IndiceInicio ROWS
+                FETCH NEXT @TamañoPagina ROWS ONLY";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
@@ -994,7 +999,7 @@ namespace Modelo
         }
         public static bool VerificarProductoExistente(Producto producto)
         {
-            string sql = "SELECT COUNT(*) FROM productos WHERE nombre = @nombre AND tipo_producto_id = @tipoProductoID AND tipo_especifico_id = @tipoEspecificoID";
+            string sql = "SELECT COUNT(*) FROM productos WHERE nombre = @Nombre AND tipo_producto_id = @TipoProductoID AND tipo_especifico_id = @TipoEspecificoID";
             int count;
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
@@ -1007,20 +1012,38 @@ namespace Modelo
             }
             return count > 0;
         }
+
         public static void InsertarProducto(Producto producto)
         {
-            string sql = "INSERT INTO productos (nombre, tipo_producto_id, tipo_especifico_id, stock) " +
-                         "VALUES (@Nombre, @TipoProductoID, @TipoEspecificoID, 0)";
+            string sql = "INSERT INTO productos (nombre, tipo_producto_id, tipo_especifico_id, tam_semilla_id, stock) " +
+                         "VALUES (@Nombre, @TipoProductoID, @TipoEspecificoID, @TamSemillaID, 0)";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
                 command.Parameters.AddWithValue("@Nombre", producto.Nombre);
                 command.Parameters.AddWithValue("@TipoProductoID", producto.TipoProductoId);
                 command.Parameters.AddWithValue("@TipoEspecificoID", producto.TipoEspecificoId);
+                command.Parameters.AddWithValue("@TamSemillaID", producto.TamSemillaId ?? (object)DBNull.Value);
 
                 command.ExecuteNonQuery();
             }
         }
+
+        public static string ObtenerTamSemilla(int tamSemillaID)
+        {
+            string nombre = string.Empty;
+            string sql = $"SELECT nombre FROM tam_semilla WHERE id = {tamSemillaID}";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@tamSemillaID", tamSemillaID);
+                object result = command.ExecuteScalar();
+                nombre = result != null ? result.ToString() : string.Empty;
+            }
+
+            return nombre;
+        }
+
         public static void ActualizarProducto(int idProductoSeleccionado, string nuevoNombre)
         {
             string sql = "UPDATE productos SET nombre = @nuevoNombre WHERE id = @idProducto";
@@ -1186,6 +1209,44 @@ namespace Modelo
             return productoId;
         }
 
+        public static int ObtenerTamSemillaIdDeProducto(int productoId)
+        {
+            int tamSemillaId = 0;
+            string sql = "SELECT tam_semilla_id FROM productos WHERE id = @id";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@id", productoId);
+
+                object result = command.ExecuteScalar();
+                if (result != null && result != DBNull.Value)
+                {
+                    tamSemillaId = Convert.ToInt32(result);
+                }
+            }
+
+            return tamSemillaId;
+        }
+
+        public static int ObtenerSemillasPorGramo(int tamSemillaId)
+        {
+            int semillasPorGramo = 0;
+            string sql = "SELECT semillas_por_gramo FROM tam_semilla WHERE id = @id";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@id", tamSemillaId);
+
+                object result = command.ExecuteScalar();
+                if (result != null && result != DBNull.Value)
+                {
+                    semillasPorGramo = Convert.ToInt32(result);
+                }
+            }
+
+            return semillasPorGramo;
+        }
+
         public static DataTable ObtenerDatosGraficoProductos()
         {
             string sql = "SELECT p.tipo_producto_id AS TipoProductoId, SUM(p.stock) AS Stock " +
@@ -1300,16 +1361,26 @@ namespace Modelo
 
         public static void EliminarProducto(int idProducto)
         {
-            string sql = "DELETE FROM productos WHERE id = @id";
+            string sqlDeleteProducto = "DELETE FROM productos WHERE id = @id";
+            string sqlDeleteTamSemilla = "DELETE FROM tam_semilla WHERE id = (SELECT tam_semilla_id FROM productos WHERE id = @id)";
 
-            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            using (SqlCommand command = new SqlCommand(sqlDeleteProducto, ConexionModelo.AbrirConexion()))
             {
                 command.Parameters.AddWithValue("@id", idProducto);
 
-                // Ejecutar el comando
+                // Eliminar el producto de la tabla productos
+                command.ExecuteNonQuery();
+            }
+
+            using (SqlCommand command = new SqlCommand(sqlDeleteTamSemilla, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@id", idProducto);
+
+                // Eliminar el registro correspondiente en la tabla tam_semilla
                 command.ExecuteNonQuery();
             }
         }
+
         public static bool VerificarProductoEnCompras(int idProducto)
         {
             string sql = "SELECT COUNT(*) FROM detalle_compra WHERE producto_id = @idProducto";
@@ -1808,6 +1879,34 @@ namespace Modelo
                          "JOIN tipos_producto tp ON p.tipo_producto_id = tp.id " +
                          "JOIN tipos_especifico te ON p.tipo_especifico_id = te.id " +
                          "WHERE p.stock > 0";  // Agregar esta condición para filtrar productos con stock > 0
+
+            List<ProductoInfo> productos = new List<ProductoInfo>();
+
+            DataTable dataTable = ExecuteQuery(sql);
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                ProductoInfo producto = new ProductoInfo
+                {
+                    Id = Convert.ToInt32(row["id"]),
+                    Nombre = row["nombre"].ToString(),
+                    TipoProducto = row["tipo_producto"].ToString(),
+                    TipoEspecifico = row["tipo_especifico"].ToString(),
+                    Stock = Convert.ToInt32(row["stock"])
+                };
+
+                productos.Add(producto);
+            }
+            return productos;
+        }
+        public static List<ProductoInfo> ObtenerProductosArbolStockComboBox()
+        {
+            string sql = "SELECT p.id, p.nombre, tp.nombre AS tipo_producto, te.nombre AS tipo_especifico, p.stock " +
+                         "FROM productos p " +
+                         "JOIN tipos_producto tp ON p.tipo_producto_id = tp.id " +
+                         "JOIN tipos_especifico te ON p.tipo_especifico_id = te.id " +
+                         "WHERE p.stock > 0 " + // Filtrar productos con stock > 0
+                         "AND tp.nombre = 'Árbol'"; // Filtrar solo productos de tipo Árbol
 
             List<ProductoInfo> productos = new List<ProductoInfo>();
 

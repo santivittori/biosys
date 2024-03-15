@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static biosys.Compras;
 using Entidad;
+using System.Windows.Media.Media3D;
 
 namespace biosys
 {
@@ -26,17 +27,34 @@ namespace biosys
 
             // Inicializo la lista de donación
             donacionList = new List<Donacion>();
+
+            comboUnidadMedida.Enabled = false;
+            labelgramo.Visible = false;
+            labelkilogramo.Visible = false;
         }
 
         private void Donaciones_Load(object sender, EventArgs e)
         {
             CargarProductos();
+            CargarUnidades();
 
             // Calcular la posición x para centrar el Label horizontalmente
             int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
 
             // Establecer la posición del Label
             labelTitulo.Location = new Point(labelPosX, 50);
+        }
+
+        private void CargarUnidades()
+        {
+            // Lista de unidades disponibles (esto puede venir de tu lógica de negocio o base de datos)
+            List<string> unidades = new List<string> { "Unidades", "Gramos", "Kilogramos" };
+
+            // Asignar la lista de unidades al ComboBox
+            comboUnidadMedida.DataSource = unidades;
+
+            // Establecer el valor predeterminado
+            comboUnidadMedida.SelectedIndex = -1;
         }
 
         private void CargarProductos()
@@ -56,8 +74,34 @@ namespace biosys
             // Agregar cada elemento de la lista al ListBox
             foreach (Donacion donacion in donacionList)
             {
-                string item = $"ID: {donacion.ProductoId} - {donacion.Producto} - Cantidad: {donacion.Cantidad}";
+                string unidadMedida = donacion.TipoProducto == "Semilla" ? ObtenerUnidadMedida(donacion.UnidadMedida) : ""; // Obtener la unidad de medida solo si el producto es una semilla
+                string item = $"ID: {donacion.ProductoId} - {donacion.Producto} - Cantidad: {donacion.Cantidad} {unidadMedida}";
                 listDetalleDonacion.Items.Add(item);
+            }
+        }
+
+        private string ObtenerUnidadMedida(string unidad)
+        {
+            switch (unidad)
+            {
+                case "gramos":
+                    return "gramos";
+                case "kilogramos":
+                    return "kilogramos";
+                default:
+                    return ""; // En caso de que la unidad no sea ni gramos ni kilogramos
+            }
+        }
+        public static int ObtenerTipoProductoSegunTexto(string tipoProductoTexto)
+        {
+            switch (tipoProductoTexto)
+            {
+                case "Árbol":
+                    return 1;
+                case "Semilla":
+                    return 2;
+                default:
+                    return 0; // Valor predeterminado en caso de texto no válido
             }
         }
 
@@ -65,7 +109,9 @@ namespace biosys
         {
             // Limpiar los campos de entrada de datos
             comboProductos.SelectedIndex = -1;
+            comboUnidadMedida.SelectedIndex = -1;
             numericCantidad.Value = 0;
+            comboUnidadMedida.Enabled = false;
 
             // Limpiar el contenido del ListBox
             listDetalleDonacion.Items.Clear();
@@ -78,6 +124,8 @@ namespace biosys
             fechaDonacion.Enabled = true;
 
             lblError.Visible = false;
+            labelgramo.Visible = false;
+            labelkilogramo.Visible = false;
         }
 
         public void msgError(string msg)
@@ -115,6 +163,7 @@ namespace biosys
             {
                 // Limpiar los campos de entrada de datos
                 comboProductos.SelectedIndex = -1;
+                comboUnidadMedida.SelectedIndex = -1;
                 numericCantidad.Value = 0;
 
                 // Reiniciar la lista de donación
@@ -130,6 +179,9 @@ namespace biosys
                 txtDonante.Enabled = true;
                 fechaDonacion.Enabled = true;
                 lblError.Visible = false;
+                comboUnidadMedida.Enabled = false;
+                labelgramo.Visible = false;
+                labelkilogramo.Visible = false;
             }
         }
 
@@ -163,12 +215,59 @@ namespace biosys
             int productoId = Controladora.Controladora.ObtenerIdProducto(nombreProducto, tipoProducto, tipoEspecifico);
             int cantidad = int.Parse(numericCantidad.Text);
 
+            // Obtener la unidad de medida seleccionada
+            string unidadMedida = comboUnidadMedida.SelectedItem?.ToString(); // Usando el operador de navegación segura
+
+            // Verificar si la unidad de medida es null
+            if (unidadMedida == null)
+            {
+                msgError("Debe seleccionar una unidad de medida.");
+                return;
+            }
+
+            // Calcular la cantidad de semillas o árboles según el tipo de producto y la unidad de medida seleccionada
+            int cantidadSemillas = 0;
+            if (tipoProductoTexto.Equals("Semilla"))
+            {
+                // Obtener el tamaño de semilla del producto
+                int tamSemillaId = Controladora.Controladora.ObtenerTamSemillaIdDeProducto(productoId);
+
+                if (unidadMedida == "Gramos")
+                {
+                    // Obtener el número de semillas por gramo del tamaño de semilla
+                    int semillasPorGramo = Controladora.Controladora.ObtenerSemillasPorGramo(tamSemillaId);
+
+                    // Calcular la cantidad de semillas
+                    cantidadSemillas = cantidad * semillasPorGramo;
+                }
+                else if (unidadMedida == "Kilogramos")
+                {
+                    // Obtener el número de semillas por gramo del tamaño de semilla
+                    int semillasPorGramo = Controladora.Controladora.ObtenerSemillasPorGramo(tamSemillaId);
+
+                    // Convertir kilogramos a gramos y luego calcular la cantidad de semillas
+                    cantidadSemillas = cantidad * 1000 * semillasPorGramo;
+                }
+                else
+                {
+                    // La cantidad ingresada ya está en semillas
+                    cantidadSemillas = cantidad;
+                }
+            }
+            else if (tipoProductoTexto.Equals("Árbol"))
+            {
+                // Para los árboles, la cantidad siempre es igual al valor ingresado en el campo de cantidad
+                cantidadSemillas = cantidad;
+            }
+
             // Crear una instancia de la clase Donacion y agregarla a la lista
             Donacion donacion = new Donacion
             {
                 ProductoId = productoId,
                 Producto = productoCompleto,
-                Cantidad = cantidad
+                Cantidad = cantidadSemillas,
+                TipoProducto = tipoProductoTexto,
+                UnidadMedida = unidadMedida
             };
             donacionList.Add(donacion);
 
@@ -179,6 +278,7 @@ namespace biosys
 
             // Limpiar los campos de entrada de datos
             comboProductos.SelectedIndex = -1;
+            comboUnidadMedida.SelectedIndex = -1;
             numericCantidad.Text = string.Empty;
 
             // Actualizar el contenido del ListBox
@@ -262,6 +362,71 @@ namespace biosys
             HistorialDonaciones historialDonacionesForm = new HistorialDonaciones();
             historialDonacionesForm.DashboardInstance = DashboardInstance;
             DashboardInstance.AbrirFormHijo(historialDonacionesForm);
+        }
+
+        private void comboProductos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboProductos.SelectedItem != null)
+            {
+                string productoCompleto = comboProductos.SelectedItem.ToString();
+                string[] partesProducto = productoCompleto.Split(new string[] { " - " }, StringSplitOptions.None);
+
+                if (partesProducto.Length == 3)
+                {
+                    string tipoProductoTexto = partesProducto[1];
+
+                    // Verificar si el producto seleccionado es una semilla
+                    if (tipoProductoTexto.Equals("Semilla"))
+                    {
+                        // Habilitar el combobox de unidad de medida
+                        comboUnidadMedida.Enabled = true;
+                    }
+                    else if (tipoProductoTexto.Equals("Árbol"))
+                    {
+                        comboUnidadMedida.SelectedIndex = comboUnidadMedida.FindStringExact("Unidades");
+                        comboUnidadMedida.Enabled = false; // Deshabilitar el combo de unidad de medida
+                    }
+                    else
+                    {
+                        comboUnidadMedida.Enabled = false;
+                    }
+                }
+            }
+        }
+
+        private void comboUnidadMedida_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Verificar si hay un elemento seleccionado en el combo box
+            if (comboUnidadMedida.SelectedItem != null)
+            {
+                string selectedUnit = comboUnidadMedida.SelectedItem.ToString();
+
+                if (selectedUnit == "Gramos")
+                {
+                    // Hacer visible el label de gramos y ocultar el de kilogramos
+                    labelgramo.Visible = true;
+                    labelkilogramo.Visible = false;
+                }
+                else if (selectedUnit == "Kilogramos")
+                {
+                    // Hacer visible el label de kilogramos y ocultar el de gramos
+                    labelkilogramo.Visible = true;
+                    labelgramo.Visible = false;
+                }
+                else
+                {
+                    // Si se selecciona "Unidades", ocultar ambos labels
+                    labelgramo.Visible = false;
+                    labelkilogramo.Visible = false;
+                }
+            }
+            else
+            {
+                // Manejar el caso cuando no hay ningún elemento seleccionado en el combo box
+                // Por ejemplo, puedes dejar ambos labels ocultos
+                labelgramo.Visible = false;
+                labelkilogramo.Visible = false;
+            }
         }
     }
 }

@@ -26,22 +26,29 @@ namespace Entidad
         public int Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
         public decimal PrecioTotal { get; set; }
+        public string TipoProducto { get; set; } // Agregar esta propiedad
+        public string UnidadMedida { get; set; } // Agregar esta propiedad
 
         // Constructor que acepta todos los parámetros, incluyendo el precio total
-        public Compra(int productoId, string producto, int cantidad, decimal precioUnitario, decimal precioTotal)
+        public Compra(int productoId, string producto, int cantidad, decimal precioUnitario, decimal precioTotal, string tipoProducto, string unidadMedida)
         {
             ProductoId = productoId;
             Producto = producto;
             Cantidad = cantidad;
             PrecioUnitario = precioUnitario;
             PrecioTotal = precioTotal;
+            TipoProducto = tipoProducto;
+            UnidadMedida = unidadMedida;
         }
     }
+
     public class Donacion
     {
         public int ProductoId { get; set; }
         public string Producto { get; set; }
         public int Cantidad { get; set; }
+        public string TipoProducto { get; set; }
+        public string UnidadMedida { get; set; }
     }
     public class Recoleccion
     {
@@ -137,6 +144,7 @@ namespace Entidad
         public string Nombre { get; set; }
         public int TipoProductoId { get; set; }
         public int TipoEspecificoId { get; set; }
+        public int? TamSemillaId { get; set; }
         public int Stock { get; set; }
         public int StockDisponible { get; set; }
     }

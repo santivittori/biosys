@@ -35,7 +35,7 @@ namespace biosys
         {
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
         }
-        // Permite editar el campo nombre seleccionado una fila en el datagridview
+
         private void dataGridViewProductos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridViewProductos.SelectedRows.Count > 0)
@@ -44,29 +44,34 @@ namespace biosys
                 DataGridViewRow selectedRow = dataGridViewProductos.SelectedRows[0];
 
                 // Obtener el ID del producto seleccionado
-                idProductoSeleccionado = Convert.ToInt32(dataGridViewProductos.Rows[e.RowIndex].Cells["ID"].Value);
+                idProductoSeleccionado = Convert.ToInt32(selectedRow.Cells["ID"].Value);
 
                 // Cargar los datos del producto en los campos correspondientes
-                txtNombreProd.Text = dataGridViewProductos.Rows[e.RowIndex].Cells["Nombre"].Value.ToString();
-                string tipoProducto = dataGridViewProductos.Rows[e.RowIndex].Cells["TipoProducto"].Value.ToString();
-                if (tipoProducto == "Árbol")
+                txtNombreProd.Text = selectedRow.Cells["Nombre"].Value.ToString();
+                string tipoProducto = selectedRow.Cells["TipoProducto"].Value.ToString();
+                comboTipoProducto.SelectedValue = ObtenerTipoProductoID(tipoProducto);
+
+                string tipoEspecifico = selectedRow.Cells["TipoEspecifico"].Value.ToString();
+                comboTipoEspecifico.SelectedValue = ObtenerTipoEspecificoID(tipoEspecifico);
+
+                // Obtener el valor del tamaño de semilla
+                string tamSemilla = selectedRow.Cells["Tamaño de Semilla"].Value.ToString();
+
+                // Verificar si el tamaño de semilla está vacío
+                if (string.IsNullOrEmpty(tamSemilla))
                 {
-                    comboTipoProducto.SelectedValue = 1;
+                    // Si está vacío, deshabilitar el ComboBox y dejarlo sin ninguna opción seleccionada
+                    comboTamSemilla.Enabled = false;
+                    comboTamSemilla.SelectedIndex = -1;
                 }
-                else if (tipoProducto == "Semilla")
+                else
                 {
-                    comboTipoProducto.SelectedValue = 2;
+                    // Si no está vacío, habilitar el ComboBox y seleccionar el valor correspondiente
+                    comboTamSemilla.SelectedValue = ObtenerTamSemillaID(tamSemilla);
+                    comboTamSemilla.Enabled = false;
                 }
 
-                string tipoEspecifico = dataGridViewProductos.Rows[e.RowIndex].Cells["TipoEspecifico"].Value.ToString();
-                if (tipoEspecifico == "Exótica")
-                {
-                    comboTipoEspecifico.SelectedValue = 1;
-                }
-                else if (tipoEspecifico == "Nativa")
-                {
-                    comboTipoEspecifico.SelectedValue = 2;
-                }
+                // Deshabilitar los ComboBox de tipo de producto y tipo específico
                 comboTipoEspecifico.Enabled = false;
                 comboTipoProducto.Enabled = false;
             }
@@ -76,6 +81,7 @@ namespace biosys
             txtNombreProd.Text = string.Empty;
             comboTipoProducto.SelectedIndex = -1;
             comboTipoEspecifico.SelectedIndex = -1;
+            comboTamSemilla.SelectedIndex = -1;
             lblError.Visible = false;
         }
 
@@ -95,8 +101,17 @@ namespace biosys
             comboTipoEspecifico.DisplayMember = "nombre";
             comboTipoEspecifico.ValueMember = "id";
 
+            string sqlTamaniosSemilla = "SELECT id, nombre FROM tam_semilla";
+            DataTable dtTamaniosSemilla = Controladora.Controladora.ExecuteQuery(sqlTamaniosSemilla);
+            comboTamSemilla.DataSource = dtTamaniosSemilla;
+            comboTamSemilla.DisplayMember = "nombre";
+            comboTamSemilla.ValueMember = "id";
+
             comboTipoProducto.SelectedIndex = -1;
             comboTipoEspecifico.SelectedIndex = -1;
+            comboTamSemilla.SelectedIndex = -1;
+
+            comboTamSemilla.Enabled = true;
 
             // Agregar las opciones de ordenamiento al ComboBox
             comboBoxOrdenar.Items.Add("Nombre ascendente");
@@ -110,6 +125,9 @@ namespace biosys
             comboBoxOrdenar.SelectedIndex = -1;
 
             CargarProductosEnDataGridView();
+
+            dataGridViewProductos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewProductos.ScrollBars = ScrollBars.None;
 
             // Calcular la posición x para centrar el Label horizontalmente
             int labelPosX = (this.ClientSize.Width - labelTitulo.Width) / 2;
@@ -257,13 +275,14 @@ namespace biosys
                 var worksheet = package.Workbook.Worksheets[0];
                 int rows = worksheet.Dimension.Rows;
 
-                // Verificar que el archivo Excel tiene las columnas esperadas (NOMBRE, TIPO PRODUCTO y TIPO ESPECIFICO)
+                // Verificar que el archivo Excel tiene las columnas esperadas (NOMBRE, TIPO PRODUCTO, TIPO ESPECIFICO y TAMAÑO SEMILLA)
                 if (worksheet.Cells[1, 1].Text.Trim().ToUpper() != "NOMBRE" ||
                     worksheet.Cells[1, 2].Text.Trim().ToUpper() != "TIPO PRODUCTO" ||
-                    worksheet.Cells[1, 3].Text.Trim().ToUpper() != "TIPO ESPECIFICO")
+                    worksheet.Cells[1, 3].Text.Trim().ToUpper() != "TIPO ESPECIFICO" ||
+                    worksheet.Cells[1, 4].Text.Trim().ToUpper() != "TAMAÑO SEMILLA")
                 {
                     // Si las columnas no tienen los títulos esperados, mostrar un mensaje de error y salir
-                    msgError("El archivo Excel no tiene el formato esperado.");
+                    msgError("El archivo Excel no tiene los títulos adecuados.");
                     return null;
                 }
 
@@ -272,6 +291,7 @@ namespace biosys
                     string nombre = worksheet.Cells[i, 1].Value?.ToString(); // Columna 1 (Nombre)
                     string tipoProductoString = worksheet.Cells[i, 2].Value?.ToString(); // Columna 2 (TipoProducto)
                     string tipoEspecificoString = worksheet.Cells[i, 3].Value?.ToString(); // Columna 3 (TipoEspecifico)
+                    string tamSemillaString = worksheet.Cells[i, 4].Value?.ToString(); // Columna 4 (TamañoSemilla)
 
                     // Verificar que los campos no estén vacíos
                     if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(tipoProductoString) || string.IsNullOrWhiteSpace(tipoEspecificoString))
@@ -283,18 +303,40 @@ namespace biosys
 
                     int tipoProducto;
                     int tipoEspecifico;
+                    int? tamSemillaId = null; // Inicializar en null para productos de tipo Árbol
 
                     // Obtener los valores enteros correspondientes a TipoProducto y TipoEspecifico
                     try
                     {
                         tipoProducto = ObtenerTipoProductoID(tipoProductoString);
                         tipoEspecifico = ObtenerTipoEspecificoID(tipoEspecificoString);
+
+                        // Obtener el ID del tamaño de semilla si el producto es de tipo Semilla
+                        if (tipoProducto == 2) // Si el producto es de tipo Semilla
+                        {
+                            // Verificar que se haya proporcionado un valor válido para tamaño de semilla
+                            if (string.IsNullOrWhiteSpace(tamSemillaString) || !tamSemillaDictionary.ContainsKey(tamSemillaString))
+                            {
+                                msgError("Valor de Tamaño Semilla inválido para productos de tipo Semilla.");
+                                return null;
+                            }
+                            tamSemillaId = tamSemillaDictionary[tamSemillaString];
+                        }
+                        else
+                        {
+                            // Si el producto es de tipo Árbol, asegúrate de que el valor de tamaño de semilla esté en blanco
+                            if (!string.IsNullOrWhiteSpace(tamSemillaString))
+                            {
+                                msgError("Para productos de tipo Árbol, el campo Tamaño Semilla debe estar en blanco.");
+                                return null;
+                            }
+                        }
                     }
                     catch (ArgumentException)
                     {
                         // Si se produce una excepción en los métodos ObtenerTipoProductoID o ObtenerTipoEspecificoID,
-                        // significa que los valores de tipoProductoString o tipoEspecificoString no son válidos.
-                        msgError("Valores de TipoProducto o TipoEspecifico inválidos en el archivo Excel.");
+                        // significa que los valores no son válidos.
+                        msgError("Valores inválidos en el archivo Excel.");
                         return null;
                     }
 
@@ -303,7 +345,8 @@ namespace biosys
                     {
                         Nombre = nombre,
                         TipoProductoId = tipoProducto,
-                        TipoEspecificoId = tipoEspecifico
+                        TipoEspecificoId = tipoEspecifico,
+                        TamSemillaId = tamSemillaId
                     });
                 }
             }
@@ -363,6 +406,22 @@ namespace biosys
             { "Nativa", 2 }
         };
 
+        private Dictionary<string, int> tamSemillaDictionary = new Dictionary<string, int>()
+        {
+            { "Pequeña", 1 },
+            { "Mediana", 2 },
+            { "Grande", 3 }
+        };
+
+        private int ObtenerTamSemillaID(string tamSemillaString)
+        {
+            if (tamSemillaDictionary.TryGetValue(tamSemillaString, out int tamSemillaID))
+            {
+                return tamSemillaID;
+            }
+            throw new ArgumentException("Valor de TamañoSemilla no válido.");
+        }
+
         private int ObtenerTipoProductoID(string tipoProductoString)
         {
             if (tipoProductoDictionary.TryGetValue(tipoProductoString, out int tipoProductoID))
@@ -389,11 +448,11 @@ namespace biosys
             // Obtener los productos paginados desde la base de datos
             DataTable dataTable = Controladora.Controladora.ObtenerProductosPaginados(indiceInicio, tamañoPagina);
 
-            // Actualizar el DataSource del DataGridView
-            dataGridViewProductos.DataSource = dataTable;
-
             // Mostrar información de paginación
             MostrarInformacionPaginacion();
+
+            // Actualizar el DataSource del DataGridView
+            dataGridViewProductos.DataSource = dataTable;
         }
 
         private void MostrarInformacionPaginacion()
@@ -415,7 +474,6 @@ namespace biosys
                 CargarProductosEnDataGridView();
             }
         }
-
         private void btnPaginaSiguiente_Click(object sender, EventArgs e)
         {
             int totalProductos = Controladora.Controladora.ObtenerCantidadTotalProductos();
@@ -484,15 +542,18 @@ namespace biosys
 
         private void btnCargarExcel_Click(object sender, EventArgs e)
         {
+            lblError.Visible = false;
+
             // Mensaje informativo sobre cómo debe estar estructurado el archivo Excel
             string mensajeInstrucciones =
                 "El archivo Excel debe tener el siguiente formato:\n\n" +
                 "1. La primera fila debe contener los títulos de las columnas.\n\n" +
                 "2. Las columnas deben estar en el siguiente orden:\n\n" +
-                "   NOMBRE | TIPO PRODUCTO | TIPO ESPECIFICO\n\n" +
+                "   NOMBRE | TIPO PRODUCTO | TIPO ESPECIFICO | TAMAÑO SEMILLA\n\n" +
                 "3. En la columna 'TIPO PRODUCTO', debe especificar 'Árbol' o 'Semilla'. Respetar tildes y buena tipografía.\n\n" +
                 "4. En la columna 'TIPO ESPECIFICO', debe especificar 'Éxotica' o 'Nativa'. Respetar tildes y buena tipografía.\n\n" +
-                "5. Asegúrese de que no haya espacios vacíos en ninguna de las celdas de estas columnas.";
+                "5. En la columna 'TAMAÑO SEMILLA', debe especificar 'Pequeña', 'Mediana' o 'Grande' para productos de tipo Semilla. Para productos de tipo Árbol, dejar el campo vacío.";
+
 
             MessageBox.Show(mensajeInstrucciones, "Instrucciones para cargar el archivo Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -550,7 +611,7 @@ namespace biosys
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             // Mostrar un cuadro de diálogo de confirmación
-            DialogResult result = MessageBox.Show("¿Está seguro de que desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Verificar si el usuario ha confirmado la cancelación
             if (result == DialogResult.Yes)
@@ -566,6 +627,7 @@ namespace biosys
             LimpiarCampos();
             comboTipoEspecifico.Enabled = true;
             comboTipoProducto.Enabled = true;
+            comboTamSemilla.Enabled = false;
 
             // Deseleccionar la fila en el DataGridView
             dataGridViewProductos.ClearSelection();
@@ -586,12 +648,29 @@ namespace biosys
             string nombre = txtNombreProd.Text;
             int tipoProductoID = Convert.ToInt32(comboTipoProducto.SelectedValue);
             int tipoEspecificoID = Convert.ToInt32(comboTipoEspecifico.SelectedValue);
+            int? tamSemillaID = null;
+
+            
+            if (tipoProductoID == 2)
+            {
+                // Verificar si se seleccionó un valor en el combo box
+                if (comboTamSemilla.SelectedValue == null)
+                {
+                    msgError("Por favor, seleccione un tamaño de semilla.");
+                    return;
+                }
+                else
+                { 
+                    tamSemillaID = Convert.ToInt32(comboTamSemilla.SelectedValue);
+                }
+            }
 
             Producto producto = new Producto()
             {
                 Nombre = nombre,
                 TipoProductoId = tipoProductoID,
                 TipoEspecificoId = tipoEspecificoID,
+                TamSemillaId = tamSemillaID
             };
 
             // Verificar si el producto ya existe
@@ -614,8 +693,6 @@ namespace biosys
             }
             else
             {
-                // No se seleccionó una fila previamente, se creará un nuevo registro
-                // Insertar el producto en la base de datos
                 Controladora.Controladora.InsertarProducto(producto);
 
                 // Mostrar mensaje de éxito
@@ -658,5 +735,31 @@ namespace biosys
         {
             btnGuardarProd.BackColor = Color.White;
         }
+
+        private void comboTipoProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Obtener el ID del tipo de producto seleccionado
+            if (comboTipoProducto.SelectedItem != null && int.TryParse(comboTipoProducto.SelectedValue.ToString(), out int selectedProductId))
+            {
+                // Verificar si el ID del tipo de producto seleccionado es igual al ID correspondiente a "Semilla" (por ejemplo, 2)
+                if (selectedProductId == 2) // Cambiar 2 por el ID correcto de "Semilla" en tu base de datos
+                {
+                    comboTamSemilla.Enabled = true; // Habilitar comboTamSemilla si el tipo de producto es "Semilla"
+                }
+                else
+                {
+                    comboTamSemilla.Enabled = false; // Deshabilitar comboTamSemilla si el tipo de producto no es "Semilla"
+                    comboTamSemilla.SelectedIndex = -1; // Deseleccionar cualquier opción seleccionada en comboTamSemilla
+                }
+            }
+            else
+            {
+                // Deshabilitar comboTamSemilla si no hay ningún tipo de producto seleccionado
+                comboTamSemilla.Enabled = false;
+                // Deseleccionar cualquier opción seleccionada en comboTamSemilla
+                comboTamSemilla.SelectedIndex = -1;
+            }
+        }
+
     }
 }

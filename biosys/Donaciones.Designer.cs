@@ -47,11 +47,16 @@
             this.lblError = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.listDetalleDonacion = new System.Windows.Forms.ListBox();
-            this.btnCancelar = new biosys.RoundedButton();
-            this.btnLimpiar = new biosys.RoundedButton();
-            this.btnGuardarDetalle = new biosys.RoundedButton();
-            this.btnRegistrarDonacion = new biosys.RoundedButton();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.comboUnidadMedida = new System.Windows.Forms.ComboBox();
+            this.labelkilogramo = new System.Windows.Forms.Label();
+            this.labelgramo = new System.Windows.Forms.Label();
             this.btnHistorialDonaciones = new biosys.RoundedButton();
+            this.btnRegistrarDonacion = new biosys.RoundedButton();
+            this.btnGuardarDetalle = new biosys.RoundedButton();
+            this.btnLimpiar = new biosys.RoundedButton();
+            this.btnCancelar = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.numericCantidad)).BeginInit();
             this.SuspendLayout();
             // 
@@ -105,6 +110,7 @@
             this.comboProductos.Name = "comboProductos";
             this.comboProductos.Size = new System.Drawing.Size(336, 26);
             this.comboProductos.TabIndex = 64;
+            this.comboProductos.SelectedIndexChanged += new System.EventHandler(this.comboProductos_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -160,7 +166,7 @@
             // numericCantidad
             // 
             this.numericCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericCantidad.Location = new System.Drawing.Point(407, 407);
+            this.numericCantidad.Location = new System.Drawing.Point(419, 441);
             this.numericCantidad.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -175,7 +181,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(84, 409);
+            this.label7.Location = new System.Drawing.Point(88, 443);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(70, 18);
             this.label7.TabIndex = 77;
@@ -186,7 +192,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Red;
-            this.label8.Location = new System.Drawing.Point(154, 409);
+            this.label8.Location = new System.Drawing.Point(158, 443);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(15, 20);
             this.label8.TabIndex = 78;
@@ -196,7 +202,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(305, 465);
+            this.label13.Location = new System.Drawing.Point(305, 479);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(299, 16);
             this.label13.TabIndex = 79;
@@ -207,7 +213,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Red;
-            this.label9.Location = new System.Drawing.Point(481, 462);
+            this.label9.Location = new System.Drawing.Point(481, 476);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(15, 20);
             this.label9.TabIndex = 80;
@@ -220,7 +226,7 @@
             this.lblError.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lblError.Image = ((System.Drawing.Image)(resources.GetObject("lblError.Image")));
             this.lblError.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblError.Location = new System.Drawing.Point(163, 513);
+            this.lblError.Location = new System.Drawing.Point(163, 521);
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(122, 18);
             this.lblError.TabIndex = 81;
@@ -247,43 +253,69 @@
             this.listDetalleDonacion.Size = new System.Drawing.Size(610, 310);
             this.listDetalleDonacion.TabIndex = 85;
             // 
-            // btnCancelar
+            // label17
             // 
-            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(87, 606);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(119, 48);
-            this.btnCancelar.TabIndex = 141;
-            this.btnCancelar.Text = "CANCELAR";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
-            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.Red;
+            this.label17.Location = new System.Drawing.Point(213, 389);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(15, 20);
+            this.label17.TabIndex = 152;
+            this.label17.Text = "*";
             // 
-            // btnLimpiar
+            // label16
             // 
-            this.btnLimpiar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(252, 606);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(119, 48);
-            this.btnLimpiar.TabIndex = 142;
-            this.btnLimpiar.Text = "LIMPIAR CAMPOS";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(84, 391);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(130, 18);
+            this.label16.TabIndex = 151;
+            this.label16.Text = "Unidad de Medida:";
             // 
-            // btnGuardarDetalle
+            // comboUnidadMedida
             // 
-            this.btnGuardarDetalle.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnGuardarDetalle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuardarDetalle.Location = new System.Drawing.Point(417, 606);
-            this.btnGuardarDetalle.Name = "btnGuardarDetalle";
-            this.btnGuardarDetalle.Size = new System.Drawing.Size(119, 48);
-            this.btnGuardarDetalle.TabIndex = 143;
-            this.btnGuardarDetalle.Text = "GUARDAR DETALLE";
-            this.btnGuardarDetalle.UseVisualStyleBackColor = true;
-            this.btnGuardarDetalle.Click += new System.EventHandler(this.btnGuardarDetalle_Click);
+            this.comboUnidadMedida.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboUnidadMedida.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboUnidadMedida.FormattingEnabled = true;
+            this.comboUnidadMedida.Location = new System.Drawing.Point(293, 387);
+            this.comboUnidadMedida.Name = "comboUnidadMedida";
+            this.comboUnidadMedida.Size = new System.Drawing.Size(336, 26);
+            this.comboUnidadMedida.TabIndex = 150;
+            this.comboUnidadMedida.SelectedIndexChanged += new System.EventHandler(this.comboUnidadMedida_SelectedIndexChanged);
+            // 
+            // labelkilogramo
+            // 
+            this.labelkilogramo.AutoSize = true;
+            this.labelkilogramo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelkilogramo.Location = new System.Drawing.Point(515, 444);
+            this.labelkilogramo.Name = "labelkilogramo";
+            this.labelkilogramo.Size = new System.Drawing.Size(24, 18);
+            this.labelkilogramo.TabIndex = 153;
+            this.labelkilogramo.Text = "kg";
+            // 
+            // labelgramo
+            // 
+            this.labelgramo.AutoSize = true;
+            this.labelgramo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelgramo.Location = new System.Drawing.Point(518, 444);
+            this.labelgramo.Name = "labelgramo";
+            this.labelgramo.Size = new System.Drawing.Size(21, 18);
+            this.labelgramo.TabIndex = 154;
+            this.labelgramo.Text = "gr";
+            // 
+            // btnHistorialDonaciones
+            // 
+            this.btnHistorialDonaciones.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHistorialDonaciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHistorialDonaciones.Location = new System.Drawing.Point(1016, 532);
+            this.btnHistorialDonaciones.Name = "btnHistorialDonaciones";
+            this.btnHistorialDonaciones.Size = new System.Drawing.Size(119, 48);
+            this.btnHistorialDonaciones.TabIndex = 147;
+            this.btnHistorialDonaciones.Text = "HISTORIAL DE DONACIONES";
+            this.btnHistorialDonaciones.UseVisualStyleBackColor = true;
+            this.btnHistorialDonaciones.Click += new System.EventHandler(this.btnHistorialDonaciones_Click);
             // 
             // btnRegistrarDonacion
             // 
@@ -299,17 +331,43 @@
             this.btnRegistrarDonacion.MouseEnter += new System.EventHandler(this.btnRegistrarDonacion_MouseEnter);
             this.btnRegistrarDonacion.MouseLeave += new System.EventHandler(this.btnRegistrarDonacion_MouseLeave);
             // 
-            // btnHistorialDonaciones
+            // btnGuardarDetalle
             // 
-            this.btnHistorialDonaciones.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnHistorialDonaciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHistorialDonaciones.Location = new System.Drawing.Point(1016, 532);
-            this.btnHistorialDonaciones.Name = "btnHistorialDonaciones";
-            this.btnHistorialDonaciones.Size = new System.Drawing.Size(119, 48);
-            this.btnHistorialDonaciones.TabIndex = 147;
-            this.btnHistorialDonaciones.Text = "HISTORIAL DE DONACIONES";
-            this.btnHistorialDonaciones.UseVisualStyleBackColor = true;
-            this.btnHistorialDonaciones.Click += new System.EventHandler(this.btnHistorialDonaciones_Click);
+            this.btnGuardarDetalle.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGuardarDetalle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGuardarDetalle.Location = new System.Drawing.Point(417, 606);
+            this.btnGuardarDetalle.Name = "btnGuardarDetalle";
+            this.btnGuardarDetalle.Size = new System.Drawing.Size(119, 48);
+            this.btnGuardarDetalle.TabIndex = 143;
+            this.btnGuardarDetalle.Text = "GUARDAR DETALLE";
+            this.btnGuardarDetalle.UseVisualStyleBackColor = true;
+            this.btnGuardarDetalle.Click += new System.EventHandler(this.btnGuardarDetalle_Click);
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.Location = new System.Drawing.Point(252, 606);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(119, 48);
+            this.btnLimpiar.TabIndex = 142;
+            this.btnLimpiar.Text = "LIMPIAR CAMPOS";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Location = new System.Drawing.Point(87, 606);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(119, 48);
+            this.btnCancelar.TabIndex = 141;
+            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
+            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
             // 
             // Donaciones
             // 
@@ -317,6 +375,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.labelgramo);
+            this.Controls.Add(this.labelkilogramo);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.comboUnidadMedida);
             this.Controls.Add(this.btnHistorialDonaciones);
             this.Controls.Add(this.btnRegistrarDonacion);
             this.Controls.Add(this.btnGuardarDetalle);
@@ -376,5 +439,10 @@
         private RoundedButton btnGuardarDetalle;
         private RoundedButton btnRegistrarDonacion;
         private RoundedButton btnHistorialDonaciones;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ComboBox comboUnidadMedida;
+        private System.Windows.Forms.Label labelkilogramo;
+        private System.Windows.Forms.Label labelgramo;
     }
 }
