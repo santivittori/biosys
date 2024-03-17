@@ -1013,10 +1013,11 @@ namespace Modelo
             return count > 0;
         }
 
-        public static void InsertarProducto(Producto producto)
+        public static int InsertarProducto(Producto producto)
         {
             string sql = "INSERT INTO productos (nombre, tipo_producto_id, tipo_especifico_id, tam_semilla_id, stock) " +
-                         "VALUES (@Nombre, @TipoProductoID, @TipoEspecificoID, @TamSemillaID, 0)";
+                         "VALUES (@Nombre, @TipoProductoID, @TipoEspecificoID, @TamSemillaID, 0);" +
+                         "SELECT SCOPE_IDENTITY();"; // Obtiene el ID del producto recién insertado
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
@@ -1025,25 +1026,26 @@ namespace Modelo
                 command.Parameters.AddWithValue("@TipoEspecificoID", producto.TipoEspecificoId);
                 command.Parameters.AddWithValue("@TamSemillaID", producto.TamSemillaId ?? (object)DBNull.Value);
 
-                command.ExecuteNonQuery();
+                // Ejecuta el comando y obtén el ID del producto insertado
+                int productoId = Convert.ToInt32(command.ExecuteScalar());
+
+                return productoId;
             }
         }
 
-        public static string ObtenerTamSemilla(int tamSemillaID)
+        public static void InsertarPrecioProducto(int productoId, decimal precioUnitario)
         {
-            string nombre = string.Empty;
-            string sql = $"SELECT nombre FROM tam_semilla WHERE id = {tamSemillaID}";
+            string sql = "INSERT INTO precios_producto (producto_id, precio_unitario, fecha_ingreso) " +
+                         "VALUES (@ProductoId, @PrecioUnitario, GETDATE())";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
             {
-                command.Parameters.AddWithValue("@tamSemillaID", tamSemillaID);
-                object result = command.ExecuteScalar();
-                nombre = result != null ? result.ToString() : string.Empty;
+                command.Parameters.AddWithValue("@ProductoId", productoId);
+                command.Parameters.AddWithValue("@PrecioUnitario", precioUnitario);
+
+                command.ExecuteNonQuery();
             }
-
-            return nombre;
         }
-
         public static void ActualizarProducto(int idProductoSeleccionado, string nuevoNombre)
         {
             string sql = "UPDATE productos SET nombre = @nuevoNombre WHERE id = @idProducto";
@@ -1361,23 +1363,28 @@ namespace Modelo
 
         public static void EliminarProducto(int idProducto)
         {
+            // Consulta SQL para eliminar el producto de la tabla productos
             string sqlDeleteProducto = "DELETE FROM productos WHERE id = @id";
+
+            // Consulta SQL para eliminar cualquier referencia al producto en la tabla tam_semilla
             string sqlDeleteTamSemilla = "DELETE FROM tam_semilla WHERE id = (SELECT tam_semilla_id FROM productos WHERE id = @id)";
 
-            using (SqlCommand command = new SqlCommand(sqlDeleteProducto, ConexionModelo.AbrirConexion()))
+            // Abrir la conexión y ejecutar las consultas SQL
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
             {
-                command.Parameters.AddWithValue("@id", idProducto);
-
                 // Eliminar el producto de la tabla productos
-                command.ExecuteNonQuery();
-            }
+                using (SqlCommand command = new SqlCommand(sqlDeleteProducto, connection))
+                {
+                    command.Parameters.AddWithValue("@id", idProducto);
+                    command.ExecuteNonQuery();
+                }
 
-            using (SqlCommand command = new SqlCommand(sqlDeleteTamSemilla, ConexionModelo.AbrirConexion()))
-            {
-                command.Parameters.AddWithValue("@id", idProducto);
-
-                // Eliminar el registro correspondiente en la tabla tam_semilla
-                command.ExecuteNonQuery();
+                // Eliminar cualquier referencia al producto en la tabla tam_semilla
+                using (SqlCommand command = new SqlCommand(sqlDeleteTamSemilla, connection))
+                {
+                    command.Parameters.AddWithValue("@id", idProducto);
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
@@ -1932,8 +1939,8 @@ namespace Modelo
         {
             int ventaId = 0;
 
-            string sql = "INSERT INTO ventas (fecha, cliente_id, usuario_id, precio_total) " +
-                         "VALUES (@FechaVenta, (SELECT id FROM clientes WHERE email_cliente = @ClienteEmail), @UsuarioId, @PrecioTotalVenta);" +
+            string sql = "INSERT INTO ventas (fecha, cliente_id, usuario_id, precio_total, medio_pago) " +
+                         "VALUES (@FechaVenta, (SELECT id FROM clientes WHERE email_cliente = @ClienteEmail), @UsuarioId, @PrecioTotalVenta, @MedioPago);" +
                          "SELECT SCOPE_IDENTITY();";
 
             using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
@@ -1942,6 +1949,7 @@ namespace Modelo
                 command.Parameters.AddWithValue("@ClienteEmail", ventaInfo.ClienteEmail);
                 command.Parameters.AddWithValue("@UsuarioId", ventaInfo.UsuarioId);
                 command.Parameters.AddWithValue("@PrecioTotalVenta", ventaInfo.PrecioTotalVenta);
+                command.Parameters.AddWithValue("@MedioPago", ventaInfo.MedioPago);
 
                 ventaId = Convert.ToInt32(command.ExecuteScalar());
             }
@@ -2199,21 +2207,23 @@ namespace Modelo
             DataTable dtHistorialCompras = new DataTable();
 
             string sql = @"SELECT c.id AS ID, 
-                            c.nro_factura AS 'Nro. Factura', 
-                            c.nro_remito AS 'Nro. Remito', 
-                            c.fecha AS 'Fecha', 
-                            p.nombre_prov AS 'Proveedor', 
-                            CASE 
-                                WHEN u.nombre_usuario = 'admin' THEN 'Usuario Privilegiado'
-                                ELSE u.nombre_usuario 
-                            END AS 'Usuario', 
-                            dp.cantidad AS 'Cantidad',
-                            pr.nombre AS 'Producto'
-                     FROM compras c
-                     INNER JOIN proveedores p ON c.proveedor_id = p.id
-                     INNER JOIN usuarios u ON c.usuario_id = u.id
-                     INNER JOIN detalle_compra dp ON c.id = dp.compra_id
-                     INNER JOIN productos pr ON dp.producto_id = pr.id";
+                    c.nro_factura AS 'Nro. Factura', 
+                    c.nro_remito AS 'Nro. Remito', 
+                    c.fecha AS 'Fecha', 
+                    p.nombre_prov AS 'Proveedor', 
+                    CASE 
+                        WHEN u.nombre_usuario = 'admin' THEN 'Usuario Privilegiado'
+                        ELSE u.nombre_usuario 
+                    END AS 'Usuario', 
+                    SUM(dp.cantidad) AS 'Cantidad',
+                    pr.nombre AS 'Producto',
+                    SUM(dp.precio_total) AS 'Precio Total'
+             FROM compras c
+             INNER JOIN proveedores p ON c.proveedor_id = p.id
+             INNER JOIN usuarios u ON c.usuario_id = u.id
+             INNER JOIN detalle_compra dp ON c.id = dp.compra_id
+             INNER JOIN productos pr ON dp.producto_id = pr.id
+             GROUP BY c.id, c.nro_factura, c.nro_remito, c.fecha, p.nombre_prov, u.nombre_usuario, pr.nombre";
 
             using (SqlConnection connection = ConexionModelo.AbrirConexion())
             {
@@ -2226,6 +2236,7 @@ namespace Modelo
 
             return dtHistorialCompras;
         }
+
         public static int ObtenerCantidadTotalCompras()
         {
             int totalCompras = 0;
@@ -2383,5 +2394,215 @@ namespace Modelo
 
             return totalReproducciones;
         }
+
+        public static bool FueComprado(int productoId)
+        {
+            string sql = @"
+            SELECT COUNT(*) 
+            FROM detalle_compra 
+            WHERE producto_id = @productoId
+        ";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@productoId", productoId);
+
+                    int count = (int)command.ExecuteScalar();
+
+                    return count > 0;
+                }
+            }
+        }
+
+        public static DataTable ObtenerHistorialVentasConNombres()
+        {
+            DataTable dtHistorialVentas = new DataTable();
+
+            string sql = @"SELECT v.id AS ID, 
+                        v.fecha AS 'Fecha', 
+                        c.nombre_cliente AS 'Cliente', 
+                        CASE 
+                                WHEN u.nombre_usuario = 'admin' THEN 'Usuario Privilegiado'
+                                ELSE u.nombre_usuario
+                                END AS 'Usuario',
+                        v.medio_pago AS 'Medio de Pago', 
+                        SUM(dv.cantidad) AS 'Cantidad', 
+                        p.nombre AS 'Producto', 
+                        SUM(dv.precio_total) AS 'Precio Total'
+                   FROM ventas v
+                   INNER JOIN clientes c ON v.cliente_id = c.id
+                   INNER JOIN usuarios u ON v.usuario_id = u.id
+                   INNER JOIN detalle_venta dv ON v.id = dv.venta_id
+                   INNER JOIN productos p ON dv.producto_id = p.id
+                   GROUP BY v.id, v.fecha, c.nombre_cliente, u.nombre_usuario, v.medio_pago, p.nombre";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dtHistorialVentas);
+                }
+            }
+
+            return dtHistorialVentas;
+        }
+
+        public static int ObtenerCantidadTotalVentas()
+        {
+            int totalVentas = 0;
+
+            string sql = "SELECT COUNT(*) FROM ventas";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    // Ejecutar el comando y obtener el resultado
+                    totalVentas = (int)command.ExecuteScalar();
+                }
+            }
+
+            return totalVentas;
+        }
+        public static DataTable ObtenerTresArbolesMasVendidos()
+        {
+            string sql = "SELECT TOP 3 p.nombre AS Producto, SUM(dv.cantidad) AS CantidadVendida, SUM(dv.precio_total) AS MontoTotal " +
+                         "FROM detalle_venta dv " +
+                         "JOIN productos p ON dv.producto_id = p.id " +
+                         "WHERE p.tipo_producto_id = 1 " + // 1 representa el ID de Árbol en tu tabla de tipos de producto
+                         "GROUP BY p.nombre " +
+                         "ORDER BY CantidadVendida DESC";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                return dataTable;
+            }
+        }
+
+        public static DataTable ObtenerTresMediosPagoMasUtilizados()
+        {
+            DataTable mediosPagoData = new DataTable();
+
+            // Consulta SQL para obtener los tres medios de pago más utilizados
+            string sql = @"
+                SELECT TOP 3 
+                    medio_pago AS MedioPago,
+                    COUNT(*) AS Cantidad
+                FROM 
+                    ventas
+                GROUP BY 
+                    medio_pago
+                ORDER BY 
+                    COUNT(*) DESC";
+
+            // Crear una conexión y ejecutar la consulta
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(mediosPagoData);
+                }
+            }
+
+            return mediosPagoData;
+        }
+        public static DataTable ObtenerVentasPorCliente()
+        {
+            DataTable ventasPorClienteData = new DataTable();
+
+            string sql = @"SELECT c.nombre_cliente AS Cliente, COUNT(*) AS CantidadVentas
+                       FROM ventas v
+                       INNER JOIN clientes c ON v.cliente_id = c.id
+                       GROUP BY c.nombre_cliente";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(ventasPorClienteData);
+                }
+            }
+
+            return ventasPorClienteData;
+        }
+        public static DataTable ObtenerVentasPorProducto()
+        {
+            DataTable ventasPorProductoData = new DataTable();
+
+            string sql = @"SELECT p.nombre AS Producto, SUM(dv.cantidad) AS CantidadVentas
+                       FROM detalle_venta dv
+                       INNER JOIN productos p ON dv.producto_id = p.id
+                       GROUP BY p.nombre";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(ventasPorProductoData);
+                }
+            }
+
+            return ventasPorProductoData;
+        }
+        public static void GuardarPrecioUnitario(int idProducto, decimal precioUnitario)
+        {
+            string sql = @"
+                IF EXISTS (SELECT 1 FROM precios_producto WHERE producto_id = @IdProducto)
+                BEGIN
+                    UPDATE precios_producto
+                    SET precio_unitario = @PrecioUnitario, fecha_ingreso = GETDATE()
+                    WHERE producto_id = @IdProducto
+                END
+                ELSE
+                BEGIN
+                    INSERT INTO precios_producto (producto_id, precio_unitario, fecha_ingreso)
+                    VALUES (@IdProducto, @PrecioUnitario, GETDATE())
+                END";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                command.Parameters.AddWithValue("@PrecioUnitario", precioUnitario);
+                command.Parameters.AddWithValue("@IdProducto", idProducto);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public static decimal ObtenerPrecioUnitarioFijado(int productoId)
+        {
+            string sql = @"
+            SELECT TOP 1 precio_unitario
+            FROM precios_producto
+            WHERE producto_id = @productoId
+            ORDER BY fecha_ingreso DESC
+        ";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@productoId", productoId);
+
+                    object result = command.ExecuteScalar();
+
+                    if (result != null && result != DBNull.Value)
+                    {
+                        return Convert.ToDecimal(result);
+                    }
+                    return 0; // Si no hay precio registrado, retornar cero
+                }
+            }
+        }
+
     }
 }

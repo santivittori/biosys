@@ -332,6 +332,12 @@ namespace biosys
                     doc.Add(new Paragraph("\nInformes Compras:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
                     doc.Add(new Paragraph(informacionGraficosCompras, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
 
+                    InformesVentas informesVentasForm = new InformesVentas();
+                    informesVentasForm.ObtenerInformacionGraficos();
+                    string informacionGraficosVentas = informesVentasForm.ObtenerInformacionGraficos();
+                    doc.Add(new Paragraph("\nInformes Ventas:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph(informacionGraficosCompras, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
+
 
                     InformesEconomicos informesEconomicosForm = new InformesEconomicos();
                     informesEconomicosForm.ObtenerInformacionGraficos();
@@ -486,6 +492,13 @@ namespace biosys
             InformesCompras informesComprasForm = new InformesCompras();
             informesComprasForm.DashboardInstance = DashboardInstance;
             DashboardInstance.AbrirFormHijo(informesComprasForm);
+        }
+
+        private void btnInfVentas_Click(object sender, EventArgs e)
+        {
+            InformesVentas informesVentasForm = new InformesVentas();
+            informesVentasForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(informesVentasForm);
         }
     }
 }

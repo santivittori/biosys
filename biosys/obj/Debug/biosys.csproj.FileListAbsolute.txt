@@ -66,3 +66,6 @@ C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.HistorialDonaciones.r
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.HistorialRecolecciones.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.HistorialReproducciones.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.InformesCompras.resources
+C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.HistorialVentas.resources
+C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.InformesVentas.resources
+C:\Users\vitto\source\repos\biosys\biosys\obj\Debug\biosys.GestionarPrecios.resources

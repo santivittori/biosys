@@ -209,5 +209,12 @@ namespace biosys
             bajaProdForm.DashboardInstance = this;
             AbrirFormHijo(bajaProdForm);
         }
+
+        private void btnGestionarPrecios_Click(object sender, EventArgs e)
+        {
+            GestionarPrecios gestionarPreciosForm = new GestionarPrecios();
+            gestionarPreciosForm.DashboardInstance = this;
+            AbrirFormHijo(gestionarPreciosForm);
+        }
     }
 }

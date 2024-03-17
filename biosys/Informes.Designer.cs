@@ -51,6 +51,7 @@
             this.btnInfEconomicos = new biosys.RoundedButton();
             this.btnInfReproduccion = new biosys.RoundedButton();
             this.btnInfCompras = new biosys.RoundedButton();
+            this.btnInfVentas = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.CantTotal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SemillasTipo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ArbolesTipo)).BeginInit();
@@ -136,7 +137,7 @@
             // 
             this.btnDescargaGrafica.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDescargaGrafica.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDescargaGrafica.Location = new System.Drawing.Point(1238, 505);
+            this.btnDescargaGrafica.Location = new System.Drawing.Point(1238, 571);
             this.btnDescargaGrafica.Name = "btnDescargaGrafica";
             this.btnDescargaGrafica.Size = new System.Drawing.Size(119, 48);
             this.btnDescargaGrafica.TabIndex = 142;
@@ -148,7 +149,7 @@
             // 
             this.btnExportarPDF.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExportarPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportarPDF.Location = new System.Drawing.Point(1238, 441);
+            this.btnExportarPDF.Location = new System.Drawing.Point(1238, 500);
             this.btnExportarPDF.Name = "btnExportarPDF";
             this.btnExportarPDF.Size = new System.Drawing.Size(119, 48);
             this.btnExportarPDF.TabIndex = 143;
@@ -160,7 +161,7 @@
             // 
             this.btnInfEconomicos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnInfEconomicos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInfEconomicos.Location = new System.Drawing.Point(1238, 350);
+            this.btnInfEconomicos.Location = new System.Drawing.Point(1238, 359);
             this.btnInfEconomicos.Name = "btnInfEconomicos";
             this.btnInfEconomicos.Size = new System.Drawing.Size(119, 48);
             this.btnInfEconomicos.TabIndex = 144;
@@ -172,7 +173,7 @@
             // 
             this.btnInfReproduccion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnInfReproduccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInfReproduccion.Location = new System.Drawing.Point(1238, 284);
+            this.btnInfReproduccion.Location = new System.Drawing.Point(1238, 289);
             this.btnInfReproduccion.Name = "btnInfReproduccion";
             this.btnInfReproduccion.Size = new System.Drawing.Size(119, 48);
             this.btnInfReproduccion.TabIndex = 145;
@@ -192,12 +193,25 @@
             this.btnInfCompras.UseVisualStyleBackColor = true;
             this.btnInfCompras.Click += new System.EventHandler(this.btnInfCompras_Click);
             // 
+            // btnInfVentas
+            // 
+            this.btnInfVentas.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnInfVentas.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInfVentas.Location = new System.Drawing.Point(1238, 428);
+            this.btnInfVentas.Name = "btnInfVentas";
+            this.btnInfVentas.Size = new System.Drawing.Size(119, 48);
+            this.btnInfVentas.TabIndex = 147;
+            this.btnInfVentas.Text = "INFORMES VENTAS";
+            this.btnInfVentas.UseVisualStyleBackColor = true;
+            this.btnInfVentas.Click += new System.EventHandler(this.btnInfVentas_Click);
+            // 
             // Informes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnInfVentas);
             this.Controls.Add(this.btnInfCompras);
             this.Controls.Add(this.btnInfReproduccion);
             this.Controls.Add(this.btnInfEconomicos);
@@ -234,5 +248,6 @@
         private RoundedButton btnInfEconomicos;
         private RoundedButton btnInfReproduccion;
         private RoundedButton btnInfCompras;
+        private RoundedButton btnInfVentas;
     }
 }

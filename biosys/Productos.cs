@@ -83,6 +83,9 @@ namespace biosys
             comboTipoEspecifico.SelectedIndex = -1;
             comboTamSemilla.SelectedIndex = -1;
             lblError.Visible = false;
+
+            comboTipoEspecifico.Enabled = true;
+            comboTipoProducto.Enabled = true;
         }
 
         private void Productos_Load(object sender, EventArgs e)
@@ -650,7 +653,6 @@ namespace biosys
             int tipoEspecificoID = Convert.ToInt32(comboTipoEspecifico.SelectedValue);
             int? tamSemillaID = null;
 
-            
             if (tipoProductoID == 2)
             {
                 // Verificar si se seleccionó un valor en el combo box
@@ -660,7 +662,7 @@ namespace biosys
                     return;
                 }
                 else
-                { 
+                {
                     tamSemillaID = Convert.ToInt32(comboTamSemilla.SelectedValue);
                 }
             }
@@ -682,7 +684,7 @@ namespace biosys
                 return;
             }
 
-            // Verificar si se seleccionó una fila para modificar
+            // Verificar si se debe insertar un nuevo producto o actualizar uno existente
             if (idProductoSeleccionado != 0)
             {
                 // Actualizar el producto en la base de datos utilizando el ID del producto seleccionado
@@ -693,7 +695,11 @@ namespace biosys
             }
             else
             {
-                Controladora.Controladora.InsertarProducto(producto);
+                // Insertar el producto y obtener su ID
+                int productoId = Controladora.Controladora.InsertarProducto(producto);
+
+                // Insertar el precio inicial del producto
+                Controladora.Controladora.InsertarPrecioProducto(productoId, 0);
 
                 // Mostrar mensaje de éxito
                 MessageBox.Show("Producto guardado exitosamente.", "Guardado exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);

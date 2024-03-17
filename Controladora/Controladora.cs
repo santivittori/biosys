@@ -228,9 +228,13 @@ namespace Controladora
         {
             return ConsultasModelo.VerificarProductoExistente(producto);
         }
-        public static void InsertarProducto(Producto producto)
+        public static int InsertarProducto(Producto producto)
         {
-            ConsultasModelo.InsertarProducto(producto);
+            return ConsultasModelo.InsertarProducto(producto);
+        }
+        public static void InsertarPrecioProducto(int productoId, decimal precioUnitario)
+        {
+            ConsultasModelo.InsertarPrecioProducto(productoId, precioUnitario);
         }
         public static int GuardarCompra(CompraInfo compraInfo)
         {
@@ -507,5 +511,42 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerCantidadTotalReproducciones();
         }
+        public static bool FueComprado(int productoId)
+        {
+            return ConsultasModelo.FueComprado(productoId);
+        }
+        public static DataTable ObtenerHistorialVentasConNombres()
+        {
+            return ConsultasModelo.ObtenerHistorialVentasConNombres();
+        }
+        public static int ObtenerCantidadTotalVentas()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalVentas();
+        }
+        public static DataTable ObtenerTresArbolesMasVendidos()
+        {
+            return ConsultasModelo.ObtenerTresArbolesMasVendidos();
+        }
+        public static DataTable ObtenerTresMediosPagoMasUtilizados()
+        {
+            return ConsultasModelo.ObtenerTresMediosPagoMasUtilizados();
+        }
+        public static DataTable ObtenerVentasPorCliente()
+        {
+            return ConsultasModelo.ObtenerVentasPorCliente();
+        }
+        public static DataTable ObtenerVentasPorProducto()
+        {
+            return ConsultasModelo.ObtenerVentasPorProducto();
+        }
+        public static void GuardarPrecioUnitario(int idProducto, decimal precioUnitario)
+        {
+            ConsultasModelo.GuardarPrecioUnitario(idProducto, precioUnitario);
+        }
+        public static decimal ObtenerPrecioUnitarioFijado(int productoId)
+        {
+            return ConsultasModelo.ObtenerPrecioUnitarioFijado(productoId);
+        }
+
     }
 }

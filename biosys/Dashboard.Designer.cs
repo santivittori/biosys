@@ -60,6 +60,12 @@
             this.btnCerrarSesion = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.PanelContenedor = new System.Windows.Forms.Panel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.btnGestionarPrecios = new System.Windows.Forms.Button();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.btnAuditoria = new System.Windows.Forms.Button();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.btnBackup = new System.Windows.Forms.Button();
             this.BarraTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnMinimizar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
@@ -124,7 +130,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(6, 59);
+            this.pictureBox1.Location = new System.Drawing.Point(6, 7);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(94, 95);
             this.pictureBox1.TabIndex = 0;
@@ -134,7 +140,7 @@
             // 
             this.lblRol.AutoSize = true;
             this.lblRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRol.Location = new System.Drawing.Point(106, 118);
+            this.lblRol.Location = new System.Drawing.Point(106, 66);
             this.lblRol.Name = "lblRol";
             this.lblRol.Size = new System.Drawing.Size(31, 16);
             this.lblRol.TabIndex = 18;
@@ -144,7 +150,7 @@
             // 
             this.lblUsuario.AutoSize = true;
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuario.Location = new System.Drawing.Point(106, 88);
+            this.lblUsuario.Location = new System.Drawing.Point(106, 36);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(61, 16);
             this.lblUsuario.TabIndex = 17;
@@ -152,7 +158,13 @@
             // 
             // Menu
             // 
+            this.Menu.Controls.Add(this.panel11);
+            this.Menu.Controls.Add(this.panel10);
+            this.Menu.Controls.Add(this.btnBackup);
+            this.Menu.Controls.Add(this.panel9);
+            this.Menu.Controls.Add(this.btnAuditoria);
             this.Menu.Controls.Add(this.btnProductos);
+            this.Menu.Controls.Add(this.btnGestionarPrecios);
             this.Menu.Controls.Add(this.btnRecoleccion);
             this.Menu.Controls.Add(this.btnProveedores);
             this.Menu.Controls.Add(this.btnCompras);
@@ -172,9 +184,9 @@
             this.Menu.Controls.Add(this.panel4);
             this.Menu.Controls.Add(this.btnInformes);
             this.Menu.Controls.Add(this.btnVentas);
-            this.Menu.Location = new System.Drawing.Point(0, 196);
+            this.Menu.Location = new System.Drawing.Point(0, 112);
             this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(277, 492);
+            this.Menu.Size = new System.Drawing.Size(277, 605);
             this.Menu.TabIndex = 16;
             // 
             // btnProductos
@@ -517,7 +529,7 @@
             this.btnCerrarSesion.ForeColor = System.Drawing.Color.Black;
             this.btnCerrarSesion.Image = ((System.Drawing.Image)(resources.GetObject("btnCerrarSesion.Image")));
             this.btnCerrarSesion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCerrarSesion.Location = new System.Drawing.Point(6, 738);
+            this.btnCerrarSesion.Location = new System.Drawing.Point(6, 741);
             this.btnCerrarSesion.Name = "btnCerrarSesion";
             this.btnCerrarSesion.Size = new System.Drawing.Size(271, 32);
             this.btnCerrarSesion.TabIndex = 11;
@@ -529,7 +541,7 @@
             // 
             this.panel6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.panel6.BackColor = System.Drawing.Color.CadetBlue;
-            this.panel6.Location = new System.Drawing.Point(0, 738);
+            this.panel6.Location = new System.Drawing.Point(0, 741);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(8, 32);
             this.panel6.TabIndex = 12;
@@ -542,6 +554,91 @@
             this.PanelContenedor.Name = "PanelContenedor";
             this.PanelContenedor.Size = new System.Drawing.Size(1400, 782);
             this.PanelContenedor.TabIndex = 3;
+            // 
+            // panel9
+            // 
+            this.panel9.BackColor = System.Drawing.Color.CadetBlue;
+            this.panel9.Location = new System.Drawing.Point(0, 491);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(8, 32);
+            this.panel9.TabIndex = 35;
+            // 
+            // btnGestionarPrecios
+            // 
+            this.btnGestionarPrecios.BackColor = System.Drawing.Color.Teal;
+            this.btnGestionarPrecios.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGestionarPrecios.FlatAppearance.BorderSize = 0;
+            this.btnGestionarPrecios.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
+            this.btnGestionarPrecios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
+            this.btnGestionarPrecios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGestionarPrecios.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGestionarPrecios.ForeColor = System.Drawing.Color.Black;
+            this.btnGestionarPrecios.Image = ((System.Drawing.Image)(resources.GetObject("btnGestionarPrecios.Image")));
+            this.btnGestionarPrecios.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGestionarPrecios.Location = new System.Drawing.Point(6, 491);
+            this.btnGestionarPrecios.Name = "btnGestionarPrecios";
+            this.btnGestionarPrecios.Size = new System.Drawing.Size(271, 32);
+            this.btnGestionarPrecios.TabIndex = 34;
+            this.btnGestionarPrecios.Tag = "Gestionar Precios";
+            this.btnGestionarPrecios.Text = "GESTIONAR PRECIOS";
+            this.btnGestionarPrecios.UseVisualStyleBackColor = false;
+            this.btnGestionarPrecios.Click += new System.EventHandler(this.btnGestionarPrecios_Click);
+            // 
+            // panel10
+            // 
+            this.panel10.BackColor = System.Drawing.Color.CadetBlue;
+            this.panel10.Location = new System.Drawing.Point(0, 529);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(8, 32);
+            this.panel10.TabIndex = 37;
+            // 
+            // btnAuditoria
+            // 
+            this.btnAuditoria.BackColor = System.Drawing.Color.Teal;
+            this.btnAuditoria.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAuditoria.FlatAppearance.BorderSize = 0;
+            this.btnAuditoria.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
+            this.btnAuditoria.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
+            this.btnAuditoria.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAuditoria.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAuditoria.ForeColor = System.Drawing.Color.Black;
+            this.btnAuditoria.Image = ((System.Drawing.Image)(resources.GetObject("btnAuditoria.Image")));
+            this.btnAuditoria.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAuditoria.Location = new System.Drawing.Point(6, 529);
+            this.btnAuditoria.Name = "btnAuditoria";
+            this.btnAuditoria.Size = new System.Drawing.Size(271, 32);
+            this.btnAuditoria.TabIndex = 36;
+            this.btnAuditoria.Tag = "Auditoria";
+            this.btnAuditoria.Text = "AUDITORÍA";
+            this.btnAuditoria.UseVisualStyleBackColor = false;
+            // 
+            // panel11
+            // 
+            this.panel11.BackColor = System.Drawing.Color.CadetBlue;
+            this.panel11.Location = new System.Drawing.Point(0, 567);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(8, 32);
+            this.panel11.TabIndex = 39;
+            // 
+            // btnBackup
+            // 
+            this.btnBackup.BackColor = System.Drawing.Color.Teal;
+            this.btnBackup.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnBackup.FlatAppearance.BorderSize = 0;
+            this.btnBackup.FlatAppearance.MouseDownBackColor = System.Drawing.Color.CadetBlue;
+            this.btnBackup.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CadetBlue;
+            this.btnBackup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBackup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBackup.ForeColor = System.Drawing.Color.Black;
+            this.btnBackup.Image = ((System.Drawing.Image)(resources.GetObject("btnBackup.Image")));
+            this.btnBackup.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBackup.Location = new System.Drawing.Point(6, 567);
+            this.btnBackup.Name = "btnBackup";
+            this.btnBackup.Size = new System.Drawing.Size(271, 32);
+            this.btnBackup.TabIndex = 38;
+            this.btnBackup.Tag = "Backup";
+            this.btnBackup.Text = "BACKUP Y RESTORE";
+            this.btnBackup.UseVisualStyleBackColor = false;
             // 
             // Dashboard
             // 
@@ -601,5 +698,11 @@
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Button btnBajaProductos;
         private System.Windows.Forms.Panel PanelContenedor;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Button btnGestionarPrecios;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Button btnBackup;
+        private System.Windows.Forms.Button btnAuditoria;
     }
 }

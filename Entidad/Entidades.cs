@@ -188,6 +188,7 @@ namespace Entidad
         public string ClienteEmail { get; set; }
         public int UsuarioId { get; set; }
         public decimal PrecioTotalVenta { get; set; }
+        public string MedioPago { get; set; }
     }
 
     public class Cliente

@@ -477,6 +477,9 @@ namespace biosys
 
                     Controladora.Controladora.GuardarDetalleCompra(detalleCompraInfo);
                     Controladora.Controladora.ActualizarStock(productoId, cantidad);
+
+                    // Actualizar el precio unitario del producto
+                    Controladora.Controladora.GuardarPrecioUnitario(productoId, precioUnitario);
                 }
 
                 LimpiarCampos();

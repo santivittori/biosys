@@ -125,6 +125,12 @@
     <Compile Include="Donaciones.Designer.cs">
       <DependentUpon>Donaciones.cs</DependentUpon>
     </Compile>
+    <Compile Include="GestionarPrecios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestionarPrecios.Designer.cs">
+      <DependentUpon>GestionarPrecios.cs</DependentUpon>
+    </Compile>
     <Compile Include="GestionarUsuario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +161,12 @@
     <Compile Include="HistorialReproducciones.Designer.cs">
       <DependentUpon>HistorialReproducciones.cs</DependentUpon>
     </Compile>
+    <Compile Include="HistorialVentas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistorialVentas.Designer.cs">
+      <DependentUpon>HistorialVentas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Informes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +190,12 @@
     </Compile>
     <Compile Include="InformesReproduccion.Designer.cs">
       <DependentUpon>InformesReproduccion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InformesVentas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InformesVentas.Designer.cs">
+      <DependentUpon>InformesVentas.cs</DependentUpon>
     </Compile>
     <Compile Include="Inicio.cs">
       <SubType>Form</SubType>
@@ -259,6 +277,9 @@
     <EmbeddedResource Include="Donaciones.resx">
       <DependentUpon>Donaciones.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GestionarPrecios.resx">
+      <DependentUpon>GestionarPrecios.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GestionarUsuario.resx">
       <DependentUpon>GestionarUsuario.cs</DependentUpon>
     </EmbeddedResource>
@@ -274,6 +295,9 @@
     <EmbeddedResource Include="HistorialReproducciones.resx">
       <DependentUpon>HistorialReproducciones.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="HistorialVentas.resx">
+      <DependentUpon>HistorialVentas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Informes.resx">
       <DependentUpon>Informes.cs</DependentUpon>
     </EmbeddedResource>
@@ -285,6 +309,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InformesReproduccion.resx">
       <DependentUpon>InformesReproduccion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InformesVentas.resx">
+      <DependentUpon>InformesVentas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inicio.resx">
       <DependentUpon>Inicio.cs</DependentUpon>
