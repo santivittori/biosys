@@ -15,7 +15,7 @@ namespace biosys
         public Dashboard DashboardInstance { get; set; }
 
         private DataTable dtHistorialVentasOriginal; // DataTable original sin filtrar
-        private int tamañoPagina = 25; // Tamaño de la página
+        private int tamañoPagina = 24; // Tamaño de la página
         private int paginaActual = 1; // Página actual
 
         public HistorialVentas()
@@ -35,6 +35,7 @@ namespace biosys
 
             // Configurar el DataGridView para que no se ajuste automáticamente al tamaño del formulario
             dataGridViewHistorialVentas.Anchor = AnchorStyles.None;
+            dataGridViewHistorialVentas.ScrollBars = ScrollBars.None;
         }
 
         private void LlenarDataGridView()
@@ -70,12 +71,12 @@ namespace biosys
             }
 
             // Asignar los datos filtrados al DataGridView
-            dataGridViewHistorialVentas.DataSource = dtHistorialVentasOriginal;
+            dataGridViewHistorialVentas.DataSource = dtPagina;
         }
 
         private void MostrarInformacionPaginacionVentas()
         {
-            int totalVentas = dataGridViewHistorialVentas.Rows.Count;
+            int totalVentas = dtHistorialVentasOriginal.Rows.Count; // Obtener el total de ventas
             int totalPaginas = (int)Math.Ceiling((double)totalVentas / tamañoPagina);
             labelHistorialVentas.Text = $"Página {paginaActual} de {totalPaginas}. Total de ventas: {totalVentas}";
         }

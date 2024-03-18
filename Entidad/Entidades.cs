@@ -189,6 +189,7 @@ namespace Entidad
         public int UsuarioId { get; set; }
         public decimal PrecioTotalVenta { get; set; }
         public string MedioPago { get; set; }
+        public string CodigoFactura { get; set; }
     }
 
     public class Cliente

@@ -164,7 +164,7 @@
             this.btnDescargaGrafica.UseVisualStyleBackColor = true;
             this.btnDescargaGrafica.Click += new System.EventHandler(this.btnDescargaGrafica_Click);
             // 
-            // InfrormesVentas
+            // InformesVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -180,7 +180,7 @@
             this.Controls.Add(this.labelTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "InfrormesVentas";
+            this.Name = "InformesVentas";
             this.Text = "InfrormesVentas";
             this.Load += new System.EventHandler(this.InfrormesVentas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).EndInit();

@@ -15,7 +15,7 @@ namespace biosys
         public Dashboard DashboardInstance { get; set; }
 
         private DataTable dtHistorialRecoleccionesOriginal; // DataTable original sin filtrar
-        private int tamañoPagina = 25; // Tamaño de la página
+        private int tamañoPagina = 24; // Tamaño de la página
         private int paginaActual = 1; // Página actual
 
         public HistorialRecolecciones()
@@ -35,6 +35,7 @@ namespace biosys
 
             // Configurar el DataGridView para que no se ajuste automáticamente al tamaño del formulario
             dataGridViewHistorialRecolecciones.Anchor = AnchorStyles.None;
+            dataGridViewHistorialRecolecciones.ScrollBars = ScrollBars.None;
         }
         private void LlenarDataGridView()
         {
@@ -74,7 +75,7 @@ namespace biosys
         }
         private void MostrarInformacionPaginacionRecolecciones()
         {
-            int totalRecolecciones = dataGridViewHistorialRecolecciones.Rows.Count;
+            int totalRecolecciones = dtHistorialRecoleccionesOriginal.Rows.Count; // Obtener el total de recolecciones
             int totalPaginas = (int)Math.Ceiling((double)totalRecolecciones / tamañoPagina);
             labelHistorialRecolecciones.Text = $"Página {paginaActual} de {totalPaginas}. Total de recolecciones: {totalRecolecciones}";
         }

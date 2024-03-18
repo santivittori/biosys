@@ -468,6 +468,22 @@ namespace biosys
                     decimal precioUnitario = compra.PrecioUnitario;
                     decimal precioTotalDetalle = compra.PrecioTotal;
 
+                    // Verificar si el producto ya tiene un precio unitario fijado
+                    decimal precioUnitarioActual = Controladora.Controladora.ObtenerPrecioUnitarioFijado(productoId);
+                    if (precioUnitarioActual == 0)
+                    {
+                        // Obtener el precio unitario más alto registrado en las compras para ese producto
+                        decimal precioMasAlto = Controladora.Controladora.ObtenerPrecioMasAltoEnCompras(productoId);
+
+                        // Comparar con el nuevo precio y asignar el mayor
+                        precioUnitario = Math.Max(precioMasAlto, precioUnitario);
+                    }
+                    else
+                    {
+                        // Comparar con el precio unitario actual y asignar el mayor
+                        precioUnitario = Math.Max(precioUnitarioActual, precioUnitario);
+                    }
+
                     // Asignar los valores del detalle de compra al objeto DetalleCompraInfo
                     detalleCompraInfo.CompraId = compraId;
                     detalleCompraInfo.ProductoId = productoId;
@@ -478,8 +494,11 @@ namespace biosys
                     Controladora.Controladora.GuardarDetalleCompra(detalleCompraInfo);
                     Controladora.Controladora.ActualizarStock(productoId, cantidad);
 
-                    // Actualizar el precio unitario del producto
-                    Controladora.Controladora.GuardarPrecioUnitario(productoId, precioUnitario);
+                    // Actualizar el precio unitario del producto solo si es mayor que el actual
+                    if (precioUnitario > precioUnitarioActual)
+                    {
+                        Controladora.Controladora.GuardarPrecioUnitario(productoId, precioUnitario);
+                    }
                 }
 
                 LimpiarCampos();

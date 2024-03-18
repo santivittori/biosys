@@ -16,7 +16,7 @@ namespace biosys
         public Dashboard DashboardInstance { get; set; }
 
         private DataTable dtHistorialReproduccionesOriginal; // DataTable original sin filtrar
-        private int tamañoPagina = 25; // Tamaño de la página
+        private int tamañoPagina = 24; // Tamaño de la página
         private int paginaActual = 1; // Página actual
 
         public HistorialReproducciones()
@@ -36,6 +36,7 @@ namespace biosys
 
             // Configurar el DataGridView para que no se ajuste automáticamente al tamaño del formulario
             dataGridViewHistorialReproducciones.Anchor = AnchorStyles.None;
+            dataGridViewHistorialReproducciones.ScrollBars = ScrollBars.None;
         }
 
         private void LlenarDataGridView()
@@ -75,7 +76,7 @@ namespace biosys
         }
         private void MostrarInformacionPaginacionReproducciones()
         {
-            int totalReproducciones = dataGridViewHistorialReproducciones.Rows.Count;
+            int totalReproducciones = dtHistorialReproduccionesOriginal.Rows.Count; // Obtener el total de reproducciones
             int totalPaginas = (int)Math.Ceiling((double)totalReproducciones / tamañoPagina);
             labelHistorialReproducciones.Text = $"Página {paginaActual} de {totalPaginas}. Total de reproducciones: {totalReproducciones}";
         }

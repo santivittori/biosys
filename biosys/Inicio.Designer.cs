@@ -39,9 +39,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHome.Image = ((System.Drawing.Image)(resources.GetObject("btnHome.Image")));
-            this.btnHome.Location = new System.Drawing.Point(339, 97);
+            this.btnHome.Location = new System.Drawing.Point(296, -10);
             this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(782, 579);
+            this.btnHome.Size = new System.Drawing.Size(800, 800);
             this.btnHome.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.btnHome.TabIndex = 18;
             this.btnHome.TabStop = false;

@@ -54,6 +54,7 @@ namespace biosys
             CargarClientes();
             CargarProductos();
             CargarMetodosdePago();
+            CargarRazonSocial();
 
             // Agregar el texto de ayuda al TextBox
             txtPrecioUnitario.Text = "Ejemplo: 4350,70";
@@ -146,12 +147,23 @@ namespace biosys
             comboMedioPago.SelectedIndex = -1;
         }
 
+        private void CargarRazonSocial()
+        {
+            List<string> razonsocial = new List<string> { "Responsable Inscripto", "Consumidor Final" };
+
+            comboRazonSocial.DataSource = razonsocial;
+
+            // Establecer el valor predeterminado
+            comboRazonSocial.SelectedIndex = -1;
+        }
+
         private void LimpiarCampos()
         {
             comboProductos.SelectedIndex = -1;
             comboCliente.SelectedIndex = -1;
             numericCantidad.Value = 0;
             comboMedioPago.SelectedIndex = -1;
+            comboRazonSocial.SelectedIndex = -1;
 
             // Limpiar el contenido del ListBox
             listDetalleVenta.Items.Clear();
@@ -203,112 +215,239 @@ namespace biosys
             }
         }
 
-        private void GenerarFacturaPDF(string nombreCliente, DateTime fechaVenta, List<Venta> ventas)
+        private void GenerarFacturaPDF(string nombreCliente, DateTime fechaVenta, List<Venta> ventas, bool esResponsableInscripto)
         {
-            // Obtener la fecha actual en el formato "ddMMyyyy"
-            string fechaActual = DateTime.Now.ToString("ddMMyyyy");
+            string fechaActual = DateTime.Now.ToString("dd'-'MM'-'yyyy");
 
             // Configurar el diálogo de guardar archivo
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Archivos PDF (*.pdf)|*.pdf";
             saveFileDialog.FileName = $"Factura_{nombreCliente}_{fechaActual}.pdf";
 
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            try
             {
-                string nombreArchivo = saveFileDialog.FileName;
-
-                Document doc = new Document();
-                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(nombreArchivo, FileMode.Create));
-
-                doc.Open();
-
-                // Encabezado de la factura
-                doc.Add(new Paragraph("FACTURA"));
-                doc.Add(new Paragraph("\n"));
-                doc.Add(new Paragraph($"Fecha de Venta: {fechaVenta.ToShortDateString()}"));
-                doc.Add(new Paragraph($"Cliente: {nombreCliente}"));
-
-                // Espacio entre el título y la información del cliente
-                doc.Add(new Paragraph("\n"));
-
-                // Contenido de la factura
-                PdfPTable table = new PdfPTable(4);
-                table.WidthPercentage = 100; // Ajustar el ancho de la tabla al 100% del espacio disponible
-                table.SetWidths(new float[] { 2f, 1f, 1f, 2f }); // Definir tamaños de columnas
-
-                table.AddCell(new PdfPCell(new Phrase("Producto", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
-                table.AddCell(new PdfPCell(new Phrase("Cantidad", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
-                table.AddCell(new PdfPCell(new Phrase("Precio Unitario", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
-                table.AddCell(new PdfPCell(new Phrase("Total", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
-
-                foreach (Venta venta in ventas)
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    table.AddCell(venta.Producto);
-                    table.AddCell(venta.Cantidad.ToString());
-                    table.AddCell(venta.PrecioUnitario.ToString("C"));
-                    table.AddCell(venta.PrecioTotal.ToString("C"));
+                    string nombreArchivo = saveFileDialog.FileName;
+
+                    // Configurar el documento PDF
+                    Document doc = new Document(PageSize.A4);
+                    PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(nombreArchivo, FileMode.Create));
+
+                    // Agregar metadatos
+                    doc.AddTitle("Factura");
+                    doc.AddCreator("BIOSYS");
+
+                    doc.Open();
+
+                    // Crear una fila para el encabezado
+                    PdfPTable encabezadoTable = new PdfPTable(3);
+                    encabezadoTable.WidthPercentage = 100;
+
+                    // Añadir el logo
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(@"C:\Users\vitto\Pictures\Ing de Software\Logo-ubicacion.png");
+                    image.ScaleToFit(110, 110); // Ajustar el tamaño de la imagen
+                    PdfPCell logoCell = new PdfPCell(image);
+                    logoCell.Border = PdfPCell.BOX; // Agregar un recuadro alrededor de la celda
+                    logoCell.Padding = 5; // Añadir un espacio interno para separar el contenido del borde
+                    logoCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    logoCell.VerticalAlignment = Element.ALIGN_MIDDLE; // Alinear verticalmente al centro o más arriba
+
+                    // Determinar el texto para la letra (B o A) según el tipo de cliente
+                    string letra = esResponsableInscripto ? "A" : "B";
+
+                    // Añadir la letra
+                    PdfPCell letraCell = new PdfPCell(new Paragraph(letra, FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 30)));
+                    letraCell.Border = PdfPCell.BOX; // Agregar un recuadro alrededor de la celda
+                    letraCell.Padding = 5; // Añadir un espacio interno para separar el contenido del borde
+                    letraCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    letraCell.VerticalAlignment = Element.ALIGN_MIDDLE; // Alinear verticalmente al centro
+
+                    // Agregar la palabra "ORIGINAL" centrada arriba de la letra A o B
+                    PdfPCell originalCell = new PdfPCell(new Phrase("ORIGINAL", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12)));
+                    originalCell.Border = PdfPCell.NO_BORDER;
+                    originalCell.Colspan = 3; // Colspan para ocupar el ancho de la fila
+                    originalCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    encabezadoTable.AddCell(originalCell);
+
+                    // Fecha, nombre del cliente y código de factura
+                    string codigoFactura = GenerarCodigoFactura();
+                    string facturaInfo = $"FACTURA\n\n\nFecha: {fechaActual}\n\nCliente: {nombreCliente}\n\nCódigo: {codigoFactura}";
+
+                    // Crear un párrafo con la información de la factura
+                    Paragraph facturaParagraph = new Paragraph(facturaInfo, FontFactory.GetFont(FontFactory.HELVETICA, 12));
+                    facturaParagraph.Alignment = Element.ALIGN_CENTER;
+
+                    // Crear una celda para la información de la factura
+                    PdfPCell facturaCell = new PdfPCell(facturaParagraph);
+                    facturaCell.Border = PdfPCell.BOX; // Agregar un recuadro alrededor de la celda
+                    facturaCell.Padding = 5; // Añadir un espacio interno para separar el contenido del borde
+                    facturaCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    facturaCell.VerticalAlignment = Element.ALIGN_MIDDLE; // Alinear verticalmente al centro
+
+                    // Agregar las celdas con los elementos al encabezado
+                    encabezadoTable.AddCell(logoCell);
+                    encabezadoTable.AddCell(letraCell);
+                    encabezadoTable.AddCell(facturaCell);
+
+                    // Agregar la fila al documento
+                    doc.Add(encabezadoTable);
+
+                    // Espacio entre el encabezado y la tabla de detalles
+                    doc.Add(new Paragraph(" "));
+
+                    // Detalles de la factura
+                    PdfPTable table = new PdfPTable(4);
+                    table.WidthPercentage = 100;
+                    table.SetWidths(new float[] { 3f, 1f, 1f, 1f });
+
+                    table.AddCell(new PdfPCell(new Phrase("Producto", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
+                    table.AddCell(new PdfPCell(new Phrase("Cantidad", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
+                    table.AddCell(new PdfPCell(new Phrase("Precio Unitario", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
+                    table.AddCell(new PdfPCell(new Phrase("Total", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
+
+                    decimal totalFactura = 0; // Inicializar el total de la factura
+
+                    foreach (Venta venta in ventas)
+                    {
+                        table.AddCell(venta.Producto);
+                        table.AddCell(venta.Cantidad.ToString());
+                        table.AddCell(venta.PrecioUnitario.ToString("C"));
+                        table.AddCell(venta.PrecioTotal.ToString("C"));
+
+                        totalFactura += venta.PrecioTotal; // Sumar al total de la factura
+                    }
+
+                    doc.Add(table);
+
+                    // Total de la factura
+                    Paragraph total = new Paragraph($"Total: {totalFactura.ToString("C")}", FontFactory.GetFont(FontFactory.HELVETICA_BOLD));
+                    total.Alignment = Element.ALIGN_RIGHT;
+                    doc.Add(total);
+
+                    // Cierra el documento
+                    doc.Close();
+
+                    MessageBox.Show($"La factura se generó correctamente y se guardó en:\n\n{nombreArchivo}", "Factura generada", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                doc.Add(table);
-
-                // Cierra el documento
-                doc.Close();
-
-                MessageBox.Show($"La factura se generó correctamente y se guardó en:\n\n{nombreArchivo}", "Factura generada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (IOException)
+            {
+                MessageBox.Show("El archivo PDF no se puede sobrescribir porque está siendo utilizado por otro proceso. Por favor, cierre cualquier visor de PDF que esté utilizando el archivo y vuelva a intentarlo.", "Error al generar la factura", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void GenerarRemitoPDF(string nombreCliente, DateTime fechaVenta, List<Venta> ventas)
         {
-            // Obtener la fecha actual en el formato "ddMMyyyy"
-            string fechaActual = DateTime.Now.ToString("ddMMyyyy");
+            string fechaActual = DateTime.Now.ToString("dd'-'MM'-'yyyy");
 
             // Configurar el diálogo de guardar archivo
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Archivos PDF (*.pdf)|*.pdf";
             saveFileDialog.FileName = $"Remito_{nombreCliente}_{fechaActual}.pdf";
 
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            try
             {
-                string nombreArchivo = saveFileDialog.FileName;
-
-                Document doc = new Document();
-                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(nombreArchivo, FileMode.Create));
-
-                doc.Open();
-
-                // Encabezado del remito
-                doc.Add(new Paragraph("REMITO"));
-                doc.Add(new Paragraph("\n"));
-                doc.Add(new Paragraph($"Fecha de Venta: {fechaVenta.ToShortDateString()}"));
-                doc.Add(new Paragraph($"Cliente: {nombreCliente}"));
-
-                // Espacio entre el título y la información del cliente
-                doc.Add(new Paragraph("\n"));
-
-                // Contenido del remito
-                PdfPTable table = new PdfPTable(3);
-                table.WidthPercentage = 100; // Ajustar el ancho de la tabla al 100% del espacio disponible
-                table.SetWidths(new float[] { 2f, 1f, 1f }); // Definir tamaños de columnas
-
-                table.AddCell(new PdfPCell(new Phrase("Producto", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
-                table.AddCell(new PdfPCell(new Phrase("Cantidad", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
-                table.AddCell(new PdfPCell(new Phrase("Precio Unitario", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
-
-                foreach (Venta venta in ventas)
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    table.AddCell(venta.Producto);
-                    table.AddCell(venta.Cantidad.ToString());
-                    table.AddCell(venta.PrecioUnitario.ToString("C"));
+                    string nombreArchivo = saveFileDialog.FileName;
+
+                    Document doc = new Document(PageSize.A4);
+                    PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(nombreArchivo, FileMode.Create));
+
+                    doc.Open();
+
+                    // Crear una fila para el encabezado
+                    PdfPTable encabezadoTable = new PdfPTable(3);
+                    encabezadoTable.WidthPercentage = 100;
+
+                    // Agregar el logo
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(@"C:\Users\vitto\Pictures\Ing de Software\Logo-ubicacion.png");
+                    image.ScaleToFit(110, 110); // Ajustar el tamaño de la imagen
+                    PdfPCell logoCell = new PdfPCell(image);
+                    logoCell.Border = PdfPCell.BOX; // Agregar un recuadro alrededor de la celda
+                    logoCell.Padding = 5; // Añadir un espacio interno para separar el contenido del borde
+                    logoCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    logoCell.VerticalAlignment = Element.ALIGN_MIDDLE; // Alinear verticalmente al centro o más arriba
+
+                    // Añadir la letra "R"
+                    PdfPCell letraCell = new PdfPCell(new Paragraph("R", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 30)));
+                    letraCell.Border = PdfPCell.BOX; // Agregar un recuadro alrededor de la celda
+                    letraCell.Padding = 5; // Añadir un espacio interno para separar el contenido del borde
+                    letraCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    letraCell.VerticalAlignment = Element.ALIGN_MIDDLE; // Alinear verticalmente al centro
+
+                    // Agregar la palabra "ORIGINAL" centrada arriba de la letra R
+                    PdfPCell originalCell = new PdfPCell(new Phrase("ORIGINAL", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12)));
+                    originalCell.Border = PdfPCell.NO_BORDER;
+                    originalCell.Colspan = 3; // Colspan para ocupar el ancho de la fila
+                    originalCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    encabezadoTable.AddCell(originalCell);
+
+                    // Fecha, nombre del cliente y código de remito
+                    string codigoRemito = GenerarCodigoRemito();
+                    string remitoInfo = $"REMITO\n\n\nFecha: {fechaActual}\n\nCliente: {nombreCliente}\n\nCódigo: {codigoRemito}";
+
+                    // Crear un párrafo con la información del remito
+                    Paragraph remitoParagraph = new Paragraph(remitoInfo, FontFactory.GetFont(FontFactory.HELVETICA, 12));
+                    remitoParagraph.Alignment = Element.ALIGN_CENTER;
+
+                    // Crear una celda para la información del remito
+                    PdfPCell remitoCell = new PdfPCell(remitoParagraph);
+                    remitoCell.Border = PdfPCell.BOX; // Agregar un recuadro alrededor de la celda
+                    remitoCell.Padding = 5; // Añadir un espacio interno para separar el contenido del borde
+                    remitoCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    remitoCell.VerticalAlignment = Element.ALIGN_MIDDLE; // Alinear verticalmente al centro
+
+                    // Agregar las celdas con los elementos al encabezado
+                    encabezadoTable.AddCell(logoCell);
+                    encabezadoTable.AddCell(letraCell);
+                    encabezadoTable.AddCell(remitoCell);
+
+                    // Agregar la fila al documento
+                    doc.Add(encabezadoTable);
+
+                    // Espacio entre el encabezado y la tabla de detalles
+                    doc.Add(new Paragraph(" "));
+
+                    // Detalles del remito
+                    PdfPTable table = new PdfPTable(2);
+                    table.WidthPercentage = 100; // Ajustar el ancho de la tabla al 100% del espacio disponible
+                    table.SetWidths(new float[] { 3f, 1f }); // Definir tamaños de columnas
+
+                    table.AddCell(new PdfPCell(new Phrase("Producto", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
+                    table.AddCell(new PdfPCell(new Phrase("Cantidad", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))));
+
+                    foreach (Venta venta in ventas)
+                    {
+                        table.AddCell(venta.Producto);
+                        table.AddCell(venta.Cantidad.ToString());
+                    }
+
+                    doc.Add(table);
+
+                    // Cierra el documento
+                    doc.Close();
+
+                    MessageBox.Show($"El remito se generó correctamente y se guardó en:\n\n{nombreArchivo}", "Remito generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                doc.Add(table);
-
-                // Cierra el documento
-                doc.Close();
-
-                MessageBox.Show($"El remito se generó correctamente y se guardó en:\n\n{nombreArchivo}", "Remito generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            catch (IOException)
+            {
+                MessageBox.Show("El archivo PDF no se puede sobrescribir porque está siendo utilizado por otro proceso. Por favor, cierre cualquier visor de PDF que esté utilizando el archivo y vuelva a intentarlo.", "Error al generar el remito", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Método para generar un código de remito único
+        private string GenerarCodigoRemito()
+        {
+            // Puedes generar un código único basado en la fecha y hora actual
+            string codigo = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+
+            // También puedes agregar algún prefijo o sufijo si es necesario
+            codigo = "REMITO-" + codigo;
+
+            return codigo;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -340,6 +479,7 @@ namespace biosys
                 comboCliente.SelectedIndex = -1;
                 numericCantidad.Value = 0;
                 comboMedioPago.SelectedIndex = -1;
+                comboRazonSocial.SelectedIndex = -1;
 
                 // Reiniciar la lista de compras
                 ventasList.Clear();
@@ -452,6 +592,16 @@ namespace biosys
                 return;
             }
 
+            // Verificar si se ha seleccionado una opción en el comboRazonSocial
+            if (comboRazonSocial.SelectedIndex == -1)
+            {
+                msgError("Debe seleccionar la razón social.");
+                return;
+            }
+
+            // Obtener el valor seleccionado del comboRazonSocial
+            bool esResponsableInscripto = comboRazonSocial.SelectedIndex == 0; // Si el índice seleccionado es 0, es Responsable Inscripto; de lo contrario, es Consumidor Final
+
             // Mostrar cuadro de diálogo de confirmación
             DialogResult result = MessageBox.Show("¿Está seguro/a de que desea realizar la venta?", "Confirmar Venta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -481,6 +631,12 @@ namespace biosys
                     ventaInfo.PrecioTotalVenta += venta.PrecioTotal;
                 }
 
+                // Generar código de factura
+                string codigoFactura = GenerarCodigoFactura();
+
+                // Asignar el código de factura a la venta
+                ventaInfo.CodigoFactura = codigoFactura;
+
                 int ventaId = Controladora.Controladora.GuardarVenta(ventaInfo);
 
                 // Crear un objeto DetalleVentaInfo para cada venta en la lista
@@ -504,8 +660,8 @@ namespace biosys
                     Controladora.Controladora.DisminuirStock(productoId, cantidad);
                 }
 
-                // Llamar a las funciones de generación de PDF
-                GenerarFacturaPDF(nombreCliente, fechaVenta, ventasList);
+                // Llamar a las funciones de generación de PDF, pasando el valor de esResponsableInscripto
+                GenerarFacturaPDF(nombreCliente, fechaVenta, ventasList, esResponsableInscripto);
                 GenerarRemitoPDF(nombreCliente, fechaVenta, ventasList);
 
                 LimpiarCampos();
@@ -516,6 +672,18 @@ namespace biosys
                 // Recargar los productos en el combo box excluyendo los que tienen stock cero
                 CargarProductos();
             }
+        }
+
+        // Método para generar un código de factura único
+        private string GenerarCodigoFactura()
+        {
+            // Puedes generar un código único basado en la fecha y hora actual
+            string codigo = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+
+            // También puedes agregar algún prefijo o sufijo si es necesario
+            codigo = "FACTURA-" + codigo;
+
+            return codigo;
         }
 
         private void btnCancelar_MouseEnter(object sender, EventArgs e)

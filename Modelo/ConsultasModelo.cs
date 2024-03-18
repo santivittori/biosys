@@ -2603,6 +2603,33 @@ namespace Modelo
                 }
             }
         }
+        public static decimal ObtenerPrecioMasAltoEnCompras(int productoId)
+        {
+            decimal precioMasAlto = 0;
+
+            string sql = @"
+                SELECT MAX(precio_unitario) AS PrecioMasAlto
+                FROM detalle_compra
+                WHERE producto_id = @ProductoId
+            ";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@ProductoId", productoId);
+
+                    object result = command.ExecuteScalar();
+
+                    if (result != null && result != DBNull.Value)
+                    {
+                        precioMasAlto = Convert.ToDecimal(result);
+                    }
+                }
+            }
+
+            return precioMasAlto;
+        }
 
     }
 }

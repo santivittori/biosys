@@ -15,7 +15,7 @@ namespace biosys
         public Dashboard DashboardInstance { get; set; }
 
         private DataTable dtHistorialDonacionesOriginal; // DataTable original sin filtrar
-        private int tamañoPagina = 25; // Tamaño de la página
+        private int tamañoPagina = 24; // Tamaño de la página
         private int paginaActual = 1; // Página actual
 
         public HistorialDonaciones()
@@ -35,6 +35,7 @@ namespace biosys
 
             // Configurar el DataGridView para que no se ajuste automáticamente al tamaño del formulario
             dataGridViewHistorialDonaciones.Anchor = AnchorStyles.None;
+            dataGridViewHistorialDonaciones.ScrollBars = ScrollBars.None;
         }
 
         private void LlenarDataGridView()
@@ -73,9 +74,10 @@ namespace biosys
             // Asignar los datos filtrados al DataGridView
             dataGridViewHistorialDonaciones.DataSource = dtPagina;
         }
+
         private void MostrarInformacionPaginacionDonaciones()
         {
-            int totalDonaciones = dataGridViewHistorialDonaciones.Rows.Count;
+            int totalDonaciones = dtHistorialDonacionesOriginal.Rows.Count; // Obtener el total de donaciones
             int totalPaginas = (int)Math.Ceiling((double)totalDonaciones / tamañoPagina);
             labelHistorialDonaciones.Text = $"Página {paginaActual} de {totalPaginas}. Total de donaciones: {totalDonaciones}";
         }

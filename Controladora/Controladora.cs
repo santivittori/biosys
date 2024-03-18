@@ -547,6 +547,9 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerPrecioUnitarioFijado(productoId);
         }
-
+        public static decimal ObtenerPrecioMasAltoEnCompras(int productoId)
+        {
+            return ConsultasModelo.ObtenerPrecioMasAltoEnCompras(productoId);
+        }
     }
 }
