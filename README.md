@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://postimg.cc/RJ3pRdjN">
-    <img src="https://i.postimg.cc/FzGthnpg/Logo-azul.jpg" alt="Logo" />
+  <a href="https://postimg.cc/dLC9D4bj">
+    <img src="https://i.postimg.cc/yYQpQGnt/Biosys-Grande.png" alt="Logo" />
   </a>
 </p>
 
