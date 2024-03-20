@@ -125,8 +125,14 @@ namespace biosys
             dateInicio.Value = DateTime.Today;
             dateFin.Value = DateTime.Today;
         }
+        private void pictureBack_Click(object sender, EventArgs e)
+        {
+            Recolecciones recoleccionesForm = new Recolecciones();
+            recoleccionesForm.DashboardInstance = DashboardInstance;
+            DashboardInstance.AbrirFormHijo(recoleccionesForm);
+        }
 
-        private void btnAntRecolecciones_Click(object sender, EventArgs e)
+        private void btnAntDonaciones_Click(object sender, EventArgs e)
         {
             if (paginaActual > 1)
             {
@@ -136,7 +142,7 @@ namespace biosys
             }
         }
 
-        private void btnSigRecolecciones_Click(object sender, EventArgs e)
+        private void btnSigDonaciones_Click(object sender, EventArgs e)
         {
             int totalRecolecciones = Controladora.Controladora.ObtenerCantidadTotalRecolecciones();
             int totalPaginas = (int)Math.Ceiling((double)totalRecolecciones / tamañoPagina);
@@ -146,13 +152,6 @@ namespace biosys
                 AplicarFiltroPaginacion();
                 MostrarInformacionPaginacionRecolecciones();
             }
-        }
-
-        private void pictureBack_Click(object sender, EventArgs e)
-        {
-            Recolecciones recoleccionesForm = new Recolecciones();
-            recoleccionesForm.DashboardInstance = DashboardInstance;
-            DashboardInstance.AbrirFormHijo(recoleccionesForm);
         }
     }
 }

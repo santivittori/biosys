@@ -146,7 +146,7 @@ namespace biosys
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la compra? \n\nLa información se perderá", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea cancelar la compra? \n\nLa información se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -157,7 +157,7 @@ namespace biosys
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea limpiar los campos? \n\nLa información se perderá", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea limpiar los campos? \n\nLa información se perderá.", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -190,7 +190,7 @@ namespace biosys
             // Validar que los campos tengan información
             if (string.IsNullOrWhiteSpace(txtDonante.Text) || comboProductos.SelectedIndex == -1 || numericCantidad.Value <= 0)
             {
-                msgError("Completar los campos obligatorios. La cantidad debe ser mayor que cero.");
+                msgError("  Complete los campos obligatorios.");
                 return;
             }
 
@@ -200,7 +200,7 @@ namespace biosys
 
             if (partesProducto.Length != 3)
             {
-                msgError("El formato del producto seleccionado es incorrecto.");
+                msgError("  El formato del producto seleccionado es incorrecto.");
                 return;
             }
 
@@ -221,7 +221,7 @@ namespace biosys
             // Verificar si la unidad de medida es null
             if (unidadMedida == null)
             {
-                msgError("Debe seleccionar una unidad de medida.");
+                msgError("  Seleccione una unidad de medida.");
                 return;
             }
 
@@ -289,12 +289,12 @@ namespace biosys
         {
             if (donacionList.Count == 0)
             {
-                msgError("Debe ingresar al menos un detalle de donación.");
+                msgError("  Ingrese al menos un detalle de donación.");
                 return;
             }
 
             // Mostrar cuadro de diálogo de confirmación
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea registrar la donación?", "Confirmar Donación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea registrar la donación?", "Confirmar Donación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Verificar si el usuario confirmó la acción
             if (result == DialogResult.Yes)

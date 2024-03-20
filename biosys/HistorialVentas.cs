@@ -80,8 +80,7 @@ namespace biosys
             int totalPaginas = (int)Math.Ceiling((double)totalVentas / tamañoPagina);
             labelHistorialVentas.Text = $"Página {paginaActual} de {totalPaginas}. Total de ventas: {totalVentas}";
         }
-
-        private void btnAntVentas_Click(object sender, EventArgs e)
+        private void btnAntReproducciones_Click(object sender, EventArgs e)
         {
             if (paginaActual > 1)
             {
@@ -91,7 +90,7 @@ namespace biosys
             }
         }
 
-        private void btnSigVentas_Click(object sender, EventArgs e)
+        private void btnSigReproducciones_Click(object sender, EventArgs e)
         {
             int totalVentas = Controladora.Controladora.ObtenerCantidadTotalVentas();
             int totalPaginas = (int)Math.Ceiling((double)totalVentas / tamañoPagina);
@@ -102,7 +101,6 @@ namespace biosys
                 MostrarInformacionPaginacionVentas();
             }
         }
-
         private void btnAplicarFiltro_Click(object sender, EventArgs e)
         {
             // Obtener las fechas seleccionadas

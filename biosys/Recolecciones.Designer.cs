@@ -61,9 +61,9 @@
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(957, 163);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(160, 18);
+            this.label10.Size = new System.Drawing.Size(154, 18);
             this.label10.TabIndex = 92;
-            this.label10.Text = "Detalle de Recolección";
+            this.label10.Text = "Detalle de recolección";
             // 
             // listDetalleRecoleccion
             // 
@@ -111,9 +111,9 @@
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTitulo.Location = new System.Drawing.Point(500, 50);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(441, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(337, 55);
             this.labelTitulo.TabIndex = 87;
-            this.labelTitulo.Text = "RECOLECCIONES";
+            this.labelTitulo.Text = "Recolecciones";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // lblError
@@ -255,7 +255,7 @@
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(119, 48);
             this.btnLimpiar.TabIndex = 153;
-            this.btnLimpiar.Text = "LIMPIAR CAMPOS";
+            this.btnLimpiar.Text = "Limpiar campos";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
@@ -267,7 +267,7 @@
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(119, 48);
             this.btnCancelar.TabIndex = 154;
-            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
@@ -281,7 +281,7 @@
             this.btnGuardarDetalle.Name = "btnGuardarDetalle";
             this.btnGuardarDetalle.Size = new System.Drawing.Size(119, 48);
             this.btnGuardarDetalle.TabIndex = 155;
-            this.btnGuardarDetalle.Text = "GUARDAR DETALLE";
+            this.btnGuardarDetalle.Text = "Guardar detalle";
             this.btnGuardarDetalle.UseVisualStyleBackColor = true;
             this.btnGuardarDetalle.Click += new System.EventHandler(this.btnGuardarDetalle_Click);
             // 
@@ -293,7 +293,7 @@
             this.btnRegistrarRecoleccion.Name = "btnRegistrarRecoleccion";
             this.btnRegistrarRecoleccion.Size = new System.Drawing.Size(119, 48);
             this.btnRegistrarRecoleccion.TabIndex = 156;
-            this.btnRegistrarRecoleccion.Text = "REGISTRAR RECOLECCIÓN";
+            this.btnRegistrarRecoleccion.Text = "Registrar recolección";
             this.btnRegistrarRecoleccion.UseVisualStyleBackColor = true;
             this.btnRegistrarRecoleccion.Click += new System.EventHandler(this.btnRegistrarRecoleccion_Click);
             this.btnRegistrarRecoleccion.MouseEnter += new System.EventHandler(this.btnRegistrarRecoleccion_MouseEnter);
@@ -302,12 +302,12 @@
             // btnHistorialRecolecciones
             // 
             this.btnHistorialRecolecciones.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnHistorialRecolecciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHistorialRecolecciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHistorialRecolecciones.Location = new System.Drawing.Point(976, 535);
             this.btnHistorialRecolecciones.Name = "btnHistorialRecolecciones";
             this.btnHistorialRecolecciones.Size = new System.Drawing.Size(119, 48);
             this.btnHistorialRecolecciones.TabIndex = 157;
-            this.btnHistorialRecolecciones.Text = "HISTORIAL DE RECOLECCIONES";
+            this.btnHistorialRecolecciones.Text = "Historial de recolecciones";
             this.btnHistorialRecolecciones.UseVisualStyleBackColor = true;
             this.btnHistorialRecolecciones.Click += new System.EventHandler(this.btnHistorialRecolecciones_Click);
             // 

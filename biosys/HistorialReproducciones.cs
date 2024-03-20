@@ -80,7 +80,6 @@ namespace biosys
             int totalPaginas = (int)Math.Ceiling((double)totalReproducciones / tamañoPagina);
             labelHistorialReproducciones.Text = $"Página {paginaActual} de {totalPaginas}. Total de reproducciones: {totalReproducciones}";
         }
-
         private void btnAntReproducciones_Click(object sender, EventArgs e)
         {
             if (paginaActual > 1)

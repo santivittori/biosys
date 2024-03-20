@@ -47,16 +47,18 @@
             this.label10 = new System.Windows.Forms.Label();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
             this.labelPaginacion = new System.Windows.Forms.Label();
-            this.btnPaginaSiguiente = new System.Windows.Forms.Button();
-            this.btnPaginaAnterior = new System.Windows.Forms.Button();
             this.btnAltaUsuario = new biosys.RoundedButton();
             this.btnEliminarUsuario = new biosys.RoundedButton();
             this.btnGuardarEdicion = new biosys.RoundedButton();
             this.btnLimpiarCampos = new biosys.RoundedButton();
             this.btnRolesyPermisos = new biosys.RoundedButton();
             this.btnHabilitarUsuario = new biosys.RoundedButton();
+            this.btnPaginaSiguiente = new System.Windows.Forms.PictureBox();
+            this.btnPaginaAnterior = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaSiguiente)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaAnterior)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
@@ -65,9 +67,9 @@
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTitulo.Location = new System.Drawing.Point(450, 50);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(570, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(427, 55);
             this.labelTitulo.TabIndex = 50;
-            this.labelTitulo.Text = "GESTIONAR USUARIOS";
+            this.labelTitulo.Text = "Gestionar usuarios";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label1
@@ -75,11 +77,11 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(338, 414);
+            this.label1.Location = new System.Drawing.Point(363, 414);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(161, 18);
+            this.label1.Size = new System.Drawing.Size(117, 18);
             this.label1.TabIndex = 57;
-            this.label1.Text = "SELECCIONE EL ROL";
+            this.label1.Text = "Seleccione el rol";
             // 
             // comborol
             // 
@@ -100,9 +102,9 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(84, 258);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 18);
+            this.label2.Size = new System.Drawing.Size(119, 18);
             this.label2.TabIndex = 61;
-            this.label2.Text = "Nombre Usuario:";
+            this.label2.Text = "Nombre usuario:";
             // 
             // label4
             // 
@@ -193,7 +195,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Red;
-            this.label8.Location = new System.Drawing.Point(500, 414);
+            this.label8.Location = new System.Drawing.Point(480, 412);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(15, 20);
             this.label8.TabIndex = 87;
@@ -224,9 +226,9 @@
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(860, 173);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(183, 18);
+            this.label10.Size = new System.Drawing.Size(178, 18);
             this.label10.TabIndex = 111;
-            this.label10.Text = "Filtrar por Nombre o Email";
+            this.label10.Text = "Filtrar por nombre o email";
             // 
             // txtBusqueda
             // 
@@ -242,35 +244,11 @@
             // 
             this.labelPaginacion.AutoSize = true;
             this.labelPaginacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPaginacion.Location = new System.Drawing.Point(812, 484);
+            this.labelPaginacion.Location = new System.Drawing.Point(811, 472);
             this.labelPaginacion.Name = "labelPaginacion";
             this.labelPaginacion.Size = new System.Drawing.Size(109, 16);
             this.labelPaginacion.TabIndex = 147;
             this.labelPaginacion.Text = "LabelPaginacion";
-            // 
-            // btnPaginaSiguiente
-            // 
-            this.btnPaginaSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPaginaSiguiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPaginaSiguiente.Location = new System.Drawing.Point(756, 476);
-            this.btnPaginaSiguiente.Name = "btnPaginaSiguiente";
-            this.btnPaginaSiguiente.Size = new System.Drawing.Size(40, 30);
-            this.btnPaginaSiguiente.TabIndex = 146;
-            this.btnPaginaSiguiente.Text = ">";
-            this.btnPaginaSiguiente.UseVisualStyleBackColor = true;
-            this.btnPaginaSiguiente.Click += new System.EventHandler(this.btnPaginaSiguiente_Click);
-            // 
-            // btnPaginaAnterior
-            // 
-            this.btnPaginaAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPaginaAnterior.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPaginaAnterior.Location = new System.Drawing.Point(710, 476);
-            this.btnPaginaAnterior.Name = "btnPaginaAnterior";
-            this.btnPaginaAnterior.Size = new System.Drawing.Size(40, 30);
-            this.btnPaginaAnterior.TabIndex = 145;
-            this.btnPaginaAnterior.Text = "<";
-            this.btnPaginaAnterior.UseVisualStyleBackColor = true;
-            this.btnPaginaAnterior.Click += new System.EventHandler(this.btnPaginaAnterior_Click);
             // 
             // btnAltaUsuario
             // 
@@ -280,7 +258,7 @@
             this.btnAltaUsuario.Name = "btnAltaUsuario";
             this.btnAltaUsuario.Size = new System.Drawing.Size(119, 48);
             this.btnAltaUsuario.TabIndex = 153;
-            this.btnAltaUsuario.Text = "DAR DE ALTA USUARIO";
+            this.btnAltaUsuario.Text = "Dar de alta usuario";
             this.btnAltaUsuario.UseVisualStyleBackColor = true;
             this.btnAltaUsuario.Click += new System.EventHandler(this.btnAltaUsuario_Click);
             this.btnAltaUsuario.MouseEnter += new System.EventHandler(this.btnAltaUsuario_MouseEnter);
@@ -294,7 +272,7 @@
             this.btnEliminarUsuario.Name = "btnEliminarUsuario";
             this.btnEliminarUsuario.Size = new System.Drawing.Size(119, 48);
             this.btnEliminarUsuario.TabIndex = 152;
-            this.btnEliminarUsuario.Text = "ELIMINAR";
+            this.btnEliminarUsuario.Text = "Eliminar";
             this.btnEliminarUsuario.UseVisualStyleBackColor = true;
             this.btnEliminarUsuario.Click += new System.EventHandler(this.btnEliminarUsuario_Click);
             this.btnEliminarUsuario.MouseEnter += new System.EventHandler(this.btnEliminarUsuario_MouseEnter);
@@ -308,7 +286,7 @@
             this.btnGuardarEdicion.Name = "btnGuardarEdicion";
             this.btnGuardarEdicion.Size = new System.Drawing.Size(119, 48);
             this.btnGuardarEdicion.TabIndex = 151;
-            this.btnGuardarEdicion.Text = "GUARDAR EDICIÓN";
+            this.btnGuardarEdicion.Text = "Guardar edición";
             this.btnGuardarEdicion.UseVisualStyleBackColor = true;
             this.btnGuardarEdicion.Click += new System.EventHandler(this.btnGuardarEdicion_Click);
             this.btnGuardarEdicion.MouseEnter += new System.EventHandler(this.btnGuardarEdicion_MouseEnter);
@@ -322,19 +300,19 @@
             this.btnLimpiarCampos.Name = "btnLimpiarCampos";
             this.btnLimpiarCampos.Size = new System.Drawing.Size(119, 48);
             this.btnLimpiarCampos.TabIndex = 150;
-            this.btnLimpiarCampos.Text = "LIMPIAR CAMPOS";
+            this.btnLimpiarCampos.Text = "Limpiar campos";
             this.btnLimpiarCampos.UseVisualStyleBackColor = true;
             this.btnLimpiarCampos.Click += new System.EventHandler(this.btnLimpiarCampos_Click);
             // 
             // btnRolesyPermisos
             // 
             this.btnRolesyPermisos.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRolesyPermisos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRolesyPermisos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRolesyPermisos.Location = new System.Drawing.Point(1192, 496);
             this.btnRolesyPermisos.Name = "btnRolesyPermisos";
             this.btnRolesyPermisos.Size = new System.Drawing.Size(119, 48);
             this.btnRolesyPermisos.TabIndex = 149;
-            this.btnRolesyPermisos.Text = "GESTIONAR ROLES Y PERMISOS";
+            this.btnRolesyPermisos.Text = "Gestionar roles y permisos";
             this.btnRolesyPermisos.UseVisualStyleBackColor = true;
             this.btnRolesyPermisos.Click += new System.EventHandler(this.btnRolesyPermisos_Click);
             // 
@@ -346,11 +324,33 @@
             this.btnHabilitarUsuario.Name = "btnHabilitarUsuario";
             this.btnHabilitarUsuario.Size = new System.Drawing.Size(119, 48);
             this.btnHabilitarUsuario.TabIndex = 179;
-            this.btnHabilitarUsuario.Text = "HABILITAR O DESHABILITAR";
+            this.btnHabilitarUsuario.Text = "Habilitar o deshabilitar";
             this.btnHabilitarUsuario.UseVisualStyleBackColor = true;
             this.btnHabilitarUsuario.Click += new System.EventHandler(this.btnHabilitarUsuario_Click);
             this.btnHabilitarUsuario.MouseEnter += new System.EventHandler(this.btnHabilitarUsuario_MouseEnter);
             this.btnHabilitarUsuario.MouseLeave += new System.EventHandler(this.btnHabilitarUsuario_MouseLeave);
+            // 
+            // btnPaginaSiguiente
+            // 
+            this.btnPaginaSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPaginaSiguiente.Image = ((System.Drawing.Image)(resources.GetObject("btnPaginaSiguiente.Image")));
+            this.btnPaginaSiguiente.Location = new System.Drawing.Point(756, 460);
+            this.btnPaginaSiguiente.Name = "btnPaginaSiguiente";
+            this.btnPaginaSiguiente.Size = new System.Drawing.Size(39, 43);
+            this.btnPaginaSiguiente.TabIndex = 181;
+            this.btnPaginaSiguiente.TabStop = false;
+            this.btnPaginaSiguiente.Click += new System.EventHandler(this.btnPaginaSiguiente_Click);
+            // 
+            // btnPaginaAnterior
+            // 
+            this.btnPaginaAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPaginaAnterior.Image = ((System.Drawing.Image)(resources.GetObject("btnPaginaAnterior.Image")));
+            this.btnPaginaAnterior.Location = new System.Drawing.Point(711, 460);
+            this.btnPaginaAnterior.Name = "btnPaginaAnterior";
+            this.btnPaginaAnterior.Size = new System.Drawing.Size(39, 43);
+            this.btnPaginaAnterior.TabIndex = 180;
+            this.btnPaginaAnterior.TabStop = false;
+            this.btnPaginaAnterior.Click += new System.EventHandler(this.btnPaginaAnterior_Click);
             // 
             // GestionarUsuario
             // 
@@ -358,6 +358,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnPaginaSiguiente);
+            this.Controls.Add(this.btnPaginaAnterior);
             this.Controls.Add(this.btnHabilitarUsuario);
             this.Controls.Add(this.btnAltaUsuario);
             this.Controls.Add(this.btnEliminarUsuario);
@@ -365,8 +367,6 @@
             this.Controls.Add(this.btnLimpiarCampos);
             this.Controls.Add(this.btnRolesyPermisos);
             this.Controls.Add(this.labelPaginacion);
-            this.Controls.Add(this.btnPaginaSiguiente);
-            this.Controls.Add(this.btnPaginaAnterior);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.txtBusqueda);
@@ -391,6 +391,8 @@
             this.Load += new System.EventHandler(this.GestionarUsuario_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaSiguiente)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaAnterior)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -416,13 +418,13 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtBusqueda;
         private System.Windows.Forms.Label labelPaginacion;
-        private System.Windows.Forms.Button btnPaginaSiguiente;
-        private System.Windows.Forms.Button btnPaginaAnterior;
         private RoundedButton btnRolesyPermisos;
         private RoundedButton btnLimpiarCampos;
         private RoundedButton btnGuardarEdicion;
         private RoundedButton btnEliminarUsuario;
         private RoundedButton btnAltaUsuario;
         private RoundedButton btnHabilitarUsuario;
+        private System.Windows.Forms.PictureBox btnPaginaSiguiente;
+        private System.Windows.Forms.PictureBox btnPaginaAnterior;
     }
 }

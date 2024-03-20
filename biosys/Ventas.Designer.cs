@@ -75,11 +75,11 @@
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(550, 50);
+            this.labelTitulo.Location = new System.Drawing.Point(590, 27);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(216, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(174, 55);
             this.labelTitulo.TabIndex = 50;
-            this.labelTitulo.Text = "VENTAS";
+            this.labelTitulo.Text = "Ventas";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // txtPrecioUnitario
@@ -111,9 +111,9 @@
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.Location = new System.Drawing.Point(124, 457);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(110, 18);
+            this.label16.Size = new System.Drawing.Size(107, 18);
             this.label16.TabIndex = 106;
-            this.label16.Text = "Precio Unitario:";
+            this.label16.Text = "Precio unitario:";
             // 
             // lblError
             // 
@@ -196,9 +196,9 @@
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(987, 101);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(114, 18);
+            this.label10.Size = new System.Drawing.Size(112, 18);
             this.label10.TabIndex = 97;
-            this.label10.Text = "Detalle de Venta";
+            this.label10.Text = "Detalle de venta";
             // 
             // listDetalleVenta
             // 
@@ -314,9 +314,9 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(124, 378);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(150, 18);
+            this.label2.Size = new System.Drawing.Size(148, 18);
             this.label2.TabIndex = 160;
-            this.label2.Text = "Ganancia Porcentual:";
+            this.label2.Text = "Ganancia porcentual:";
             // 
             // numericGananciaPorcentual
             // 
@@ -370,9 +370,9 @@
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label17.Location = new System.Drawing.Point(124, 511);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(122, 18);
+            this.label17.Size = new System.Drawing.Size(120, 18);
             this.label17.TabIndex = 166;
-            this.label17.Text = "Método de Pago:";
+            this.label17.Text = "Método de pago:";
             // 
             // comboMedioPago
             // 
@@ -421,9 +421,9 @@
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label18.Location = new System.Drawing.Point(124, 564);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(101, 18);
+            this.label18.Size = new System.Drawing.Size(99, 18);
             this.label18.TabIndex = 171;
-            this.label18.Text = "Razón Social:";
+            this.label18.Text = "Razón social:";
             // 
             // btnHistorialVentas
             // 
@@ -433,7 +433,7 @@
             this.btnHistorialVentas.Name = "btnHistorialVentas";
             this.btnHistorialVentas.Size = new System.Drawing.Size(119, 48);
             this.btnHistorialVentas.TabIndex = 165;
-            this.btnHistorialVentas.Text = "HISTORIAL DE VENTAS";
+            this.btnHistorialVentas.Text = "Historial de ventas";
             this.btnHistorialVentas.UseVisualStyleBackColor = true;
             this.btnHistorialVentas.Click += new System.EventHandler(this.btnHistorialVentas_Click);
             // 
@@ -445,7 +445,7 @@
             this.btnRegistrarVenta.Name = "btnRegistrarVenta";
             this.btnRegistrarVenta.Size = new System.Drawing.Size(119, 48);
             this.btnRegistrarVenta.TabIndex = 159;
-            this.btnRegistrarVenta.Text = "REGISTRAR VENTA";
+            this.btnRegistrarVenta.Text = "Registrar venta";
             this.btnRegistrarVenta.UseVisualStyleBackColor = true;
             this.btnRegistrarVenta.Click += new System.EventHandler(this.btnRegistrarVenta_Click);
             this.btnRegistrarVenta.MouseEnter += new System.EventHandler(this.btnRegistrarVenta_MouseEnter);
@@ -459,7 +459,7 @@
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(119, 48);
             this.btnLimpiar.TabIndex = 158;
-            this.btnLimpiar.Text = "LIMPIAR CAMPOS";
+            this.btnLimpiar.Text = "Limpiar campos";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
@@ -471,7 +471,7 @@
             this.btnGuardarDetalle.Name = "btnGuardarDetalle";
             this.btnGuardarDetalle.Size = new System.Drawing.Size(119, 48);
             this.btnGuardarDetalle.TabIndex = 157;
-            this.btnGuardarDetalle.Text = "GUARDAR DETALLE";
+            this.btnGuardarDetalle.Text = "Guardar detalle";
             this.btnGuardarDetalle.UseVisualStyleBackColor = true;
             this.btnGuardarDetalle.Click += new System.EventHandler(this.btnGuardarDetalle_Click);
             // 
@@ -483,7 +483,7 @@
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(119, 48);
             this.btnCancelar.TabIndex = 156;
-            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);

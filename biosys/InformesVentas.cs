@@ -122,7 +122,7 @@ namespace biosys
             StringBuilder sb = new StringBuilder();
 
             // Información de los tres árboles más vendidos
-            sb.AppendLine("Los Tres Árboles Más Vendidos:");
+            sb.AppendLine("Los tres árboles más vendidos:");
             DataTable arbolesvendidosData = Controladora.Controladora.ObtenerTresArbolesMasVendidos();
             for (int i = 0; i < arbolesvendidosData.Rows.Count; i++)
             {
@@ -133,7 +133,7 @@ namespace biosys
             }
 
             // Información de los tres medios de pagos mas utilizados
-            sb.AppendLine("Los Tres Medios De Pagos Más Utilizados:");
+            sb.AppendLine("Los tres medios de pagos más utilizados:");
             DataTable mediosdepagoData = Controladora.Controladora.ObtenerTresMediosPagoMasUtilizados();
             for (int i = 0; i < mediosdepagoData.Rows.Count; i++)
             {
@@ -144,7 +144,7 @@ namespace biosys
             }
 
             // Información de la distribución de ventas por cliente
-            sb.AppendLine("Distribución De Ventas Por Cliente:");
+            sb.AppendLine("Distribución de ventas por cliente:");
             DataTable ventasPorClienteData = Controladora.Controladora.ObtenerVentasPorCliente();
             foreach (DataRow row in ventasPorClienteData.Rows)
             {
@@ -153,7 +153,7 @@ namespace biosys
                 sb.AppendLine($"{cliente}: {cantidadVentas}");
             }
             // Información de ventas por producto
-            sb.AppendLine("Ventas Por Producto:");
+            sb.AppendLine("Ventas por producto:");
             DataTable ventasporproductoData = Controladora.Controladora.ObtenerVentasPorProducto();
 
             foreach (DataRow row in ventasporproductoData.Rows)
@@ -175,7 +175,7 @@ namespace biosys
             if (arbolesMasVendidosData.Rows.Count > 0)
             {
                 // Configurar el gráfico de barras para los árboles más vendidos
-                ConfigurarGraficoBarras(chartArbolesMasVendidos, arbolesMasVendidosData, "Los Tres Árboles Más Vendidos", "Árboles", "Monto");
+                ConfigurarGraficoBarras(chartArbolesMasVendidos, arbolesMasVendidosData, "Los tres árboles más vendidos", "Árboles", "Monto");
             }
             else
             {
@@ -271,7 +271,7 @@ namespace biosys
             if (mediosPagoData.Rows.Count > 0)
             {
                 // Configurar el gráfico de barras para los medios de pago más utilizados
-                ConfigurarGraficoBarrasMediosPago(chartMediosPago, mediosPagoData, "Los Tres Medios de Pago Más Utilizados", "Medios de Pago", "Cantidad");
+                ConfigurarGraficoBarrasMediosPago(chartMediosPago, mediosPagoData, "Los tres medios de pago más utilizados", "Medios de Pago", "Cantidad");
             }
             else
             {
@@ -315,7 +315,7 @@ namespace biosys
             if (ventasPorClienteData.Rows.Count > 0)
             {
                 // Configurar el gráfico de torta para la distribución de ventas por cliente
-                ConfigurarGraficoTorta(chartVentasPorCliente, ventasPorClienteData, "Distribución De Ventas Por Cliente");
+                ConfigurarGraficoTorta(chartVentasPorCliente, ventasPorClienteData, "Distribución de ventas por cliente");
             }
             else
             {
@@ -372,7 +372,7 @@ namespace biosys
             if (ventasPorProductoData.Rows.Count > 0)
             {
                 // Configurar el gráfico de barras para las ventas por producto
-                ConfigurarGraficoBarrasVentasPorProducto(chartVentasPorProducto, ventasPorProductoData, "Ventas Por Producto", "Producto", "Cantidad");
+                ConfigurarGraficoBarrasVentasPorProducto(chartVentasPorProducto, ventasPorProductoData, "Ventas por producto", "Producto", "Cantidad");
             }
             else
             {

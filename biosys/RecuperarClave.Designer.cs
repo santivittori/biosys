@@ -57,7 +57,7 @@
             // 
             this.btnCerrar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCerrar.Image = ((System.Drawing.Image)(resources.GetObject("btnCerrar.Image")));
-            this.btnCerrar.Location = new System.Drawing.Point(759, 12);
+            this.btnCerrar.Location = new System.Drawing.Point(757, 0);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(20, 20);
             this.btnCerrar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -69,7 +69,7 @@
             // 
             this.btnMinimizar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnMinimizar.Image = ((System.Drawing.Image)(resources.GetObject("btnMinimizar.Image")));
-            this.btnMinimizar.Location = new System.Drawing.Point(733, 12);
+            this.btnMinimizar.Location = new System.Drawing.Point(731, 0);
             this.btnMinimizar.Name = "btnMinimizar";
             this.btnMinimizar.Size = new System.Drawing.Size(20, 20);
             this.btnMinimizar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -82,11 +82,11 @@
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTitulo.ForeColor = System.Drawing.Color.DimGray;
-            this.labelTitulo.Location = new System.Drawing.Point(224, 30);
+            this.labelTitulo.Location = new System.Drawing.Point(260, 10);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(348, 31);
+            this.labelTitulo.Size = new System.Drawing.Size(268, 31);
             this.labelTitulo.TabIndex = 0;
-            this.labelTitulo.Text = "OLVIDÉ MI CONTRASEÑA";
+            this.labelTitulo.Text = "Olvidé mi contraseña";
             // 
             // txtEmail
             // 
@@ -98,7 +98,7 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(370, 19);
             this.txtEmail.TabIndex = 23;
-            this.txtEmail.Text = "EMAIL";
+            this.txtEmail.Text = "Email";
             this.txtEmail.Enter += new System.EventHandler(this.txtEmail_Enter);
             this.txtEmail.Leave += new System.EventHandler(this.txtEmail_Leave);
             // 
@@ -132,7 +132,7 @@
             this.txtCodVerificacion.Name = "txtCodVerificacion";
             this.txtCodVerificacion.Size = new System.Drawing.Size(370, 19);
             this.txtCodVerificacion.TabIndex = 24;
-            this.txtCodVerificacion.Text = "CÓDIGO DE VERIFICACIÓN";
+            this.txtCodVerificacion.Text = "Código de verificación";
             this.txtCodVerificacion.Enter += new System.EventHandler(this.txtCodVerificacion_Enter);
             this.txtCodVerificacion.Leave += new System.EventHandler(this.txtCodVerificacion_Leave);
             // 
@@ -148,6 +148,7 @@
             this.lblError.Size = new System.Drawing.Size(109, 16);
             this.lblError.TabIndex = 26;
             this.lblError.Text = "Mensaje de error";
+            this.lblError.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lblError.Visible = false;
             // 
             // btnGuardarClave
@@ -160,11 +161,11 @@
             this.btnGuardarClave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardarClave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardarClave.ForeColor = System.Drawing.Color.LightGray;
-            this.btnGuardarClave.Location = new System.Drawing.Point(213, 379);
+            this.btnGuardarClave.Location = new System.Drawing.Point(213, 387);
             this.btnGuardarClave.Name = "btnGuardarClave";
             this.btnGuardarClave.Size = new System.Drawing.Size(370, 40);
             this.btnGuardarClave.TabIndex = 29;
-            this.btnGuardarClave.Text = "GUARDAR NUEVA CONTRASEÑA";
+            this.btnGuardarClave.Text = "Guardar contraseña";
             this.btnGuardarClave.UseVisualStyleBackColor = false;
             this.btnGuardarClave.Click += new System.EventHandler(this.btnGuardarClave_Click);
             // 
@@ -182,7 +183,7 @@
             this.btnVerificarCod.Name = "btnVerificarCod";
             this.btnVerificarCod.Size = new System.Drawing.Size(108, 30);
             this.btnVerificarCod.TabIndex = 28;
-            this.btnVerificarCod.Text = "VERIFICAR";
+            this.btnVerificarCod.Text = "Verificar";
             this.btnVerificarCod.UseVisualStyleBackColor = false;
             this.btnVerificarCod.Click += new System.EventHandler(this.btnVerificarCod_Click);
             // 
@@ -200,7 +201,7 @@
             this.btnVerificarEmail.Name = "btnVerificarEmail";
             this.btnVerificarEmail.Size = new System.Drawing.Size(108, 30);
             this.btnVerificarEmail.TabIndex = 1;
-            this.btnVerificarEmail.Text = "VERIFICAR";
+            this.btnVerificarEmail.Text = "Verificar";
             this.btnVerificarEmail.UseVisualStyleBackColor = false;
             this.btnVerificarEmail.Click += new System.EventHandler(this.btnVerificarEmail_Click);
             // 
@@ -235,7 +236,7 @@
             this.txtContraseñaNueva.Name = "txtContraseñaNueva";
             this.txtContraseñaNueva.Size = new System.Drawing.Size(370, 19);
             this.txtContraseñaNueva.TabIndex = 30;
-            this.txtContraseñaNueva.Text = "CONTRASEÑA NUEVA";
+            this.txtContraseñaNueva.Text = "Contraseña nueva";
             this.txtContraseñaNueva.Enter += new System.EventHandler(this.txtContraseñaNueva_Enter);
             this.txtContraseñaNueva.Leave += new System.EventHandler(this.txtContraseñaNueva_Leave);
             // 
@@ -254,7 +255,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(780, 500);
             this.Controls.Add(this.btnOjoCerrado);
             this.Controls.Add(this.btnOjo);
             this.Controls.Add(this.pictureBox2);

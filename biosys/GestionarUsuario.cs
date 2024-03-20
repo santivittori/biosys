@@ -40,7 +40,7 @@ namespace biosys
             // Verificar campos vacíos
             if (string.IsNullOrWhiteSpace(txtUsuario.Text) || comborol.SelectedItem == null)
             {
-                msgError("Por favor, complete todos los campos.");
+                msgError("  Complete todos los campos.");
                 return;
             }
 
@@ -51,7 +51,7 @@ namespace biosys
             // Verificar existencia de usuario
             if (Controladora.Controladora.VerificarExistenciaUsuario(nombreUsuario))
             {
-                msgError("El nombre de usuario ya existe. Por favor, elija otro.");
+                msgError("  El nombre de usuario ya existe. Elija otro.");
                 return;
             }
 
@@ -59,12 +59,12 @@ namespace biosys
 
             if (!esValido)
             {
-                msgError("Debe ingresar un email válido, por favor verifíquelo.");
+                msgError("  Ingrese un email válido.");
                 return;
             }
             else if (Controladora.Controladora.VerificarExistenciaEmail(email))
             {
-                msgError("El email ya está registrado. Por favor, use otro email.");
+                msgError("  El email ya está registrado. Use otro email.");
                 return;
 
             }
@@ -129,12 +129,12 @@ namespace biosys
                     }
                     else
                     {
-                        MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Hubo un problema al enviar el correo. Inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Hubo un problema al enviar el correo. Inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -162,7 +162,7 @@ namespace biosys
             {
                 txtUsuario.Text = txtUsuario.Text.Substring(0, 60);
                 txtUsuario.SelectionStart = 60; // Establece el cursor al final del texto.
-                msgError("No se pueden ingresar mas caracteres");
+                msgError("  No se pueden ingresar mas caracteres");
             }
         }
         private void dataGridViewUsuarios_SelectionChanged(object sender, EventArgs e)
@@ -195,7 +195,7 @@ namespace biosys
                 // El correo electrónico ha cambiado, verifica si ya existe en la base de datos
                 if (Controladora.Controladora.VerificarExistenciaEmail(nuevoCorreoElectronico))
                 {
-                    MessageBox.Show("El nuevo correo electrónico ya está registrado. Por favor, use otro correo electrónico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("El nuevo correo electrónico ya está registrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -248,12 +248,12 @@ namespace biosys
                 }
                 else
                 {
-                    MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Hubo un problema al enviar el correo. Inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception)
             {
-                MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Hubo un problema al enviar el correo. Inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -294,7 +294,6 @@ namespace biosys
             int totalPaginas = (int)Math.Ceiling((double)totalUsuarios / tamañoPagina);
             labelPaginacion.Text = $"Página {paginaActual} de {totalPaginas}. Total de usuarios: {totalUsuarios}";
         }
-
         private void btnPaginaAnterior_Click(object sender, EventArgs e)
         {
             if (paginaActual > 1)
@@ -381,7 +380,7 @@ namespace biosys
             }
             else
             {
-                msgError("Debe seleccionar una fila en el DataGridView para editar un usuario.");
+                msgError("  Seleccione una fila de la casilla para editar.");
             }
         }
 
@@ -424,7 +423,7 @@ namespace biosys
                 else
                 {
                     // Mostrar un cuadro de diálogo de confirmación
-                    DialogResult result = MessageBox.Show("¿Está seguro/a de que desea eliminar este usuario?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show("¿Desea eliminar este usuario?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     // Si el usuario confirma la eliminación
                     if (result == DialogResult.Yes)
@@ -441,7 +440,7 @@ namespace biosys
             }
             else
             {
-                msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
+                msgError("  Seleccione una fila de la casilla para eliminar.");
                 return;
             }
         }
@@ -509,7 +508,7 @@ namespace biosys
                 else
                 {
                     // Mostrar un cuadro de diálogo de confirmación
-                    string mensaje = "¿Está seguro/a de que desea ";
+                    string mensaje = "¿Desea ";
                     mensaje += Controladora.Controladora.VerificarUsuarioHabilitadoPorID(idUsuario) ? "deshabilitar" : "habilitar";
                     mensaje += " este usuario?";
 
@@ -551,7 +550,7 @@ namespace biosys
             }
             else
             {
-                msgError("Debe seleccionar una fila en el DataGridView para habilitar o deshabilitar un usuario.");
+                msgError("  Seleccione una fila de la casilla para habilitar o deshabilitar un usuario.");
                 return;
             }
         }

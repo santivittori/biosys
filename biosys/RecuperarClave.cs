@@ -34,7 +34,7 @@ namespace biosys
         // Diseño para nombrar los campos de Email, Codigo verificación y Contraseña nueva
         private void txtEmail_Enter(object sender, EventArgs e)
         {
-            if (txtEmail.Text == "EMAIL")
+            if (txtEmail.Text == "Email")
             {
                 txtEmail.Text = "";
                 txtEmail.ForeColor = Color.LightGray;
@@ -44,13 +44,13 @@ namespace biosys
         {
             if (txtEmail.Text == "")
             {
-                txtEmail.Text = "EMAIL";
+                txtEmail.Text = "Email";
                 txtEmail.ForeColor = Color.DimGray;
             }
         }
         private void txtContraseñaNueva_Enter(object sender, EventArgs e)
         {
-            if (txtContraseñaNueva.Text == "CONTRASEÑA NUEVA")
+            if (txtContraseñaNueva.Text == "Contraseña nueva")
             {
                 txtContraseñaNueva.Text = "";
                 txtContraseñaNueva.ForeColor = Color.LightGray;
@@ -61,14 +61,14 @@ namespace biosys
         {
             if (txtContraseñaNueva.Text == "")
             {
-                txtContraseñaNueva.Text = "CONTRASEÑA NUEVA";
+                txtContraseñaNueva.Text = "Contraseña nueva";
                 txtContraseñaNueva.ForeColor = Color.DimGray;
                 txtContraseñaNueva.UseSystemPasswordChar = false;
             }
         }
         private void txtCodVerificacion_Enter(object sender, EventArgs e)
         {
-            if (txtCodVerificacion.Text == "CÓDIGO DE VERIFICACIÓN")
+            if (txtCodVerificacion.Text == "Código de verificación")
             {
                 txtCodVerificacion.Text = "";
                 txtCodVerificacion.ForeColor = Color.LightGray;
@@ -78,7 +78,7 @@ namespace biosys
         {
             if (txtCodVerificacion.Text == "")
             {
-                txtCodVerificacion.Text = "CÓDIGO DE VERIFICACIÓN";
+                txtCodVerificacion.Text = "Código de verificación";
                 txtCodVerificacion.ForeColor = Color.DimGray;
             }
         }
@@ -113,9 +113,9 @@ namespace biosys
         private async void btnVerificarEmail_Click(object sender, EventArgs e)
         {
             // Verificar campos vacíos
-            if (txtEmail.Text == "EMAIL")
+            if (txtEmail.Text == "Email")
             {
-                msgError("Por favor, complete todos los campos.");
+                msgError("  Complete todos los campos.");
                 return;
             }
 
@@ -125,7 +125,7 @@ namespace biosys
 
             if (!esValido)
             {
-                msgError("Debe ingresar un email válido, por favor verifíquelo.");
+                msgError("  Ingrese un email válido.");
                 return;
             }
 
@@ -184,14 +184,14 @@ namespace biosys
                         MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     MessageBox.Show("Hubo un problema al enviar el correo. Por favor, inténtelo nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                msgError("El email ingresado no se encontró. Verifique e intente nuevamente.");
+                msgError("  El email ingresado no se encontró.");
                 return;
             }
         }
@@ -220,7 +220,7 @@ namespace biosys
             }
             else
             {
-                msgError("Código de verificación incorrecto. Intente nuevamente.");
+                msgError("  Código de verificación incorrecto.");
                 return;
             }
         }
@@ -269,7 +269,7 @@ namespace biosys
 
         private void btnOjoCerrado_Click(object sender, EventArgs e)
         {
-            if (txtContraseñaNueva.Text != "CONTRASEÑA" && txtContraseñaNueva.Text != "")
+            if (txtContraseñaNueva.Text != "Contraseña" && txtContraseñaNueva.Text != "")
             {
                 txtContraseñaNueva.UseSystemPasswordChar = false;
                 btnOjoCerrado.Visible = false;

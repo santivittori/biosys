@@ -56,11 +56,11 @@
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(510, 50);
+            this.labelTitulo.Location = new System.Drawing.Point(533, 38);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(420, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(322, 55);
             this.labelTitulo.TabIndex = 50;
-            this.labelTitulo.Text = "REPRODUCCIÓN";
+            this.labelTitulo.Text = "Reproducción";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // fechaCompra
@@ -201,9 +201,9 @@
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(985, 146);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(132, 18);
+            this.label10.Size = new System.Drawing.Size(130, 18);
             this.label10.TabIndex = 90;
-            this.label10.Text = "Detalle de Siembra";
+            this.label10.Text = "Detalle de siembra";
             // 
             // listDetalleSiembra
             // 
@@ -233,7 +233,7 @@
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(119, 48);
             this.btnCancelar.TabIndex = 155;
-            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
@@ -243,11 +243,11 @@
             // 
             this.btnGuardarDetalle.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnGuardarDetalle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuardarDetalle.Location = new System.Drawing.Point(508, 514);
+            this.btnGuardarDetalle.Location = new System.Drawing.Point(349, 514);
             this.btnGuardarDetalle.Name = "btnGuardarDetalle";
             this.btnGuardarDetalle.Size = new System.Drawing.Size(119, 48);
             this.btnGuardarDetalle.TabIndex = 156;
-            this.btnGuardarDetalle.Text = "GUARDAR DETALLE";
+            this.btnGuardarDetalle.Text = "Guardar detalle";
             this.btnGuardarDetalle.UseVisualStyleBackColor = true;
             this.btnGuardarDetalle.Click += new System.EventHandler(this.btnGuardarDetalle_Click);
             // 
@@ -255,12 +255,12 @@
             // 
             this.btnRegistrarSiembra.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRegistrarSiembra.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistrarSiembra.Location = new System.Drawing.Point(343, 514);
+            this.btnRegistrarSiembra.Location = new System.Drawing.Point(522, 514);
             this.btnRegistrarSiembra.Name = "btnRegistrarSiembra";
             this.btnRegistrarSiembra.Size = new System.Drawing.Size(119, 48);
             this.btnRegistrarSiembra.TabIndex = 157;
             this.btnRegistrarSiembra.Tag = "";
-            this.btnRegistrarSiembra.Text = "REGISTRAR SIEMBRA";
+            this.btnRegistrarSiembra.Text = "Registrar siembra";
             this.btnRegistrarSiembra.UseVisualStyleBackColor = true;
             this.btnRegistrarSiembra.Click += new System.EventHandler(this.btnRegistrarSiembra_Click);
             this.btnRegistrarSiembra.MouseEnter += new System.EventHandler(this.btnRegistrarSiembra_MouseEnter);
@@ -269,12 +269,12 @@
             // btnHistorialReproduccion
             // 
             this.btnHistorialReproduccion.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnHistorialReproduccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHistorialReproduccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHistorialReproduccion.Location = new System.Drawing.Point(993, 514);
             this.btnHistorialReproduccion.Name = "btnHistorialReproduccion";
             this.btnHistorialReproduccion.Size = new System.Drawing.Size(119, 48);
             this.btnHistorialReproduccion.TabIndex = 158;
-            this.btnHistorialReproduccion.Text = "HISTORIAL DE REPRODUCCIONES";
+            this.btnHistorialReproduccion.Text = "Historial de reproducciones";
             this.btnHistorialReproduccion.UseVisualStyleBackColor = true;
             this.btnHistorialReproduccion.Click += new System.EventHandler(this.btnHistorialReproduccion_Click);
             // 

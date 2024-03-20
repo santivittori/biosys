@@ -46,9 +46,9 @@
             this.lblOlvidoClave = new System.Windows.Forms.Label();
             this.txtCodigoVerificacion = new System.Windows.Forms.TextBox();
             this.panelVerficacion = new System.Windows.Forms.Panel();
+            this.btnConfirmarCodigo = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.btnSinCodigo = new System.Windows.Forms.Button();
-            this.btnConfirmarCodigo = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnCerrar)).BeginInit();
@@ -58,17 +58,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.btnOjo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOjoCerrado)).BeginInit();
             this.panelVerficacion.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnConfirmarCodigo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Teal;
+            this.panel1.BackColor = System.Drawing.Color.CadetBlue;
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(250, 490);
+            this.panel1.Size = new System.Drawing.Size(250, 500);
             this.panel1.TabIndex = 0;
             // 
             // pictureBox1
@@ -92,7 +93,7 @@
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(370, 19);
             this.txtUsuario.TabIndex = 1;
-            this.txtUsuario.Text = "USUARIO";
+            this.txtUsuario.Text = "Usuario";
             this.txtUsuario.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtUsuario_MouseClick);
             this.txtUsuario.TextChanged += new System.EventHandler(this.txtUsuario_TextChanged);
             this.txtUsuario.Enter += new System.EventHandler(this.txtUsuario_Enter);
@@ -108,7 +109,7 @@
             this.txtContraseña.Name = "txtContraseña";
             this.txtContraseña.Size = new System.Drawing.Size(370, 19);
             this.txtContraseña.TabIndex = 2;
-            this.txtContraseña.Text = "CONTRASEÑA";
+            this.txtContraseña.Text = "Contraseña";
             this.txtContraseña.Enter += new System.EventHandler(this.txtContraseña_Enter);
             this.txtContraseña.Leave += new System.EventHandler(this.txtContraseña_Leave);
             // 
@@ -117,11 +118,11 @@
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTitulo.ForeColor = System.Drawing.Color.DimGray;
-            this.labelTitulo.Location = new System.Drawing.Point(465, 9);
+            this.labelTitulo.Location = new System.Drawing.Point(465, 10);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(99, 31);
+            this.labelTitulo.Size = new System.Drawing.Size(105, 31);
             this.labelTitulo.TabIndex = 4;
-            this.labelTitulo.Text = "LOGIN";
+            this.labelTitulo.Text = "Ingreso";
             // 
             // btnIniciarSesion
             // 
@@ -137,7 +138,7 @@
             this.btnIniciarSesion.Name = "btnIniciarSesion";
             this.btnIniciarSesion.Size = new System.Drawing.Size(370, 40);
             this.btnIniciarSesion.TabIndex = 3;
-            this.btnIniciarSesion.Text = "INICIAR SESION";
+            this.btnIniciarSesion.Text = "Iniciar sesión";
             this.btnIniciarSesion.UseVisualStyleBackColor = false;
             this.btnIniciarSesion.Click += new System.EventHandler(this.btnIniciarSesion_Click);
             // 
@@ -199,7 +200,7 @@
             this.btnRegistro.Name = "btnRegistro";
             this.btnRegistro.Size = new System.Drawing.Size(370, 40);
             this.btnRegistro.TabIndex = 0;
-            this.btnRegistro.Text = "REGISTRARSE";
+            this.btnRegistro.Text = "Registrarse";
             this.btnRegistro.UseVisualStyleBackColor = false;
             this.btnRegistro.Click += new System.EventHandler(this.btnRegistro_Click);
             // 
@@ -215,6 +216,7 @@
             this.lblError.Size = new System.Drawing.Size(110, 16);
             this.lblError.TabIndex = 10;
             this.lblError.Text = "Mensaje de Error";
+            this.lblError.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lblError.Visible = false;
             // 
             // btnOjo
@@ -240,9 +242,9 @@
             // lblOlvidoClave
             // 
             this.lblOlvidoClave.AutoSize = true;
-            this.lblOlvidoClave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOlvidoClave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOlvidoClave.ForeColor = System.Drawing.Color.LightGray;
-            this.lblOlvidoClave.Location = new System.Drawing.Point(441, 339);
+            this.lblOlvidoClave.Location = new System.Drawing.Point(441, 332);
             this.lblOlvidoClave.Name = "lblOlvidoClave";
             this.lblOlvidoClave.Size = new System.Drawing.Size(133, 16);
             this.lblOlvidoClave.TabIndex = 13;
@@ -259,21 +261,31 @@
             this.txtCodigoVerificacion.Name = "txtCodigoVerificacion";
             this.txtCodigoVerificacion.Size = new System.Drawing.Size(370, 19);
             this.txtCodigoVerificacion.TabIndex = 14;
-            this.txtCodigoVerificacion.Text = "CÓDIGO DE VERIFICACIÓN";
+            this.txtCodigoVerificacion.Text = "Código de verificación";
             this.txtCodigoVerificacion.Enter += new System.EventHandler(this.txtCodigoVerificacion_Enter);
             this.txtCodigoVerificacion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoVerificacion_KeyPress);
             this.txtCodigoVerificacion.Leave += new System.EventHandler(this.txtCodigoVerificacion_Leave);
             // 
             // panelVerficacion
             // 
+            this.panelVerficacion.Controls.Add(this.btnConfirmarCodigo);
             this.panelVerficacion.Controls.Add(this.pictureBox4);
             this.panelVerficacion.Controls.Add(this.btnSinCodigo);
-            this.panelVerficacion.Controls.Add(this.btnConfirmarCodigo);
             this.panelVerficacion.Controls.Add(this.txtCodigoVerificacion);
             this.panelVerficacion.Location = new System.Drawing.Point(273, 358);
             this.panelVerficacion.Name = "panelVerficacion";
-            this.panelVerficacion.Size = new System.Drawing.Size(495, 120);
+            this.panelVerficacion.Size = new System.Drawing.Size(495, 142);
             this.panelVerficacion.TabIndex = 15;
+            // 
+            // btnConfirmarCodigo
+            // 
+            this.btnConfirmarCodigo.Image = ((System.Drawing.Image)(resources.GetObject("btnConfirmarCodigo.Image")));
+            this.btnConfirmarCodigo.Location = new System.Drawing.Point(428, 10);
+            this.btnConfirmarCodigo.Name = "btnConfirmarCodigo";
+            this.btnConfirmarCodigo.Size = new System.Drawing.Size(39, 36);
+            this.btnConfirmarCodigo.TabIndex = 16;
+            this.btnConfirmarCodigo.TabStop = false;
+            this.btnConfirmarCodigo.Click += new System.EventHandler(this.btnConfirmarCodigo_Click);
             // 
             // pictureBox4
             // 
@@ -295,32 +307,20 @@
             this.btnSinCodigo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSinCodigo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSinCodigo.ForeColor = System.Drawing.Color.LightGray;
-            this.btnSinCodigo.Location = new System.Drawing.Point(130, 76);
+            this.btnSinCodigo.Location = new System.Drawing.Point(52, 90);
             this.btnSinCodigo.Name = "btnSinCodigo";
-            this.btnSinCodigo.Size = new System.Drawing.Size(222, 26);
+            this.btnSinCodigo.Size = new System.Drawing.Size(370, 40);
             this.btnSinCodigo.TabIndex = 16;
-            this.btnSinCodigo.Text = "NO TENGO EL CÓDIGO";
+            this.btnSinCodigo.Text = "Acceso libre";
             this.btnSinCodigo.UseVisualStyleBackColor = false;
             this.btnSinCodigo.Click += new System.EventHandler(this.btnSinCodigo_Click);
-            // 
-            // btnConfirmarCodigo
-            // 
-            this.btnConfirmarCodigo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.btnConfirmarCodigo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConfirmarCodigo.Location = new System.Drawing.Point(428, 3);
-            this.btnConfirmarCodigo.Name = "btnConfirmarCodigo";
-            this.btnConfirmarCodigo.Size = new System.Drawing.Size(38, 36);
-            this.btnConfirmarCodigo.TabIndex = 15;
-            this.btnConfirmarCodigo.Text = "✅";
-            this.btnConfirmarCodigo.UseVisualStyleBackColor = false;
-            this.btnConfirmarCodigo.Click += new System.EventHandler(this.btnConfirmarCodigo_Click);
             // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.ClientSize = new System.Drawing.Size(780, 490);
+            this.ClientSize = new System.Drawing.Size(780, 500);
             this.Controls.Add(this.panelVerficacion);
             this.Controls.Add(this.lblOlvidoClave);
             this.Controls.Add(this.btnOjoCerrado);
@@ -354,6 +354,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.btnOjoCerrado)).EndInit();
             this.panelVerficacion.ResumeLayout(false);
             this.panelVerficacion.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnConfirmarCodigo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -380,8 +381,8 @@
         private System.Windows.Forms.TextBox txtCodigoVerificacion;
         private System.Windows.Forms.Panel panelVerficacion;
         private System.Windows.Forms.Button btnSinCodigo;
-        private System.Windows.Forms.Button btnConfirmarCodigo;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox btnConfirmarCodigo;
     }
 }
 

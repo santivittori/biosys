@@ -52,7 +52,7 @@ namespace biosys
             if (semillasData.Rows.Count > 0)
             {
                 // Configurar el gráfico de barras para las semillas más compradas
-                ConfigurarGraficoBarras(chartSemillas, semillasData, "Las Tres Semillas Más Compradas", "Semillas", "Monto");
+                ConfigurarGraficoBarras(chartSemillas, semillasData, "Las tres semillas más compradas", "Semillas", "Monto");
             }
             else
             {
@@ -180,7 +180,7 @@ namespace biosys
             StringBuilder sb = new StringBuilder();
 
             // Información de las tres semillas más compradas
-            sb.AppendLine("Las Tres Semillas Más Compradas:");
+            sb.AppendLine("Las tres semillas más compradas:");
             DataTable semillasData = Controladora.Controladora.ObtenerTresSemillasMasCompradas();
             for (int i = 0; i < semillasData.Rows.Count; i++)
             {
@@ -191,7 +191,7 @@ namespace biosys
             }
 
             // Información de los tres árboles más comprados
-            sb.AppendLine("Los Tres Árboles Más Comprados:");
+            sb.AppendLine("Los tres árboles más comprados:");
             DataTable arbolesData = Controladora.Controladora.ObtenerTresArbolesMasComprados();
             for (int i = 0; i < arbolesData.Rows.Count; i++)
             {
@@ -202,7 +202,7 @@ namespace biosys
             }
 
             // Información de la distribución de compras por proveedor
-            sb.AppendLine("Distribución De Compras Por Proveedor:");
+            sb.AppendLine("Distribución de compras por proveedor:");
             DataTable comprasPorProveedorData = Controladora.Controladora.ObtenerComprasPorProveedor();
             foreach (DataRow row in comprasPorProveedorData.Rows)
             {
@@ -212,7 +212,7 @@ namespace biosys
             }
 
             // Información de la comparación de precios unitarios
-            sb.AppendLine("Comparación De Precios Unitarios De Árboles:");
+            sb.AppendLine("Comparación de precios unitarios de árboles:");
             DataTable preciosUnitariosData = Controladora.Controladora.ObtenerPreciosUnitariosArboles();
             foreach (DataRow row in preciosUnitariosData.Rows)
             {
@@ -232,7 +232,7 @@ namespace biosys
             if (arbolesData.Rows.Count > 0)
             {
                 // Configurar el gráfico de barras para los árboles más comprados
-                ConfigurarGraficoBarras(chartArboles, arbolesData, "Los Tres Árboles Más Comprados", "Árboles", "Monto");
+                ConfigurarGraficoBarras(chartArboles, arbolesData, "Los tres árboles más comprados", "Árboles", "Monto");
             }
             else
             {
@@ -251,7 +251,7 @@ namespace biosys
             if (comprasPorProveedorData.Rows.Count > 0)
             {
                 // Configurar el gráfico de torta para la distribución de compras por proveedor
-                ConfigurarGraficoTorta(chartComprasPorProveedor, comprasPorProveedorData, "Distribución De Compras Por Proveedor");
+                ConfigurarGraficoTorta(chartComprasPorProveedor, comprasPorProveedorData, "Distribución de compras por proveedor");
             }
             else
             {
@@ -294,7 +294,7 @@ namespace biosys
             if (preciosUnitariosData.Rows.Count > 0)
             {
                 // Configurar el gráfico de dispersión para comparar precios unitarios
-                ConfigurarGraficoDispersión(chartPreciosUnitarios, preciosUnitariosData, "Comparación De Precios Unitarios De Árboles", "Producto", "Precio Unitario");
+                ConfigurarGraficoDispersión(chartPreciosUnitarios, preciosUnitariosData, "Comparación de precios unitarios de árboles", "Producto", "Precio Unitario");
             }
             else
             {

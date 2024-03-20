@@ -38,24 +38,26 @@
             this.dateInicio = new System.Windows.Forms.DateTimePicker();
             this.btnAplicarFiltro = new biosys.RoundedButton();
             this.labelHistorialDonaciones = new System.Windows.Forms.Label();
-            this.btnSigDonaciones = new System.Windows.Forms.Button();
-            this.btnAntDonaciones = new System.Windows.Forms.Button();
             this.dataGridViewHistorialDonaciones = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBack = new System.Windows.Forms.PictureBox();
+            this.btnSigDonaciones = new System.Windows.Forms.PictureBox();
+            this.btnAntDonaciones = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistorialDonaciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSigDonaciones)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAntDonaciones)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(342, 45);
+            this.labelTitulo.Location = new System.Drawing.Point(430, 26);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(693, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(523, 55);
             this.labelTitulo.TabIndex = 51;
-            this.labelTitulo.Text = "HISTORIAL DE DONACIONES";
+            this.labelTitulo.Text = "Historial de donaciones";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label3
@@ -96,7 +98,7 @@
             this.btnQuitarFiltro.Name = "btnQuitarFiltro";
             this.btnQuitarFiltro.Size = new System.Drawing.Size(119, 48);
             this.btnQuitarFiltro.TabIndex = 190;
-            this.btnQuitarFiltro.Text = "QUITAR FILTRO";
+            this.btnQuitarFiltro.Text = "Quitar filtro";
             this.btnQuitarFiltro.UseVisualStyleBackColor = true;
             this.btnQuitarFiltro.Click += new System.EventHandler(this.btnQuitarFiltro_Click);
             // 
@@ -126,7 +128,7 @@
             this.btnAplicarFiltro.Name = "btnAplicarFiltro";
             this.btnAplicarFiltro.Size = new System.Drawing.Size(119, 48);
             this.btnAplicarFiltro.TabIndex = 187;
-            this.btnAplicarFiltro.Text = "APLICAR FILTRO";
+            this.btnAplicarFiltro.Text = "Aplicar filtro";
             this.btnAplicarFiltro.UseVisualStyleBackColor = true;
             this.btnAplicarFiltro.Click += new System.EventHandler(this.btnAplicarFiltro_Click);
             // 
@@ -134,35 +136,11 @@
             // 
             this.labelHistorialDonaciones.AutoSize = true;
             this.labelHistorialDonaciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelHistorialDonaciones.Location = new System.Drawing.Point(161, 715);
+            this.labelHistorialDonaciones.Location = new System.Drawing.Point(157, 708);
             this.labelHistorialDonaciones.Name = "labelHistorialDonaciones";
             this.labelHistorialDonaciones.Size = new System.Drawing.Size(163, 16);
             this.labelHistorialDonaciones.TabIndex = 186;
             this.labelHistorialDonaciones.Text = "LabelHistorialDonaciones";
-            // 
-            // btnSigDonaciones
-            // 
-            this.btnSigDonaciones.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSigDonaciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSigDonaciones.Location = new System.Drawing.Point(101, 707);
-            this.btnSigDonaciones.Name = "btnSigDonaciones";
-            this.btnSigDonaciones.Size = new System.Drawing.Size(40, 30);
-            this.btnSigDonaciones.TabIndex = 185;
-            this.btnSigDonaciones.Text = ">";
-            this.btnSigDonaciones.UseVisualStyleBackColor = true;
-            this.btnSigDonaciones.Click += new System.EventHandler(this.btnSigDonaciones_Click);
-            // 
-            // btnAntDonaciones
-            // 
-            this.btnAntDonaciones.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAntDonaciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAntDonaciones.Location = new System.Drawing.Point(54, 707);
-            this.btnAntDonaciones.Name = "btnAntDonaciones";
-            this.btnAntDonaciones.Size = new System.Drawing.Size(40, 30);
-            this.btnAntDonaciones.TabIndex = 184;
-            this.btnAntDonaciones.Text = "<";
-            this.btnAntDonaciones.UseVisualStyleBackColor = true;
-            this.btnAntDonaciones.Click += new System.EventHandler(this.btnAntDonaciones_Click);
             // 
             // dataGridViewHistorialDonaciones
             // 
@@ -184,9 +162,9 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(88, 26);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 20);
+            this.label4.Size = new System.Drawing.Size(52, 20);
             this.label4.TabIndex = 195;
-            this.label4.Text = "Back";
+            this.label4.Text = "Atrás";
             // 
             // pictureBack
             // 
@@ -199,12 +177,36 @@
             this.pictureBack.TabStop = false;
             this.pictureBack.Click += new System.EventHandler(this.pictureBack_Click);
             // 
+            // btnSigDonaciones
+            // 
+            this.btnSigDonaciones.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSigDonaciones.Image = ((System.Drawing.Image)(resources.GetObject("btnSigDonaciones.Image")));
+            this.btnSigDonaciones.Location = new System.Drawing.Point(101, 696);
+            this.btnSigDonaciones.Name = "btnSigDonaciones";
+            this.btnSigDonaciones.Size = new System.Drawing.Size(39, 43);
+            this.btnSigDonaciones.TabIndex = 197;
+            this.btnSigDonaciones.TabStop = false;
+            this.btnSigDonaciones.Click += new System.EventHandler(this.btnSigDonaciones_Click);
+            // 
+            // btnAntDonaciones
+            // 
+            this.btnAntDonaciones.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAntDonaciones.Image = ((System.Drawing.Image)(resources.GetObject("btnAntDonaciones.Image")));
+            this.btnAntDonaciones.Location = new System.Drawing.Point(56, 696);
+            this.btnAntDonaciones.Name = "btnAntDonaciones";
+            this.btnAntDonaciones.Size = new System.Drawing.Size(39, 43);
+            this.btnAntDonaciones.TabIndex = 196;
+            this.btnAntDonaciones.TabStop = false;
+            this.btnAntDonaciones.Click += new System.EventHandler(this.btnAntDonaciones_Click);
+            // 
             // HistorialDonaciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnSigDonaciones);
+            this.Controls.Add(this.btnAntDonaciones);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.pictureBack);
             this.Controls.Add(this.label3);
@@ -215,8 +217,6 @@
             this.Controls.Add(this.dateInicio);
             this.Controls.Add(this.btnAplicarFiltro);
             this.Controls.Add(this.labelHistorialDonaciones);
-            this.Controls.Add(this.btnSigDonaciones);
-            this.Controls.Add(this.btnAntDonaciones);
             this.Controls.Add(this.dataGridViewHistorialDonaciones);
             this.Controls.Add(this.labelTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -226,6 +226,8 @@
             this.Load += new System.EventHandler(this.HistorialDonaciones_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistorialDonaciones)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSigDonaciones)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAntDonaciones)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -242,10 +244,10 @@
         private System.Windows.Forms.DateTimePicker dateInicio;
         private RoundedButton btnAplicarFiltro;
         private System.Windows.Forms.Label labelHistorialDonaciones;
-        private System.Windows.Forms.Button btnSigDonaciones;
-        private System.Windows.Forms.Button btnAntDonaciones;
         private System.Windows.Forms.DataGridView dataGridViewHistorialDonaciones;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pictureBack;
+        private System.Windows.Forms.PictureBox btnSigDonaciones;
+        private System.Windows.Forms.PictureBox btnAntDonaciones;
     }
 }

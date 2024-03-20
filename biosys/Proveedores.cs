@@ -221,7 +221,6 @@ namespace biosys
             // Mostrar información de paginación en una etiqueta o control similar
             labelPaginacion.Text = $"Página {paginaActual} de {totalPaginas}. Total de proveedores: {totalProveedores}";
         }
-
         private void btnPaginaAnterior_Click(object sender, EventArgs e)
         {
             if (paginaActual > 1)
@@ -268,12 +267,12 @@ namespace biosys
 
                 if (proveedorEnCompra)
                 {
-                    msgError("El proveedor no puede ser eliminado porque ha sido utilizado en una compra.");
+                    msgError("  El proveedor no puede ser eliminado porque ha sido utilizado en una compra.");
                     return;
                 }
 
                 // Mostrar un cuadro de diálogo de confirmación
-                DialogResult result = MessageBox.Show("¿Está seguro/a de que desea eliminar este proveedor?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("¿Desea eliminar este proveedor?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 // Si el usuario confirma la eliminación
                 if (result == DialogResult.Yes)
@@ -289,7 +288,7 @@ namespace biosys
             }
             else
             {
-                msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
+                msgError("  Seleccione una fila de la casilla para eliminar.");
                 return;
             }
         }
@@ -297,7 +296,7 @@ namespace biosys
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             // Mostrar un cuadro de diálogo de confirmación
-            DialogResult result = MessageBox.Show("¿Está seguro de que desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Verificar si el usuario ha confirmado la cancelación
             if (result == DialogResult.Yes)
@@ -323,7 +322,7 @@ namespace biosys
             if (string.IsNullOrEmpty(txtNombreProv.Text) || string.IsNullOrEmpty(txtApellidoProv.Text) ||
                 string.IsNullOrEmpty(txtEmailProv.Text) || string.IsNullOrEmpty(txtTelefonoProv.Text))
             {
-                msgError("Por favor, complete todos los campos obligatorios.");
+                msgError("  Complete todos los campos obligatorios.");
                 return;
             }
 
@@ -348,12 +347,12 @@ namespace biosys
 
             if (!esValido)
             {
-                msgError("Debe ingresar un email válido, por favor verifíquelo.");
+                msgError("  Ingrese un email válido.");
                 return;
             }
             else if (proveedorExistente)
             {
-                msgError("El proveedor ya existe en la base de datos.");
+                msgError("  El proveedor ya existe en la base de datos.");
                 return;
             }
 

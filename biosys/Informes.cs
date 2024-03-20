@@ -87,7 +87,7 @@ namespace biosys
 
             // Configurar el título del gráfico
             CantTotal.Titles.Clear();
-            CantTotal.Titles.Add("Total de Semillas y Árboles");
+            CantTotal.Titles.Add("Total de semillas y árboles");
             CantTotal.Titles[0].Font = new Font("Arial", 12, FontStyle.Bold);
 
             CantTotal.DataBind();
@@ -137,7 +137,7 @@ namespace biosys
 
             // Configurar el título del gráfico de Semillas
             SemillasTipo.Titles.Clear();
-            SemillasTipo.Titles.Add("Stock de Semillas");
+            SemillasTipo.Titles.Add("Stock de semillas");
             SemillasTipo.Titles[0].Font = new Font("Arial", 12, FontStyle.Bold);
 
             // Ocultar la leyenda
@@ -197,7 +197,7 @@ namespace biosys
 
             // Configurar el título del gráfico de Árboles
             ArbolesTipo.Titles.Clear();
-            ArbolesTipo.Titles.Add("Stock de Árboles");
+            ArbolesTipo.Titles.Add("Stock de árboles");
             ArbolesTipo.Titles[0].Font = new Font("Arial", 12, FontStyle.Bold);
 
             // Ocultar la leyenda
@@ -261,7 +261,7 @@ namespace biosys
 
             // Configurar el título del gráfico
             TotalporDivision.Titles.Clear();
-            TotalporDivision.Titles.Add("Totales por División");
+            TotalporDivision.Titles.Add("Totales por división");
             TotalporDivision.Titles[0].Font = new Font("Arial", 12, FontStyle.Bold);
 
             TotalporDivision.DataBind();
@@ -302,47 +302,47 @@ namespace biosys
                     doc.Add(new Paragraph("Información de los gráficos:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 14, iTextSharp.text.Font.BOLD)));
 
                     // Agregar la información de CantTotal
-                    doc.Add(new Paragraph("\nTotal de Semillas y Árboles:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph("\nTotal de semillas y árboles:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
                     doc.Add(new Paragraph($"Cantidad total de semillas = {CantTotal.Series["Semillas"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
                     doc.Add(new Paragraph($"Cantidad total de árboles = {CantTotal.Series["Árboles"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
 
                     // Agregar la información de SemillasTipo
-                    doc.Add(new Paragraph("\nStock de Semillas por tipo:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph("\nStock de semillas por tipo:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
                     foreach (Series seriesSemilla in SemillasTipo.Series)
                     {
                         doc.Add(new Paragraph($"Cantidad de {seriesSemilla.Name} = {seriesSemilla.Points.FirstOrDefault()?.YValues[0] ?? 0}."));
                     }
 
                     // Agregar la información de ArbolesTipo
-                    doc.Add(new Paragraph("\nStock de Árboles por tipo:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph("\nStock de árboles por tipo:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
                     foreach (Series seriesArbol in ArbolesTipo.Series)
                     {
                         doc.Add(new Paragraph($"Cantidad de {seriesArbol.Name} = {seriesArbol.Points.FirstOrDefault()?.YValues[0] ?? 0}."));
                     }
 
                     // Agregar la información de TotalporDivision
-                    doc.Add(new Paragraph("\nTotales por División:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
-                    doc.Add(new Paragraph($"Total de Compras = {TotalporDivision.Series["Compras"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
-                    doc.Add(new Paragraph($"Total de Donaciones = {TotalporDivision.Series["Donaciones"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
-                    doc.Add(new Paragraph($"Total de Recolecciones = {TotalporDivision.Series["Recolecciones"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
+                    doc.Add(new Paragraph("\nTotales por división:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph($"Total de compras = {TotalporDivision.Series["Compras"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
+                    doc.Add(new Paragraph($"Total de donaciones = {TotalporDivision.Series["Donaciones"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
+                    doc.Add(new Paragraph($"Total de recolecciones = {TotalporDivision.Series["Recolecciones"].Points.FirstOrDefault()?.YValues[0] ?? 0}."));
 
                     InformesCompras informesComprasForm = new InformesCompras();
                     informesComprasForm.ObtenerInformacionGraficos();
                     string informacionGraficosCompras = informesComprasForm.ObtenerInformacionGraficos();
-                    doc.Add(new Paragraph("\nInformes Compras:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph("\nInformes compras:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
                     doc.Add(new Paragraph(informacionGraficosCompras, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
 
                     InformesVentas informesVentasForm = new InformesVentas();
                     informesVentasForm.ObtenerInformacionGraficos();
                     string informacionGraficosVentas = informesVentasForm.ObtenerInformacionGraficos();
-                    doc.Add(new Paragraph("\nInformes Ventas:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph("\nInformes ventas:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
                     doc.Add(new Paragraph(informacionGraficosCompras, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
 
 
                     InformesEconomicos informesEconomicosForm = new InformesEconomicos();
                     informesEconomicosForm.ObtenerInformacionGraficos();
                     string informacionGraficos = informesEconomicosForm.ObtenerInformacionGraficos();
-                    doc.Add(new Paragraph("\nInformes Economicos:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph("\nInformes economicos:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
                     doc.Add(new Paragraph(informacionGraficos, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
 
                     
@@ -350,7 +350,7 @@ namespace biosys
                     InformesReproduccion informesReproduccionForm = new InformesReproduccion();
                     informesReproduccionForm.ObtenerInfoGraficosReprod();
                     string informacionGraficosReprod = informesReproduccionForm.ObtenerInfoGraficosReprod();
-                    doc.Add(new Paragraph("\nInformes Reproducción:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph("\nInformes reproducción:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
                     doc.Add(new Paragraph(informacionGraficosReprod, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
 
 
@@ -444,7 +444,7 @@ namespace biosys
         // Método para agregar información de semillas al PDF
         private void AgregarInformacionSemillas(Document doc)
         {
-            doc.Add(new Paragraph("Información de Stock de Semillas por Tipo:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+            doc.Add(new Paragraph("Información de stock de semillas por tipo:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
 
             foreach (Series seriesSemilla in SemillasTipo.Series)
             {
@@ -455,7 +455,7 @@ namespace biosys
         // Método para agregar información de árboles al PDF
         private void AgregarInformacionArboles(Document doc)
         {
-            doc.Add(new Paragraph("Información de Stock de Árboles por Tipo:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
+            doc.Add(new Paragraph("Información de stock de árboles por tipo:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.BOLD)));
 
             foreach (Series seriesArbol in ArbolesTipo.Series)
             {

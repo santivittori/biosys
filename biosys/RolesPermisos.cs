@@ -257,7 +257,6 @@ namespace biosys
             // Mostrar información de paginación
             MostrarInformacionPaginacionPermisos();
         }
-
         private void btnAntPermiso_Click(object sender, EventArgs e)
         {
             if (paginaActualPermiso > 1)
@@ -325,7 +324,7 @@ namespace biosys
         }
         private bool ConfirmarCambioEstadoRol(string nombreRol, bool nuevoEstado)
         {
-            string mensaje = nuevoEstado ? $"¿Está seguro de habilitar el rol '{nombreRol}'?" : $"¿Está seguro de deshabilitar el rol '{nombreRol}'? Esto impedirá que los usuarios con este rol inicien sesión.";
+            string mensaje = nuevoEstado ? $"¿Desea habilitar el rol '{nombreRol}'?" : $"¿Desea deshabilitar el rol '{nombreRol}'? Esto impedirá que los usuarios con este rol inicien sesión.";
             DialogResult result = MessageBox.Show(mensaje, "Confirmar cambio de estado", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             return result == DialogResult.Yes;
         }
@@ -345,14 +344,14 @@ namespace biosys
             // Verificar si hay una fila seleccionada en el DataGridView
             if (dataGridViewPermisos.SelectedRows.Count > 0)
             {
-                msgErrorPermiso("Por favor, limpie los campos antes de crear un nuevo permiso.");
+                msgErrorPermiso("  Limpie los campos antes de crear un nuevo permiso.");
                 return;
             }
 
             // Verificar si el nombre del permiso está ingresado
             if (string.IsNullOrWhiteSpace(txtNombrePermiso.Text))
             {
-                msgErrorPermiso("Debe ingresar un nombre para el permiso.");
+                msgErrorPermiso("  Ingrese un nombre para el permiso.");
                 return;
             }
 
@@ -360,7 +359,7 @@ namespace biosys
             string nombrePermiso = txtNombrePermiso.Text.Trim();
             if (Controladora.Controladora.ExistePermiso(nombrePermiso))
             {
-                msgErrorPermiso("Ya existe un permiso con este nombre.");
+                msgErrorPermiso("  Ya existe un permiso con este nombre.");
                 return;
             }
 
@@ -382,14 +381,14 @@ namespace biosys
             // Verificar si hay una fila seleccionada en el DataGridView
             if (dataGridViewRoles.SelectedRows.Count > 0)
             {
-                msgError("Por favor, limpie los campos antes de crear un nuevo rol.");
+                msgError("  Limpie los campos antes de crear un nuevo rol.");
                 return;
             }
 
             // Verificar si el nombre del rol está ingresado
             if (string.IsNullOrWhiteSpace(txtNombreRol.Text))
             {
-                msgError("Debe ingresar un nombre para el rol.");
+                msgError("  Debe ingresar un nombre para el rol.");
                 return;
             }
 
@@ -397,14 +396,14 @@ namespace biosys
             string nombreRol = txtNombreRol.Text.Trim();
             if (Controladora.Controladora.ExisteRol(nombreRol))
             {
-                msgError("Ya existe un rol con este nombre.");
+                msgError("  Ya existe un rol con este nombre.");
                 return;
             }
 
             // Verificar si al menos un permiso está seleccionado
             if (checkedListBoxPermisos.CheckedItems.Count == 0)
             {
-                msgError("Debe seleccionar al menos un permiso para el rol.");
+                msgError("  Debe seleccionar al menos un permiso para el rol.");
                 return;
             }
 
@@ -423,7 +422,7 @@ namespace biosys
             // Verificar si se ha seleccionado una fila en el DataGridView
             if (dataGridViewRoles.SelectedRows.Count == 0)
             {
-                msgError("Por favor, seleccione una fila para editar.");
+                msgError("  Seleccione una fila de la casilla para editar.");
                 return;
             }
 
@@ -433,7 +432,7 @@ namespace biosys
             // Verificar si el rol está deshabilitado
             if (!Controladora.Controladora.VerificarRolHabilitado(nombreRolSeleccionado))
             {
-                msgError("El rol ha sido deshabilitado y no puede ser editado.");
+                msgError("  El rol ha sido deshabilitado y no puede ser editado.");
                 return;
             }
 
@@ -449,7 +448,7 @@ namespace biosys
             string nuevoNombreRol = txtNombreRol.Text.Trim();
             if (nuevoNombreRol == nombreRolSeleccionado && !HuboCambiosEnPermisos())
             {
-                msgError("No se realizaron cambios en el rol.");
+                msgError("  No se realizaron cambios en el rol.");
                 return;
             }
 
@@ -497,7 +496,7 @@ namespace biosys
             // Verificar si se seleccionó una fila
             if (dataGridViewRoles.SelectedRows.Count == 0)
             {
-                msgError("Debe seleccionar un rol antes de habilitarlo o deshabilitarlo.");
+                msgError("  Seleccione un rol antes de habilitarlo o deshabilitarlo.");
                 return;
             }
 
@@ -518,7 +517,7 @@ namespace biosys
             bool nuevoEstadoRol = !rolHabilitado;
 
             // Confirmar con el usuario si desea cambiar el estado del rol
-            DialogResult result = MessageBox.Show($"¿Está seguro/a de que desea {(nuevoEstadoRol ? "habilitar" : "deshabilitar")} el rol '{nombreRol}'?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show($"¿Desea {(nuevoEstadoRol ? "habilitar" : "deshabilitar")} el rol '{nombreRol}'?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -552,7 +551,7 @@ namespace biosys
             // Verificar si se seleccionó una fila
             if (dataGridViewRoles.SelectedRows.Count == 0)
             {
-                msgError("Debe seleccionar un rol antes de eliminarlo.");
+                msgError("  Seleccione un rol antes de eliminarlo.");
                 return;
             }
 
@@ -577,7 +576,7 @@ namespace biosys
             }
 
             // Preguntar al usuario si está seguro de eliminar el rol
-            DialogResult result = MessageBox.Show($"¿Está seguro/a de eliminar el rol '{nombreRol}'? Esto eliminará también los usuarios asociados.", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show($"¿Desea eliminar el rol '{nombreRol}'? Esto eliminará también los usuarios asociados.", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -602,7 +601,7 @@ namespace biosys
             // Verificar si se ha seleccionado una fila en el DataGridView
             if (dataGridViewPermisos.SelectedRows.Count == 0)
             {
-                msgErrorPermiso("Por favor, seleccione una fila para editar.");
+                msgErrorPermiso("  Seleccione una fila de la casilla para editar.");
                 return;
             }
 
@@ -613,7 +612,7 @@ namespace biosys
             string nuevoNombrePermiso = txtNombrePermiso.Text.Trim();
             if (nuevoNombrePermiso == nombrePermisoSeleccionado)
             {
-                msgErrorPermiso("No se realizaron cambios en el permiso.");
+                msgErrorPermiso("  No se realizaron cambios en el permiso.");
                 return;
             }
 
@@ -648,7 +647,7 @@ namespace biosys
             // Verificar si se ha seleccionado una fila en el DataGridView
             if (dataGridViewPermisos.SelectedRows.Count == 0)
             {
-                msgErrorPermiso("Por favor, seleccione una fila para eliminar un permiso.");
+                msgErrorPermiso("  Seleccione una fila de la casilla para eliminar.");
                 return;
             }
 
@@ -663,7 +662,7 @@ namespace biosys
             }
 
             // Preguntar al usuario si está seguro de eliminar el permiso
-            DialogResult result = MessageBox.Show($"¿Está seguro/a de eliminar el permiso '{nombrePermisoSeleccionado}'?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show($"¿Desea eliminar el permiso '{nombrePermisoSeleccionado}'?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {

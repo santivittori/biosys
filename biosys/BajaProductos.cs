@@ -116,7 +116,7 @@ namespace biosys
                     if (producto != null)
                     {
                         // Muestra el stock disponible del producto seleccionado
-                        labelStockDisponible.Text = $"Stock Disponible: {producto.Stock}";
+                        labelStockDisponible.Text = $"Stock disponible: {producto.Stock}";
                         labelStockDisponible.Visible = true;
                         lblError.Visible = false;
                     }
@@ -155,7 +155,7 @@ namespace biosys
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la baja de productos? \n\nLa información se perderá", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea cancelar la baja de productos? \n\nLa información se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -166,7 +166,7 @@ namespace biosys
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea limpiar los campos? \n\nLa información se perderá", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea limpiar los campos? \n\nLa información se perderá.", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -184,13 +184,13 @@ namespace biosys
             // Verificar que se ha seleccionado un producto y un motivo
             if (string.IsNullOrWhiteSpace(comboProductos.Text))
             {
-                msgError("Por favor, seleccione un producto antes de confirmar la baja.");
+                msgError("  Seleccione un producto antes de confirmar la baja.");
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(comboMotivo.Text))
             {
-                msgError("Por favor, seleccione un motivo para la baja.");
+                msgError("  Seleccione un motivo para la baja.");
                 return;
             }
 
@@ -208,7 +208,7 @@ namespace biosys
             // Verificar que la cantidad sea mayor a cero
             if (cantidadBaja <= 0)
             {
-                msgError("La cantidad ingresada debe ser mayor que cero.");
+                msgError("  La cantidad ingresada debe ser mayor que cero.");
                 return;
             }
 
@@ -218,7 +218,7 @@ namespace biosys
             // Verificar que la cantidad de baja no sea mayor que el stock disponible
             if (cantidadBaja > stock)
             {
-                msgError("La cantidad ingresada es mayor que el stock disponible. Verifique la cantidad.");
+                msgError("  La cantidad ingresada es mayor que el stock disponible.");
                 return;
             }
 
@@ -235,12 +235,12 @@ namespace biosys
             CargarProductos();
 
             // Mostrar cuadro de diálogo de confirmación
-            DialogResult result = MessageBox.Show($"¿Está seguro de que desea realizar la baja de {cantidadBaja} unidad/es de {productName}?", "Confirmar Baja", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show($"¿Desea realizar la baja de {cantidadBaja} unidad/es de {productName}?", "Confirmar Baja", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Verificar si el usuario confirmó la acción
             if (result == DialogResult.Yes)
             {
-                MessageBox.Show($"Se realizó la baja de {cantidadBaja} unidad/es de {productName}.", "Baja Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"La baja de {cantidadBaja} unidad/es de {productName} fue exitosa.", "Baja Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Registrar la baja del producto
                 Controladora.Controladora.RegistrarBajaProducto(productName, cantidadBaja, comboMotivo.Text);

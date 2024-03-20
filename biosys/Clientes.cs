@@ -222,7 +222,6 @@ namespace biosys
             // Mostrar información de paginación en una etiqueta o control similar
             labelPaginacion.Text = $"Página {paginaActual} de {totalPaginas}. Total de clientes: {totalClientes}";
         }
-
         private void btnPaginaAnterior_Click(object sender, EventArgs e)
         {
             if (paginaActual > 1)
@@ -231,7 +230,6 @@ namespace biosys
                 CargarClientesEnDataGridView();
             }
         }
-
         private void btnPaginaSiguiente_Click(object sender, EventArgs e)
         {
             int totalClientes = Controladora.Controladora.ObtenerCantidadTotalClientes();
@@ -262,7 +260,7 @@ namespace biosys
                 bool clienteEnCompra = Controladora.Controladora.VerificarClienteEnVentas(idCliente);
 
                 // Mostrar un cuadro de diálogo de confirmación
-                DialogResult result = MessageBox.Show("¿Está seguro/a de que desea eliminar este cliente?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("¿Desea eliminar este cliente?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 // Si el usuario confirma la eliminación
                 if (result == DialogResult.Yes)
@@ -279,7 +277,7 @@ namespace biosys
             else
             {
                 // Si no se ha seleccionado ningún cliente, mostrar un mensaje de error
-                msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
+                msgError("  Seleccione una fila de la casilla para eliminar.");
                 return;
             }
         }
@@ -295,7 +293,7 @@ namespace biosys
         {
             if (string.IsNullOrEmpty(txtNombreCliente.Text) || string.IsNullOrEmpty(txtApellidoCliente.Text) || string.IsNullOrEmpty(txtEmailCliente.Text) || string.IsNullOrEmpty(txtTelefonoCliente.Text))
             {
-                msgError("Por favor, complete todos los campos obligatorios.");
+                msgError("  Complete todos los campos obligatorios.");
                 return;
             }
 
@@ -319,12 +317,12 @@ namespace biosys
 
             if (!esValido)
             {
-                msgError("Debe ingresar un email válido, por favor verifíquelo.");
+                msgError("  Ingrese un email válido.");
                 return;
             }
             else if (clienteExistente)
             {
-                msgError("El cliente ya existe en la base de datos.");
+                msgError("  El cliente ya existe en la base de datos.");
                 return;
             }
 
@@ -344,7 +342,7 @@ namespace biosys
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             // Mostrar un cuadro de diálogo de confirmación
-            DialogResult result = MessageBox.Show("¿Está seguro de que desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Verificar si el usuario ha confirmado la cancelación
             if (result == DialogResult.Yes)

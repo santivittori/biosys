@@ -95,7 +95,7 @@ namespace biosys
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la operación? \n\nLa información se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea cancelar la operación? \n\nLa información se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -106,7 +106,7 @@ namespace biosys
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea limpiar los campos? \n\nLa información se perderá.", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea limpiar los campos? \n\nLa información se perderá.", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -202,7 +202,7 @@ namespace biosys
                             if (decimal.TryParse(txtPrecioUnitario.Text, out precioUnitarioIngresado))
                             {
                                 // Mostrar cuadro de diálogo de confirmación
-                                DialogResult result = MessageBox.Show("¿Está seguro/a de fijar el precio unitario de costo?", "Confirmar Precio", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                DialogResult result = MessageBox.Show("¿Desea fijar el precio unitario de costo?", "Confirmar Precio", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                                 // Verificar si el usuario confirmó la acción
                                 if (result == DialogResult.Yes)
@@ -215,19 +215,19 @@ namespace biosys
                             }
                             else
                             {
-                                msgError("El precio unitario ingresado no es válido.");
+                                msgError("  El precio unitario ingresado no es válido.");
                             }
                         }
                         else
                         {
-                            msgError("Por favor ingrese el precio unitario.");
+                            msgError("  Ingrese el precio unitario.");
                         }
                     }
                 }
             }
             else
             {
-                msgError("Por favor seleccione un producto.");
+                msgError("  Seleccione un producto.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace biosys
 
                         if (precioUnitarioFijado > 0)
                         {
-                            labelPrecioCosto.Text = $"Precio Unitario de Costo: {precioUnitarioFijado.ToString("N2")}";
+                            labelPrecioCosto.Text = $"Precio unitario de costo: {precioUnitarioFijado.ToString("N2")}";
                             labelPrecioCosto.Font = new Font(labelPrecioCosto.Font, FontStyle.Bold);
                             labelPrecioCosto.ForeColor = Color.Black;
                             labelPrecioCosto.Visible = true;

@@ -48,8 +48,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
             this.labelPaginacion = new System.Windows.Forms.Label();
-            this.btnPaginaSiguiente = new System.Windows.Forms.Button();
-            this.btnPaginaAnterior = new System.Windows.Forms.Button();
             this.btnQuitarFiltros = new biosys.RoundedButton();
             this.btnEliminarProd = new biosys.RoundedButton();
             this.btnCancelar = new biosys.RoundedButton();
@@ -59,20 +57,24 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblTamSemilla = new System.Windows.Forms.Label();
             this.comboTamSemilla = new System.Windows.Forms.ComboBox();
+            this.btnPaginaSiguiente = new System.Windows.Forms.PictureBox();
+            this.btnPaginaAnterior = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProductos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaSiguiente)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaAnterior)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(540, 50);
+            this.labelTitulo.Location = new System.Drawing.Point(594, 44);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(331, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(241, 55);
             this.labelTitulo.TabIndex = 51;
-            this.labelTitulo.Text = "PRODUCTOS";
+            this.labelTitulo.Text = "Productos";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // txtNombreProd
@@ -197,9 +199,9 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(34, 567);
+            this.pictureBox2.Location = new System.Drawing.Point(34, 561);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(40, 37);
+            this.pictureBox2.Size = new System.Drawing.Size(40, 45);
             this.pictureBox2.TabIndex = 119;
             this.pictureBox2.TabStop = false;
             // 
@@ -239,9 +241,9 @@
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(80, 487);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(342, 18);
+            this.label10.Size = new System.Drawing.Size(333, 18);
             this.label10.TabIndex = 115;
-            this.label10.Text = "Filtrar por Nombre, TipoProducto o TipoEspecifico";
+            this.label10.Text = "Filtrar por nombre, tipo producto o tipo específico";
             // 
             // txtBusqueda
             // 
@@ -258,35 +260,11 @@
             // 
             this.labelPaginacion.AutoSize = true;
             this.labelPaginacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPaginacion.Location = new System.Drawing.Point(555, 735);
+            this.labelPaginacion.Location = new System.Drawing.Point(538, 739);
             this.labelPaginacion.Name = "labelPaginacion";
             this.labelPaginacion.Size = new System.Drawing.Size(109, 16);
             this.labelPaginacion.TabIndex = 147;
             this.labelPaginacion.Text = "LabelPaginacion";
-            // 
-            // btnPaginaSiguiente
-            // 
-            this.btnPaginaSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPaginaSiguiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPaginaSiguiente.Location = new System.Drawing.Point(483, 727);
-            this.btnPaginaSiguiente.Name = "btnPaginaSiguiente";
-            this.btnPaginaSiguiente.Size = new System.Drawing.Size(40, 30);
-            this.btnPaginaSiguiente.TabIndex = 146;
-            this.btnPaginaSiguiente.Text = ">";
-            this.btnPaginaSiguiente.UseVisualStyleBackColor = true;
-            this.btnPaginaSiguiente.Click += new System.EventHandler(this.btnPaginaSiguiente_Click);
-            // 
-            // btnPaginaAnterior
-            // 
-            this.btnPaginaAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPaginaAnterior.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPaginaAnterior.Location = new System.Drawing.Point(437, 727);
-            this.btnPaginaAnterior.Name = "btnPaginaAnterior";
-            this.btnPaginaAnterior.Size = new System.Drawing.Size(40, 30);
-            this.btnPaginaAnterior.TabIndex = 145;
-            this.btnPaginaAnterior.Text = "<";
-            this.btnPaginaAnterior.UseVisualStyleBackColor = true;
-            this.btnPaginaAnterior.Click += new System.EventHandler(this.btnPaginaAnterior_Click);
             // 
             // btnQuitarFiltros
             // 
@@ -296,7 +274,7 @@
             this.btnQuitarFiltros.Name = "btnQuitarFiltros";
             this.btnQuitarFiltros.Size = new System.Drawing.Size(119, 48);
             this.btnQuitarFiltros.TabIndex = 148;
-            this.btnQuitarFiltros.Text = "QUITAR FILTROS";
+            this.btnQuitarFiltros.Text = "Quitar filtros";
             this.btnQuitarFiltros.UseVisualStyleBackColor = true;
             this.btnQuitarFiltros.Click += new System.EventHandler(this.btnQuitarFiltros_Click);
             // 
@@ -308,7 +286,7 @@
             this.btnEliminarProd.Name = "btnEliminarProd";
             this.btnEliminarProd.Size = new System.Drawing.Size(119, 48);
             this.btnEliminarProd.TabIndex = 149;
-            this.btnEliminarProd.Text = "ELIMINAR PRODUCTO";
+            this.btnEliminarProd.Text = "Eliminar producto";
             this.btnEliminarProd.UseVisualStyleBackColor = true;
             this.btnEliminarProd.Click += new System.EventHandler(this.btnEliminarProd_Click);
             this.btnEliminarProd.MouseEnter += new System.EventHandler(this.btnEliminarProd_MouseEnter);
@@ -318,11 +296,11 @@
             // 
             this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(964, 364);
+            this.btnCancelar.Location = new System.Drawing.Point(964, 339);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(119, 48);
             this.btnCancelar.TabIndex = 150;
-            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
@@ -332,11 +310,11 @@
             // 
             this.btnLimpiar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(964, 292);
+            this.btnLimpiar.Location = new System.Drawing.Point(964, 267);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(119, 48);
             this.btnLimpiar.TabIndex = 151;
-            this.btnLimpiar.Text = "LIMPIAR CAMPOS";
+            this.btnLimpiar.Text = "Limpiar campos";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
@@ -344,11 +322,11 @@
             // 
             this.btnGuardarProd.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnGuardarProd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuardarProd.Location = new System.Drawing.Point(964, 221);
+            this.btnGuardarProd.Location = new System.Drawing.Point(964, 196);
             this.btnGuardarProd.Name = "btnGuardarProd";
             this.btnGuardarProd.Size = new System.Drawing.Size(119, 48);
             this.btnGuardarProd.TabIndex = 152;
-            this.btnGuardarProd.Text = "GUARDAR PRODUCTO";
+            this.btnGuardarProd.Text = "Guardar producto";
             this.btnGuardarProd.UseVisualStyleBackColor = true;
             this.btnGuardarProd.Click += new System.EventHandler(this.btnGuardarProd_Click);
             this.btnGuardarProd.MouseEnter += new System.EventHandler(this.btnGuardarProd_MouseEnter);
@@ -357,12 +335,12 @@
             // btnCargarExcel
             // 
             this.btnCargarExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCargarExcel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCargarExcel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCargarExcel.Location = new System.Drawing.Point(1105, 543);
             this.btnCargarExcel.Name = "btnCargarExcel";
             this.btnCargarExcel.Size = new System.Drawing.Size(119, 48);
             this.btnCargarExcel.TabIndex = 153;
-            this.btnCargarExcel.Text = "CARGAR EXCEL CON PRODUCTOS";
+            this.btnCargarExcel.Text = "Cargar excel con productos";
             this.btnCargarExcel.UseVisualStyleBackColor = true;
             this.btnCargarExcel.Click += new System.EventHandler(this.btnCargarExcel_Click);
             // 
@@ -383,9 +361,9 @@
             this.lblTamSemilla.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTamSemilla.Location = new System.Drawing.Point(342, 375);
             this.lblTamSemilla.Name = "lblTamSemilla";
-            this.lblTamSemilla.Size = new System.Drawing.Size(139, 18);
+            this.lblTamSemilla.Size = new System.Drawing.Size(137, 18);
             this.lblTamSemilla.TabIndex = 155;
-            this.lblTamSemilla.Text = "Tamaño de Semilla:";
+            this.lblTamSemilla.Text = "Tamaño de semilla:";
             // 
             // comboTamSemilla
             // 
@@ -397,12 +375,36 @@
             this.comboTamSemilla.Size = new System.Drawing.Size(336, 26);
             this.comboTamSemilla.TabIndex = 157;
             // 
+            // btnPaginaSiguiente
+            // 
+            this.btnPaginaSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPaginaSiguiente.Image = ((System.Drawing.Image)(resources.GetObject("btnPaginaSiguiente.Image")));
+            this.btnPaginaSiguiente.Location = new System.Drawing.Point(484, 727);
+            this.btnPaginaSiguiente.Name = "btnPaginaSiguiente";
+            this.btnPaginaSiguiente.Size = new System.Drawing.Size(39, 43);
+            this.btnPaginaSiguiente.TabIndex = 205;
+            this.btnPaginaSiguiente.TabStop = false;
+            this.btnPaginaSiguiente.Click += new System.EventHandler(this.btnPaginaSiguiente_Click);
+            // 
+            // btnPaginaAnterior
+            // 
+            this.btnPaginaAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPaginaAnterior.Image = ((System.Drawing.Image)(resources.GetObject("btnPaginaAnterior.Image")));
+            this.btnPaginaAnterior.Location = new System.Drawing.Point(439, 727);
+            this.btnPaginaAnterior.Name = "btnPaginaAnterior";
+            this.btnPaginaAnterior.Size = new System.Drawing.Size(39, 43);
+            this.btnPaginaAnterior.TabIndex = 204;
+            this.btnPaginaAnterior.TabStop = false;
+            this.btnPaginaAnterior.Click += new System.EventHandler(this.btnPaginaAnterior_Click);
+            // 
             // Productos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnPaginaSiguiente);
+            this.Controls.Add(this.btnPaginaAnterior);
             this.Controls.Add(this.comboTamSemilla);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblTamSemilla);
@@ -413,8 +415,6 @@
             this.Controls.Add(this.btnEliminarProd);
             this.Controls.Add(this.btnQuitarFiltros);
             this.Controls.Add(this.labelPaginacion);
-            this.Controls.Add(this.btnPaginaSiguiente);
-            this.Controls.Add(this.btnPaginaAnterior);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.comboBoxOrdenar);
@@ -441,6 +441,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProductos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaSiguiente)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaAnterior)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -467,8 +469,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtBusqueda;
         private System.Windows.Forms.Label labelPaginacion;
-        private System.Windows.Forms.Button btnPaginaSiguiente;
-        private System.Windows.Forms.Button btnPaginaAnterior;
         private RoundedButton btnQuitarFiltros;
         private RoundedButton btnEliminarProd;
         private RoundedButton btnCancelar;
@@ -478,5 +478,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblTamSemilla;
         private System.Windows.Forms.ComboBox comboTamSemilla;
+        private System.Windows.Forms.PictureBox btnPaginaSiguiente;
+        private System.Windows.Forms.PictureBox btnPaginaAnterior;
     }
 }

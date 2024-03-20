@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using Controladora;
 using COMUN;
 using Entidad;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace biosys
 {
@@ -32,7 +33,7 @@ namespace biosys
         // Diseño para nombrar los campos de Usurio, Contraseña y Email
         private void txtUsuario_Enter(object sender, EventArgs e)
         {
-            if (txtUsuario.Text == "USUARIO")
+            if (txtUsuario.Text == "Usuario")
             {
                 txtUsuario.Text = "";
                 txtUsuario.ForeColor = Color.LightGray;
@@ -42,13 +43,13 @@ namespace biosys
         {
             if (txtUsuario.Text == "")
             {
-                txtUsuario.Text = "USUARIO";
+                txtUsuario.Text = "Usuario";
                 txtUsuario.ForeColor = Color.DimGray;
             }
         }
         private void txtContraseña_Enter(object sender, EventArgs e)
         {
-            if (txtContraseña.Text == "CONTRASEÑA")
+            if (txtContraseña.Text == "Contraseña")
             {
                 txtContraseña.Text = "";
                 txtContraseña.ForeColor = Color.LightGray;
@@ -59,14 +60,14 @@ namespace biosys
         {
             if (txtContraseña.Text == "")
             {
-                txtContraseña.Text = "CONTRASEÑA";
+                txtContraseña.Text = "Contraseña";
                 txtContraseña.ForeColor = Color.DimGray;
                 txtContraseña.UseSystemPasswordChar = false;
             }
         }
         private void txtEmail_Enter(object sender, EventArgs e)
         {
-            if (txtEmail.Text == "EMAIL")
+            if (txtEmail.Text == "Email")
             {
                 txtEmail.Text = "";
                 txtEmail.ForeColor = Color.LightGray;
@@ -77,7 +78,7 @@ namespace biosys
         {
             if (txtEmail.Text == "")
             {
-                txtEmail.Text = "EMAIL";
+                txtEmail.Text = "Email";
                 txtEmail.ForeColor = Color.DimGray;
             }
         }
@@ -121,9 +122,9 @@ namespace biosys
         private void btnCrearUsuario_Click(object sender, EventArgs e)
         {
             // Verificar campos vacíos
-            if (txtUsuario.Text == "USUARIO" || txtContraseña.Text == "CONTRASEÑA" || comborol.SelectedItem == null)
+            if (txtUsuario.Text == "Usuario" || txtContraseña.Text == "Contraseña" || comborol.SelectedItem == null)
             {
-                msgError("Por favor, complete todos los campos.");
+                msgError("  Complete todos los campos.");
                 return;
             }
 
@@ -135,7 +136,7 @@ namespace biosys
             // Verificar existencia de usuario
             if (Controladora.Controladora.VerificarExistenciaUsuario(nombreUsuario))
             {
-                msgError("El nombre de usuario ya existe. Por favor, elija otro.");
+                msgError("  El nombre de usuario ya existe. Elija otro.");
                 return;
             }
 
@@ -143,12 +144,12 @@ namespace biosys
 
             if (!esValido)
             {
-                msgError("Debe ingresar un email válido, por favor verifíquelo.");
+                msgError("  Ingrese un email válido.");
                 return;
             }
             else if (Controladora.Controladora.VerificarExistenciaEmail(email))
             {
-                msgError("El email ya está registrado. Por favor, use otro email.");
+                msgError("  El email ya está registrado. Use otro email.");
                 return;
                 
             }
@@ -192,7 +193,7 @@ namespace biosys
 
         private void btnOjoCerrado_Click(object sender, EventArgs e)
         {
-            if (txtContraseña.Text != "CONTRASEÑA" && txtContraseña.Text != "")
+            if (txtContraseña.Text != "Contraseña" && txtContraseña.Text != "")
             {
                 txtContraseña.UseSystemPasswordChar = false;
                 btnOjoCerrado.Visible = false;
@@ -202,7 +203,7 @@ namespace biosys
 
         private void txtUsuario_Click(object sender, EventArgs e)
         {
-            if (txtContraseña.Text == "CONTRASEÑA")
+            if (txtContraseña.Text == "Contraseña")
             {
                 btnOjo.Visible = false;
                 btnOjoCerrado.Visible = true;
@@ -210,7 +211,7 @@ namespace biosys
         }
         private void txtEmail_Click(object sender, EventArgs e)
         {
-            if (txtContraseña.Text == "CONTRASEÑA")
+            if (txtContraseña.Text == "Contraseña")
             {
                 btnOjo.Visible = false;
                 btnOjoCerrado.Visible = true;
@@ -228,7 +229,7 @@ namespace biosys
             {
                 txtUsuario.Text = txtUsuario.Text.Substring(0, 60);
                 txtUsuario.SelectionStart = 60; // Establece el cursor al final del texto.
-                msgError("No se pueden ingresar mas caracteres");
+                msgError("  No se pueden ingresar mas caracteres");
             }
         }
 

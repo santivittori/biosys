@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InformesReproduccion));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.labelTitulo = new System.Windows.Forms.Label();
             this.pictureBack = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -50,11 +50,11 @@
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(359, 50);
+            this.labelTitulo.Location = new System.Drawing.Point(467, 26);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(686, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(503, 55);
             this.labelTitulo.TabIndex = 53;
-            this.labelTitulo.Text = "INFORMES REPRODUCCIÓN";
+            this.labelTitulo.Text = "Informes reproducción";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // pictureBack
@@ -74,38 +74,38 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(88, 26);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 20);
+            this.label1.Size = new System.Drawing.Size(52, 20);
             this.label1.TabIndex = 56;
-            this.label1.Text = "Back";
+            this.label1.Text = "Atrás";
             // 
             // chartBajas
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartBajas.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartBajas.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.chartBajas.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chartBajas.Legends.Add(legend3);
             this.chartBajas.Location = new System.Drawing.Point(80, 209);
             this.chartBajas.Name = "chartBajas";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartBajas.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chartBajas.Series.Add(series3);
             this.chartBajas.Size = new System.Drawing.Size(483, 386);
             this.chartBajas.TabIndex = 57;
             this.chartBajas.Text = "chart1";
             // 
             // chartBajasTotales
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartBajasTotales.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartBajasTotales.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea1";
+            this.chartBajasTotales.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chartBajasTotales.Legends.Add(legend4);
             this.chartBajasTotales.Location = new System.Drawing.Point(676, 209);
             this.chartBajasTotales.Name = "chartBajasTotales";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartBajasTotales.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chartBajasTotales.Series.Add(series4);
             this.chartBajasTotales.Size = new System.Drawing.Size(483, 386);
             this.chartBajasTotales.TabIndex = 58;
             this.chartBajasTotales.Text = "chart2";
@@ -118,7 +118,7 @@
             this.btnDescargaGrafica.Name = "btnDescargaGrafica";
             this.btnDescargaGrafica.Size = new System.Drawing.Size(119, 48);
             this.btnDescargaGrafica.TabIndex = 144;
-            this.btnDescargaGrafica.Text = "DESCARGA GRÁFICA";
+            this.btnDescargaGrafica.Text = "Descargar";
             this.btnDescargaGrafica.UseVisualStyleBackColor = true;
             this.btnDescargaGrafica.Click += new System.EventHandler(this.btnDescargaGrafica_Click);
             // 

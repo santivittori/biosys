@@ -40,22 +40,24 @@
             this.dateInicio = new System.Windows.Forms.DateTimePicker();
             this.btnAplicarFiltro = new biosys.RoundedButton();
             this.labelHistorialVentas = new System.Windows.Forms.Label();
-            this.btnSigVentas = new System.Windows.Forms.Button();
-            this.btnAntVentas = new System.Windows.Forms.Button();
             this.dataGridViewHistorialVentas = new System.Windows.Forms.DataGridView();
+            this.btnSigReproducciones = new System.Windows.Forms.PictureBox();
+            this.btnAntReproducciones = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistorialVentas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSigReproducciones)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAntReproducciones)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(382, 29);
+            this.labelTitulo.Location = new System.Drawing.Point(513, 26);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(562, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(418, 55);
             this.labelTitulo.TabIndex = 51;
-            this.labelTitulo.Text = "HISTORIAL DE VENTAS";
+            this.labelTitulo.Text = "Historial de ventas";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label4
@@ -64,9 +66,9 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(88, 26);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 20);
+            this.label4.Size = new System.Drawing.Size(52, 20);
             this.label4.TabIndex = 186;
-            this.label4.Text = "Back";
+            this.label4.Text = "Atrás";
             // 
             // pictureBack
             // 
@@ -117,7 +119,7 @@
             this.btnQuitarFiltro.Name = "btnQuitarFiltro";
             this.btnQuitarFiltro.Size = new System.Drawing.Size(119, 48);
             this.btnQuitarFiltro.TabIndex = 194;
-            this.btnQuitarFiltro.Text = "QUITAR FILTRO";
+            this.btnQuitarFiltro.Text = "Quitar filtro";
             this.btnQuitarFiltro.UseVisualStyleBackColor = true;
             this.btnQuitarFiltro.Click += new System.EventHandler(this.btnQuitarFiltro_Click);
             // 
@@ -147,7 +149,7 @@
             this.btnAplicarFiltro.Name = "btnAplicarFiltro";
             this.btnAplicarFiltro.Size = new System.Drawing.Size(119, 48);
             this.btnAplicarFiltro.TabIndex = 191;
-            this.btnAplicarFiltro.Text = "APLICAR FILTRO";
+            this.btnAplicarFiltro.Text = "Aplicar filtro";
             this.btnAplicarFiltro.UseVisualStyleBackColor = true;
             this.btnAplicarFiltro.Click += new System.EventHandler(this.btnAplicarFiltro_Click);
             // 
@@ -155,35 +157,11 @@
             // 
             this.labelHistorialVentas.AutoSize = true;
             this.labelHistorialVentas.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelHistorialVentas.Location = new System.Drawing.Point(161, 715);
+            this.labelHistorialVentas.Location = new System.Drawing.Point(157, 709);
             this.labelHistorialVentas.Name = "labelHistorialVentas";
             this.labelHistorialVentas.Size = new System.Drawing.Size(132, 16);
             this.labelHistorialVentas.TabIndex = 190;
             this.labelHistorialVentas.Text = "LabelHistorialVentas";
-            // 
-            // btnSigVentas
-            // 
-            this.btnSigVentas.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSigVentas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSigVentas.Location = new System.Drawing.Point(101, 707);
-            this.btnSigVentas.Name = "btnSigVentas";
-            this.btnSigVentas.Size = new System.Drawing.Size(40, 30);
-            this.btnSigVentas.TabIndex = 189;
-            this.btnSigVentas.Text = ">";
-            this.btnSigVentas.UseVisualStyleBackColor = true;
-            this.btnSigVentas.Click += new System.EventHandler(this.btnSigVentas_Click);
-            // 
-            // btnAntVentas
-            // 
-            this.btnAntVentas.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAntVentas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAntVentas.Location = new System.Drawing.Point(54, 707);
-            this.btnAntVentas.Name = "btnAntVentas";
-            this.btnAntVentas.Size = new System.Drawing.Size(40, 30);
-            this.btnAntVentas.TabIndex = 188;
-            this.btnAntVentas.Text = "<";
-            this.btnAntVentas.UseVisualStyleBackColor = true;
-            this.btnAntVentas.Click += new System.EventHandler(this.btnAntVentas_Click);
             // 
             // dataGridViewHistorialVentas
             // 
@@ -199,12 +177,36 @@
             this.dataGridViewHistorialVentas.Size = new System.Drawing.Size(1020, 550);
             this.dataGridViewHistorialVentas.TabIndex = 187;
             // 
+            // btnSigReproducciones
+            // 
+            this.btnSigReproducciones.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSigReproducciones.Image = ((System.Drawing.Image)(resources.GetObject("btnSigReproducciones.Image")));
+            this.btnSigReproducciones.Location = new System.Drawing.Point(101, 696);
+            this.btnSigReproducciones.Name = "btnSigReproducciones";
+            this.btnSigReproducciones.Size = new System.Drawing.Size(39, 43);
+            this.btnSigReproducciones.TabIndex = 203;
+            this.btnSigReproducciones.TabStop = false;
+            this.btnSigReproducciones.Click += new System.EventHandler(this.btnSigReproducciones_Click);
+            // 
+            // btnAntReproducciones
+            // 
+            this.btnAntReproducciones.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAntReproducciones.Image = ((System.Drawing.Image)(resources.GetObject("btnAntReproducciones.Image")));
+            this.btnAntReproducciones.Location = new System.Drawing.Point(56, 696);
+            this.btnAntReproducciones.Name = "btnAntReproducciones";
+            this.btnAntReproducciones.Size = new System.Drawing.Size(39, 43);
+            this.btnAntReproducciones.TabIndex = 202;
+            this.btnAntReproducciones.TabStop = false;
+            this.btnAntReproducciones.Click += new System.EventHandler(this.btnAntReproducciones_Click);
+            // 
             // HistorialVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnSigReproducciones);
+            this.Controls.Add(this.btnAntReproducciones);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -213,8 +215,6 @@
             this.Controls.Add(this.dateInicio);
             this.Controls.Add(this.btnAplicarFiltro);
             this.Controls.Add(this.labelHistorialVentas);
-            this.Controls.Add(this.btnSigVentas);
-            this.Controls.Add(this.btnAntVentas);
             this.Controls.Add(this.dataGridViewHistorialVentas);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.pictureBack);
@@ -226,6 +226,8 @@
             this.Load += new System.EventHandler(this.HistorialVentas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistorialVentas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSigReproducciones)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAntReproducciones)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,8 +246,8 @@
         private System.Windows.Forms.DateTimePicker dateInicio;
         private RoundedButton btnAplicarFiltro;
         private System.Windows.Forms.Label labelHistorialVentas;
-        private System.Windows.Forms.Button btnSigVentas;
-        private System.Windows.Forms.Button btnAntVentas;
         private System.Windows.Forms.DataGridView dataGridViewHistorialVentas;
+        private System.Windows.Forms.PictureBox btnSigReproducciones;
+        private System.Windows.Forms.PictureBox btnAntReproducciones;
     }
 }

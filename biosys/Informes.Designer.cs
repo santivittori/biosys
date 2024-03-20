@@ -62,11 +62,11 @@
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(550, 50);
+            this.labelTitulo.Location = new System.Drawing.Point(583, 34);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(277, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(211, 55);
             this.labelTitulo.TabIndex = 51;
-            this.labelTitulo.Text = "INFORMES";
+            this.labelTitulo.Text = "Informes";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // CantTotal
@@ -141,7 +141,7 @@
             this.btnDescargaGrafica.Name = "btnDescargaGrafica";
             this.btnDescargaGrafica.Size = new System.Drawing.Size(119, 48);
             this.btnDescargaGrafica.TabIndex = 142;
-            this.btnDescargaGrafica.Text = "DESCARGA GRÁFICA";
+            this.btnDescargaGrafica.Text = "Descargar gráficos";
             this.btnDescargaGrafica.UseVisualStyleBackColor = true;
             this.btnDescargaGrafica.Click += new System.EventHandler(this.btnDescargaGrafica_Click);
             // 
@@ -153,7 +153,7 @@
             this.btnExportarPDF.Name = "btnExportarPDF";
             this.btnExportarPDF.Size = new System.Drawing.Size(119, 48);
             this.btnExportarPDF.TabIndex = 143;
-            this.btnExportarPDF.Text = "DESCARGA ESCRITA";
+            this.btnExportarPDF.Text = "Descargar informes";
             this.btnExportarPDF.UseVisualStyleBackColor = true;
             this.btnExportarPDF.Click += new System.EventHandler(this.btnExportarPDF_Click);
             // 
@@ -165,19 +165,19 @@
             this.btnInfEconomicos.Name = "btnInfEconomicos";
             this.btnInfEconomicos.Size = new System.Drawing.Size(119, 48);
             this.btnInfEconomicos.TabIndex = 144;
-            this.btnInfEconomicos.Text = "INFORMES ECONÓMICOS";
+            this.btnInfEconomicos.Text = "Informes económicos";
             this.btnInfEconomicos.UseVisualStyleBackColor = true;
             this.btnInfEconomicos.Click += new System.EventHandler(this.btnInfEconomicos_Click);
             // 
             // btnInfReproduccion
             // 
             this.btnInfReproduccion.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnInfReproduccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInfReproduccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInfReproduccion.Location = new System.Drawing.Point(1238, 289);
             this.btnInfReproduccion.Name = "btnInfReproduccion";
             this.btnInfReproduccion.Size = new System.Drawing.Size(119, 48);
             this.btnInfReproduccion.TabIndex = 145;
-            this.btnInfReproduccion.Text = "INFORMES REPRODUCCIÓN";
+            this.btnInfReproduccion.Text = "Informes reproducción";
             this.btnInfReproduccion.UseVisualStyleBackColor = true;
             this.btnInfReproduccion.Click += new System.EventHandler(this.btnInfReproduccion_Click);
             // 
@@ -189,7 +189,7 @@
             this.btnInfCompras.Name = "btnInfCompras";
             this.btnInfCompras.Size = new System.Drawing.Size(119, 48);
             this.btnInfCompras.TabIndex = 146;
-            this.btnInfCompras.Text = "INFORMES COMPRAS";
+            this.btnInfCompras.Text = "Informes compras";
             this.btnInfCompras.UseVisualStyleBackColor = true;
             this.btnInfCompras.Click += new System.EventHandler(this.btnInfCompras_Click);
             // 
@@ -201,7 +201,7 @@
             this.btnInfVentas.Name = "btnInfVentas";
             this.btnInfVentas.Size = new System.Drawing.Size(119, 48);
             this.btnInfVentas.TabIndex = 147;
-            this.btnInfVentas.Text = "INFORMES VENTAS";
+            this.btnInfVentas.Text = "Informes ventas";
             this.btnInfVentas.UseVisualStyleBackColor = true;
             this.btnInfVentas.Click += new System.EventHandler(this.btnInfVentas_Click);
             // 

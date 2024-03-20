@@ -92,7 +92,7 @@ namespace biosys
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la compra? \n\nLa información se perderá", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea cancelar la compra? \n\nLa información se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -103,7 +103,7 @@ namespace biosys
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea limpiar los campos? \n\nLa información se perderá", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea limpiar los campos? \n\nLa información se perderá.", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -132,7 +132,7 @@ namespace biosys
             // Validar que los campos tengan información
             if (string.IsNullOrWhiteSpace(txtLugar.Text) || comboProductos.SelectedIndex == -1 || numericCantidad.Value <= 0)
             {
-                msgError("Completar los campos obligatorios. La cantidad debe ser mayor que cero.");
+                msgError("  Complete los campos obligatorios.");
                 return;
             }
 
@@ -142,7 +142,7 @@ namespace biosys
 
             if (partesProducto.Length != 3)
             {
-                msgError("El formato del producto seleccionado es incorrecto.");
+                msgError("  El formato del producto seleccionado es incorrecto.");
                 return;
             }
 
@@ -183,12 +183,12 @@ namespace biosys
         {
             if (recoleccionList.Count == 0)
             {
-                msgError("Debe ingresar al menos un detalle de recolección.");
+                msgError("  Ingrese al menos un detalle de recolección.");
                 return;
             }
 
             // Mostrar cuadro de diálogo de confirmación
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea registrar la recolección?", "Confirmar Recolección", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea registrar la recolección?", "Confirmar Recolección", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Verificar si el usuario confirmó la acción
             if (result == DialogResult.Yes)

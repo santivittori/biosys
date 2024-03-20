@@ -53,27 +53,29 @@
             this.label11 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.labelPaginacion = new System.Windows.Forms.Label();
-            this.btnPaginaSiguiente = new System.Windows.Forms.Button();
-            this.btnPaginaAnterior = new System.Windows.Forms.Button();
             this.btnQuitarFiltros = new biosys.RoundedButton();
             this.btnEliminarProv = new biosys.RoundedButton();
             this.btnCancelar = new biosys.RoundedButton();
             this.btnLimpiar = new biosys.RoundedButton();
             this.btnGuardarProv = new biosys.RoundedButton();
+            this.btnPaginaSiguiente = new System.Windows.Forms.PictureBox();
+            this.btnPaginaAnterior = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProveedores)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaSiguiente)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaAnterior)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(530, 50);
+            this.labelTitulo.Location = new System.Drawing.Point(581, 34);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(395, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(298, 55);
             this.labelTitulo.TabIndex = 50;
-            this.labelTitulo.Text = "PROVEEDORES";
+            this.labelTitulo.Text = "Proveedores";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label1
@@ -259,9 +261,9 @@
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(150, 496);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(197, 18);
+            this.label10.Size = new System.Drawing.Size(193, 18);
             this.label10.TabIndex = 108;
-            this.label10.Text = "Filtrar por Nombre o Apellido";
+            this.label10.Text = "Filtrar por nombre o apellido";
             // 
             // pictureBox1
             // 
@@ -296,9 +298,9 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(104, 577);
+            this.pictureBox2.Location = new System.Drawing.Point(104, 570);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(40, 37);
+            this.pictureBox2.Size = new System.Drawing.Size(40, 46);
             this.pictureBox2.TabIndex = 112;
             this.pictureBox2.TabStop = false;
             // 
@@ -306,35 +308,11 @@
             // 
             this.labelPaginacion.AutoSize = true;
             this.labelPaginacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPaginacion.Location = new System.Drawing.Point(605, 710);
+            this.labelPaginacion.Location = new System.Drawing.Point(588, 704);
             this.labelPaginacion.Name = "labelPaginacion";
             this.labelPaginacion.Size = new System.Drawing.Size(109, 16);
             this.labelPaginacion.TabIndex = 147;
             this.labelPaginacion.Text = "LabelPaginacion";
-            // 
-            // btnPaginaSiguiente
-            // 
-            this.btnPaginaSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPaginaSiguiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPaginaSiguiente.Location = new System.Drawing.Point(533, 702);
-            this.btnPaginaSiguiente.Name = "btnPaginaSiguiente";
-            this.btnPaginaSiguiente.Size = new System.Drawing.Size(40, 30);
-            this.btnPaginaSiguiente.TabIndex = 146;
-            this.btnPaginaSiguiente.Text = ">";
-            this.btnPaginaSiguiente.UseVisualStyleBackColor = true;
-            this.btnPaginaSiguiente.Click += new System.EventHandler(this.btnPaginaSiguiente_Click);
-            // 
-            // btnPaginaAnterior
-            // 
-            this.btnPaginaAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPaginaAnterior.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPaginaAnterior.Location = new System.Drawing.Point(487, 702);
-            this.btnPaginaAnterior.Name = "btnPaginaAnterior";
-            this.btnPaginaAnterior.Size = new System.Drawing.Size(40, 30);
-            this.btnPaginaAnterior.TabIndex = 145;
-            this.btnPaginaAnterior.Text = "<";
-            this.btnPaginaAnterior.UseVisualStyleBackColor = true;
-            this.btnPaginaAnterior.Click += new System.EventHandler(this.btnPaginaAnterior_Click);
             // 
             // btnQuitarFiltros
             // 
@@ -344,7 +322,7 @@
             this.btnQuitarFiltros.Name = "btnQuitarFiltros";
             this.btnQuitarFiltros.Size = new System.Drawing.Size(119, 48);
             this.btnQuitarFiltros.TabIndex = 149;
-            this.btnQuitarFiltros.Text = "QUITAR FILTROS";
+            this.btnQuitarFiltros.Text = "Quitar filtros";
             this.btnQuitarFiltros.UseVisualStyleBackColor = true;
             this.btnQuitarFiltros.Click += new System.EventHandler(this.btnQuitarFiltros_Click);
             // 
@@ -356,7 +334,7 @@
             this.btnEliminarProv.Name = "btnEliminarProv";
             this.btnEliminarProv.Size = new System.Drawing.Size(119, 48);
             this.btnEliminarProv.TabIndex = 150;
-            this.btnEliminarProv.Text = "ELIMINAR PROVEEDOR";
+            this.btnEliminarProv.Text = "Eliminar proveedor";
             this.btnEliminarProv.UseVisualStyleBackColor = true;
             this.btnEliminarProv.Click += new System.EventHandler(this.btnEliminarProv_Click);
             this.btnEliminarProv.MouseEnter += new System.EventHandler(this.btnEliminarProv_MouseEnter);
@@ -370,7 +348,7 @@
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(119, 48);
             this.btnCancelar.TabIndex = 151;
-            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
@@ -384,7 +362,7 @@
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(119, 48);
             this.btnLimpiar.TabIndex = 152;
-            this.btnLimpiar.Text = "LIMPIAR CAMPOS";
+            this.btnLimpiar.Text = "Limpiar campos";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
@@ -396,11 +374,33 @@
             this.btnGuardarProv.Name = "btnGuardarProv";
             this.btnGuardarProv.Size = new System.Drawing.Size(119, 48);
             this.btnGuardarProv.TabIndex = 153;
-            this.btnGuardarProv.Text = "GUARDAR PROVEEDOR";
+            this.btnGuardarProv.Text = "Guardar proveedor";
             this.btnGuardarProv.UseVisualStyleBackColor = true;
             this.btnGuardarProv.Click += new System.EventHandler(this.btnGuardarProv_Click);
             this.btnGuardarProv.MouseEnter += new System.EventHandler(this.btnGuardarProv_MouseEnter);
             this.btnGuardarProv.MouseLeave += new System.EventHandler(this.btnGuardarProv_MouseLeave);
+            // 
+            // btnPaginaSiguiente
+            // 
+            this.btnPaginaSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPaginaSiguiente.Image = ((System.Drawing.Image)(resources.GetObject("btnPaginaSiguiente.Image")));
+            this.btnPaginaSiguiente.Location = new System.Drawing.Point(533, 690);
+            this.btnPaginaSiguiente.Name = "btnPaginaSiguiente";
+            this.btnPaginaSiguiente.Size = new System.Drawing.Size(39, 43);
+            this.btnPaginaSiguiente.TabIndex = 207;
+            this.btnPaginaSiguiente.TabStop = false;
+            this.btnPaginaSiguiente.Click += new System.EventHandler(this.btnPaginaSiguiente_Click);
+            // 
+            // btnPaginaAnterior
+            // 
+            this.btnPaginaAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPaginaAnterior.Image = ((System.Drawing.Image)(resources.GetObject("btnPaginaAnterior.Image")));
+            this.btnPaginaAnterior.Location = new System.Drawing.Point(488, 690);
+            this.btnPaginaAnterior.Name = "btnPaginaAnterior";
+            this.btnPaginaAnterior.Size = new System.Drawing.Size(39, 43);
+            this.btnPaginaAnterior.TabIndex = 206;
+            this.btnPaginaAnterior.TabStop = false;
+            this.btnPaginaAnterior.Click += new System.EventHandler(this.btnPaginaAnterior_Click);
             // 
             // Proveedores
             // 
@@ -408,14 +408,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnPaginaSiguiente);
+            this.Controls.Add(this.btnPaginaAnterior);
             this.Controls.Add(this.btnGuardarProv);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnEliminarProv);
             this.Controls.Add(this.btnQuitarFiltros);
             this.Controls.Add(this.labelPaginacion);
-            this.Controls.Add(this.btnPaginaSiguiente);
-            this.Controls.Add(this.btnPaginaAnterior);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.comboBoxOrdenar);
@@ -447,6 +447,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewProveedores)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaSiguiente)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaAnterior)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -478,12 +480,12 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label labelPaginacion;
-        private System.Windows.Forms.Button btnPaginaSiguiente;
-        private System.Windows.Forms.Button btnPaginaAnterior;
         private RoundedButton btnQuitarFiltros;
         private RoundedButton btnEliminarProv;
         private RoundedButton btnCancelar;
         private RoundedButton btnLimpiar;
         private RoundedButton btnGuardarProv;
+        private System.Windows.Forms.PictureBox btnPaginaSiguiente;
+        private System.Windows.Forms.PictureBox btnPaginaAnterior;
     }
 }

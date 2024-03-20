@@ -66,9 +66,9 @@
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTitulo.Location = new System.Drawing.Point(550, 50);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(347, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(279, 55);
             this.labelTitulo.TabIndex = 50;
-            this.labelTitulo.Text = "DONACIONES";
+            this.labelTitulo.Text = "Donaciones";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label6
@@ -239,9 +239,9 @@
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(1003, 161);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(141, 18);
+            this.label10.Size = new System.Drawing.Size(138, 18);
             this.label10.TabIndex = 86;
-            this.label10.Text = "Detalle de Donación";
+            this.label10.Text = "Detalle de donación";
             // 
             // listDetalleDonacion
             // 
@@ -272,7 +272,7 @@
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(130, 18);
             this.label16.TabIndex = 151;
-            this.label16.Text = "Unidad de Medida:";
+            this.label16.Text = "Unidad de medida:";
             // 
             // comboUnidadMedida
             // 
@@ -313,7 +313,7 @@
             this.btnHistorialDonaciones.Name = "btnHistorialDonaciones";
             this.btnHistorialDonaciones.Size = new System.Drawing.Size(119, 48);
             this.btnHistorialDonaciones.TabIndex = 147;
-            this.btnHistorialDonaciones.Text = "HISTORIAL DE DONACIONES";
+            this.btnHistorialDonaciones.Text = "Historial de donaciones";
             this.btnHistorialDonaciones.UseVisualStyleBackColor = true;
             this.btnHistorialDonaciones.Click += new System.EventHandler(this.btnHistorialDonaciones_Click);
             // 
@@ -325,7 +325,7 @@
             this.btnRegistrarDonacion.Name = "btnRegistrarDonacion";
             this.btnRegistrarDonacion.Size = new System.Drawing.Size(119, 48);
             this.btnRegistrarDonacion.TabIndex = 144;
-            this.btnRegistrarDonacion.Text = "REGISTRAR DONACIÓN";
+            this.btnRegistrarDonacion.Text = "Registrar donación";
             this.btnRegistrarDonacion.UseVisualStyleBackColor = true;
             this.btnRegistrarDonacion.Click += new System.EventHandler(this.btnRegistrarDonacion_Click);
             this.btnRegistrarDonacion.MouseEnter += new System.EventHandler(this.btnRegistrarDonacion_MouseEnter);
@@ -339,7 +339,7 @@
             this.btnGuardarDetalle.Name = "btnGuardarDetalle";
             this.btnGuardarDetalle.Size = new System.Drawing.Size(119, 48);
             this.btnGuardarDetalle.TabIndex = 143;
-            this.btnGuardarDetalle.Text = "GUARDAR DETALLE";
+            this.btnGuardarDetalle.Text = "Guardar detalle";
             this.btnGuardarDetalle.UseVisualStyleBackColor = true;
             this.btnGuardarDetalle.Click += new System.EventHandler(this.btnGuardarDetalle_Click);
             // 
@@ -351,7 +351,7 @@
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(119, 48);
             this.btnLimpiar.TabIndex = 142;
-            this.btnLimpiar.Text = "LIMPIAR CAMPOS";
+            this.btnLimpiar.Text = "Limpiar campos";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
@@ -363,7 +363,7 @@
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(119, 48);
             this.btnCancelar.TabIndex = 141;
-            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);

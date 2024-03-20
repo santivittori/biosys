@@ -38,24 +38,26 @@
             this.dateInicio = new System.Windows.Forms.DateTimePicker();
             this.btnAplicarFiltro = new biosys.RoundedButton();
             this.labelHistorialRecolecciones = new System.Windows.Forms.Label();
-            this.btnSigRecolecciones = new System.Windows.Forms.Button();
-            this.btnAntRecolecciones = new System.Windows.Forms.Button();
             this.dataGridViewHistorialRecolecciones = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBack = new System.Windows.Forms.PictureBox();
+            this.btnSigDonaciones = new System.Windows.Forms.PictureBox();
+            this.btnAntDonaciones = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistorialRecolecciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSigDonaciones)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAntDonaciones)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(323, 40);
+            this.labelTitulo.Location = new System.Drawing.Point(423, 26);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(787, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(570, 55);
             this.labelTitulo.TabIndex = 51;
-            this.labelTitulo.Text = "HISTORIAL DE RECOLECCIONES";
+            this.labelTitulo.Text = "Historial de recolecciones";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label3
@@ -96,7 +98,7 @@
             this.btnQuitarFiltro.Name = "btnQuitarFiltro";
             this.btnQuitarFiltro.Size = new System.Drawing.Size(119, 48);
             this.btnQuitarFiltro.TabIndex = 190;
-            this.btnQuitarFiltro.Text = "QUITAR FILTRO";
+            this.btnQuitarFiltro.Text = "Quitar filtro";
             this.btnQuitarFiltro.UseVisualStyleBackColor = true;
             this.btnQuitarFiltro.Click += new System.EventHandler(this.btnQuitarFiltro_Click);
             // 
@@ -126,7 +128,7 @@
             this.btnAplicarFiltro.Name = "btnAplicarFiltro";
             this.btnAplicarFiltro.Size = new System.Drawing.Size(119, 48);
             this.btnAplicarFiltro.TabIndex = 187;
-            this.btnAplicarFiltro.Text = "APLICAR FILTRO";
+            this.btnAplicarFiltro.Text = "Aplicar filtro";
             this.btnAplicarFiltro.UseVisualStyleBackColor = true;
             this.btnAplicarFiltro.Click += new System.EventHandler(this.btnAplicarFiltro_Click);
             // 
@@ -134,35 +136,11 @@
             // 
             this.labelHistorialRecolecciones.AutoSize = true;
             this.labelHistorialRecolecciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelHistorialRecolecciones.Location = new System.Drawing.Point(161, 715);
+            this.labelHistorialRecolecciones.Location = new System.Drawing.Point(157, 709);
             this.labelHistorialRecolecciones.Name = "labelHistorialRecolecciones";
             this.labelHistorialRecolecciones.Size = new System.Drawing.Size(181, 16);
             this.labelHistorialRecolecciones.TabIndex = 186;
             this.labelHistorialRecolecciones.Text = "LabelHistorialRecolecciones";
-            // 
-            // btnSigRecolecciones
-            // 
-            this.btnSigRecolecciones.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSigRecolecciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSigRecolecciones.Location = new System.Drawing.Point(101, 707);
-            this.btnSigRecolecciones.Name = "btnSigRecolecciones";
-            this.btnSigRecolecciones.Size = new System.Drawing.Size(40, 30);
-            this.btnSigRecolecciones.TabIndex = 185;
-            this.btnSigRecolecciones.Text = ">";
-            this.btnSigRecolecciones.UseVisualStyleBackColor = true;
-            this.btnSigRecolecciones.Click += new System.EventHandler(this.btnSigRecolecciones_Click);
-            // 
-            // btnAntRecolecciones
-            // 
-            this.btnAntRecolecciones.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAntRecolecciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAntRecolecciones.Location = new System.Drawing.Point(54, 707);
-            this.btnAntRecolecciones.Name = "btnAntRecolecciones";
-            this.btnAntRecolecciones.Size = new System.Drawing.Size(40, 30);
-            this.btnAntRecolecciones.TabIndex = 184;
-            this.btnAntRecolecciones.Text = "<";
-            this.btnAntRecolecciones.UseVisualStyleBackColor = true;
-            this.btnAntRecolecciones.Click += new System.EventHandler(this.btnAntRecolecciones_Click);
             // 
             // dataGridViewHistorialRecolecciones
             // 
@@ -184,9 +162,9 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(88, 26);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 20);
+            this.label4.Size = new System.Drawing.Size(52, 20);
             this.label4.TabIndex = 197;
-            this.label4.Text = "Back";
+            this.label4.Text = "Atrás";
             // 
             // pictureBack
             // 
@@ -199,12 +177,36 @@
             this.pictureBack.TabStop = false;
             this.pictureBack.Click += new System.EventHandler(this.pictureBack_Click);
             // 
+            // btnSigDonaciones
+            // 
+            this.btnSigDonaciones.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSigDonaciones.Image = ((System.Drawing.Image)(resources.GetObject("btnSigDonaciones.Image")));
+            this.btnSigDonaciones.Location = new System.Drawing.Point(101, 696);
+            this.btnSigDonaciones.Name = "btnSigDonaciones";
+            this.btnSigDonaciones.Size = new System.Drawing.Size(39, 43);
+            this.btnSigDonaciones.TabIndex = 199;
+            this.btnSigDonaciones.TabStop = false;
+            this.btnSigDonaciones.Click += new System.EventHandler(this.btnSigDonaciones_Click);
+            // 
+            // btnAntDonaciones
+            // 
+            this.btnAntDonaciones.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAntDonaciones.Image = ((System.Drawing.Image)(resources.GetObject("btnAntDonaciones.Image")));
+            this.btnAntDonaciones.Location = new System.Drawing.Point(56, 696);
+            this.btnAntDonaciones.Name = "btnAntDonaciones";
+            this.btnAntDonaciones.Size = new System.Drawing.Size(39, 43);
+            this.btnAntDonaciones.TabIndex = 198;
+            this.btnAntDonaciones.TabStop = false;
+            this.btnAntDonaciones.Click += new System.EventHandler(this.btnAntDonaciones_Click);
+            // 
             // HistorialRecolecciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnSigDonaciones);
+            this.Controls.Add(this.btnAntDonaciones);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.pictureBack);
             this.Controls.Add(this.label3);
@@ -215,8 +217,6 @@
             this.Controls.Add(this.dateInicio);
             this.Controls.Add(this.btnAplicarFiltro);
             this.Controls.Add(this.labelHistorialRecolecciones);
-            this.Controls.Add(this.btnSigRecolecciones);
-            this.Controls.Add(this.btnAntRecolecciones);
             this.Controls.Add(this.dataGridViewHistorialRecolecciones);
             this.Controls.Add(this.labelTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -226,6 +226,8 @@
             this.Load += new System.EventHandler(this.HistorialRecolecciones_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHistorialRecolecciones)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSigDonaciones)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAntDonaciones)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -242,10 +244,10 @@
         private System.Windows.Forms.DateTimePicker dateInicio;
         private RoundedButton btnAplicarFiltro;
         private System.Windows.Forms.Label labelHistorialRecolecciones;
-        private System.Windows.Forms.Button btnSigRecolecciones;
-        private System.Windows.Forms.Button btnAntRecolecciones;
         private System.Windows.Forms.DataGridView dataGridViewHistorialRecolecciones;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pictureBack;
+        private System.Windows.Forms.PictureBox btnSigDonaciones;
+        private System.Windows.Forms.PictureBox btnAntDonaciones;
     }
 }

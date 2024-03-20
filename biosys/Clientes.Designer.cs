@@ -52,42 +52,47 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnPaginaAnterior = new System.Windows.Forms.Button();
-            this.btnPaginaSiguiente = new System.Windows.Forms.Button();
             this.labelPaginacion = new System.Windows.Forms.Label();
-            this.btnQuitarFiltros = new biosys.RoundedButton();
-            this.btnEliminarCliente = new biosys.RoundedButton();
-            this.btnCancelar = new biosys.RoundedButton();
-            this.btnLimpiar = new biosys.RoundedButton();
+            this.btnPaginaAnterior = new System.Windows.Forms.PictureBox();
+            this.btnPaginaSiguiente = new System.Windows.Forms.PictureBox();
             this.btnGuardarCliente = new biosys.RoundedButton();
+            this.btnLimpiar = new biosys.RoundedButton();
+            this.btnCancelar = new biosys.RoundedButton();
+            this.btnEliminarCliente = new biosys.RoundedButton();
+            this.btnQuitarFiltros = new biosys.RoundedButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClientes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaAnterior)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaSiguiente)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
             // 
             this.labelTitulo.AutoSize = true;
+            this.labelTitulo.BackColor = System.Drawing.Color.Transparent;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(570, 50);
+            this.labelTitulo.Location = new System.Drawing.Point(604, 32);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(259, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(197, 55);
             this.labelTitulo.TabIndex = 51;
-            this.labelTitulo.Text = "CLIENTES";
+            this.labelTitulo.Text = "Clientes";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // pictureBox2
             // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(83, 553);
+            this.pictureBox2.Location = new System.Drawing.Point(83, 546);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(40, 37);
+            this.pictureBox2.Size = new System.Drawing.Size(40, 47);
             this.pictureBox2.TabIndex = 139;
             this.pictureBox2.TabStop = false;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.Location = new System.Drawing.Point(129, 559);
             this.label11.Name = "label11";
@@ -108,6 +113,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(83, 461);
             this.pictureBox1.Name = "pictureBox1";
@@ -118,12 +124,13 @@
             // label10
             // 
             this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(129, 472);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(197, 18);
+            this.label10.Size = new System.Drawing.Size(193, 18);
             this.label10.TabIndex = 135;
-            this.label10.Text = "Filtrar por Nombre o Apellido";
+            this.label10.Text = "Filtrar por nombre o apellido";
             // 
             // txtBusqueda
             // 
@@ -139,6 +146,7 @@
             // lblError
             // 
             this.lblError.AutoSize = true;
+            this.lblError.BackColor = System.Drawing.Color.Transparent;
             this.lblError.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblError.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lblError.Image = ((System.Drawing.Image)(resources.GetObject("lblError.Image")));
@@ -200,6 +208,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Red;
             this.label9.Location = new System.Drawing.Point(744, 376);
@@ -211,6 +220,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Red;
             this.label8.Location = new System.Drawing.Point(478, 335);
@@ -222,6 +232,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Red;
             this.label7.Location = new System.Drawing.Point(457, 280);
@@ -233,6 +244,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Red;
             this.label5.Location = new System.Drawing.Point(470, 225);
@@ -244,6 +256,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Red;
             this.label6.Location = new System.Drawing.Point(472, 169);
@@ -255,6 +268,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(567, 376);
             this.label13.Name = "label13";
@@ -265,6 +279,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(407, 338);
             this.label4.Name = "label4";
@@ -275,6 +290,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(407, 280);
             this.label3.Name = "label3";
@@ -285,6 +301,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(407, 225);
             this.label2.Name = "label2";
@@ -295,6 +312,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(407, 169);
             this.label1.Name = "label1";
@@ -302,91 +320,40 @@
             this.label1.TabIndex = 115;
             this.label1.Text = "Nombre:";
             // 
-            // btnPaginaAnterior
-            // 
-            this.btnPaginaAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPaginaAnterior.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPaginaAnterior.Location = new System.Drawing.Point(445, 700);
-            this.btnPaginaAnterior.Name = "btnPaginaAnterior";
-            this.btnPaginaAnterior.Size = new System.Drawing.Size(40, 30);
-            this.btnPaginaAnterior.TabIndex = 141;
-            this.btnPaginaAnterior.Text = "<";
-            this.btnPaginaAnterior.UseVisualStyleBackColor = true;
-            this.btnPaginaAnterior.Click += new System.EventHandler(this.btnPaginaAnterior_Click);
-            // 
-            // btnPaginaSiguiente
-            // 
-            this.btnPaginaSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPaginaSiguiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPaginaSiguiente.Location = new System.Drawing.Point(491, 700);
-            this.btnPaginaSiguiente.Name = "btnPaginaSiguiente";
-            this.btnPaginaSiguiente.Size = new System.Drawing.Size(40, 30);
-            this.btnPaginaSiguiente.TabIndex = 142;
-            this.btnPaginaSiguiente.Text = ">";
-            this.btnPaginaSiguiente.UseVisualStyleBackColor = true;
-            this.btnPaginaSiguiente.Click += new System.EventHandler(this.btnPaginaSiguiente_Click);
-            // 
             // labelPaginacion
             // 
             this.labelPaginacion.AutoSize = true;
+            this.labelPaginacion.BackColor = System.Drawing.Color.Transparent;
             this.labelPaginacion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPaginacion.Location = new System.Drawing.Point(552, 708);
+            this.labelPaginacion.Location = new System.Drawing.Point(543, 701);
             this.labelPaginacion.Name = "labelPaginacion";
             this.labelPaginacion.Size = new System.Drawing.Size(109, 16);
             this.labelPaginacion.TabIndex = 144;
             this.labelPaginacion.Text = "LabelPaginacion";
             // 
-            // btnQuitarFiltros
+            // btnPaginaAnterior
             // 
-            this.btnQuitarFiltros.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnQuitarFiltros.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnQuitarFiltros.Location = new System.Drawing.Point(161, 663);
-            this.btnQuitarFiltros.Name = "btnQuitarFiltros";
-            this.btnQuitarFiltros.Size = new System.Drawing.Size(119, 48);
-            this.btnQuitarFiltros.TabIndex = 145;
-            this.btnQuitarFiltros.Text = "QUITAR FILTROS";
-            this.btnQuitarFiltros.UseVisualStyleBackColor = true;
-            this.btnQuitarFiltros.Click += new System.EventHandler(this.btnQuitarFiltros_Click);
+            this.btnPaginaAnterior.BackColor = System.Drawing.Color.Transparent;
+            this.btnPaginaAnterior.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPaginaAnterior.Image = ((System.Drawing.Image)(resources.GetObject("btnPaginaAnterior.Image")));
+            this.btnPaginaAnterior.Location = new System.Drawing.Point(445, 687);
+            this.btnPaginaAnterior.Name = "btnPaginaAnterior";
+            this.btnPaginaAnterior.Size = new System.Drawing.Size(39, 43);
+            this.btnPaginaAnterior.TabIndex = 150;
+            this.btnPaginaAnterior.TabStop = false;
+            this.btnPaginaAnterior.Click += new System.EventHandler(this.btnPaginaAnterior_Click);
             // 
-            // btnEliminarCliente
+            // btnPaginaSiguiente
             // 
-            this.btnEliminarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnEliminarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminarCliente.Location = new System.Drawing.Point(1046, 553);
-            this.btnEliminarCliente.Name = "btnEliminarCliente";
-            this.btnEliminarCliente.Size = new System.Drawing.Size(119, 48);
-            this.btnEliminarCliente.TabIndex = 146;
-            this.btnEliminarCliente.Text = "ELIMINAR CLIENTE";
-            this.btnEliminarCliente.UseVisualStyleBackColor = true;
-            this.btnEliminarCliente.Click += new System.EventHandler(this.btnEliminarCliente_Click);
-            this.btnEliminarCliente.MouseEnter += new System.EventHandler(this.btnEliminarCliente_MouseEnter);
-            this.btnEliminarCliente.MouseLeave += new System.EventHandler(this.btnEliminarCliente_MouseLeave);
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Location = new System.Drawing.Point(959, 309);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(119, 48);
-            this.btnCancelar.TabIndex = 147;
-            this.btnCancelar.Text = "CANCELAR";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
-            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiar.Location = new System.Drawing.Point(959, 237);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(119, 48);
-            this.btnLimpiar.TabIndex = 148;
-            this.btnLimpiar.Text = "LIMPIAR CAMPOS";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            this.btnPaginaSiguiente.BackColor = System.Drawing.Color.Transparent;
+            this.btnPaginaSiguiente.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPaginaSiguiente.Image = ((System.Drawing.Image)(resources.GetObject("btnPaginaSiguiente.Image")));
+            this.btnPaginaSiguiente.Location = new System.Drawing.Point(490, 687);
+            this.btnPaginaSiguiente.Name = "btnPaginaSiguiente";
+            this.btnPaginaSiguiente.Size = new System.Drawing.Size(39, 43);
+            this.btnPaginaSiguiente.TabIndex = 151;
+            this.btnPaginaSiguiente.TabStop = false;
+            this.btnPaginaSiguiente.Click += new System.EventHandler(this.btnPaginaSiguiente_Click);
             // 
             // btnGuardarCliente
             // 
@@ -396,11 +363,63 @@
             this.btnGuardarCliente.Name = "btnGuardarCliente";
             this.btnGuardarCliente.Size = new System.Drawing.Size(119, 48);
             this.btnGuardarCliente.TabIndex = 149;
-            this.btnGuardarCliente.Text = "GUARDAR CLIENTE";
+            this.btnGuardarCliente.Text = "Guardar cliente";
             this.btnGuardarCliente.UseVisualStyleBackColor = true;
             this.btnGuardarCliente.Click += new System.EventHandler(this.btnGuardarCliente_Click);
             this.btnGuardarCliente.MouseEnter += new System.EventHandler(this.btnGuardarCliente_MouseEnter);
             this.btnGuardarCliente.MouseLeave += new System.EventHandler(this.btnGuardarCliente_MouseLeave);
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLimpiar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiar.Location = new System.Drawing.Point(959, 237);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(119, 48);
+            this.btnLimpiar.TabIndex = 148;
+            this.btnLimpiar.Text = "Limpiar campos";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Location = new System.Drawing.Point(959, 309);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(119, 48);
+            this.btnCancelar.TabIndex = 147;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.btnCancelar.MouseEnter += new System.EventHandler(this.btnCancelar_MouseEnter);
+            this.btnCancelar.MouseLeave += new System.EventHandler(this.btnCancelar_MouseLeave);
+            // 
+            // btnEliminarCliente
+            // 
+            this.btnEliminarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEliminarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEliminarCliente.Location = new System.Drawing.Point(1046, 553);
+            this.btnEliminarCliente.Name = "btnEliminarCliente";
+            this.btnEliminarCliente.Size = new System.Drawing.Size(119, 48);
+            this.btnEliminarCliente.TabIndex = 146;
+            this.btnEliminarCliente.Text = "Eliminar cliente";
+            this.btnEliminarCliente.UseVisualStyleBackColor = true;
+            this.btnEliminarCliente.Click += new System.EventHandler(this.btnEliminarCliente_Click);
+            this.btnEliminarCliente.MouseEnter += new System.EventHandler(this.btnEliminarCliente_MouseEnter);
+            this.btnEliminarCliente.MouseLeave += new System.EventHandler(this.btnEliminarCliente_MouseLeave);
+            // 
+            // btnQuitarFiltros
+            // 
+            this.btnQuitarFiltros.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnQuitarFiltros.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuitarFiltros.Location = new System.Drawing.Point(161, 663);
+            this.btnQuitarFiltros.Name = "btnQuitarFiltros";
+            this.btnQuitarFiltros.Size = new System.Drawing.Size(119, 48);
+            this.btnQuitarFiltros.TabIndex = 145;
+            this.btnQuitarFiltros.Text = "Quitar filtros";
+            this.btnQuitarFiltros.UseVisualStyleBackColor = true;
+            this.btnQuitarFiltros.Click += new System.EventHandler(this.btnQuitarFiltros_Click);
             // 
             // Clientes
             // 
@@ -408,14 +427,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnPaginaSiguiente);
+            this.Controls.Add(this.btnPaginaAnterior);
             this.Controls.Add(this.btnGuardarCliente);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnEliminarCliente);
             this.Controls.Add(this.btnQuitarFiltros);
             this.Controls.Add(this.labelPaginacion);
-            this.Controls.Add(this.btnPaginaSiguiente);
-            this.Controls.Add(this.btnPaginaAnterior);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.comboBoxOrdenar);
@@ -447,6 +466,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClientes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaAnterior)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPaginaSiguiente)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -477,13 +498,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnPaginaAnterior;
-        private System.Windows.Forms.Button btnPaginaSiguiente;
         private System.Windows.Forms.Label labelPaginacion;
         private RoundedButton btnQuitarFiltros;
         private RoundedButton btnEliminarCliente;
         private RoundedButton btnCancelar;
         private RoundedButton btnLimpiar;
         private RoundedButton btnGuardarCliente;
+        private System.Windows.Forms.PictureBox btnPaginaAnterior;
+        private System.Windows.Forms.PictureBox btnPaginaSiguiente;
     }
 }

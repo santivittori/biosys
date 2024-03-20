@@ -220,7 +220,7 @@ namespace biosys
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la compra? \n\nLa información se perderá", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea cancelar la compra? \n\nLa información se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -233,12 +233,12 @@ namespace biosys
         {
             if (siembraList.Count == 0)
             {
-                msgError("Debe ingresar al menos un detalle de siembra.");
+                msgError("  Ingrese al menos un detalle de siembra.");
                 return;
             }
 
             // Mostrar cuadro de diálogo de confirmación
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea registrar la siembra?", "Confirmar Siembra", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea registrar la siembra?", "Confirmar Siembra", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Verificar si el usuario confirmó la acción
             if (result == DialogResult.Yes)
@@ -268,14 +268,14 @@ namespace biosys
                     if (productoSemilla == null || productoSemilla.TipoProductoId != 2)
                     {
                         // No se encontró el producto de tipo "Semilla" o el producto no es de tipo "Semilla"
-                        msgError("El producto seleccionado no es una semilla válida.");
+                        msgError("  El producto seleccionado no es una semilla válida.");
                         return;
                     }
 
                     // Comprobar que la cantidad de semillas a plantar no exceda el stock disponible
                     if (cantidad > productoSemilla.Stock)
                     {
-                        msgError("La cantidad de semillas a plantar excede el stock disponible.");
+                        msgError("  La cantidad de semillas a plantar excede el stock disponible.");
                         return;
                     }
 
@@ -336,7 +336,7 @@ namespace biosys
             // Validar que los campos tengan información
             if (comboProductos.SelectedIndex == -1 || numericCantidad.Value <= 0)
             {
-                msgError("Completar los campos obligatorios. La cantidad debe ser mayor que cero.");
+                msgError("  Complete los campos obligatorios.");
                 return;
             }
 
@@ -349,7 +349,7 @@ namespace biosys
 
             if (partesProducto.Length != 3)
             {
-                msgError("El formato del producto seleccionado es incorrecto.");
+                msgError("  El formato del producto seleccionado es incorrecto.");
                 return;
             }
 
@@ -368,14 +368,14 @@ namespace biosys
 
             if (stockProducto == null)
             {
-                msgError("No se encontró información de stock para el producto seleccionado.");
+                msgError("  No se encontró información de stock para el producto seleccionado.");
                 return;
             }
 
             // Validar que la cantidad no exceda el stock disponible
             if (cantidad > stockProducto.StockDisponible)
             {
-                msgError("La cantidad de semillas a plantar excede el stock disponible.");
+                msgError("  La cantidad de semillas a plantar excede el stock disponible.");
                 return;
             }
 

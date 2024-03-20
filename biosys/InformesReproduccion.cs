@@ -51,7 +51,7 @@ namespace biosys
             chartBajas.Series.Clear();
 
             // Crear una serie para el gráfico de torta
-            Series series = new Series("Bajas de Productos");
+            Series series = new Series("Bajas de productos");
             series.ChartType = SeriesChartType.Pie;
 
             // Agregar los datos a la serie
@@ -70,7 +70,7 @@ namespace biosys
 
             // Agregar el título al gráfico
             chartBajas.Titles.Clear();
-            chartBajas.Titles.Add("Bajas Totales por Motivo");
+            chartBajas.Titles.Add("Bajas totales por motivo");
             chartBajas.Titles[0].Font = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
 
             // Agregar la serie al control Chart
@@ -90,7 +90,7 @@ namespace biosys
             chartBajasTotales.Series.Clear();
 
             // Crear una serie para el gráfico de torta
-            Series series = new Series("Bajas de Productos");
+            Series series = new Series("Bajas de productos");
             series.ChartType = SeriesChartType.Pie;
 
             // Obtener la cantidad total de bajas
@@ -113,7 +113,7 @@ namespace biosys
 
             // Agregar el título al gráfico
             chartBajasTotales.Titles.Clear();
-            chartBajasTotales.Titles.Add("Cantidad de Bajas Totales");
+            chartBajasTotales.Titles.Add("Cantidad de bajas totales");
             chartBajasTotales.Titles[0].Font = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
 
             // Agregar la serie al control Chart
@@ -133,7 +133,7 @@ namespace biosys
             StringBuilder sb = new StringBuilder();
 
             // Información del gráfico de Bajas por Motivo
-            sb.AppendLine("Bajas Totales por Motivo:");
+            sb.AppendLine("Bajas totales por motivo:");
             foreach (DataPoint dataPoint in chartBajas.Series[0].Points)
             {
                 string motivo = dataPoint.AxisLabel;
@@ -143,7 +143,7 @@ namespace biosys
             sb.AppendLine();
 
             // Información del gráfico de Bajas Totales
-            sb.AppendLine("Cantidad de Bajas Totales:");
+            sb.AppendLine("Cantidad de bajas totales:");
             foreach (DataPoint dataPoint in chartBajasTotales.Series[0].Points)
             {
                 string motivo = dataPoint.AxisLabel;

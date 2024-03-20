@@ -72,7 +72,7 @@ namespace biosys
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a que desea salir de la aplicación?", "Cerrar y Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show("¿Desea salir de la aplicación?", "Cerrar y Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result == DialogResult.Yes)
             {
@@ -99,7 +99,7 @@ namespace biosys
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
             // Primero preguntar si está seguro de cerrar sesión
-            DialogResult result = MessageBox.Show("¿Está seguro/a que desea cerrar sesión?", "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show("¿Desea cerrar sesión?", "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             
             // Si la respuesta es correcta , cerrar sesión
             if (result == DialogResult.Yes)

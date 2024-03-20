@@ -33,7 +33,7 @@ namespace biosys
         // Diseño para nombrar los campos de Usurio y Contraseña
         private void txtUsuario_Enter(object sender, EventArgs e)
         {
-            if (txtUsuario.Text == "USUARIO")
+            if (txtUsuario.Text == "Usuario")
             {
                 txtUsuario.Text = "";
                 txtUsuario.ForeColor = Color.LightGray;
@@ -44,14 +44,14 @@ namespace biosys
         {
             if (txtUsuario.Text == "")
             {
-                txtUsuario.Text = "USUARIO";
+                txtUsuario.Text = "Usuario";
                 txtUsuario.ForeColor = Color.DimGray;
             }
         }
 
         private void txtContraseña_Enter(object sender, EventArgs e)
         {
-            if (txtContraseña.Text == "CONTRASEÑA")
+            if (txtContraseña.Text == "Contraseña")
             {
                 txtContraseña.Text = "";
                 txtContraseña.ForeColor = Color.LightGray;
@@ -63,7 +63,7 @@ namespace biosys
         {
             if (txtContraseña.Text == "")
             {
-                txtContraseña.Text = "CONTRASEÑA";
+                txtContraseña.Text = "Contraseña";
                 txtContraseña.ForeColor = Color.DimGray;
                 txtContraseña.UseSystemPasswordChar = false;
             }
@@ -122,18 +122,18 @@ namespace biosys
                     else
                     {
                         // Mostrar mensaje indicando que el usuario está deshabilitado
-                        msgError("Su cuenta de usuario ha sido deshabilitada. No puede iniciar sesión.");
+                        msgError("  Su cuenta de usuario ha sido deshabilitada. No puede iniciar sesión.");
                     }
                 }
                 else
                 {
                     // Mostrar mensaje indicando que el rol está deshabilitado
-                    msgError("Su rol ha sido deshabilitado. No puede iniciar sesión.");
+                    msgError("  Su rol ha sido deshabilitado. No puede iniciar sesión.");
                 }
             }
             else
             {
-                msgError("Nombre de usuario o contraseña incorrectos");
+                msgError("  Nombre de usuario o contraseña incorrectos");
             }
         }
 
@@ -172,7 +172,7 @@ namespace biosys
         }
         private void btnOjoCerrado_Click(object sender, EventArgs e)
         {
-            if (txtContraseña.Text != "CONTRASEÑA" && txtContraseña.Text != "")
+            if (txtContraseña.Text != "Contraseña" && txtContraseña.Text != "")
             {
                 txtContraseña.UseSystemPasswordChar = false;
                 btnOjoCerrado.Visible = false;
@@ -188,7 +188,7 @@ namespace biosys
         // Borrar y mostrar el valor del campo por defecto
         private void txtUsuario_MouseClick(object sender, MouseEventArgs e)
         {
-            if (txtContraseña.Text == "CONTRASEÑA")
+            if (txtContraseña.Text == "Contraseña")
             {
                 btnOjo.Visible = false;
                 btnOjoCerrado.Visible = true;
@@ -201,7 +201,7 @@ namespace biosys
             {
                 txtUsuario.Text = txtUsuario.Text.Substring(0, 60);
                 txtUsuario.SelectionStart = 60; // Establece el cursor al final del texto.
-                msgError("No se pueden ingresar mas caracteres");
+                msgError("  No se pueden ingresar mas caracteres");
             }
         }
         // Abre form para crear una nueva clave
@@ -210,6 +210,42 @@ namespace biosys
             RecuperarClave recuperarclave = new RecuperarClave();
             this.Hide();
             recuperarclave.ShowDialog();
+        }
+        private void btnSinCodigo_Click(object sender, EventArgs e)
+        {
+            Registro registro = new Registro();
+            this.Hide();
+            registro.comborol.SelectedIndex = registro.comborol.Items.IndexOf("Empleado");
+            registro.comborol.Enabled = false;
+            registro.ShowDialog();
+        }
+
+        private void txtCodigoVerificacion_Enter(object sender, EventArgs e)
+        {
+            if (txtCodigoVerificacion.Text == "Código de verificación")
+            {
+                txtCodigoVerificacion.Text = "";
+                txtCodigoVerificacion.ForeColor = Color.LightGray;
+            }
+        }
+
+        private void txtCodigoVerificacion_Leave(object sender, EventArgs e)
+        {
+            if (txtCodigoVerificacion.Text == "")
+            {
+                txtCodigoVerificacion.Text = "Código de verificación";
+                txtCodigoVerificacion.ForeColor = Color.DimGray;
+            }
+        }
+
+        private void txtCodigoVerificacion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e = MetodosComunes.KeyPressSoloNumeros(e);
+
+            if (e.Handled)
+            {
+                e.Handled = true;
+            }
         }
 
         private void btnConfirmarCodigo_Click(object sender, EventArgs e)
@@ -224,50 +260,13 @@ namespace biosys
                 registro.comborol.Enabled = true;
                 registro.ShowDialog();
             }
-            else if (codigoVerificacionIngresado == "CÓDIGO DE VERIFICACIÓN")
+            else if (codigoVerificacionIngresado == "Código de verificación")
             {
-                msgError("Ingrese el código de verificación primero.");
+                msgError("  Ingrese el código de verificación primero.");
             }
             else
             {
-                msgError("El código de verificación ingresado es incorrecto.");
-            }
-        }
-
-        private void btnSinCodigo_Click(object sender, EventArgs e)
-        {
-            Registro registro = new Registro();
-            this.Hide();
-            registro.comborol.SelectedIndex = registro.comborol.Items.IndexOf("Empleado");
-            registro.comborol.Enabled = false;
-            registro.ShowDialog();
-        }
-
-        private void txtCodigoVerificacion_Enter(object sender, EventArgs e)
-        {
-            if (txtCodigoVerificacion.Text == "CÓDIGO DE VERIFICACIÓN")
-            {
-                txtCodigoVerificacion.Text = "";
-                txtCodigoVerificacion.ForeColor = Color.LightGray;
-            }
-        }
-
-        private void txtCodigoVerificacion_Leave(object sender, EventArgs e)
-        {
-            if (txtCodigoVerificacion.Text == "")
-            {
-                txtCodigoVerificacion.Text = "CÓDIGO DE VERIFICACIÓN";
-                txtCodigoVerificacion.ForeColor = Color.DimGray;
-            }
-        }
-
-        private void txtCodigoVerificacion_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e = MetodosComunes.KeyPressSoloNumeros(e);
-
-            if (e.Handled)
-            {
-                e.Handled = true;
+                msgError("  El código de verificación ingresado es incorrecto.");
             }
         }
     }

@@ -80,7 +80,6 @@ namespace biosys
             int totalPaginas = (int)Math.Ceiling((double)totalCompras / tamañoPagina);
             labelHistorialCompras.Text = $"Página {paginaActual} de {totalPaginas}. Total de compras: {totalCompras}";
         }
-
         private void btnAntCompras_Click(object sender, EventArgs e)
         {
             if (paginaActual > 1)
@@ -155,5 +154,6 @@ namespace biosys
             comprasForm.DashboardInstance = DashboardInstance;
             DashboardInstance.AbrirFormHijo(comprasForm);
         }
+
     }
 }

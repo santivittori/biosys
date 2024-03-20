@@ -122,11 +122,11 @@ namespace biosys
             StringBuilder sb = new StringBuilder();
 
             // Información del gráfico de Compras
-            sb.AppendLine($"Total de Compras = ${CompraTotal.Titles[1].Text.Replace("Total: $", "")}");
+            sb.AppendLine($"Total de compras = ${CompraTotal.Titles[1].Text.Replace("Total: $", "")}");
             sb.AppendLine();
 
             // Información del gráfico de Ventas
-            sb.AppendLine($"Total de Ventas = ${VentaTotal.Titles[1].Text.Replace("Total: $", "")}");
+            sb.AppendLine($"Total de ventas = ${VentaTotal.Titles[1].Text.Replace("Total: $", "")}");
             sb.AppendLine();
 
             return sb.ToString();

@@ -50,11 +50,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBack = new System.Windows.Forms.PictureBox();
             this.labelRol = new System.Windows.Forms.Label();
-            this.btnPagSigRol = new System.Windows.Forms.Button();
-            this.btnPagAntRol = new System.Windows.Forms.Button();
             this.labelPermiso = new System.Windows.Forms.Label();
-            this.btnSigPermiso = new System.Windows.Forms.Button();
-            this.btnAntPermiso = new System.Windows.Forms.Button();
             this.btnCrearPermiso = new biosys.RoundedButton();
             this.btnCrearRol = new biosys.RoundedButton();
             this.btnGuardarRol = new biosys.RoundedButton();
@@ -64,20 +60,28 @@
             this.btnGuardarPermiso = new biosys.RoundedButton();
             this.btnLimpiarPermisos = new biosys.RoundedButton();
             this.btnEliminarPermiso = new biosys.RoundedButton();
+            this.btnPagSigRol = new System.Windows.Forms.PictureBox();
+            this.btnPagAntRol = new System.Windows.Forms.PictureBox();
+            this.btnSigPermiso = new System.Windows.Forms.PictureBox();
+            this.btnAntPermiso = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRoles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPermisos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPagSigRol)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPagAntRol)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSigPermiso)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAntPermiso)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitulo
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(350, 50);
+            this.labelTitulo.Location = new System.Drawing.Point(427, 24);
             this.labelTitulo.Name = "labelTitulo";
-            this.labelTitulo.Size = new System.Drawing.Size(793, 55);
+            this.labelTitulo.Size = new System.Drawing.Size(594, 55);
             this.labelTitulo.TabIndex = 51;
-            this.labelTitulo.Text = "GESTIONAR ROLES Y PERMISOS";
+            this.labelTitulo.Text = "Gestionar roles y permisos";
             this.labelTitulo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // dataGridViewRoles
@@ -152,9 +156,9 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(65, 183);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(116, 18);
+            this.label2.Size = new System.Drawing.Size(110, 18);
             this.label2.TabIndex = 84;
-            this.label2.Text = "Nombre del Rol:";
+            this.label2.Text = "Nombre del rol:";
             // 
             // label7
             // 
@@ -213,9 +217,9 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(744, 183);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(149, 18);
+            this.label5.Size = new System.Drawing.Size(147, 18);
             this.label5.TabIndex = 151;
-            this.label5.Text = "Nombre del Permiso:";
+            this.label5.Text = "Nombre del permiso:";
             // 
             // label8
             // 
@@ -271,9 +275,9 @@
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(64, 24);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(49, 20);
+            this.label6.Size = new System.Drawing.Size(52, 20);
             this.label6.TabIndex = 166;
-            this.label6.Text = "Back";
+            this.label6.Text = "Atrás";
             // 
             // pictureBack
             // 
@@ -290,69 +294,21 @@
             // 
             this.labelRol.AutoSize = true;
             this.labelRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRol.Location = new System.Drawing.Point(281, 734);
+            this.labelRol.Location = new System.Drawing.Point(280, 732);
             this.labelRol.Name = "labelRol";
             this.labelRol.Size = new System.Drawing.Size(62, 16);
             this.labelRol.TabIndex = 169;
             this.labelRol.Text = "LabelRol";
             // 
-            // btnPagSigRol
-            // 
-            this.btnPagSigRol.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPagSigRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPagSigRol.Location = new System.Drawing.Point(224, 726);
-            this.btnPagSigRol.Name = "btnPagSigRol";
-            this.btnPagSigRol.Size = new System.Drawing.Size(40, 30);
-            this.btnPagSigRol.TabIndex = 168;
-            this.btnPagSigRol.Text = ">";
-            this.btnPagSigRol.UseVisualStyleBackColor = true;
-            this.btnPagSigRol.Click += new System.EventHandler(this.btnPagSigRol_Click);
-            // 
-            // btnPagAntRol
-            // 
-            this.btnPagAntRol.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPagAntRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPagAntRol.Location = new System.Drawing.Point(178, 726);
-            this.btnPagAntRol.Name = "btnPagAntRol";
-            this.btnPagAntRol.Size = new System.Drawing.Size(40, 30);
-            this.btnPagAntRol.TabIndex = 167;
-            this.btnPagAntRol.Text = "<";
-            this.btnPagAntRol.UseVisualStyleBackColor = true;
-            this.btnPagAntRol.Click += new System.EventHandler(this.btnPagAntRol_Click);
-            // 
             // labelPermiso
             // 
             this.labelPermiso.AutoSize = true;
             this.labelPermiso.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPermiso.Location = new System.Drawing.Point(913, 734);
+            this.labelPermiso.Location = new System.Drawing.Point(911, 732);
             this.labelPermiso.Name = "labelPermiso";
             this.labelPermiso.Size = new System.Drawing.Size(91, 16);
             this.labelPermiso.TabIndex = 172;
             this.labelPermiso.Text = "LabelPermiso";
-            // 
-            // btnSigPermiso
-            // 
-            this.btnSigPermiso.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSigPermiso.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSigPermiso.Location = new System.Drawing.Point(853, 726);
-            this.btnSigPermiso.Name = "btnSigPermiso";
-            this.btnSigPermiso.Size = new System.Drawing.Size(40, 30);
-            this.btnSigPermiso.TabIndex = 171;
-            this.btnSigPermiso.Text = ">";
-            this.btnSigPermiso.UseVisualStyleBackColor = true;
-            this.btnSigPermiso.Click += new System.EventHandler(this.btnSigPermiso_Click);
-            // 
-            // btnAntPermiso
-            // 
-            this.btnAntPermiso.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAntPermiso.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAntPermiso.Location = new System.Drawing.Point(806, 726);
-            this.btnAntPermiso.Name = "btnAntPermiso";
-            this.btnAntPermiso.Size = new System.Drawing.Size(40, 30);
-            this.btnAntPermiso.TabIndex = 170;
-            this.btnAntPermiso.Text = "<";
-            this.btnAntPermiso.UseVisualStyleBackColor = true;
-            this.btnAntPermiso.Click += new System.EventHandler(this.btnAntPermiso_Click);
             // 
             // btnCrearPermiso
             // 
@@ -362,7 +318,7 @@
             this.btnCrearPermiso.Name = "btnCrearPermiso";
             this.btnCrearPermiso.Size = new System.Drawing.Size(119, 48);
             this.btnCrearPermiso.TabIndex = 174;
-            this.btnCrearPermiso.Text = "CREAR";
+            this.btnCrearPermiso.Text = "Crear";
             this.btnCrearPermiso.UseVisualStyleBackColor = true;
             this.btnCrearPermiso.Click += new System.EventHandler(this.btnCrearPermiso_Click);
             this.btnCrearPermiso.MouseEnter += new System.EventHandler(this.btnCrearPermiso_MouseEnter);
@@ -376,7 +332,7 @@
             this.btnCrearRol.Name = "btnCrearRol";
             this.btnCrearRol.Size = new System.Drawing.Size(119, 48);
             this.btnCrearRol.TabIndex = 175;
-            this.btnCrearRol.Text = "CREAR";
+            this.btnCrearRol.Text = "Crear";
             this.btnCrearRol.UseVisualStyleBackColor = true;
             this.btnCrearRol.Click += new System.EventHandler(this.btnCrearRol_Click);
             this.btnCrearRol.MouseEnter += new System.EventHandler(this.btnCrearRol_MouseEnter);
@@ -390,7 +346,7 @@
             this.btnGuardarRol.Name = "btnGuardarRol";
             this.btnGuardarRol.Size = new System.Drawing.Size(119, 48);
             this.btnGuardarRol.TabIndex = 176;
-            this.btnGuardarRol.Text = "GUARDAR EDICIÓN";
+            this.btnGuardarRol.Text = "Guardar edición";
             this.btnGuardarRol.UseVisualStyleBackColor = true;
             this.btnGuardarRol.Click += new System.EventHandler(this.btnGuardarRol_Click);
             this.btnGuardarRol.MouseEnter += new System.EventHandler(this.btnGuardarRol_MouseEnter);
@@ -404,7 +360,7 @@
             this.btnLimpiarRol.Name = "btnLimpiarRol";
             this.btnLimpiarRol.Size = new System.Drawing.Size(119, 48);
             this.btnLimpiarRol.TabIndex = 177;
-            this.btnLimpiarRol.Text = "LIMPIAR CAMPOS";
+            this.btnLimpiarRol.Text = "Limpiar campos";
             this.btnLimpiarRol.UseVisualStyleBackColor = true;
             this.btnLimpiarRol.Click += new System.EventHandler(this.btnLimpiarRol_Click);
             // 
@@ -416,7 +372,7 @@
             this.btnHabilitar.Name = "btnHabilitar";
             this.btnHabilitar.Size = new System.Drawing.Size(119, 48);
             this.btnHabilitar.TabIndex = 178;
-            this.btnHabilitar.Text = "HABILITAR O DESHABILITAR";
+            this.btnHabilitar.Text = "Habilitar o deshabilitar";
             this.btnHabilitar.UseVisualStyleBackColor = true;
             this.btnHabilitar.Click += new System.EventHandler(this.btnHabilitar_Click);
             this.btnHabilitar.MouseEnter += new System.EventHandler(this.btnHabilitar_MouseEnter);
@@ -430,7 +386,7 @@
             this.btnEliminarRol.Name = "btnEliminarRol";
             this.btnEliminarRol.Size = new System.Drawing.Size(119, 48);
             this.btnEliminarRol.TabIndex = 179;
-            this.btnEliminarRol.Text = "ELIMINAR";
+            this.btnEliminarRol.Text = "Eliminar";
             this.btnEliminarRol.UseVisualStyleBackColor = true;
             this.btnEliminarRol.Click += new System.EventHandler(this.btnEliminarRol_Click);
             this.btnEliminarRol.MouseEnter += new System.EventHandler(this.btnEliminarRol_MouseEnter);
@@ -444,7 +400,7 @@
             this.btnGuardarPermiso.Name = "btnGuardarPermiso";
             this.btnGuardarPermiso.Size = new System.Drawing.Size(119, 48);
             this.btnGuardarPermiso.TabIndex = 180;
-            this.btnGuardarPermiso.Text = "GUARDAR EDICIÓN";
+            this.btnGuardarPermiso.Text = "Guardar edición";
             this.btnGuardarPermiso.UseVisualStyleBackColor = true;
             this.btnGuardarPermiso.Click += new System.EventHandler(this.btnGuardarPermiso_Click);
             this.btnGuardarPermiso.MouseEnter += new System.EventHandler(this.btnGuardarPermiso_MouseEnter);
@@ -458,7 +414,7 @@
             this.btnLimpiarPermisos.Name = "btnLimpiarPermisos";
             this.btnLimpiarPermisos.Size = new System.Drawing.Size(119, 48);
             this.btnLimpiarPermisos.TabIndex = 181;
-            this.btnLimpiarPermisos.Text = "LIMPIAR CAMPOS";
+            this.btnLimpiarPermisos.Text = "Limpiar campos";
             this.btnLimpiarPermisos.UseVisualStyleBackColor = true;
             this.btnLimpiarPermisos.Click += new System.EventHandler(this.btnLimpiarPermisos_Click);
             // 
@@ -470,11 +426,55 @@
             this.btnEliminarPermiso.Name = "btnEliminarPermiso";
             this.btnEliminarPermiso.Size = new System.Drawing.Size(119, 48);
             this.btnEliminarPermiso.TabIndex = 182;
-            this.btnEliminarPermiso.Text = "ELIMINAR";
+            this.btnEliminarPermiso.Text = "Eliminar";
             this.btnEliminarPermiso.UseVisualStyleBackColor = true;
             this.btnEliminarPermiso.Click += new System.EventHandler(this.btnEliminarPermiso_Click);
             this.btnEliminarPermiso.MouseEnter += new System.EventHandler(this.btnEliminarPermiso_MouseEnter);
             this.btnEliminarPermiso.MouseLeave += new System.EventHandler(this.btnEliminarPermiso_MouseLeave);
+            // 
+            // btnPagSigRol
+            // 
+            this.btnPagSigRol.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPagSigRol.Image = ((System.Drawing.Image)(resources.GetObject("btnPagSigRol.Image")));
+            this.btnPagSigRol.Location = new System.Drawing.Point(224, 718);
+            this.btnPagSigRol.Name = "btnPagSigRol";
+            this.btnPagSigRol.Size = new System.Drawing.Size(39, 43);
+            this.btnPagSigRol.TabIndex = 209;
+            this.btnPagSigRol.TabStop = false;
+            this.btnPagSigRol.Click += new System.EventHandler(this.btnPagSigRol_Click);
+            // 
+            // btnPagAntRol
+            // 
+            this.btnPagAntRol.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPagAntRol.Image = ((System.Drawing.Image)(resources.GetObject("btnPagAntRol.Image")));
+            this.btnPagAntRol.Location = new System.Drawing.Point(179, 718);
+            this.btnPagAntRol.Name = "btnPagAntRol";
+            this.btnPagAntRol.Size = new System.Drawing.Size(39, 43);
+            this.btnPagAntRol.TabIndex = 208;
+            this.btnPagAntRol.TabStop = false;
+            this.btnPagAntRol.Click += new System.EventHandler(this.btnPagAntRol_Click);
+            // 
+            // btnSigPermiso
+            // 
+            this.btnSigPermiso.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSigPermiso.Image = ((System.Drawing.Image)(resources.GetObject("btnSigPermiso.Image")));
+            this.btnSigPermiso.Location = new System.Drawing.Point(852, 718);
+            this.btnSigPermiso.Name = "btnSigPermiso";
+            this.btnSigPermiso.Size = new System.Drawing.Size(39, 43);
+            this.btnSigPermiso.TabIndex = 211;
+            this.btnSigPermiso.TabStop = false;
+            this.btnSigPermiso.Click += new System.EventHandler(this.btnSigPermiso_Click);
+            // 
+            // btnAntPermiso
+            // 
+            this.btnAntPermiso.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAntPermiso.Image = ((System.Drawing.Image)(resources.GetObject("btnAntPermiso.Image")));
+            this.btnAntPermiso.Location = new System.Drawing.Point(807, 718);
+            this.btnAntPermiso.Name = "btnAntPermiso";
+            this.btnAntPermiso.Size = new System.Drawing.Size(39, 43);
+            this.btnAntPermiso.TabIndex = 210;
+            this.btnAntPermiso.TabStop = false;
+            this.btnAntPermiso.Click += new System.EventHandler(this.btnAntPermiso_Click);
             // 
             // RolesPermisos
             // 
@@ -482,6 +482,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1400, 782);
+            this.Controls.Add(this.btnSigPermiso);
+            this.Controls.Add(this.btnAntPermiso);
+            this.Controls.Add(this.btnPagSigRol);
+            this.Controls.Add(this.btnPagAntRol);
             this.Controls.Add(this.btnEliminarPermiso);
             this.Controls.Add(this.btnLimpiarPermisos);
             this.Controls.Add(this.btnGuardarPermiso);
@@ -492,11 +496,7 @@
             this.Controls.Add(this.btnCrearRol);
             this.Controls.Add(this.btnCrearPermiso);
             this.Controls.Add(this.labelPermiso);
-            this.Controls.Add(this.btnSigPermiso);
-            this.Controls.Add(this.btnAntPermiso);
             this.Controls.Add(this.labelRol);
-            this.Controls.Add(this.btnPagSigRol);
-            this.Controls.Add(this.btnPagAntRol);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.pictureBack);
             this.Controls.Add(this.label8);
@@ -525,6 +525,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRoles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPermisos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBack)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPagSigRol)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnPagAntRol)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSigPermiso)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnAntPermiso)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -553,11 +557,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBack;
         private System.Windows.Forms.Label labelRol;
-        private System.Windows.Forms.Button btnPagSigRol;
-        private System.Windows.Forms.Button btnPagAntRol;
         private System.Windows.Forms.Label labelPermiso;
-        private System.Windows.Forms.Button btnSigPermiso;
-        private System.Windows.Forms.Button btnAntPermiso;
         private RoundedButton btnCrearPermiso;
         private RoundedButton btnCrearRol;
         private RoundedButton btnGuardarRol;
@@ -567,5 +567,9 @@
         private RoundedButton btnGuardarPermiso;
         private RoundedButton btnLimpiarPermisos;
         private RoundedButton btnEliminarPermiso;
+        private System.Windows.Forms.PictureBox btnPagSigRol;
+        private System.Windows.Forms.PictureBox btnPagAntRol;
+        private System.Windows.Forms.PictureBox btnSigPermiso;
+        private System.Windows.Forms.PictureBox btnAntPermiso;
     }
 }

@@ -285,7 +285,7 @@ namespace biosys
                     worksheet.Cells[1, 4].Text.Trim().ToUpper() != "TAMAÑO SEMILLA")
                 {
                     // Si las columnas no tienen los títulos esperados, mostrar un mensaje de error y salir
-                    msgError("El archivo Excel no tiene los títulos adecuados.");
+                    msgError("  El archivo excel no tiene los títulos adecuados.");
                     return null;
                 }
 
@@ -300,7 +300,7 @@ namespace biosys
                     if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(tipoProductoString) || string.IsNullOrWhiteSpace(tipoEspecificoString))
                     {
                         // Si alguno de los campos está vacío, mostrar un mensaje de error y salir
-                        msgError("El archivo Excel contiene datos incompletos.");
+                        msgError("  El archivo excel contiene datos incompletos.");
                         return null;
                     }
 
@@ -320,7 +320,7 @@ namespace biosys
                             // Verificar que se haya proporcionado un valor válido para tamaño de semilla
                             if (string.IsNullOrWhiteSpace(tamSemillaString) || !tamSemillaDictionary.ContainsKey(tamSemillaString))
                             {
-                                msgError("Valor de Tamaño Semilla inválido para productos de tipo Semilla.");
+                                msgError("  Valor de tamaño semilla inválido para productos de tipo semilla.");
                                 return null;
                             }
                             tamSemillaId = tamSemillaDictionary[tamSemillaString];
@@ -330,7 +330,7 @@ namespace biosys
                             // Si el producto es de tipo Árbol, asegúrate de que el valor de tamaño de semilla esté en blanco
                             if (!string.IsNullOrWhiteSpace(tamSemillaString))
                             {
-                                msgError("Para productos de tipo Árbol, el campo Tamaño Semilla debe estar en blanco.");
+                                msgError("  Para productos de tipo árbol, el campo tamaño semilla debe estar en blanco.");
                                 return null;
                             }
                         }
@@ -339,7 +339,7 @@ namespace biosys
                     {
                         // Si se produce una excepción en los métodos ObtenerTipoProductoID o ObtenerTipoEspecificoID,
                         // significa que los valores no son válidos.
-                        msgError("Valores inválidos en el archivo Excel.");
+                        msgError("  Valores inválidos en el archivo excel.");
                         return null;
                     }
 
@@ -371,7 +371,7 @@ namespace biosys
                 else
                 {
                     // Si los datos no son válidos, detener el proceso y devolver null
-                    msgError("Los datos del producto no son válidos.");
+                    msgError("  Los datos del producto no son válidos.");
                     return null;
                 }
             }
@@ -477,6 +477,7 @@ namespace biosys
                 CargarProductosEnDataGridView();
             }
         }
+
         private void btnPaginaSiguiente_Click(object sender, EventArgs e)
         {
             int totalProductos = Controladora.Controladora.ObtenerCantidadTotalProductos();
@@ -517,12 +518,12 @@ namespace biosys
 
                 if (productoEnCompra || productoEnDetalleSiembra)
                 {
-                    msgError("El producto no puede ser eliminado porque ha sido utilizado.");
+                    msgError("  El producto no puede ser eliminado porque ha sido utilizado.");
                     return;
                 }
 
                 // Mostrar un cuadro de diálogo de confirmación
-                DialogResult result = MessageBox.Show("¿Está seguro/a de que desea eliminar este producto?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("¿Desea eliminar este producto?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 // Si el usuario confirma la eliminación
                 if (result == DialogResult.Yes)
@@ -538,7 +539,7 @@ namespace biosys
             }
             else
             {
-                msgError("Debe seleccionar una fila en el DataGridView para eliminar.");
+                msgError("  Seleccione una fila de la casilla para eliminar.");
                 return;
             }
         }
@@ -558,7 +559,7 @@ namespace biosys
                 "5. En la columna 'TAMAÑO SEMILLA', debe especificar 'Pequeña', 'Mediana' o 'Grande' para productos de tipo Semilla. Para productos de tipo Árbol, dejar el campo vacío.";
 
 
-            MessageBox.Show(mensajeInstrucciones, "Instrucciones para cargar el archivo Excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(mensajeInstrucciones, "Instrucciones para cargar el archivo excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             EstablecerContextoLicencia();
 
@@ -599,13 +600,13 @@ namespace biosys
                     }
                     else
                     {
-                        msgError("El archivo Excel no contiene datos válidos o no se pudo normalizar.");
+                        msgError("  El archivo excel no contiene datos válidos o no se pudo normalizar.");
                         return;
                     }
                 }
                 else
                 {
-                    msgError("El archivo Excel no contiene datos válidos o está vacío.");
+                    msgError("  El archivo excel no contiene datos válidos o está vacío.");
                     return;
                 }
             }
@@ -614,7 +615,7 @@ namespace biosys
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             // Mostrar un cuadro de diálogo de confirmación
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea cancelar? La información no guardada se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Verificar si el usuario ha confirmado la cancelación
             if (result == DialogResult.Yes)
@@ -643,7 +644,7 @@ namespace biosys
             // Validar que se ingresen todos los campos obligatorios
             if (string.IsNullOrEmpty(txtNombreProd.Text) || comboTipoProducto.SelectedItem == null || comboTipoEspecifico.SelectedItem == null)
             {
-                msgError("Por favor, complete todos los campos obligatorios.");
+                msgError("  Complete todos los campos obligatorios.");
                 return;
             }
 
@@ -658,7 +659,7 @@ namespace biosys
                 // Verificar si se seleccionó un valor en el combo box
                 if (comboTamSemilla.SelectedValue == null)
                 {
-                    msgError("Por favor, seleccione un tamaño de semilla.");
+                    msgError("  Seleccione un tamaño de semilla.");
                     return;
                 }
                 else
@@ -680,7 +681,7 @@ namespace biosys
 
             if (productoExistente)
             {
-                msgError("El producto ya existe en la base de datos.");
+                msgError("  El producto ya existe en la base de datos.");
                 return;
             }
 
@@ -766,6 +767,5 @@ namespace biosys
                 comboTamSemilla.SelectedIndex = -1;
             }
         }
-
     }
 }

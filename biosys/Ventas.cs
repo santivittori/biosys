@@ -139,7 +139,7 @@ namespace biosys
         }
         private void CargarMetodosdePago()
         {
-            List<string> metodosdepago = new List<string> { "Efectivo", "Transferencia", "MercadoPago", "Tarjeta de Crédito", "Tarjeta de Débito" };
+            List<string> metodosdepago = new List<string> { "Efectivo", "Transferencia", "Mercado pago", "Tarjeta de crédito", "Tarjeta de débito" };
 
             comboMedioPago.DataSource = metodosdepago;
 
@@ -149,7 +149,7 @@ namespace biosys
 
         private void CargarRazonSocial()
         {
-            List<string> razonsocial = new List<string> { "Responsable Inscripto", "Consumidor Final" };
+            List<string> razonsocial = new List<string> { "Responsable inscripto", "Consumidor final" };
 
             comboRazonSocial.DataSource = razonsocial;
 
@@ -452,7 +452,7 @@ namespace biosys
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea cancelar la venta? \n\nLa información se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea cancelar la venta? \n\nLa información se perderá.", "Confirmar cancelación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -463,7 +463,7 @@ namespace biosys
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea limpiar los campos? \n\nLa información se perderá.", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea limpiar los campos? \n\nLa información se perderá.", "Confirmar limpieza de campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
@@ -501,7 +501,7 @@ namespace biosys
             // Validar que los campos tengan información
             if (comboProductos.SelectedIndex == -1 || numericCantidad.Value <= 0 || string.IsNullOrWhiteSpace(txtPrecioUnitario.Text) || txtPrecioUnitario.Text == "Ejemplo: 4350,70")
             {
-                msgError("Completar los campos obligatorios. La cantidad debe ser mayor que cero.");
+                msgError("  Complete los campos obligatorios.");
                 return;
             }
 
@@ -514,7 +514,7 @@ namespace biosys
 
             if (partesProducto.Length != 3)
             {
-                msgError("El formato del producto seleccionado es incorrecto.");
+                msgError("  El formato del producto seleccionado es incorrecto.");
                 return;
             }
 
@@ -533,7 +533,7 @@ namespace biosys
 
             if (productoSeleccionado != null && cantidad > productoSeleccionado.Stock)
             {
-                msgError("La cantidad ingresada es mayor que el stock disponible.");
+                msgError("  La cantidad ingresada es mayor que el stock disponible.");
                 return;
             }
 
@@ -581,21 +581,21 @@ namespace biosys
         {
             if (ventasList.Count == 0)
             {
-                msgError("Debe ingresar al menos un detalle de venta.");
+                msgError("  Ingrese al menos un detalle de venta.");
                 return;
             }
 
             // Verificar si se ha seleccionado un medio de pago
             if (comboMedioPago.SelectedIndex == -1)
             {
-                msgError("Debe seleccionar un medio de pago.");
+                msgError("  Ingrese un medio de pago.");
                 return;
             }
 
             // Verificar si se ha seleccionado una opción en el comboRazonSocial
             if (comboRazonSocial.SelectedIndex == -1)
             {
-                msgError("Debe seleccionar la razón social.");
+                msgError("  Seleccione la razón social.");
                 return;
             }
 
@@ -603,7 +603,7 @@ namespace biosys
             bool esResponsableInscripto = comboRazonSocial.SelectedIndex == 0; // Si el índice seleccionado es 0, es Responsable Inscripto; de lo contrario, es Consumidor Final
 
             // Mostrar cuadro de diálogo de confirmación
-            DialogResult result = MessageBox.Show("¿Está seguro/a de que desea realizar la venta?", "Confirmar Venta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("¿Desea realizar la venta?", "Confirmar Venta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Verificar si el usuario confirmó la acción
             if (result == DialogResult.Yes)
@@ -739,7 +739,7 @@ namespace biosys
                     if (producto != null)
                     {
                         // Muestra el stock disponible del producto seleccionado
-                        labelStockDisponible.Text = $"Stock Disponible: {producto.Stock}";
+                        labelStockDisponible.Text = $"Stock disponible: {producto.Stock}";
                         labelStockDisponible.Visible = true;
 
                         // Obtener el precio unitario fijado del producto
