@@ -1,0 +1,6 @@
+C:\Users\vitto\source\repos\biosys\Entidad\bin\Release\Entidad.dll
+C:\Users\vitto\source\repos\biosys\Entidad\bin\Release\Entidad.pdb
+C:\Users\vitto\source\repos\biosys\Entidad\obj\Release\Entidad.csproj.AssemblyReference.cache
+C:\Users\vitto\source\repos\biosys\Entidad\obj\Release\Entidad.csproj.CoreCompileInputs.cache
+C:\Users\vitto\source\repos\biosys\Entidad\obj\Release\Entidad.dll
+C:\Users\vitto\source\repos\biosys\Entidad\obj\Release\Entidad.pdb

@@ -1,0 +1,9 @@
+C:\Users\vitto\source\repos\biosys\Modelo\bin\Release\Modelo.dll
+C:\Users\vitto\source\repos\biosys\Modelo\bin\Release\Modelo.pdb
+C:\Users\vitto\source\repos\biosys\Modelo\bin\Release\Entidad.dll
+C:\Users\vitto\source\repos\biosys\Modelo\bin\Release\Entidad.pdb
+C:\Users\vitto\source\repos\biosys\Modelo\obj\Release\Modelo.csproj.AssemblyReference.cache
+C:\Users\vitto\source\repos\biosys\Modelo\obj\Release\Modelo.csproj.CoreCompileInputs.cache
+C:\Users\vitto\source\repos\biosys\Modelo\obj\Release\Modelo.csproj.Up2Date
+C:\Users\vitto\source\repos\biosys\Modelo\obj\Release\Modelo.dll
+C:\Users\vitto\source\repos\biosys\Modelo\obj\Release\Modelo.pdb

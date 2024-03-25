@@ -1,0 +1,11 @@
+C:\Users\vitto\source\repos\biosys\Controladora\bin\Release\Controladora.dll
+C:\Users\vitto\source\repos\biosys\Controladora\bin\Release\Controladora.pdb
+C:\Users\vitto\source\repos\biosys\Controladora\bin\Release\Entidad.dll
+C:\Users\vitto\source\repos\biosys\Controladora\bin\Release\Modelo.dll
+C:\Users\vitto\source\repos\biosys\Controladora\bin\Release\Entidad.pdb
+C:\Users\vitto\source\repos\biosys\Controladora\bin\Release\Modelo.pdb
+C:\Users\vitto\source\repos\biosys\Controladora\obj\Release\Controladora.csproj.AssemblyReference.cache
+C:\Users\vitto\source\repos\biosys\Controladora\obj\Release\Controladora.csproj.CoreCompileInputs.cache
+C:\Users\vitto\source\repos\biosys\Controladora\obj\Release\Controla.1EE7A4DA.Up2Date
+C:\Users\vitto\source\repos\biosys\Controladora\obj\Release\Controladora.dll
+C:\Users\vitto\source\repos\biosys\Controladora\obj\Release\Controladora.pdb
