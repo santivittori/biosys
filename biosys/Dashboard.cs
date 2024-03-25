@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entidad;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -76,6 +77,8 @@ namespace biosys
 
             if (result == DialogResult.Yes)
             {
+                Controladora.Controladora.RegistrarAuditoria(UsuarioActual.UsuarioLogueado.NombreUsuario, "Cerró sesión");
+
                 // Mostrar el formulario de inicio de sesión
                 Login loginForm = new Login();
                 loginForm.Show();
@@ -84,6 +87,7 @@ namespace biosys
                 this.Close();
             }
         }
+
         private void btnMinimizar_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
@@ -104,6 +108,9 @@ namespace biosys
             // Si la respuesta es correcta , cerrar sesión
             if (result == DialogResult.Yes)
             {
+                // Registrar cierre de sesión en la auditoría
+                Controladora.Controladora.RegistrarAuditoria(UsuarioActual.UsuarioLogueado.NombreUsuario, "Cerró sesión");
+
                 // Mostrar el formulario de inicio de sesión
                 Login loginForm = new Login();
                 loginForm.Show();
@@ -138,6 +145,26 @@ namespace biosys
         private void Dashboard_Load(object sender, EventArgs e)
         {
             AbrirFormHijo(new Inicio());
+
+            // Verificar si el usuario es administrador y ha pasado una semana desde el último respaldo
+            if (UsuarioActual.UsuarioLogueado.NombreUsuario == "admin" && Controladora.Controladora.HaPasadoUnaSemanaDesdeUltimoRespaldo())
+            {
+                // Esperar hasta que el formulario Dashboard se muestre completamente
+                this.Shown += (s, ev) =>
+                {
+                    // Mostrar mensaje emergente instando al usuario a realizar el respaldo
+                    DialogResult result = MessageBox.Show("¡Es hora de realizar un respaldo del sistema!\n\n¿Desea realizarlo ahora?",
+                                                           "Recordatorio de respaldo", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                    // Si el usuario confirma, abrir el formulario de respaldo
+                    if (result == DialogResult.Yes)
+                    {
+                        Backup backupForm = new Backup();
+                        backupForm.DashboardInstance = this;
+                        AbrirFormHijo(backupForm);
+                    }
+                };
+            }
         }
 
         private void btnProveedores_Click(object sender, EventArgs e)
@@ -215,6 +242,20 @@ namespace biosys
             GestionarPrecios gestionarPreciosForm = new GestionarPrecios();
             gestionarPreciosForm.DashboardInstance = this;
             AbrirFormHijo(gestionarPreciosForm);
+        }
+
+        private void btnAuditoria_Click(object sender, EventArgs e)
+        {
+            Auditoria auditoriaForm = new Auditoria();
+            auditoriaForm.DashboardInstance = this;
+            AbrirFormHijo(auditoriaForm);
+        }
+
+        private void btnBackup_Click(object sender, EventArgs e)
+        {
+            Backup backupForm = new Backup();
+            backupForm.DashboardInstance = this;
+            AbrirFormHijo(backupForm);
         }
     }
 }

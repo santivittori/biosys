@@ -236,10 +236,10 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(1003, 161);
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(979, 156);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(138, 18);
+            this.label10.Size = new System.Drawing.Size(178, 24);
             this.label10.TabIndex = 86;
             this.label10.Text = "Detalle de donación";
             // 
@@ -309,7 +309,7 @@
             // 
             this.btnHistorialDonaciones.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHistorialDonaciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHistorialDonaciones.Location = new System.Drawing.Point(1016, 532);
+            this.btnHistorialDonaciones.Location = new System.Drawing.Point(1005, 532);
             this.btnHistorialDonaciones.Name = "btnHistorialDonaciones";
             this.btnHistorialDonaciones.Size = new System.Drawing.Size(119, 48);
             this.btnHistorialDonaciones.TabIndex = 147;

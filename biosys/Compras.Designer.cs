@@ -103,10 +103,10 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(986, 125);
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(969, 121);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(128, 18);
+            this.label10.Size = new System.Drawing.Size(163, 24);
             this.label10.TabIndex = 68;
             this.label10.Text = "Detalle de compra";
             // 
@@ -369,7 +369,7 @@
             // 
             this.btnHistorialCompras.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHistorialCompras.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHistorialCompras.Location = new System.Drawing.Point(992, 503);
+            this.btnHistorialCompras.Location = new System.Drawing.Point(985, 503);
             this.btnHistorialCompras.Name = "btnHistorialCompras";
             this.btnHistorialCompras.Size = new System.Drawing.Size(119, 48);
             this.btnHistorialCompras.TabIndex = 146;

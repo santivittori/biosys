@@ -301,7 +301,7 @@ namespace biosys
                 // No hay datos, mostrar un mensaje predeterminado
                 chartPreciosUnitarios.Series.Clear();
                 chartPreciosUnitarios.Titles.Clear();
-                chartPreciosUnitarios.Titles.Add(new Title("No hay datos disponibles para mostrar", Docking.Top, new System.Drawing.Font("Arial", 12, FontStyle.Bold), Color.Black));
+                chartPreciosUnitarios.Titles.Add(new Title("No hay datos disponibles", Docking.Top, new System.Drawing.Font("Arial", 12, FontStyle.Bold), Color.Black));
             }
         }
 

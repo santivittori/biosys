@@ -551,5 +551,65 @@ namespace Controladora
         {
             return ConsultasModelo.ObtenerPrecioMasAltoEnCompras(productoId);
         }
+        public static void RegistrarAuditoria(string nombreUsuario, string accion)
+        {
+            ConsultasModelo.RegistrarAuditoria(nombreUsuario, accion);
+        }
+        public static DataTable ObtenerAuditoriaInicioyCerrarPaginada(int indiceInicio, int tamañoPagina)
+        {
+            return ConsultasModelo.ObtenerAuditoriaInicioyCerrarPaginada(indiceInicio, tamañoPagina);
+        }
+        public static int ObtenerCantidadTotalInicioyCierre()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalInicioyCierre();
+        }
+        public static DataTable ObtenerAuditoriaProductosPaginada(int indiceInicio, int tamañoPagina)
+        {
+            return ConsultasModelo.ObtenerAuditoriaProductosPaginada(indiceInicio, tamañoPagina);
+        }
+        public static int ObtenerCantidadTotalAuditoriaProductos()
+        {
+            return ConsultasModelo.ObtenerCantidadTotalAuditoriaProductos();
+        }
+        public static void RegistrarAuditoriaProducto(string nombreUsuario, string accion, string nombreProducto, string origen)
+        {
+            ConsultasModelo.RegistrarAuditoriaProducto(nombreUsuario, accion, nombreProducto, origen);
+        }
+        public static DataTable ObtenerTresUsuariosMasIniciaronSesion()
+        {
+            return ConsultasModelo.ObtenerTresUsuariosMasIniciaronSesion();
+        }
+        public static DataTable ObtenerUsuariosSesionNocturna()
+        {
+            return ConsultasModelo.ObtenerUsuariosSesionNocturna();
+        }
+        public static DataTable ObtenerTresUsuariosMasProductosAgregaron()
+        {
+            return ConsultasModelo.ObtenerTresUsuariosMasProductosAgregaron();
+        }
+        public static DataTable ObtenerProductosUltimoMes()
+        {
+            return ConsultasModelo.ObtenerProductosUltimoMes();
+        }
+        public static bool RealizarRespaldoBaseDatos(string rutaRespaldo)
+        {
+            return ConsultasModelo.RealizarRespaldoBaseDatos(rutaRespaldo);
+        }
+        public static void GuardarInfoRespaldo(string rutaRespaldo)
+        {
+            ConsultasModelo.GuardarInfoRespaldo(rutaRespaldo);
+        }
+        public static bool RealizarRestauracionBaseDatos(string rutaArchivo)
+        {
+            return ConsultasModelo.RealizarRestauracionBaseDatos(rutaArchivo);
+        }
+        public static bool HaPasadoUnaSemanaDesdeUltimoRespaldo()
+        {
+            return ConsultasModelo.HaPasadoUnaSemanaDesdeUltimoRespaldo();
+        }
+        public static DateTime ObtenerFechaUltimoRespaldo()
+        {
+            return ConsultasModelo.ObtenerFechaUltimoRespaldo();
+        }
     }
 }

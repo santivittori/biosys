@@ -58,10 +58,10 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(957, 163);
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(933, 158);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(154, 18);
+            this.label10.Size = new System.Drawing.Size(198, 24);
             this.label10.TabIndex = 92;
             this.label10.Text = "Detalle de recolección";
             // 
@@ -303,7 +303,7 @@
             // 
             this.btnHistorialRecolecciones.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHistorialRecolecciones.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHistorialRecolecciones.Location = new System.Drawing.Point(976, 535);
+            this.btnHistorialRecolecciones.Location = new System.Drawing.Point(965, 535);
             this.btnHistorialRecolecciones.Name = "btnHistorialRecolecciones";
             this.btnHistorialRecolecciones.Size = new System.Drawing.Size(119, 48);
             this.btnHistorialRecolecciones.TabIndex = 157;

@@ -95,6 +95,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auditoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Auditoria.Designer.cs">
+      <DependentUpon>Auditoria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Backup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Backup.Designer.cs">
+      <DependentUpon>Backup.cs</DependentUpon>
+    </Compile>
     <Compile Include="BajaProductos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -172,6 +184,12 @@
     </Compile>
     <Compile Include="Informes.Designer.cs">
       <DependentUpon>Informes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InformesAuditoria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InformesAuditoria.Designer.cs">
+      <DependentUpon>InformesAuditoria.cs</DependentUpon>
     </Compile>
     <Compile Include="InformesCompras.cs">
       <SubType>Form</SubType>
@@ -262,6 +280,12 @@
     <Compile Include="Ventas.Designer.cs">
       <DependentUpon>Ventas.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Auditoria.resx">
+      <DependentUpon>Auditoria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Backup.resx">
+      <DependentUpon>Backup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BajaProductos.resx">
       <DependentUpon>BajaProductos.cs</DependentUpon>
     </EmbeddedResource>
@@ -300,6 +324,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Informes.resx">
       <DependentUpon>Informes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InformesAuditoria.resx">
+      <DependentUpon>InformesAuditoria.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InformesCompras.resx">
       <DependentUpon>InformesCompras.cs</DependentUpon>

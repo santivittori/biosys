@@ -518,7 +518,7 @@ namespace biosys
 
                 if (productoEnCompra || productoEnDetalleSiembra)
                 {
-                    msgError("  El producto no puede ser eliminado porque ha sido utilizado.");
+                    msgError("El producto no puede ser eliminado porque ha sido utilizado.");
                     return;
                 }
 
@@ -528,6 +528,18 @@ namespace biosys
                 // Si el usuario confirma la eliminación
                 if (result == DialogResult.Yes)
                 {
+                    // Obtener el nombre de usuario del usuario actualmente logueado
+                    string nombreUsuario = UsuarioActual.UsuarioLogueado.NombreUsuario;
+
+                    // Determinar el origen de la acción (en este caso, manual)
+                    string origen = "Manual"; // Puedes cambiar esto si la acción proviene de otra fuente
+
+                    // Obtener el nombre del producto seleccionado
+                    string nombreProducto = Convert.ToString(dataGridViewProductos.SelectedRows[0].Cells["Nombre"].Value);
+
+                    // Registrar la eliminación del producto en la auditoría
+                    Controladora.Controladora.RegistrarAuditoriaProducto(nombreUsuario, "Eliminó", nombreProducto, origen);
+
                     // Eliminar el producto de la base de datos
                     Controladora.Controladora.EliminarProducto(idProducto);
 
@@ -539,7 +551,7 @@ namespace biosys
             }
             else
             {
-                msgError("  Seleccione una fila de la casilla para eliminar.");
+                msgError("Seleccione una fila de la casilla para eliminar.");
                 return;
             }
         }
@@ -557,7 +569,6 @@ namespace biosys
                 "3. En la columna 'TIPO PRODUCTO', debe especificar 'Árbol' o 'Semilla'. Respetar tildes y buena tipografía.\n\n" +
                 "4. En la columna 'TIPO ESPECIFICO', debe especificar 'Éxotica' o 'Nativa'. Respetar tildes y buena tipografía.\n\n" +
                 "5. En la columna 'TAMAÑO SEMILLA', debe especificar 'Pequeña', 'Mediana' o 'Grande' para productos de tipo Semilla. Para productos de tipo Árbol, dejar el campo vacío.";
-
 
             MessageBox.Show(mensajeInstrucciones, "Instrucciones para cargar el archivo excel", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -581,6 +592,13 @@ namespace biosys
                     if (productosNormalizados != null && productosNormalizados.Count > 0)
                     {
                         // Agregar los productos normalizados a la base de datos
+                        string nombreUsuario = UsuarioActual.UsuarioLogueado.NombreUsuario;
+                        string origen = "Excel";
+                        string nombreProducto = "Varios"; // Mostrar "Varios" ya que se están cargando varios productos
+
+                        // Registrar la acción en la auditoría
+                        Controladora.Controladora.RegistrarAuditoriaProducto(nombreUsuario, "Agregó", nombreProducto, origen);
+
                         foreach (Producto producto in productosNormalizados)
                         {
                             // Verificar si el producto ya existe en la base de datos
@@ -600,13 +618,13 @@ namespace biosys
                     }
                     else
                     {
-                        msgError("  El archivo excel no contiene datos válidos o no se pudo normalizar.");
+                        msgError("El archivo excel no contiene datos válidos o no se pudo normalizar.");
                         return;
                     }
                 }
                 else
                 {
-                    msgError("  El archivo excel no contiene datos válidos o está vacío.");
+                    msgError("El archivo excel no contiene datos válidos o está vacío.");
                     return;
                 }
             }
@@ -641,76 +659,135 @@ namespace biosys
 
         private void btnGuardarProd_Click(object sender, EventArgs e)
         {
-            // Validar que se ingresen todos los campos obligatorios
-            if (string.IsNullOrEmpty(txtNombreProd.Text) || comboTipoProducto.SelectedItem == null || comboTipoEspecifico.SelectedItem == null)
+            try
             {
-                msgError("  Complete todos los campos obligatorios.");
-                return;
-            }
-
-            // Obtener los valores ingresados
-            string nombre = txtNombreProd.Text;
-            int tipoProductoID = Convert.ToInt32(comboTipoProducto.SelectedValue);
-            int tipoEspecificoID = Convert.ToInt32(comboTipoEspecifico.SelectedValue);
-            int? tamSemillaID = null;
-
-            if (tipoProductoID == 2)
-            {
-                // Verificar si se seleccionó un valor en el combo box
-                if (comboTamSemilla.SelectedValue == null)
+                // Validar que se ingresen todos los campos obligatorios
+                if (string.IsNullOrEmpty(txtNombreProd.Text) || comboTipoProducto.SelectedItem == null || comboTipoEspecifico.SelectedItem == null)
                 {
-                    msgError("  Seleccione un tamaño de semilla.");
+                    msgError("Complete todos los campos obligatorios.");
                     return;
+                }
+
+                // Obtener los valores ingresados
+                string nombre = txtNombreProd.Text;
+                int tipoProductoID = Convert.ToInt32(comboTipoProducto.SelectedValue);
+                int tipoEspecificoID = Convert.ToInt32(comboTipoEspecifico.SelectedValue);
+                int? tamSemillaID = null;
+
+                if (tipoProductoID == 2)
+                {
+                    // Verificar si se seleccionó un valor en el combo box
+                    if (comboTamSemilla.SelectedValue == null)
+                    {
+                        msgError("Seleccione un tamaño de semilla.");
+                        return;
+                    }
+                    else
+                    {
+                        tamSemillaID = Convert.ToInt32(comboTamSemilla.SelectedValue);
+                    }
+                }
+
+                Producto producto = new Producto()
+                {
+                    Nombre = nombre,
+                    TipoProductoId = tipoProductoID,
+                    TipoEspecificoId = tipoEspecificoID,
+                    TamSemillaId = tamSemillaID
+                };
+
+                // Verificar si el producto ya existe
+                bool productoExistente = Controladora.Controladora.VerificarProductoExistente(producto);
+
+                if (productoExistente)
+                {
+                    msgError("El producto ya existe en la base de datos.");
+                    return;
+                }
+
+                // Verificar si se debe insertar un nuevo producto o actualizar uno existente
+                if (idProductoSeleccionado != 0)
+                {
+                    // Obtener el producto antes de la actualización
+                    Producto productoAnterior = Controladora.Controladora.ObtenerProductoPorId(idProductoSeleccionado);
+
+                    // Actualizar el producto en la base de datos utilizando el ID del producto seleccionado
+                    Controladora.Controladora.ActualizarProducto(idProductoSeleccionado, nombre);
+
+                    // Obtener el nombre de usuario del usuario actualmente logueado
+                    string nombreUsuario = UsuarioActual.UsuarioLogueado.NombreUsuario;
+
+                    // Determinar el origen de la acción (en este caso, manual)
+                    string origen = "Manual"; // Puedes cambiar esto si la acción proviene de otra fuente
+
+                    // Crear una cadena para representar los valores anteriores y actuales del producto
+                    string valoresAnteriores = $"{productoAnterior.Nombre}";
+                    string valoresActuales = $"{nombre}";
+
+                    // Registrar la edición del producto en la auditoría
+                    Controladora.Controladora.RegistrarAuditoriaProducto(nombreUsuario, "Editó", $"{valoresAnteriores} -> {valoresActuales}", origen);
+
+                    // Mostrar mensaje de éxito
+                    MessageBox.Show("Producto modificado exitosamente.", "Modificación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                else
+                {
+                    // Insertar el producto y obtener su ID
+                    int productoId = Controladora.Controladora.InsertarProducto(producto);
+
+                    // Insertar el precio inicial del producto
+                    Controladora.Controladora.InsertarPrecioProducto(productoId, 0);
+
+                    // Obtener el nombre de usuario del usuario actualmente logueado
+                    string nombreUsuario = UsuarioActual.UsuarioLogueado.NombreUsuario;
+
+                    // Determinar el origen de la acción (en este caso, manual)
+                    string origen = "Manual"; // Puedes cambiar esto si la acción proviene de otra fuente
+
+                    // Registrar la adición del producto en la auditoría
+                    Controladora.Controladora.RegistrarAuditoriaProducto(nombreUsuario, "Agregó", nombre, origen);
+
+                    // Mostrar mensaje de éxito
+                    MessageBox.Show("Producto guardado exitosamente.", "Guardado exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                // Limpiar los campos
+                LimpiarCampos();
+
+                // Actualizar el DataGridView
+                CargarProductosEnDataGridView();
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                MessageBox.Show("Error al guardar el producto: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void comboTipoProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Obtener el ID del tipo de producto seleccionado
+            if (comboTipoProducto.SelectedItem != null && int.TryParse(comboTipoProducto.SelectedValue.ToString(), out int selectedProductId))
+            {
+                // Verificar si el ID del tipo de producto seleccionado es igual al ID correspondiente a "Semilla" (por ejemplo, 2)
+                if (selectedProductId == 2) // Cambiar 2 por el ID correcto de "Semilla" en tu base de datos
+                {
+                    comboTamSemilla.Enabled = true; // Habilitar comboTamSemilla si el tipo de producto es "Semilla"
                 }
                 else
                 {
-                    tamSemillaID = Convert.ToInt32(comboTamSemilla.SelectedValue);
+                    comboTamSemilla.Enabled = false; // Deshabilitar comboTamSemilla si el tipo de producto no es "Semilla"
+                    comboTamSemilla.SelectedIndex = -1; // Deseleccionar cualquier opción seleccionada en comboTamSemilla
                 }
-            }
-
-            Producto producto = new Producto()
-            {
-                Nombre = nombre,
-                TipoProductoId = tipoProductoID,
-                TipoEspecificoId = tipoEspecificoID,
-                TamSemillaId = tamSemillaID
-            };
-
-            // Verificar si el producto ya existe
-            bool productoExistente = Controladora.Controladora.VerificarProductoExistente(producto);
-
-            if (productoExistente)
-            {
-                msgError("  El producto ya existe en la base de datos.");
-                return;
-            }
-
-            // Verificar si se debe insertar un nuevo producto o actualizar uno existente
-            if (idProductoSeleccionado != 0)
-            {
-                // Actualizar el producto en la base de datos utilizando el ID del producto seleccionado
-                Controladora.Controladora.ActualizarProducto(idProductoSeleccionado, nombre);
-
-                // Mostrar mensaje de éxito
-                MessageBox.Show("Producto modificado exitosamente.", "Modificación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                // Insertar el producto y obtener su ID
-                int productoId = Controladora.Controladora.InsertarProducto(producto);
-
-                // Insertar el precio inicial del producto
-                Controladora.Controladora.InsertarPrecioProducto(productoId, 0);
-
-                // Mostrar mensaje de éxito
-                MessageBox.Show("Producto guardado exitosamente.", "Guardado exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Deshabilitar comboTamSemilla si no hay ningún tipo de producto seleccionado
+                comboTamSemilla.Enabled = false;
+                // Deseleccionar cualquier opción seleccionada en comboTamSemilla
+                comboTamSemilla.SelectedIndex = -1;
             }
-
-            // Limpiar los campos
-            LimpiarCampos();
-
-            // Actualizar el DataGridView
-            CargarProductosEnDataGridView();
         }
 
         private void btnCancelar_MouseEnter(object sender, EventArgs e)
@@ -741,31 +818,6 @@ namespace biosys
         private void btnGuardarProd_MouseLeave(object sender, EventArgs e)
         {
             btnGuardarProd.BackColor = Color.White;
-        }
-
-        private void comboTipoProducto_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // Obtener el ID del tipo de producto seleccionado
-            if (comboTipoProducto.SelectedItem != null && int.TryParse(comboTipoProducto.SelectedValue.ToString(), out int selectedProductId))
-            {
-                // Verificar si el ID del tipo de producto seleccionado es igual al ID correspondiente a "Semilla" (por ejemplo, 2)
-                if (selectedProductId == 2) // Cambiar 2 por el ID correcto de "Semilla" en tu base de datos
-                {
-                    comboTamSemilla.Enabled = true; // Habilitar comboTamSemilla si el tipo de producto es "Semilla"
-                }
-                else
-                {
-                    comboTamSemilla.Enabled = false; // Deshabilitar comboTamSemilla si el tipo de producto no es "Semilla"
-                    comboTamSemilla.SelectedIndex = -1; // Deseleccionar cualquier opción seleccionada en comboTamSemilla
-                }
-            }
-            else
-            {
-                // Deshabilitar comboTamSemilla si no hay ningún tipo de producto seleccionado
-                comboTamSemilla.Enabled = false;
-                // Deseleccionar cualquier opción seleccionada en comboTamSemilla
-                comboTamSemilla.SelectedIndex = -1;
-            }
         }
     }
 }

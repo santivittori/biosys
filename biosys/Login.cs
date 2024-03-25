@@ -15,6 +15,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using COMUN;
 using System.Configuration;
 using Entidad;
+using System.Data.SqlClient;
 
 namespace biosys
 {
@@ -99,6 +100,9 @@ namespace biosys
             // Verificar la autenticación del usuario en la base de datos
             if (Controladora.Controladora.VerificarAutenticacion(nombreUsuario, claveCifrada))
             {
+                // Registrar inicio de sesión en la auditoría
+                Controladora.Controladora.RegistrarAuditoria(nombreUsuario, "Inició sesión");
+
                 // Obtener el rol y el correo electrónico del usuario desde la base de datos
                 string rol = Controladora.Controladora.ObtenerRolUsuario(nombreUsuario);
                 string correoElectronico = Controladora.Controladora.ObtenerCorreoUsuario(nombreUsuario);

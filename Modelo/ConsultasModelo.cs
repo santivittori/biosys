@@ -9,6 +9,7 @@ using Entidad;
 using System.Net.Http.Headers;
 using System.Collections;
 using System.Runtime.Remoting.Messaging;
+using System.IO;
 
 namespace Modelo
 {
@@ -1363,26 +1364,25 @@ namespace Modelo
 
         public static void EliminarProducto(int idProducto)
         {
-            // Consulta SQL para eliminar el producto de la tabla productos
-            string sqlDeleteProducto = "DELETE FROM productos WHERE id = @id";
-
-            // Consulta SQL para eliminar cualquier referencia al producto en la tabla tam_semilla
-            string sqlDeleteTamSemilla = "DELETE FROM tam_semilla WHERE id = (SELECT tam_semilla_id FROM productos WHERE id = @id)";
-
-            // Abrir la conexión y ejecutar las consultas SQL
             using (SqlConnection connection = ConexionModelo.AbrirConexion())
             {
-                // Eliminar el producto de la tabla productos
-                using (SqlCommand command = new SqlCommand(sqlDeleteProducto, connection))
+                // Consulta SQL para eliminar los precios asociados al producto
+                string sqlDeletePrecios = "DELETE FROM precios_producto WHERE producto_id = @idProducto";
+
+                // Consulta SQL para eliminar el producto de la tabla productos
+                string sqlDeleteProducto = "DELETE FROM productos WHERE id = @idProducto";
+
+                // Eliminar los precios asociados al producto
+                using (SqlCommand command = new SqlCommand(sqlDeletePrecios, connection))
                 {
-                    command.Parameters.AddWithValue("@id", idProducto);
+                    command.Parameters.AddWithValue("@idProducto", idProducto);
                     command.ExecuteNonQuery();
                 }
 
-                // Eliminar cualquier referencia al producto en la tabla tam_semilla
-                using (SqlCommand command = new SqlCommand(sqlDeleteTamSemilla, connection))
+                // Eliminar el producto de la tabla productos
+                using (SqlCommand command = new SqlCommand(sqlDeleteProducto, connection))
                 {
-                    command.Parameters.AddWithValue("@id", idProducto);
+                    command.Parameters.AddWithValue("@idProducto", idProducto);
                     command.ExecuteNonQuery();
                 }
             }
@@ -2629,6 +2629,362 @@ namespace Modelo
             }
 
             return precioMasAlto;
+        }
+        public static void RegistrarAuditoria(string nombreUsuario, string accion)
+        {
+
+            string sql = "INSERT INTO auditoria_login_logout (usuario, fechahora, accion) VALUES (@Usuario, @FechaHora, @Accion)";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Usuario", nombreUsuario);
+                    command.Parameters.AddWithValue("@FechaHora", DateTime.Now);
+                    command.Parameters.AddWithValue("@Accion", accion);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+        public static DataTable ObtenerAuditoriaInicioyCerrarPaginada(int indiceInicio, int tamañoPagina)
+        {
+            DataTable auditoriaData = new DataTable();
+
+            string sql = @"
+                SELECT id, usuario, fechahora, accion
+                FROM (
+                    SELECT ROW_NUMBER() OVER (ORDER BY id DESC) AS RowNum, id, usuario, fechahora, accion
+                    FROM auditoria_login_logout
+                ) AS PaginatedAuditoria
+                WHERE RowNum BETWEEN @IndiceInicio AND @IndiceFin";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@IndiceInicio", indiceInicio + 1); // Sumar 1 porque el índice comienza en 1
+                    command.Parameters.AddWithValue("@IndiceFin", indiceInicio + tamañoPagina); // Calcular el índice final
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(auditoriaData);
+                }
+            }
+            return auditoriaData;
+        }
+
+        public static int ObtenerCantidadTotalInicioyCierre()
+        {
+            int totalInicioyCierre = 0;
+
+            string sql = "SELECT COUNT(*) FROM auditoria_login_logout";
+
+            using (SqlCommand command = new SqlCommand(sql, ConexionModelo.AbrirConexion()))
+            {
+                totalInicioyCierre = (int)command.ExecuteScalar();
+            }
+
+            // Retornar el número total de auditorías de inicio y cierre
+            return totalInicioyCierre;
+        }
+        public static DataTable ObtenerAuditoriaProductosPaginada(int indiceInicio, int tamañoPagina)
+        {
+            DataTable auditoriaData = new DataTable();
+
+            string sql = @"
+                SELECT id, usuario, fecha_hora, accion, producto, origen
+                FROM (
+                    SELECT ROW_NUMBER() OVER (ORDER BY id DESC) AS RowNum, id, usuario, fecha_hora, accion, producto, origen
+                    FROM auditoria_productos
+                ) AS PaginatedAuditoria
+                WHERE RowNum BETWEEN @IndiceInicio AND @IndiceFin";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@IndiceInicio", indiceInicio + 1); // Sumar 1 porque el índice comienza en 1
+                    command.Parameters.AddWithValue("@IndiceFin", indiceInicio + tamañoPagina); // Calcular el índice final
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(auditoriaData);
+                }
+            }
+            return auditoriaData;
+        }
+
+        public static int ObtenerCantidadTotalAuditoriaProductos()
+        {
+            int totalProductos = 0;
+
+            string sql = "SELECT COUNT(*) FROM auditoria_productos";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    totalProductos = (int)command.ExecuteScalar();
+                }
+            }
+
+            // Retornar el número total de registros de auditoría de productos
+            return totalProductos;
+        }
+        public static void RegistrarAuditoriaProducto(string nombreUsuario, string accion, string nombreProducto, string origen)
+        {
+            string sql = "INSERT INTO auditoria_productos (usuario, fecha_hora, accion, producto, origen) VALUES (@Usuario, @FechaHora, @Accion, @Producto, @Origen)";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Usuario", nombreUsuario);
+                    command.Parameters.AddWithValue("@FechaHora", DateTime.Now);
+                    command.Parameters.AddWithValue("@Accion", accion);
+                    command.Parameters.AddWithValue("@Producto", nombreProducto);
+                    command.Parameters.AddWithValue("@Origen", origen);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+        public static DataTable ObtenerTresUsuariosMasIniciaronSesion()
+        {
+            string sql = @"
+            SELECT TOP 3 usuario, COUNT(*) AS NumeroSesiones
+            FROM auditoria_login_logout
+            WHERE accion = 'Inició sesión'
+            GROUP BY usuario
+            ORDER BY NumeroSesiones DESC";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+
+                    return dataTable;
+                }
+            }
+        }
+        public static DataTable ObtenerUsuariosSesionNocturna()
+        {
+            string sql = @"
+            SELECT usuario, COUNT(*) AS NumeroSesiones
+            FROM auditoria_login_logout
+            WHERE accion = 'Inició sesión'
+                AND (DATEPART(HOUR, fechahora) >= 20 OR DATEPART(HOUR, fechahora) <= 5)
+            GROUP BY usuario";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+
+                    return dataTable;
+                }
+            }
+        }
+        public static DataTable ObtenerTresUsuariosMasProductosAgregaron()
+        {
+            string sql = @"
+            SELECT TOP 3 usuario, COUNT(*) AS NumeroProductos
+            FROM auditoria_productos
+            WHERE accion = 'Agregó'
+                AND origen != 'Excel'
+            GROUP BY usuario
+            ORDER BY NumeroProductos DESC";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+
+                    return dataTable;
+                }
+            }
+        }
+        public static DataTable ObtenerProductosUltimoMes()
+        {
+            // Obtener la fecha de hace un mes
+            DateTime fechaInicio = DateTime.Now.AddMonths(-1);
+            DateTime fechaFin = DateTime.Now;
+
+            string sql = @"
+            SELECT 'Agregados' AS Accion, COUNT(*) AS Cantidad
+            FROM auditoria_productos
+            WHERE accion = 'Agregó' AND fecha_hora BETWEEN @FechaInicio AND @FechaFin
+            UNION ALL
+            SELECT 'Modificados' AS Accion, COUNT(*) AS Cantidad
+            FROM auditoria_productos
+            WHERE accion = 'Editó' AND fecha_hora BETWEEN @FechaInicio AND @FechaFin
+            UNION ALL
+            SELECT 'Eliminados' AS Accion, COUNT(*) AS Cantidad
+            FROM auditoria_productos
+            WHERE accion = 'Eliminó' AND fecha_hora BETWEEN @FechaInicio AND @FechaFin";
+
+            using (SqlConnection connection = ConexionModelo.AbrirConexion())
+            {
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@FechaInicio", fechaInicio);
+                    command.Parameters.AddWithValue("@FechaFin", fechaFin);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+
+                    return dataTable;
+                }
+            }
+        }
+        public static bool RealizarRespaldoBaseDatos(string rutaRespaldo)
+        {
+            try
+            {
+                // Definir el nombre del archivo de respaldo
+                string nombreArchivo = "Biosys_" + DateTime.Now.ToString("yyyy-MM-dd") + ".bak";
+
+                using (SqlConnection connection = ConexionModelo.AbrirConexion())
+                {
+                    // Consulta de respaldo
+                    string backupQuery = $@"
+                    BACKUP DATABASE [biosys] TO DISK = N'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.MSSQLSERVER\\MSSQL\\Backup\\{nombreArchivo}' 
+                    WITH NOFORMAT, NOINIT, NAME = N'biosys-Full Database Backup', SKIP, NOREWIND, NOUNLOAD, STATS = 10";
+
+                    // Ejecutar la consulta de respaldo
+                    using (SqlCommand command = new SqlCommand(backupQuery, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                return true; // Respaldar la base de datos exitosamente
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al realizar el respaldo de la base de datos: {ex.Message}");
+                return false; // Falla al respaldar la base de datos
+            }
+        }
+        public static void GuardarInfoRespaldo(string rutaRespaldo)
+        {
+            try
+            {
+                // Obtener el usuario responsable del respaldo
+                string usuarioResponsable = UsuarioActual.UsuarioLogueado.NombreUsuario;
+
+                using (SqlConnection connection = ConexionModelo.AbrirConexion())
+                {
+                    // Insertar la información del respaldo en la tabla respaldos
+                    string insertQuery = "INSERT INTO respaldos (fecha_respaldo, usuario_responsable, ruta_respaldo) VALUES (@FechaRespaldo, @UsuarioResponsable, @RutaRespaldo)";
+                    using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
+                    {
+                        insertCommand.Parameters.AddWithValue("@FechaRespaldo", DateTime.Now);
+                        insertCommand.Parameters.AddWithValue("@UsuarioResponsable", usuarioResponsable);
+                        insertCommand.Parameters.AddWithValue("@RutaRespaldo", rutaRespaldo);
+                        insertCommand.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al guardar la información del respaldo: {ex.Message}");
+                // Aquí puedes manejar el error según tus necesidades
+            }
+        }
+
+        public static bool RealizarRestauracionBaseDatos(string rutaArchivo)
+        {
+            try
+            {
+                // Consulta de restauración
+                string restoreQuery = $@"
+                USE [master];
+                ALTER DATABASE [biosys] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+                RESTORE DATABASE [biosys] FROM DISK = N'{rutaArchivo}' WITH FILE = 1, REPLACE, NOUNLOAD, STATS = 5;
+                ALTER DATABASE [biosys] SET MULTI_USER;";
+
+                using (SqlConnection connection = ConexionModelo.AbrirConexion())
+                {
+                    using (SqlCommand command = new SqlCommand(restoreQuery, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                return true; // Restauración exitosa
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al realizar la restauración de la base de datos: {ex.Message}");
+                return false; // Restauración fallida
+            }
+        }
+        public static bool HaPasadoUnaSemanaDesdeUltimoRespaldo()
+        {
+            try
+            {
+                // Consulta para obtener la fecha del último respaldo
+                string query = "SELECT TOP 1 fecha_respaldo FROM respaldos ORDER BY fecha_respaldo DESC";
+
+                using (SqlConnection connection = ConexionModelo.AbrirConexion())
+                {
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        object result = command.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            DateTime fechaUltimoRespaldo = (DateTime)result;
+                            // Verificar si ha pasado una semana desde el último respaldo
+                            return DateTime.Now.Subtract(fechaUltimoRespaldo).TotalDays >= 7;
+                        }
+                        // Si no hay registros en la tabla de respaldos, se asume que ha pasado una semana
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al verificar si ha pasado una semana desde el último respaldo: {ex.Message}");
+                return false;
+            }
+        }
+        public static DateTime ObtenerFechaUltimoRespaldo()
+        {
+            DateTime ultimaFechaRespaldo = DateTime.MinValue;
+
+            try
+            {
+                string query = "SELECT TOP 1 fecha_respaldo FROM respaldos ORDER BY fecha_respaldo DESC";
+
+                using (SqlConnection connection = ConexionModelo.AbrirConexion())
+                {
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                        {
+                            ultimaFechaRespaldo = (DateTime)result;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener la última fecha de respaldo: {ex.Message}");
+            }
+
+            return ultimaFechaRespaldo;
         }
 
     }
