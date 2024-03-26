@@ -11,7 +11,8 @@ namespace Modelo
 {
     public class ConexionModelo
     {
-        private static string cadenaConexion = "Server=LAPTOP-SANTI;Database=biosys;Integrated Security=true";
+        //private static string cadenaConexion = "Server=LAPTOP-SANTI;Database=biosys;Integrated Security=true";
+        private static string cadenaConexion = "Server=(local);Database=bdbiosys;Integrated Security=true";
 
         public static SqlConnection AbrirConexion()
         {

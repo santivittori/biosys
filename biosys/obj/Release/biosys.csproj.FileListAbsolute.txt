@@ -1,4 +1,6 @@
 C:\Users\vitto\source\repos\biosys\biosys\bin\Release\biosys.exe.config
+C:\Users\vitto\source\repos\biosys\biosys\bin\Release\biosys.exe.manifest
+C:\Users\vitto\source\repos\biosys\biosys\bin\Release\biosys.application
 C:\Users\vitto\source\repos\biosys\biosys\bin\Release\biosys.exe
 C:\Users\vitto\source\repos\biosys\biosys\bin\Release\biosys.pdb
 C:\Users\vitto\source\repos\biosys\biosys\bin\Release\BouncyCastle.Crypto.dll
@@ -69,10 +71,8 @@ C:\Users\vitto\source\repos\biosys\biosys\obj\Release\biosys.RolesPermisos.resou
 C:\Users\vitto\source\repos\biosys\biosys\obj\Release\biosys.Ventas.resources
 C:\Users\vitto\source\repos\biosys\biosys\obj\Release\biosys.csproj.GenerateResource.cache
 C:\Users\vitto\source\repos\biosys\biosys\obj\Release\biosys.csproj.CoreCompileInputs.cache
+C:\Users\vitto\source\repos\biosys\biosys\obj\Release\biosys.exe.manifest
+C:\Users\vitto\source\repos\biosys\biosys\obj\Release\biosys.application
 C:\Users\vitto\source\repos\biosys\biosys\obj\Release\biosys.csproj.Up2Date
 C:\Users\vitto\source\repos\biosys\biosys\obj\Release\biosys.exe
 C:\Users\vitto\source\repos\biosys\biosys\obj\Release\biosys.pdb
-C:\Users\vitto\source\repos\biosys\biosys\bin\Release\biosys.exe.manifest
-C:\Users\vitto\source\repos\biosys\biosys\bin\Release\biosys.application
-C:\Users\vitto\source\repos\biosys\biosys\obj\Release\biosys.exe.manifest
-C:\Users\vitto\source\repos\biosys\biosys\obj\Release\biosys.application
