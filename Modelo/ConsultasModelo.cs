@@ -2857,7 +2857,7 @@ namespace Modelo
                 {
                     // Consulta de respaldo
                     string backupQuery = $@"
-                    BACKUP DATABASE [biosys] TO DISK = N'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.MSSQLSERVER\\MSSQL\\Backup\\{nombreArchivo}' 
+                    BACKUP DATABASE [bdbiosys] TO DISK = N'C:\\Program Files\\Microsoft SQL Server\\MSSQL16.MSSQLSERVER\\MSSQL\\Backup\\{nombreArchivo}' 
                     WITH NOFORMAT, NOINIT, NAME = N'biosys-Full Database Backup', SKIP, NOREWIND, NOUNLOAD, STATS = 10";
 
                     // Ejecutar la consulta de respaldo
@@ -2909,9 +2909,9 @@ namespace Modelo
                 // Consulta de restauración
                 string restoreQuery = $@"
                 USE [master];
-                ALTER DATABASE [biosys] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-                RESTORE DATABASE [biosys] FROM DISK = N'{rutaArchivo}' WITH FILE = 1, REPLACE, NOUNLOAD, STATS = 5;
-                ALTER DATABASE [biosys] SET MULTI_USER;";
+                ALTER DATABASE [bdbiosys] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+                RESTORE DATABASE [bdbiosys] FROM DISK = N'{rutaArchivo}' WITH FILE = 1, REPLACE, NOUNLOAD, STATS = 5;
+                ALTER DATABASE [bdbiosys] SET MULTI_USER;";
 
                 using (SqlConnection connection = ConexionModelo.AbrirConexion())
                 {
