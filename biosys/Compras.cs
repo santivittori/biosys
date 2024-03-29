@@ -153,6 +153,7 @@ namespace biosys
             txtNroFactura.Text = string.Empty;
             txtNroRemito.Text = string.Empty;
             txtPrecioUnitario.Text = string.Empty;
+            txtPrecioTotal.Text = string.Empty;
             lblError.Visible = false;
 
             // Habilitar campos nuevamente
@@ -553,14 +554,16 @@ namespace biosys
                         labelPrecioUnitario.Visible = false;
 
                         comboUnidadMedida.Enabled = true;
+
+                        numericCantidad.Value = 0;
                     }
                     else if (tipoProductoTexto.Equals("Árbol")) // Si es un árbol, establecer la unidad de medida en "Unidades"
                     {
                         comboUnidadMedida.SelectedIndex = comboUnidadMedida.FindStringExact("Unidades");
                         comboUnidadMedida.Enabled = false; // Deshabilitar el combo de unidad de medida
-                    }
-                    else
-                    {
+
+                        numericCantidad.Value = 0;
+
                         txtPrecioUnitario.Visible = true;
                         labelPrecioUnitario.Visible = true;
 
@@ -570,8 +573,6 @@ namespace biosys
 
                         txtPrecioTotal.Visible = false;
                         labelPrecioTotal.Visible = false;
-
-                        comboUnidadMedida.Enabled = false;
                     }
                 }
             }

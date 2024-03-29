@@ -173,7 +173,7 @@ namespace biosys
                     PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(saveFileDialog.FileName, FileMode.Create));
                     doc.Open();
 
-                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(@"C:\Users\vitto\Pictures\Ing de Software\biosys-transp.png");
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(@"C:\Users\vitto\Pictures\Ing de Software\Logo.png");
                     image.Alignment = Element.ALIGN_CENTER;
                     doc.Add(image);
 

@@ -285,7 +285,7 @@ namespace biosys
                     PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(saveFileDialog.FileName, FileMode.Create));
                     doc.Open();
 
-                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(@"C:\Users\vitto\Pictures\Ing de Software\biosys-transp.png");
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(@"C:\Users\vitto\Pictures\Ing de Software\Logo.png");
                     image.Alignment = Element.ALIGN_CENTER;
                     doc.Add(image);
 
@@ -336,13 +336,13 @@ namespace biosys
                     informesVentasForm.ObtenerInformacionGraficos();
                     string informacionGraficosVentas = informesVentasForm.ObtenerInformacionGraficos();
                     doc.Add(new Paragraph("\nInformes ventas:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
-                    doc.Add(new Paragraph(informacionGraficosCompras, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
+                    doc.Add(new Paragraph(informacionGraficosVentas, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
 
 
                     InformesEconomicos informesEconomicosForm = new InformesEconomicos();
                     informesEconomicosForm.ObtenerInformacionGraficos();
                     string informacionGraficos = informesEconomicosForm.ObtenerInformacionGraficos();
-                    doc.Add(new Paragraph("\nInformes economicos:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
+                    doc.Add(new Paragraph("\nInformes económicos:", new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.BOLD)));
                     doc.Add(new Paragraph(informacionGraficos, new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL)));
 
                     
@@ -386,7 +386,7 @@ namespace biosys
                     PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(saveFileDialog.FileName, FileMode.Create));
                     doc.Open();
 
-                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(@"C:\Users\vitto\Pictures\Ing de Software\biosys-transp.png");
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(@"C:\Users\vitto\Pictures\Ing de Software\Logo.png");
                     image.Alignment = Element.ALIGN_CENTER;
                     doc.Add(image);
 

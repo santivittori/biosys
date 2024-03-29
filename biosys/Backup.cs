@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace biosys
 {
@@ -52,32 +54,25 @@ namespace biosys
             // Verificar si el usuario confirmó la acción
             if (result == DialogResult.Yes)
             {
-                // Crear un cuadro de diálogo para seleccionar la ruta de respaldo
-                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                // Definir la carpeta de respaldo
+                string carpetaBackup = @"C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\Backup";
+
+                // Definir el nombre del archivo de respaldo
+                string nombreArchivo = "biosys_" + DateTime.Now.ToString("yyyy-MM-dd") + ".bak";
+
+                // Combinar la carpeta de respaldo con el nombre de archivo
+                string rutaRespaldo = Path.Combine(carpetaBackup, nombreArchivo);
+
+                if (Controladora.Controladora.RealizarRespaldoBaseDatos(rutaRespaldo))
                 {
-                    saveFileDialog.Filter = "Archivo de respaldo (*.bak)|*.bak";
-                    saveFileDialog.Title = "Guardar respaldo de la base de datos";
+                    MessageBox.Show($"Respaldo de base de datos completado correctamente. \n\nSe guardó en: {rutaRespaldo}", "Respaldo exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    lblError.Visible = false;
 
-                    // Establecer el nombre predeterminado del archivo de respaldo
-                    saveFileDialog.FileName = "biosys_" + DateTime.Now.ToString("yyyy-MM-dd") + ".bak";
-
-                    // Mostrar el cuadro de diálogo y verificar si el usuario confirmó la acción
-                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        string rutaRespaldo = saveFileDialog.FileName;
-
-                        if (Controladora.Controladora.RealizarRespaldoBaseDatos(rutaRespaldo))
-                        {
-                            MessageBox.Show($"Respaldo de base de datos completado correctamente. \n\nSe guardó en: {rutaRespaldo}", "Respaldo exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            lblError.Visible = false;
-
-                            Controladora.Controladora.GuardarInfoRespaldo(rutaRespaldo);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Error al realizar el respaldo de la base de datos. Consulte los registros para obtener más detalles.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
+                    Controladora.Controladora.GuardarInfoRespaldo(rutaRespaldo);
+                }
+                else
+                {
+                    MessageBox.Show("Error al realizar el respaldo de la base de datos. Consulte los registros para obtener más detalles.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
