@@ -927,7 +927,7 @@ namespace Modelo
 
         public static DataTable ObtenerProductosCompleto()
         {
-            string sql = "SELECT p.id AS ID, p.nombre AS Nombre, tp.nombre AS TipoProducto, te.nombre AS TipoEspecifico, ts.nombre AS TamanoSemilla " +
+            string sql = "SELECT p.id AS ID, p.nombre AS Nombre, tp.nombre AS TipoProducto, te.nombre AS TipoEspecifico, ts.nombre AS [Tamaño de Semilla] " +
                          "FROM productos p " +
                          "JOIN tipos_producto tp ON p.tipo_producto_id = tp.id " +
                          "JOIN tipos_especifico te ON p.tipo_especifico_id = te.id " +
