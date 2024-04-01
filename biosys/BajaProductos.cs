@@ -222,24 +222,24 @@ namespace biosys
                 return;
             }
 
-            // Realizar la baja del producto
-            Controladora.Controladora.DisminuirStockProducto(productName, cantidadBaja, tipoProducto);
-
-            // Actualizar la lista de productos con stock después de la baja
-            productos = Controladora.Controladora.ObtenerProductosStockComboBox();
-
-            // Eliminar el producto de la lista si su stock es cero
-            productos = productos.Where(p => p.Stock > 0).ToList();
-
-            // Volver a cargar los productos en el ComboBox
-            CargarProductos();
-
             // Mostrar cuadro de diálogo de confirmación
             DialogResult result = MessageBox.Show($"¿Desea realizar la baja de {cantidadBaja} unidad/es de {productName}?", "Confirmar Baja", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Verificar si el usuario confirmó la acción
             if (result == DialogResult.Yes)
             {
+                // Realizar la baja del producto
+                Controladora.Controladora.DisminuirStockProducto(productName, cantidadBaja, tipoProducto);
+
+                // Actualizar la lista de productos con stock después de la baja
+                productos = Controladora.Controladora.ObtenerProductosStockComboBox();
+
+                // Eliminar el producto de la lista si su stock es cero
+                productos = productos.Where(p => p.Stock > 0).ToList();
+
+                // Volver a cargar los productos en el ComboBox
+                CargarProductos();
+
                 MessageBox.Show($"La baja de {cantidadBaja} unidad/es de {productName} fue exitosa.", "Baja Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Registrar la baja del producto
