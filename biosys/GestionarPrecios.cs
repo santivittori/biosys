@@ -263,6 +263,9 @@ namespace biosys
                             labelPrecioCosto.Font = new Font(labelPrecioCosto.Font, FontStyle.Bold);
                             labelPrecioCosto.ForeColor = Color.Black;
                             labelPrecioCosto.Visible = true;
+
+                            // Si hay precio fijado, no mostrar el label de "No hay precio fijado"
+                            lblNohayprecio.Visible = false;
                         }
                         else
                         {
