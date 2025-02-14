@@ -1,8 +1,4 @@
-<p align="center">
-  <a href="https://postimg.cc/dLC9D4bj">
-    <img src="https://i.postimg.cc/yYQpQGnt/Biosys-Grande.png" alt="Logo" />
-  </a>
-</p>
+[![Biosys-Grande.png](https://i.postimg.cc/yYQpQGnt/Biosys-Grande.png)](https://postimg.cc/dLC9D4bj)
 
 # Biosys System 🌱🌎
 
